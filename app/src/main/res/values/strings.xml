@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">ZzApiDoc</string>
+    <string name="cancel_text">取消</string>
+    <string name="ok_text">确定</string>
+    <string name="no_net_text">网络故障，请检查网络</string>
+    <string name="phone_hint_text">请输入手机号</string>
+    <string name="pswd_hint_text">请输入密码</string>
+    <string name="login_text">登录</string>
+    <string name="me_text">我</string>
+    <string name="press_angin_exit_text">再按一次退出ZzApiDoc</string>
+    <string name="exit_login_text">退出登录</string>
+    <string name="msg_notice_text">通知消息</string>
+    <string name="msg_clear_text">缓存清理</string>
+    <string name="msg_update_text">软件更新</string>
+    <string name="msg_about_text">关于</string>
+    <string name="msg_setting_text">设置</string>
+    <string name="project_text">我的项目</string>
+    <string name="register_text">注册</string>
+    <string name="more_text">更多</string>
+</resources>

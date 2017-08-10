@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:background="@color/colorGrayBg"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/activity_title_height"
+        android:background="@color/colorMain"
+        android:gravity="center"
+        android:text="@string/me_text"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/activity_title_text_size" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorMain"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <me.zhouzhuo810.zzapidoc.ui.widget.roundimage.RoundedImageView
+                    android:id="@+id/iv_photo"
+                    android:layout_width="170px"
+                    android:layout_height="170px"
+                    android:layout_marginTop="40px"
+                    android:src="@drawable/photo_me"
+                    app:riv_border_color="@color/colorWhite"
+                    app:riv_border_width="3px"
+                    app:riv_oval="true" />
+
+                <TextView
+                    android:id="@+id/tv_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="36px"
+                    android:gravity="center"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/activity_title_text_size" />
+
+                <TextView
+                    android:id="@+id/tv_position"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="65px"
+                    android:layout_marginTop="36px"
+                    android:gravity="center"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="40px" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_notice"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/setting_item_height"
+                android:background="@drawable/setting_item_bg_selector"
+                android:clickable="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="70px"
+                    android:layout_height="70px"
+                    android:layout_marginLeft="40px"
+                    android:layout_marginRight="40px"
+                    android:src="@drawable/me_message" />
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:textSize="40px"
+                    android:textColor="@color/colorText"
+                    android:text="@string/msg_notice_text"/>
+                <ImageView
+                    android:layout_width="40px"
+                    android:layout_height="40px"
+                    android:src="@drawable/more"
+                    android:layout_marginRight="40px"/>
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="40px"/>
+            <LinearLayout
+                android:id="@+id/ll_clear"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/setting_item_height"
+                android:background="@drawable/setting_item_bg_selector"
+                android:clickable="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="70px"
+                    android:layout_height="70px"
+                    android:layout_marginLeft="40px"
+                    android:layout_marginRight="40px"
+                    android:src="@drawable/me_clear" />
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:textSize="40px"
+                    android:textColor="@color/colorText"
+                    android:text="@string/msg_clear_text"/>
+                <ImageView
+                    android:layout_width="40px"
+                    android:layout_height="40px"
+                    android:src="@drawable/more"
+                    android:layout_marginRight="40px"/>
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="40px"/>
+            <LinearLayout
+                android:id="@+id/ll_update"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/setting_item_height"
+                android:background="@drawable/setting_item_bg_selector"
+                android:clickable="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="70px"
+                    android:layout_height="70px"
+                    android:layout_marginLeft="40px"
+                    android:layout_marginRight="40px"
+                    android:src="@drawable/me_update" />
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:textSize="40px"
+                    android:textColor="@color/colorText"
+                    android:text="@string/msg_update_text"/>
+                <ImageView
+                    android:layout_width="40px"
+                    android:layout_height="40px"
+                    android:src="@drawable/more"
+                    android:layout_marginRight="40px"/>
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="40px"/>
+            <LinearLayout
+                android:id="@+id/ll_about"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/setting_item_height"
+                android:background="@drawable/setting_item_bg_selector"
+                android:clickable="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="70px"
+                    android:layout_height="70px"
+                    android:layout_marginLeft="40px"
+                    android:layout_marginRight="40px"
+                    android:src="@drawable/me_about" />
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:textSize="40px"
+                    android:textColor="@color/colorText"
+                    android:text="@string/msg_about_text"/>
+                <ImageView
+                    android:layout_width="40px"
+                    android:layout_height="40px"
+                    android:src="@drawable/more"
+                    android:layout_marginRight="40px"/>
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="40px"/>
+
+            <LinearLayout
+                android:id="@+id/ll_setting"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/setting_item_height"
+                android:layout_marginTop="51px"
+                android:background="@drawable/setting_item_bg_selector"
+                android:clickable="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="70px"
+                    android:layout_height="70px"
+                    android:layout_marginLeft="40px"
+                    android:layout_marginRight="40px"
+                    android:src="@drawable/me_setting" />
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:textSize="40px"
+                    android:textColor="@color/colorText"
+                    android:text="@string/msg_setting_text"/>
+                <ImageView
+                    android:layout_width="40px"
+                    android:layout_height="40px"
+                    android:src="@drawable/more"
+                    android:layout_marginRight="40px"/>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_exit"
+                android:layout_width="match_parent"
+                android:layout_height="110px"
+                android:layout_marginLeft="40px"
+                android:layout_marginRight="40px"
+                android:layout_marginTop="50px"
+                android:layout_marginBottom="50px"
+                android:textSize="40px"
+                android:textColor="@color/colorWhite"
+                android:text="@string/exit_login_text"
+                android:background="@drawable/btn_exit_selector"/>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

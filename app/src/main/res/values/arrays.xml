@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="tab_name">
+        <item>项目</item>
+        <item>我</item>
+    </string-array>
+</resources>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="7"
+        android:gravity="center"
+        android:background="@color/colorMain"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="600px"
+            android:layout_height="wrap_content"
+            android:scaleType="fitCenter"
+            android:src="@mipmap/ic_launcher" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50px"
+            android:text="ZzApiDoc"
+            android:textColor="@color/colorWhite"
+            android:textSize="60px"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginLeft="100px"
+        android:layout_marginRight="100px"
+        android:layout_weight="5"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="120px"
+            android:layout_marginLeft="30px"
+            android:layout_marginRight="30px">
+
+            <AutoCompleteTextView
+                android:id="@+id/et_phone"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/et_bg_line"
+                android:completionThreshold="1"
+                android:hint="@string/phone_hint_text"
+                android:inputType="phone"
+                android:paddingLeft="20px"
+                android:paddingRight="120px"
+                android:textColor="@color/colorBlack"
+                android:textColorHint="@color/colorMain"
+                android:textSize="40px" />
+
+            <ImageView
+                android:id="@+id/iv_clear_phone"
+                android:layout_width="60px"
+                android:layout_height="60px"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="30px"
+                android:src="@drawable/clear" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="120px"
+            android:layout_marginLeft="30px"
+            android:layout_marginRight="30px"
+            android:layout_marginTop="20px">
+
+            <EditText
+                android:id="@+id/et_pswd"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/et_bg_line"
+                android:hint="@string/pswd_hint_text"
+                android:paddingLeft="20px"
+                android:paddingRight="120px"
+                android:textColor="@color/colorBlack"
+                android:textColorHint="@color/colorMain"
+                android:textSize="40px" />
+
+            <ImageView
+                android:id="@+id/iv_clear_pswd"
+                android:layout_width="60px"
+                android:layout_height="60px"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="30px"
+                android:src="@drawable/clear" />
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/btn_login"
+            android:layout_width="match_parent"
+            android:layout_height="120px"
+            android:layout_marginLeft="30px"
+            android:layout_marginRight="30px"
+            android:layout_marginTop="90px"
+            android:background="@drawable/btn_save_selector"
+            android:text="@string/login_text"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/activity_title_text_size" />
+    </LinearLayout>
+</LinearLayout>
