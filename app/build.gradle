@@ -47,6 +47,8 @@ dependencies {
     //Logger
     compile 'com.orhanobut:logger:2.1.1'
 
+    compile 'me.zhouzhuo.zzhttp:zz-http:1.0.4'
+
 
 
 

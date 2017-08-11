@@ -127,6 +127,7 @@ public class RequestParamsManageActivity extends BaseActivity {
                 intent.putExtra("projectId", projectId);
                 intent.putExtra("groupId", groupId);
                 intent.putExtra("interfaceId", interfaceId);
+                intent.putExtra("pid", pid);
                 startActWithIntent(intent);
             }
         });
@@ -134,7 +135,37 @@ public class RequestParamsManageActivity extends BaseActivity {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                int type = adapter.getmDatas().get(position).getType();
+                String pid = adapter.getmDatas().get(position).getId();
+                String interfaceId = adapter.getmDatas().get(position).getInterfaceId();
+                Intent intent;
+                switch (type) {
+                    case 0:
+                        //string
+                        break;
+                    case 1:
+                        //number
+                        break;
+                    case 2:
+                        //object
+                        intent = new Intent(RequestParamsManageActivity.this, RequestParamsManageActivity.class);
+                        intent.putExtra("pid", pid);
+                        intent.putExtra("interfaceId", interfaceId);
+                        intent.putExtra("projectId", projectId);
+                        startActWithIntent(intent);
+                        break;
+                    case 3:
+                        //array[object]
+                        intent = new Intent(RequestParamsManageActivity.this, RequestParamsManageActivity.class);
+                        intent.putExtra("pid", pid);
+                        intent.putExtra("interfaceId", interfaceId);
+                        intent.putExtra("projectId", projectId);
+                        startActWithIntent(intent);
+                        break;
+                    case 4:
+                        //array[string]
+                        break;
+                }
             }
         });
 

@@ -15,6 +15,8 @@ import com.zhy.autolayout.utils.AutoUtils;
 import me.zhouzhuo810.zzapidoc.R;
 import me.zhouzhuo810.zzapidoc.common.utils.ZSharedUtil;
 import rx.Subscription;
+import zhouzhuo810.me.zzandframe.ui.act.*;
+import zhouzhuo810.me.zzandframe.ui.act.BaseActivity;
 
 /**
  * Created by zz on 2017/6/26.
@@ -58,6 +60,11 @@ public abstract class BaseFragment extends zhouzhuo810.me.zzandframe.ui.fgm.Base
     public void onDetach() {
         super.onDetach();
         isAttach = false;
+    }
+
+    @Override
+    public me.zhouzhuo810.zzapidoc.common.base.BaseActivity getBaseAct() {
+        return (me.zhouzhuo810.zzapidoc.common.base.BaseActivity) getActivity();
     }
 
     public String getUserId() {

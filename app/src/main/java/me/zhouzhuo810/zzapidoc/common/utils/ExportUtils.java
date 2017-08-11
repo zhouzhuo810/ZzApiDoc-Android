@@ -1,12 +1,14 @@
 package me.zhouzhuo810.zzapidoc.common.utils;
 
-import org.xutils.common.Callback;
-import org.xutils.common.util.FileUtil;
+import android.net.Uri;
+
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
 import java.io.File;
 
+import me.zhouzhuo.zzhttp.ZzHttp;
+import me.zhouzhuo.zzhttp.callback.Callback;
 import me.zhouzhuo810.zzapidoc.common.Constants;
 
 /**
@@ -17,6 +19,7 @@ public class ExportUtils {
 
 
     public interface ProgressListener {
+        void onStart();
         void onLoad(int progress);
         void onCancel();
         void onFail(String error);
@@ -37,12 +40,42 @@ public class ExportUtils {
         if (!file.exists()) {
             file.mkdirs();
         }
+
+        String url = Constants.SERVER_IP+"/v1/interface/downloadJson?userId="+userId+"&projectId="+projectId;
+        if (listener != null) {
+            listener.onStart();
+        }
+        ZzHttp.getInstance().download(url, filePath, new Callback.ProgressDownloadCallback() {
+            @Override
+            public void onProgress(float progress, int currentSize, int totalSize) {
+                if (listener != null) {
+                    listener.onLoad((int) (progress+0.5f));
+                }
+            }
+
+            @Override
+            public void onSuccess(String result) {
+
+                if (listener != null) {
+                    listener.onOk();
+                }
+            }
+
+            @Override
+            public void onFailure(String error) {
+                if (listener != null) {
+                    listener.onFail(error);
+                }
+            }
+        });
+/*
         RequestParams params = new RequestParams(Constants.SERVER_IP+"/v1/interface/downloadJson");
         params.addQueryStringParameter("userId", userId);
         params.addQueryStringParameter("projectId", projectId);
         params.setSaveFilePath(filePath+fileName);
         params.setConnectTimeout(2*60*1000);
-        params.setAutoRename(true);
+        params.setMultipart(true);
+        params.setAutoRename(false);
         params.setAutoResume(true);
         x.http().get(params, new Callback.ProgressCallback<File>() {
             @Override
@@ -68,7 +101,9 @@ public class ExportUtils {
 
             @Override
             public void onFinished() {
-
+                if (listener != null) {
+                    listener.onOk();
+                }
             }
 
             @Override
@@ -87,7 +122,7 @@ public class ExportUtils {
                     listener.onLoad((int) (current*100.0/total+0.5));
                 }
             }
-        });
+        });*/
 
 
     }

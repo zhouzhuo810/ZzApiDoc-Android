@@ -26,7 +26,9 @@ public class Constants {
 
     public static final String APK_DOWNLOAD_DIR = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "ZzApiDoc/Apk";
 
-    public static final String DBPATH = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "ZzApiDoc/Db";
+    public static final String DBPATH = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "ZzApiDoc/Db"
+            ;
+    public static final String EXPORT_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "ZzApiDoc/JSON/";
 
     public static final String PIC_UPLOAD_ROOT_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "ZzApiDoc/Image/Upload/";
 

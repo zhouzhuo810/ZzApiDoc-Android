@@ -1,25 +1,32 @@
 package me.zhouzhuo810.zzapidoc.ui.fgm;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import me.zhouzhuo810.zzapidoc.R;
+import me.zhouzhuo810.zzapidoc.common.Constants;
 import me.zhouzhuo810.zzapidoc.common.api.Api;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllProjectResult;
+import me.zhouzhuo810.zzapidoc.common.base.BaseActivity;
 import me.zhouzhuo810.zzapidoc.common.base.BaseFragment;
 import me.zhouzhuo810.zzapidoc.common.rx.RxHelper;
+import me.zhouzhuo810.zzapidoc.common.utils.ExportUtils;
 import me.zhouzhuo810.zzapidoc.common.utils.ToastUtils;
 import me.zhouzhuo810.zzapidoc.ui.act.AddProjectActivity;
 import me.zhouzhuo810.zzapidoc.ui.act.InterfaceGroupManageActivity;
@@ -120,6 +127,73 @@ public class ProjectFragment extends BaseFragment {
                 Intent intent = new Intent(getActivity(), InterfaceGroupManageActivity.class);
                 intent.putExtra("projectId", adapter.getmDatas().get(position).getId());
                 startActivity(intent);
+            }
+        });
+
+        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+                getBaseAct().showListDialog(Arrays.asList("导出JSON"), true, null, new BaseActivity.OnItemClick() {
+                    @Override
+                    public void onItemClick(int pos, String content) {
+                        switch (pos) {
+                            case 0:
+                                export(adapter.getmDatas().get(position).getId());
+                                break;
+                        }
+                    }
+                });
+                return true;
+            }
+        });
+    }
+
+    private void export(String id) {
+        final String name = System.currentTimeMillis()+".txt";
+        ExportUtils.exportToJsonFile(getUserId(), id, Constants.EXPORT_PATH, name, new ExportUtils.ProgressListener() {
+            TextView tv;
+            ProgressBar pb;
+            @Override
+            public void onStart() {
+                getBaseAct().showUpdateDialog("导出", "正在导出...", false, new BaseActivity.OnOneBtnClickListener() {
+                    @Override
+                    public void onProgress(TextView tvProgress, ProgressBar progressBar) {
+                        tv = tvProgress;
+                        pb = progressBar;
+                    }
+
+                    @Override
+                    public void onOK() {
+                        getBaseAct().hideUpdateDialog();
+                    }
+                });
+            }
+
+            @Override
+            public void onLoad(final int progress) {
+                Log.e("TTT", "progress="+progress);
+                tv.setText(progress + "%");
+                pb.setProgress(progress);
+            }
+
+            @Override
+            public void onCancel() {
+                Log.e("TTT", "cancel");
+                getBaseAct().hideUpdateDialog();
+            }
+
+            @Override
+            public void onFail(String error) {
+                Log.e("TTT", "fail");
+                getBaseAct().hideUpdateDialog();
+                ToastUtils.showCustomBgToast(error);
+            }
+
+            @Override
+            public void onOk() {
+                Log.e("TTT", "ok");
+                getBaseAct().hideUpdateDialog();
+                ToastUtils.showCustomBgToast("文件已保存到" + Constants.EXPORT_PATH + name);
             }
         });
     }

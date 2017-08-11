@@ -79,7 +79,7 @@ public class ResponseParamsManageActivity extends BaseActivity {
     }
 
     private void getData() {
-        if (pid==null) {
+        if (pid == null) {
             pid = "0";
         }
         Api.getApi0()
@@ -129,6 +129,7 @@ public class ResponseParamsManageActivity extends BaseActivity {
                 intent.putExtra("projectId", projectId);
                 intent.putExtra("groupId", groupId);
                 intent.putExtra("interfaceId", interfaceId);
+                intent.putExtra("pid", pid);
                 startActWithIntent(intent);
             }
         });
@@ -136,7 +137,37 @@ public class ResponseParamsManageActivity extends BaseActivity {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                int type = adapter.getmDatas().get(position).getType();
+                String pid = adapter.getmDatas().get(position).getId();
+                String interfaceId = adapter.getmDatas().get(position).getInterfaceId();
+                Intent intent;
+                switch (type) {
+                    case 0:
+                        //string
+                        break;
+                    case 1:
+                        //number
+                        break;
+                    case 2:
+                        //object
+                        intent = new Intent(ResponseParamsManageActivity.this, ResponseParamsManageActivity.class);
+                        intent.putExtra("pid", pid);
+                        intent.putExtra("interfaceId", interfaceId);
+                        intent.putExtra("projectId", projectId);
+                        startActWithIntent(intent);
+                        break;
+                    case 3:
+                        //array[object]
+                        intent = new Intent(ResponseParamsManageActivity.this, ResponseParamsManageActivity.class);
+                        intent.putExtra("pid", pid);
+                        intent.putExtra("interfaceId", interfaceId);
+                        intent.putExtra("projectId", projectId);
+                        startActWithIntent(intent);
+                        break;
+                    case 4:
+                        //array[string]
+                        break;
+                }
             }
         });
 
@@ -168,7 +199,7 @@ public class ResponseParamsManageActivity extends BaseActivity {
     private void delete(String id) {
         showPd(getString(R.string.submiting_text), false);
         Api.getApi0()
-                .deleteRequestArg(id, getUserId())
+                .deleteResponseArg(id, getUserId())
                 .compose(RxHelper.<DeleteArgResult>io_main())
                 .subscribe(new Subscriber<DeleteArgResult>() {
                     @Override
@@ -187,7 +218,7 @@ public class ResponseParamsManageActivity extends BaseActivity {
                     public void onNext(DeleteArgResult deleteArgResult) {
                         hidePd();
                         ToastUtils.showCustomBgToast(deleteArgResult.getMsg());
-                        if (deleteArgResult.getCode()==1) {
+                        if (deleteArgResult.getCode() == 1) {
                             startRefresh(refresh);
                             getData();
                         }
