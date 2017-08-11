@@ -1,29 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorWhite"
     android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/ll_top"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="7"
-        android:gravity="center"
         android:background="@color/colorMain"
+        android:gravity="center"
         android:orientation="vertical">
 
         <ImageView
-            android:layout_width="600px"
-            android:layout_height="wrap_content"
-            android:scaleType="fitCenter"
-            android:src="@mipmap/ic_launcher" />
+            android:layout_width="200px"
+            android:layout_height="200px"
+            android:scaleType="fitXY"
+            android:src="@mipmap/logo"
+            app:layout_auto_baseheight="width" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="120px"
             android:layout_marginTop="50px"
-            android:text="ZzApiDoc"
+            android:gravity="center"
+            android:text="@string/app_name"
             android:textColor="@color/colorWhite"
             android:textSize="60px"
             android:textStyle="bold" />
@@ -35,7 +39,7 @@
         android:layout_height="0dp"
         android:layout_marginLeft="100px"
         android:layout_marginRight="100px"
-        android:layout_weight="5"
+        android:layout_weight="7"
         android:gravity="center"
         android:orientation="vertical">
 
@@ -63,6 +67,7 @@
                 android:id="@+id/iv_clear_phone"
                 android:layout_width="60px"
                 android:layout_height="60px"
+                android:visibility="gone"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="30px"
@@ -93,6 +98,7 @@
                 android:id="@+id/iv_clear_pswd"
                 android:layout_width="60px"
                 android:layout_height="60px"
+                android:visibility="gone"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="30px"
@@ -108,6 +114,18 @@
             android:layout_marginTop="90px"
             android:background="@drawable/btn_save_selector"
             android:text="@string/login_text"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/activity_title_text_size" />
+
+        <Button
+            android:id="@+id/btn_register"
+            android:layout_width="match_parent"
+            android:layout_height="120px"
+            android:layout_marginLeft="30px"
+            android:layout_marginRight="30px"
+            android:layout_marginTop="40px"
+            android:background="@drawable/btn_exit_selector"
+            android:text="@string/register_text"
             android:textColor="@color/colorWhite"
             android:textSize="@dimen/activity_title_text_size" />
     </LinearLayout>

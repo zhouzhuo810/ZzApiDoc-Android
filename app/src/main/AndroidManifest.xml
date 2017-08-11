@@ -25,9 +25,9 @@
     <application
         android:name=".ZApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
@@ -39,7 +39,8 @@
             android:value="1920" />
 
 
-        <activity android:name=".ui.act.LoginActivity"
+        <activity
+            android:name=".ui.act.LoginActivity"
             android:configChanges="orientation|keyboardHidden|layoutDirection|screenSize|screenLayout"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden">
@@ -50,10 +51,66 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.act.MainActivity"
+        <activity
+            android:name=".ui.act.MainActivity"
             android:configChanges="orientation|keyboardHidden|layoutDirection|screenSize|screenLayout"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".ui.act.RegisterActivity"
+            android:configChanges="orientation|keyboardHidden|layoutDirection|screenSize|screenLayout"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".ui.act.RevisePswdActivity"
+            android:configChanges="orientation|keyboardHidden|layoutDirection|screenSize|screenLayout"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".ui.act.AddProjectActivity"
+            android:configChanges="orientation|keyboardHidden|layoutDirection|screenSize|screenLayout"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".ui.act.InterfaceGroupManageActivity"
+            android:configChanges="orientation|keyboardHidden|layoutDirection|screenSize|screenLayout"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".ui.act.AddInterfaceGroupActivity"
+            android:configChanges="orientation|keyboardHidden|layoutDirection|screenSize|screenLayout"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".ui.act.InterfaceManageActivity"
+            android:configChanges="orientation|keyboardHidden|layoutDirection|screenSize|screenLayout"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".ui.act.AddInterfaceActivity"
+            android:configChanges="orientation|keyboardHidden|layoutDirection|screenSize|screenLayout"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".ui.act.RequestParamsManageActivity"
+            android:configChanges="orientation|keyboardHidden|layoutDirection|screenSize|screenLayout"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".ui.act.ResponseParamsManageActivity"
+            android:configChanges="orientation|keyboardHidden|layoutDirection|screenSize|screenLayout"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".ui.act.AddRequestParamsActivity"
+            android:configChanges="orientation|keyboardHidden|layoutDirection|screenSize|screenLayout"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".ui.act.AddResponseParamsActivity"
+            android:configChanges="orientation|keyboardHidden|layoutDirection|screenSize|screenLayout"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -62,9 +119,8 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/provider_paths" />
+                android:resource="@xml/provider_paths"/>
         </provider>
-
     </application>
 
 </manifest>

@@ -1,7 +1,9 @@
 package me.zhouzhuo810.zzapidoc.ui.fgm;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +19,7 @@ import me.zhouzhuo810.zzapidoc.common.base.BaseActivity;
 import me.zhouzhuo810.zzapidoc.common.base.BaseFragment;
 import me.zhouzhuo810.zzapidoc.common.utils.ZSharedUtil;
 import me.zhouzhuo810.zzapidoc.ui.act.LoginActivity;
+import me.zhouzhuo810.zzapidoc.ui.act.RevisePswdActivity;
 import me.zhouzhuo810.zzapidoc.ui.widget.roundimage.RoundedImageView;
 
 /**
@@ -32,11 +35,13 @@ public class MeFragment extends BaseFragment {
     private LinearLayout llUpdate;
     private LinearLayout llAbout;
     private LinearLayout llSetting;
+    private LinearLayout llPswd;
     private Button btnExit;
 
+
     @Override
-    public View getViews(LayoutInflater inflater, ViewGroup container) {
-        return inflater.inflate(R.layout.fgm_me, container, false);
+    public int getLayoutId() {
+        return R.layout.fgm_me;
     }
 
     @Override
@@ -49,6 +54,7 @@ public class MeFragment extends BaseFragment {
         llUpdate = (LinearLayout) rootView.findViewById(R.id.ll_update);
         llAbout = (LinearLayout) rootView.findViewById(R.id.ll_about);
         llSetting = (LinearLayout) rootView.findViewById(R.id.ll_setting);
+        llPswd = (LinearLayout) rootView.findViewById(R.id.ll_pswd);
         btnExit = (Button) rootView.findViewById(R.id.btn_exit);
     }
 
@@ -57,7 +63,7 @@ public class MeFragment extends BaseFragment {
         String photo = ZSharedUtil.getPicUrl();
         String name = ZSharedUtil.getRealName();
         String position = ZSharedUtil.getPosition();
-        Glide.with(this).load(Constants.PIC_HEAD+photo).crossFade().error(R.drawable.photo_me).placeholder(R.drawable.photo_me).into(ivPhoto);
+        Glide.with(this).load(Constants.PIC_HEAD + photo).crossFade().error(R.drawable.photo_me).placeholder(R.drawable.photo_me).into(ivPhoto);
         tvName.setText(name);
         tvPosition.setText(position);
     }
@@ -68,13 +74,10 @@ public class MeFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
 
-                ((BaseActivity)getActivity()).showTwoBtnDialog("提示", "确定退出登录吗？", true, new BaseActivity.OnTwoBtnClick() {
+                ((BaseActivity) getActivity()).showTwoBtnDialog("提示", "确定退出登录吗？", true, new BaseActivity.OnTwoBtnClick() {
                     @Override
                     public void onOk() {
-                        ZSharedUtil.savePswd("");
-                        Intent intent = new Intent(getActivity(), LoginActivity.class);
-                        startActWithIntent(intent);
-                        ((BaseActivity)getActivity()).closeAct();
+                        exitLogin();
                     }
 
                     @Override
@@ -83,15 +86,54 @@ public class MeFragment extends BaseFragment {
                 });
             }
         });
+
+        llPswd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), RevisePswdActivity.class);
+                startActivityForResult(intent, 0x01);
+            }
+        });
+    }
+
+    private void exitLogin() {
+        ZSharedUtil.savePswd("");
+        Intent intent = new Intent(getActivity(), LoginActivity.class);
+        getBaseAct().startActWithIntent(intent);
+        getBaseAct().closeAct();
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            switch (requestCode) {
+                case 0x01:
+                    exitLogin();
+                    break;
+            }
+        }
     }
 
     @Override
-    public void onSaveState(Bundle bundle) {
+    public void resume() {
 
     }
 
     @Override
-    public void onStateRestored(Bundle bundle) {
+    public void saveState(Bundle bundle) {
 
     }
+
+    @Override
+    public void restoreState(@Nullable Bundle bundle) {
+
+    }
+
+    @Override
+    public void destroyView() {
+
+    }
+
 }

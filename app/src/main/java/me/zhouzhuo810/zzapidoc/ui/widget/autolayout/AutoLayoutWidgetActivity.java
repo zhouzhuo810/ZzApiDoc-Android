@@ -14,7 +14,6 @@ import com.zhy.autolayout.AutoLayoutActivity;
 public class AutoLayoutWidgetActivity extends AutoLayoutActivity {
 
     private static final String RADIO_GROUP = "android.widget.RadioGroup";
-    private static final String FLOW_LAYOUT = "com.zhy.view.flowlayout.FlowLayout";
 
     @Override
     public View onCreateView(String name, Context context, AttributeSet attrs) {
@@ -24,9 +23,6 @@ public class AutoLayoutWidgetActivity extends AutoLayoutActivity {
             view = new RadioGroup(context, attrs);
         }
 
-        if (name.equals(FLOW_LAYOUT)) {
-            view = new AutoFlowLayout(context, attrs);
-        }
 
         if (view != null) return view;
         return super.onCreateView(name, context, attrs);

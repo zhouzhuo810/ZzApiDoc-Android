@@ -1,6 +1,7 @@
 package me.zhouzhuo810.zzapidoc.common.base;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,10 +13,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+
 import com.zhy.autolayout.utils.AutoUtils;
 
 import java.util.ArrayList;
@@ -26,7 +31,8 @@ import me.zhouzhuo810.zzapidoc.common.api.entity.GetDictionaryResult;
 import me.zhouzhuo810.zzapidoc.common.rx.ExitEvent;
 import me.zhouzhuo810.zzapidoc.common.rx.RxBus;
 import me.zhouzhuo810.zzapidoc.common.utils.ZSharedUtil;
-import me.zhouzhuo810.zzapidoc.ui.widget.autolayout.AutoLayoutWidgetActivity;
+import me.zhouzhuo810.zzapidoc.ui.adapter.base.CommonAdapter;
+import me.zhouzhuo810.zzapidoc.ui.adapter.base.ViewHolder;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -36,19 +42,18 @@ import rx.subscriptions.CompositeSubscription;
 /**
  * Created by zz on 2017/6/26.
  */
-public abstract class BaseActivity extends AutoLayoutWidgetActivity {
+public abstract class BaseActivity extends zhouzhuo810.me.zzandframe.ui.act.BaseActivity {
 
     private boolean isForeground;
-
-    protected Subscription subscription1;
-    protected Subscription subscription2;
-    protected Subscription subscription3;
 
     private CompositeSubscription compositeSubscription;
 
     private Dialog pd;
     private Dialog twoBtnD;
     private Dialog twoBtnEtD;
+    private Dialog lvD;
+    private Dialog updateD;
+
 
     public interface OnTwoBtnClick {
         void onOk();
@@ -62,18 +67,21 @@ public abstract class BaseActivity extends AutoLayoutWidgetActivity {
         void onCancel();
     }
 
+    public interface OnItemClick {
+        void onItemClick(int position, String content);
+    }
+
+    public interface OnOneBtnClickListener {
+        void onProgress(TextView tvProgress, ProgressBar pb);
+
+        void onOK();
+    }
+
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         registerExitObserver();
-
-        setContentView(getLayoutId());
-
-        initView();
-
-        initData();
-
-        initEvent();
     }
 
     private void addSubscription(Subscription subscription) {
@@ -112,19 +120,6 @@ public abstract class BaseActivity extends AutoLayoutWidgetActivity {
         RxBus.getInstance().post(ExitEvent.getInstance());
     }
 
-    public abstract int getLayoutId();
-
-    public abstract void initView();
-
-    public abstract void initData();
-
-    public abstract void initEvent();
-
-    public abstract void saveState(Bundle bundle);
-
-    public abstract void restoreState(Bundle bundle);
-
-
     public boolean isForeground() {
         return isForeground;
     }
@@ -151,51 +146,8 @@ public abstract class BaseActivity extends AutoLayoutWidgetActivity {
         return list;
     }
 
-
-    public void setEditListener(final EditText et, final ImageView iv) {
-        iv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                et.setText("");
-            }
-        });
-        et.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (s.length() > 0) {
-                    iv.setVisibility(View.VISIBLE);
-                } else {
-                    iv.setVisibility(View.GONE);
-                }
-            }
-        });
-    }
-
     public String getUserId() {
         return ZSharedUtil.getUserId();
-    }
-
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        saveState(outState);
-        super.onSaveInstanceState(outState);
-    }
-
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        restoreState(savedInstanceState);
-        super.onRestoreInstanceState(savedInstanceState);
     }
 
     public void startActWithIntent(Intent intent) {
@@ -216,37 +168,10 @@ public abstract class BaseActivity extends AutoLayoutWidgetActivity {
                 R.anim.slide_out_right);
     }
 
-    @Override
-    public void onBackPressed() {
-        if (isDefaultBackClose()) {
-            super.onBackPressed();
-        } else {
-            closeAct();
-        }
-    }
-
     public void setBackgroundAlpha(float alpha) {
         WindowManager.LayoutParams lp = getWindow().getAttributes();
         lp.alpha = alpha;
         getWindow().setAttributes(lp);
-    }
-
-
-    public abstract boolean isDefaultBackClose();
-
-    public void setSubscription1(Subscription subscription1) {
-        unSubscribe(subscription1);
-        this.subscription1 = subscription1;
-    }
-
-    public void setSubscription2(Subscription subscription2) {
-        unSubscribe(subscription2);
-        this.subscription2 = subscription2;
-    }
-
-    public void setSubscription3(Subscription subscription3) {
-        unSubscribe(subscription3);
-        this.subscription3 = subscription3;
     }
 
     public void unSubscribe(Subscription subscription) {
@@ -363,6 +288,85 @@ public abstract class BaseActivity extends AutoLayoutWidgetActivity {
         twoBtnEtD.show();
     }
 
+    public void showUpdateDialog(String title, String msg, boolean cancelable, final OnOneBtnClickListener oneBtnClickListener) {
+        hideTwoBtnDialog();
+        View convertView = LayoutInflater.from(this).inflate(R.layout.layout_update_dialog, null);
+        AutoUtils.auto(convertView);
+        TextView tvTitle = (TextView) convertView.findViewById(R.id.tv_title);
+        tvTitle.setText(title);
+        final TextView tvPercent = (TextView) convertView.findViewById(R.id.tv_percent);
+        tvPercent.setText(msg);
+        final ProgressBar pb = (ProgressBar) convertView.findViewById(R.id.dialog_pb);
+        pb.setProgress(0);
+        if (oneBtnClickListener != null) {
+            oneBtnClickListener.onProgress(tvPercent, pb);
+        }
+        updateD = new Dialog(this, R.style.transparentWindow);
+        Button btnOk = (Button) convertView.findViewById(R.id.btn_ok);
+        btnOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hideTwoBtnDialog();
+                if (oneBtnClickListener != null) {
+                    oneBtnClickListener.onOK();
+                }
+            }
+        });
+        Window window = updateD.getWindow();
+        WindowManager.LayoutParams wl = window.getAttributes();
+        wl.width = ViewGroup.LayoutParams.MATCH_PARENT;
+        wl.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+        updateD.onWindowAttributesChanged(wl);
+        updateD.setCanceledOnTouchOutside(cancelable);
+        updateD.setContentView(convertView);
+        updateD.show();
+    }
+
+    public void hideUpdateDialog() {
+        if (updateD != null) {
+            updateD.dismiss();
+            updateD = null;
+        }
+    }
+
+    public void showListDialog(final List<String> items, boolean cancelable, DialogInterface.OnDismissListener dismissListener, final OnItemClick onItemClick) {
+        hideListDialog();
+        View convertView = LayoutInflater.from(this).inflate(R.layout.layout_list_dialog, null);
+        AutoUtils.auto(convertView);
+        ListView lv = (ListView) convertView.findViewById(R.id.lv);
+        lv.setAdapter(new CommonAdapter<String>(this, items, R.layout.list_item_lv_dialog, true) {
+            @Override
+            public void convert(ViewHolder holder, String s) {
+                holder.setText(R.id.tv_name, s);
+            }
+        });
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (onItemClick != null) {
+                    onItemClick.onItemClick(position, items.get(position));
+                }
+                hideListDialog();
+            }
+        });
+        lvD = new Dialog(this, R.style.transparentWindow);
+        lvD.setOnDismissListener(dismissListener);
+        Window window = lvD.getWindow();
+        WindowManager.LayoutParams wl = window.getAttributes();
+        wl.width = ViewGroup.LayoutParams.MATCH_PARENT;
+        wl.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+        lvD.onWindowAttributesChanged(wl);
+        lvD.setCanceledOnTouchOutside(cancelable);
+        lvD.setContentView(convertView);
+        lvD.show();
+    }
+    public void hideListDialog() {
+        if (lvD != null) {
+            lvD.dismiss();
+            lvD = null;
+        }
+    }
+
     public void hidePd() {
         if (pd != null) {
             pd.dismiss();
@@ -401,9 +405,6 @@ public abstract class BaseActivity extends AutoLayoutWidgetActivity {
         super.onDestroy();
         hidePd();
         hideTwoBtnDialog();
-        unSubscribe(subscription1);
-        unSubscribe(subscription2);
-        unSubscribe(subscription3);
         if (compositeSubscription != null)
             compositeSubscription.unsubscribe();
     }

@@ -68,6 +68,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     }
 
     @Override
+    public boolean defaultBack() {
+        return false;
+    }
+
+    @Override
     public void initView() {
         rxPermissions = new RxPermissions(this);
 
@@ -111,6 +116,20 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         llMe.setOnClickListener(this);
     }
 
+    @Override
+    public void resume() {
+
+    }
+
+    @Override
+    public void pause() {
+
+    }
+
+    @Override
+    public void destroy() {
+
+    }
 
 
     public void check(int position) {
@@ -193,11 +212,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     @Override
     public void restoreState(Bundle bundle) {
 
-    }
-
-    @Override
-    public boolean isDefaultBackClose() {
-        return false;
     }
 
     @Override

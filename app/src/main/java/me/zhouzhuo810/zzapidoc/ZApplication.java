@@ -2,11 +2,9 @@ package me.zhouzhuo810.zzapidoc;
 
 import android.app.Application;
 
-import com.bumptech.glide.Glide;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
 import com.tencent.bugly.crashreport.CrashReport;
-import com.zhy.autolayout.config.AutoLayoutConifg;
 
 import org.xutils.x;
 
@@ -17,7 +15,7 @@ import org.xutils.x;
 
 public class ZApplication extends Application {
 
-    private static ZApplication INSTANCE;
+    private static Application INSTANCE;
 
     @Override
     public void onCreate() {
@@ -30,8 +28,6 @@ public class ZApplication extends Application {
         x.Ext.setDebug(true);
 
         Logger.addLogAdapter(new AndroidLogAdapter());
-
-        AutoLayoutConifg.getInstance().useDeviceSize();
 
         /*
          Bugly SDK初始化
@@ -47,20 +43,8 @@ public class ZApplication extends Application {
 
     }
 
-    /**
-     * 清理Glide缓存
-     */
-    public void clearImageCache() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Glide.get(INSTANCE).clearMemory();
-                Glide.get(INSTANCE).clearDiskCache();
-            }
-        }).start();
-    }
 
-    public static ZApplication getInstance() {
+    public static Application getInstance() {
         return INSTANCE;
     }
 }

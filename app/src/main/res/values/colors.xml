@@ -5,7 +5,7 @@
     <color name="colorPrimaryDark">#438cff</color>
     <color name="colorAccent">#438cff</color>
     <color name="colorPress">#1d61ce</color>
-
+    <color name="colorGrayBg">#ecf4f8</color>
     <color name="colorWhite">#fff</color>
     <color name="colorBlack">#000</color>
     <color name="colorTransparent">#00000000</color>
@@ -15,11 +15,12 @@
     <color name="colorText">#222</color>
     <color name="colorTabNormal">#aac3d2</color>
     <color name="colorTabPress">#438cff</color>
-    <color name="colorGrayBg">#ecf4f8</color>
 
     <color name="colorExit">#d44a4a</color>
     <color name="colorExitPress">#dc5353</color>
 
     <color name="colorNonHistory">#e92953</color>
     <color name="colorHistory">#1ec642</color>
+
+    <color name="colorDeepGreen">#378930</color>
 </resources>

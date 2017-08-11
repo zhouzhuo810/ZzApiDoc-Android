@@ -4,11 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,21 +27,27 @@ import me.zhouzhuo810.zzapidoc.common.utils.ZSharedUtil;
 import rx.Subscriber;
 
 /**
- *
  * Created by zz on 2017/7/5.
  */
 
 public class LoginActivity extends BaseActivity {
     private AutoCompleteTextView etPhone;
-//    private EditText etPhone;
+    //    private EditText etPhone;
     private EditText etPswd;
     private Button btnLogin;
     private ImageView ivClearPhone;
     private ImageView ivClearPswd;
+    private LinearLayout llTop;
+    private Button btnRegister;
 
     @Override
     public int getLayoutId() {
         return R.layout.activity_login;
+    }
+
+    @Override
+    public boolean defaultBack() {
+        return false;
     }
 
     @Override
@@ -48,6 +56,9 @@ public class LoginActivity extends BaseActivity {
 //        etPhone = (EditText) findViewById(R.id.et_phone);
         etPswd = (EditText) findViewById(R.id.et_pswd);
         btnLogin = (Button) findViewById(R.id.btn_login);
+        btnRegister = (Button) findViewById(R.id.btn_register);
+
+        llTop = (LinearLayout) findViewById(R.id.ll_top);
 
         ivClearPhone = (ImageView) findViewById(R.id.iv_clear_phone);
         ivClearPswd = (ImageView) findViewById(R.id.iv_clear_pswd);
@@ -61,7 +72,7 @@ public class LoginActivity extends BaseActivity {
             String pswd = ZSharedUtil.getPswd();
             if (!TextUtils.isEmpty(pswd)) {
                 etPswd.setText(pswd);
-                doLogin();
+                doLogin(phone, pswd);
             }
         }
         initAuto();
@@ -75,7 +86,7 @@ public class LoginActivity extends BaseActivity {
     }
 
     private List<String> generatePhones(List<PhoneEntity> allPhones) {
-        List<String> p  = new ArrayList<>();
+        List<String> p = new ArrayList<>();
         if (allPhones != null) {
             for (PhoneEntity allPhone : allPhones) {
                 p.add(allPhone.getPhone());
@@ -89,20 +100,76 @@ public class LoginActivity extends BaseActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                doLogin();
+                final String phone = etPhone.getText().toString().trim();
+                final String pswd = etPswd.getText().toString().trim();
+                doLogin(phone, pswd);
+            }
+        });
+
+        btnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                doRegister();
             }
         });
 
         setEditListener(etPhone, ivClearPhone);
         setEditListener(etPswd, ivClearPswd);
 
+        llTop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                InputMethodManager imm = (InputMethodManager) v.getContext().getSystemService(INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+            }
+        });
+
     }
 
-    private void doLogin() {
-        showPd("登陆中...", false);
-        final String phone = etPhone.getText().toString().trim();
-        final String pswd = etPswd.getText().toString().trim();
+    @Override
+    public void resume() {
 
+    }
+
+    @Override
+    public void pause() {
+
+    }
+
+    @Override
+    public void destroy() {
+
+    }
+
+    private void doRegister() {
+        Intent intent = new Intent(this, RegisterActivity.class);
+        startActForResultWithIntent(intent, 0x01);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case 0x01:
+                    String phone = data.getStringExtra("phone");
+                    String pswd = data.getStringExtra("pswd");
+                    doLogin(phone, pswd);
+                    break;
+            }
+        }
+    }
+
+    private void doLogin(final String phone, final String pswd) {
+        if (phone.length() == 0) {
+            ToastUtils.showCustomBgToast("手机号不能为空！");
+            return;
+        }
+        if (pswd.length() == 0) {
+            ToastUtils.showCustomBgToast("密码不能为空！");
+            return;
+        }
+        showPd("登陆中...", false);
         Api.getApi0()
                 .userLogin(phone, pswd)
                 .compose(RxHelper.<UserLoginResult>io_main())
@@ -115,7 +182,7 @@ public class LoginActivity extends BaseActivity {
                     @Override
                     public void onError(Throwable e) {
                         hidePd();
-                        ToastUtils.showCustomBgToast(getString(R.string.no_net_text)+e.toString());
+                        ToastUtils.showCustomBgToast(getString(R.string.no_net_text) + e.toString());
                     }
 
                     @Override
@@ -150,8 +217,4 @@ public class LoginActivity extends BaseActivity {
 
     }
 
-    @Override
-    public boolean isDefaultBackClose() {
-        return false;
-    }
 }

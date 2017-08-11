@@ -19,33 +19,13 @@ import rx.Subscription;
 /**
  * Created by zz on 2017/6/26.
  */
-public abstract class BaseFragment extends Fragment {
+public abstract class BaseFragment extends zhouzhuo810.me.zzandframe.ui.fgm.BaseFragment {
 
     protected Subscription subscription1;
     protected Subscription subscription2;
     protected Subscription subscription3;
 
     protected boolean isAttach;
-    protected View rootView;
-
-    public abstract View getViews(LayoutInflater inflater, ViewGroup container);
-
-    public abstract void initView();
-
-    public abstract void initData();
-
-    public abstract void initEvent();
-
-
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        rootView = getViews(inflater, container);
-        initView();
-        initData();
-        initEvent();
-        return rootView;
-    }
 
     public void setSubscription1(Subscription subscription1) {
         unSubscribe(subscription1);
@@ -67,48 +47,6 @@ public abstract class BaseFragment extends Fragment {
             subscription.unsubscribe();
         }
     }
-
-    public void startRefresh(SwipeRefreshLayout refreshLayout) {
-        if (refreshLayout != null) {
-            refreshLayout.setRefreshing(false);
-            refreshLayout.setProgressViewOffset(false, 0, AutoUtils.getPercentHeightSize(24));
-            refreshLayout.setRefreshing(true);
-        }
-    }
-
-    public void stopRefresh(SwipeRefreshLayout refreshLayout) {
-        if (refreshLayout != null && refreshLayout.isRefreshing()) {
-            refreshLayout.setRefreshing(false);
-        }
-    }
-    public void startActWithIntent(Intent intent) {
-        startActivity(intent);
-        ((BaseActivity) getActivity()).overridePendingTransition(R.anim.slide_in_left,
-                R.anim.slide_out_right);
-    }
-
-    public void startActWithIntentForResult(Intent intent, int requestCode) {
-        startActivityForResult(intent, requestCode);
-        ((BaseActivity) getActivity()).overridePendingTransition(R.anim.slide_in_left,
-                R.anim.slide_out_right);
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        onSaveState(outState);
-        super.onSaveInstanceState(outState);
-    }
-
-    @Override
-    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
-        onStateRestored(savedInstanceState);
-        super.onViewStateRestored(savedInstanceState);
-    }
-
-    public abstract void onSaveState(Bundle bundle);
-
-    public abstract void onStateRestored(Bundle bundle);
-
 
     @Override
     public void onAttach(Context context) {

@@ -77,6 +77,26 @@ public class GetAllProjectResult {
             return createUserName;
         }
 
+        private String createTime;
+
+        public String getCreateTime() {
+            return createTime;
+        }
+
+        public void setCreateTime(String createTime) {
+            this.createTime = createTime;
+        }
+
+        private int interfaceNo;
+
+        public int getInterfaceNo() {
+            return interfaceNo;
+        }
+
+        public void setInterfaceNo(int interfaceNo) {
+            this.interfaceNo = interfaceNo;
+        }
+
         private String id;
 
         public void setId(String id) {

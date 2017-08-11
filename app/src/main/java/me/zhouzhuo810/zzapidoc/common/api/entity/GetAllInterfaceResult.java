@@ -76,5 +76,45 @@ public class GetAllInterfaceResult {
         public String getGroup() {
             return group;
         }
+
+        private int requestParamsNo;
+
+        private int responseParamsNo;
+
+        private String createTime;
+
+        private String createUserName;
+
+        public int getRequestParamsNo() {
+            return requestParamsNo;
+        }
+
+        public void setRequestParamsNo(int requestParamsNo) {
+            this.requestParamsNo = requestParamsNo;
+        }
+
+        public int getResponseParamsNo() {
+            return responseParamsNo;
+        }
+
+        public void setResponseParamsNo(int responseParamsNo) {
+            this.responseParamsNo = responseParamsNo;
+        }
+
+        public String getCreateTime() {
+            return createTime;
+        }
+
+        public void setCreateTime(String createTime) {
+            this.createTime = createTime;
+        }
+
+        public String getCreateUserName() {
+            return createUserName;
+        }
+
+        public void setCreateUserName(String createUserName) {
+            this.createUserName = createUserName;
+        }
     }
 }
