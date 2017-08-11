@@ -1,10 +1,5 @@
 package me.zhouzhuo810.zzapidoc.common.utils;
 
-import android.net.Uri;
-
-import org.xutils.http.RequestParams;
-import org.xutils.x;
-
 import java.io.File;
 
 import me.zhouzhuo.zzhttp.ZzHttp;
