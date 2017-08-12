@@ -10,6 +10,22 @@ android {
         versionCode 1
         versionName "1.0"
     }
+
+    applicationVariants.all {variant ->
+        variant.outputs.each {output ->
+            def outputFile = output.outputFile
+            def fileName
+            if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                if (variant.buildType.name.equals('release')) {
+                    fileName = "ZzApiDoc_${defaultConfig.versionName}.apk"
+                } else if (variant.buildType.name.equals('debug')) {
+                    fileName = "ZzApiDoc_${defaultConfig.versionName}_debug.apk"
+                }
+                output.outputFile = new File(outputFile.parent, fileName)
+            }
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false

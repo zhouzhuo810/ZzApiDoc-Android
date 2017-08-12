@@ -29,7 +29,6 @@ import rx.Subscriber;
 /**
  * Created by zz on 2017/7/5.
  */
-
 public class LoginActivity extends BaseActivity {
     private AutoCompleteTextView etPhone;
     //    private EditText etPhone;
