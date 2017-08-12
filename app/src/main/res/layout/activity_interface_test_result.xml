@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorGrayBg"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/activity_title_height"
+        android:background="@color/colorMain">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/test_result_text"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/activity_title_text_size" />
+
+        <RelativeLayout
+            android:id="@+id/rl_back"
+            android:layout_width="160px"
+            android:layout_height="match_parent"
+            android:background="@drawable/btn_main_selecotr"
+            android:clickable="true">
+
+            <ImageView
+                android:layout_width="80px"
+                android:layout_height="80px"
+                android:layout_centerInParent="true"
+                android:src="@drawable/back" />
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/rl_right"
+            android:layout_width="200px"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/btn_main_selecotr"
+            android:clickable="true"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="@string/copy_result_text"
+                android:textColor="@color/colorWhite"
+                android:textSize="40px" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/ll_scroll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="80px"
+                android:gravity="center_vertical"
+                android:paddingLeft="40px"
+                android:paddingRight="40px"
+                android:text="请求方式:"
+                android:textColor="@color/colorBlack"
+                android:textSize="30px" />
+
+            <TextView
+                android:id="@+id/tv_method"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:minHeight="80px"
+                android:paddingLeft="90px"
+                android:paddingRight="40px"
+                android:textColor="@color/colorPress"
+                android:textSize="40px" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="80px"
+                android:gravity="center_vertical"
+                android:paddingLeft="40px"
+                android:text="请求地址:"
+                android:textColor="@color/colorBlack"
+                android:textSize="30px" />
+
+            <TextView
+                android:id="@+id/tv_path"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:minHeight="80px"
+                android:paddingLeft="90px"
+                android:paddingRight="40px"
+                android:textColor="@color/colorPress"
+                android:textSize="40px" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="80px"
+                android:gravity="center_vertical"
+                android:paddingLeft="40px"
+                android:paddingRight="40px"
+                android:text="请求用时:"
+                android:textColor="@color/colorBlack"
+                android:textSize="30px" />
+
+            <TextView
+                android:id="@+id/tv_time"
+                android:layout_width="match_parent"
+                android:layout_height="80px"
+                android:gravity="center_vertical"
+                android:paddingLeft="90px"
+                android:paddingRight="40px"
+                android:textColor="@color/colorPress"
+                android:textSize="40px" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="80px"
+                android:gravity="center_vertical"
+                android:paddingLeft="40px"
+                android:paddingRight="40px"
+                android:text="请求参数:"
+                android:textColor="@color/colorBlack"
+                android:textSize="30px" />
+
+            <LinearLayout
+                android:id="@+id/ll_params"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorWhite"
+                android:orientation="vertical">
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="80px"
+                android:gravity="center_vertical"
+                android:paddingLeft="40px"
+                android:paddingRight="40px"
+                android:text="请求结果:"
+                android:textColor="@color/colorBlack"
+                android:textSize="30px" />
+
+            <TextView
+                android:id="@+id/tv_result"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorWhite"
+                android:paddingLeft="40px"
+                android:paddingRight="40px"
+                android:background="@color/colorPrimary"
+                android:textSize="42px"
+                >
+
+            </TextView>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

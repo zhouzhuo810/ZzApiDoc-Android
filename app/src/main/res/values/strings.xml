@@ -78,4 +78,9 @@
     <string name="ip_hint_text">请输入服务器IP地址</string>
     <string name="add_request_params_text">添加请求参数</string>
     <string name="checking_text">检查中...</string>
+    <string name="interface_test_text">接口测试</string>
+    <string name="start_test_text">开始测试</string>
+    <string name="vaule_hint_text">请输入参数值</string>
+    <string name="test_result_text">测试结果</string>
+    <string name="copy_result_text">复制结果</string>
 </resources>

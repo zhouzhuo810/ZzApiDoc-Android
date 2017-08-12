@@ -111,6 +111,16 @@
             android:configChanges="orientation|keyboardHidden|layoutDirection|screenSize|screenLayout"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".ui.act.InterfaceTestActivity"
+            android:configChanges="orientation|keyboardHidden|layoutDirection|screenSize|screenLayout"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".ui.act.InterfaceTestResultActivity"
+            android:configChanges="orientation|keyboardHidden|layoutDirection|screenSize|screenLayout"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

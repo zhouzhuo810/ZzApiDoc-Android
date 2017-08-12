@@ -187,6 +187,7 @@ public class ProjectFragment extends BaseFragment {
 
     private void copy(String name, String s) {
         CopyUtils.copyPlainText(getActivity(), name, s);
+        ToastUtils.showCustomBgToast("已复制到剪切板");
     }
 
     private void export(String id) {

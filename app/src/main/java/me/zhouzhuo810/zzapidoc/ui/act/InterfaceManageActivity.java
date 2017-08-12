@@ -164,7 +164,7 @@ public class InterfaceManageActivity extends BaseActivity {
         lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
-                showListDialog(Arrays.asList("删除接口", "复制接口地址"), true, null, new OnItemClick() {
+                showListDialog(Arrays.asList("删除接口", "复制接口地址", "测试接口"), true, null, new OnItemClick() {
                     @Override
                     public void onItemClick(int pos, String content) {
                         switch (pos) {
@@ -177,6 +177,17 @@ public class InterfaceManageActivity extends BaseActivity {
                                         adapter.getmDatas().get(position).getIp()
                                                 + File.separator
                                                 + adapter.getmDatas().get(position).getPath());
+                                ToastUtils.showCustomBgToast("已复制到剪切板");
+                                break;
+                            case 2:
+                                Intent intent = new Intent(InterfaceManageActivity.this, InterfaceTestActivity.class);
+                                intent.putExtra("interfaceId", adapter.getmDatas().get(position).getId());
+                                intent.putExtra("projectId", projectId);
+                                intent.putExtra("ip", adapter.getmDatas().get(position).getIp());
+                                intent.putExtra("path", adapter.getmDatas().get(position).getPath());
+                                intent.putExtra("method", adapter.getmDatas().get(position).getMethod());
+                                startActWithIntent(intent);
+
                                 break;
                         }
                     }

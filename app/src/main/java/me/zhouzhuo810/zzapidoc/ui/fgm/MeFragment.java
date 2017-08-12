@@ -133,7 +133,6 @@ public class MeFragment extends BaseFragment {
                     @Override
                     public void onNext(final UpdateResult updateResult) {
                         getBaseAct().hidePd();
-                        ToastUtils.showCustomBgToast(updateResult.getMsg());
                         if (updateResult.getCode() == 1) {
                             getBaseAct().showTwoBtnDialog("更新", updateResult.getData().getUpdateInfo(), true, new BaseActivity.OnTwoBtnClick() {
                                 @Override
@@ -146,6 +145,8 @@ public class MeFragment extends BaseFragment {
 
                                 }
                             });
+                        } else {
+                            ToastUtils.showCustomBgToast(updateResult.getMsg());
                         }
                     }
                 });

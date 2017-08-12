@@ -92,6 +92,7 @@ public class RequestParamsManageActivity extends BaseActivity {
                     @Override
                     public void onError(Throwable e) {
                         stopRefresh(refresh);
+                        ToastUtils.showCustomBgToast(getString(R.string.no_net_text)+e.toString());
                     }
 
                     @Override
