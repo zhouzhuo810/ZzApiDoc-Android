@@ -57,6 +57,26 @@ public class GetAllInterfaceResult {
             return name;
         }
 
+        private String path;
+
+        public String getPath() {
+            return path;
+        }
+
+        public void setPath(String path) {
+            this.path = path;
+        }
+
+        private String ip;
+
+        public String getIp() {
+            return ip;
+        }
+
+        public void setIp(String ip) {
+            this.ip = ip;
+        }
+
         private String id;
 
         public void setId(String id) {

@@ -21,11 +21,10 @@ public class InterfaceListAdapter extends CommonAdapter<GetAllInterfaceResult.Da
 
     @Override
     public void convert(ViewHolder holder, GetAllInterfaceResult.DataEntity dataEntity) {
-
-
         holder.setText(R.id.tv_name, dataEntity.getName())
                 .setText(R.id.tv_time, dataEntity.getCreateTime())
                 .setText(R.id.tv_method, dataEntity.getMethod())
+                .setText(R.id.tv_path, dataEntity.getPath())
                 .setText(R.id.tv_create_man, dataEntity.getCreateUserName())
                 .setText(R.id.tv_request_params_no, dataEntity.getRequestParamsNo() + "")
                 .setText(R.id.tv_response_params_no, dataEntity.getResponseParamsNo() + "");

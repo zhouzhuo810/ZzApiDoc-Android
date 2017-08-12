@@ -47,6 +47,7 @@ public class AddResponseParamsActivity extends BaseActivity {
     private int typeId = 0;
     private String pid;
     private String interfaceId;
+    private boolean global;
 
 
     @Override
@@ -78,6 +79,7 @@ public class AddResponseParamsActivity extends BaseActivity {
         groupId = getIntent().getStringExtra("groupId");
         interfaceId = getIntent().getStringExtra("interfaceId");
         pid = getIntent().getStringExtra("pid");
+        global = getIntent().getBooleanExtra("global", false);
     }
 
     @Override
@@ -140,7 +142,7 @@ public class AddResponseParamsActivity extends BaseActivity {
         String note = etArgNote.getText().toString().trim();
         showPd(getString(R.string.submiting_text), false);
         Api.getApi0()
-                .addResponseArg(pid, name, typeId, projectId, interfaceId, note, getUserId())
+                .addResponseArg(pid, name, typeId, projectId, interfaceId, note, getUserId(), global)
                 .compose(RxHelper.<AddResponseArgResult>io_main())
                 .subscribe(new Subscriber<AddResponseArgResult>() {
                     @Override

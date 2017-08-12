@@ -10,14 +10,20 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import me.zhouzhuo810.zzapidoc.R;
 import me.zhouzhuo810.zzapidoc.common.api.Api;
+import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteInterfaceGroupResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllInterfaceGroupResult;
+import me.zhouzhuo810.zzapidoc.common.api.entity.UpdateInterfaceResult;
 import me.zhouzhuo810.zzapidoc.common.base.BaseActivity;
 import me.zhouzhuo810.zzapidoc.common.rx.RxHelper;
+import me.zhouzhuo810.zzapidoc.common.utils.CopyUtils;
+import me.zhouzhuo810.zzapidoc.common.utils.ToastUtils;
 import me.zhouzhuo810.zzapidoc.ui.adapter.InterfaceGroupListAdapter;
 import rx.Subscriber;
 
@@ -127,12 +133,105 @@ public class InterfaceGroupManageActivity extends BaseActivity {
             }
         });
 
+        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+                showListDialog(Arrays.asList("删除接口", "修改接口地址"), true, null, new OnItemClick() {
+                    @Override
+                    public void onItemClick(int pos, String content) {
+                        switch (pos) {
+                            case 0:
+                                deleteGroup(adapter.getmDatas().get(position).getId());
+                                break;
+                            case 1:
+                                changeIpAddr(adapter.getmDatas().get(position));
+                                break;
+                        }
+                    }
+                });
+                return true;
+            }
+        });
+
         refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 getData();
             }
         });
+    }
+
+    private void changeIpAddr(final GetAllInterfaceGroupResult.DataBean group) {
+        showTwoBtnEditDialog("修改接口地址", "请输入新的接口地址", group.getIp(), false, new OnTwoBtnEditClick() {
+            @Override
+            public void onOk(String content) {
+                group.setIp(content);
+                updateGroup(group);
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+        });
+    }
+
+    private void updateGroup(GetAllInterfaceGroupResult.DataBean group) {
+        showPd(getString(R.string.submiting_text), false);
+        Api.getApi0()
+                .updateInterfaceGroup(group.getId(), group.getName(), projectId, group.getIp(), getUserId())
+                .compose(RxHelper.<UpdateInterfaceResult>io_main())
+                .subscribe(new Subscriber<UpdateInterfaceResult>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        hidePd();
+                        ToastUtils.showCustomBgToast(getString(R.string.no_net_text) + e.toString());
+                    }
+
+                    @Override
+                    public void onNext(UpdateInterfaceResult updateInterfaceResult) {
+                        hidePd();
+                        ToastUtils.showCustomBgToast(updateInterfaceResult.getMsg());
+                        if (updateInterfaceResult.getCode() == 1) {
+                            startRefresh(refresh);
+                            getData();
+                        }
+                    }
+                });
+    }
+
+    private void deleteGroup(String id) {
+        showPd(getString(R.string.submiting_text), false);
+        Api.getApi0()
+                .deleteInterfaceGroup(id, getUserId())
+                .compose(RxHelper.<DeleteInterfaceGroupResult>io_main())
+                .subscribe(new Subscriber<DeleteInterfaceGroupResult>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        hidePd();
+                        ToastUtils.showCustomBgToast(getString(R.string.no_net_text) + e.toString());
+                    }
+
+                    @Override
+                    public void onNext(DeleteInterfaceGroupResult deleteInterfaceGroupResult) {
+                        hidePd();
+                        ToastUtils.showCustomBgToast(deleteInterfaceGroupResult.getMsg());
+                        if (deleteInterfaceGroupResult.getCode() == 1) {
+                            startRefresh(refresh);
+                            getData();
+                        }
+                    }
+                });
     }
 
     @Override

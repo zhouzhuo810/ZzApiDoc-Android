@@ -32,6 +32,8 @@ public class AddInterfaceGroupActivity extends BaseActivity {
     private ImageView ivClearInterfaceGroupName;
     private Button btnSubmit;
     private String projectId;
+    private EditText etIp;
+    private ImageView ivClearIp;
 
 
     @Override
@@ -50,6 +52,8 @@ public class AddInterfaceGroupActivity extends BaseActivity {
         rlRight = (RelativeLayout) findViewById(R.id.rl_right);
         etInterfaceGroupName = (EditText) findViewById(R.id.et_interface_group_name);
         ivClearInterfaceGroupName = (ImageView) findViewById(R.id.iv_clear_interface_group_name);
+        etIp = (EditText) findViewById(R.id.et_ip);
+        ivClearIp = (ImageView) findViewById(R.id.iv_clear_ip);
         btnSubmit = (Button) findViewById(R.id.btn_submit);
     }
 
@@ -68,6 +72,7 @@ public class AddInterfaceGroupActivity extends BaseActivity {
         });
 
         setEditListener(etInterfaceGroupName, ivClearInterfaceGroupName);
+        setEditListener(etIp, ivClearIp);
 
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,9 +90,10 @@ public class AddInterfaceGroupActivity extends BaseActivity {
             ToastUtils.showCustomBgToast(getString(R.string.group_name_not_nul_text));
             return;
         }
+        String ip = etIp.getText().toString().trim();
         showPd(getString(R.string.submiting_text), false);
         Api.getApi0()
-                .addInterfaceGroup(name, projectId, getUserId())
+                .addInterfaceGroup(name, projectId, ip, getUserId())
                 .compose(RxHelper.<AddInterfaceGroupResult>io_main())
                 .subscribe(new Subscriber<AddInterfaceGroupResult>() {
                     @Override
@@ -110,6 +116,10 @@ public class AddInterfaceGroupActivity extends BaseActivity {
                         }
                     }
                 });
+
+
+
+
     }
 
     @Override

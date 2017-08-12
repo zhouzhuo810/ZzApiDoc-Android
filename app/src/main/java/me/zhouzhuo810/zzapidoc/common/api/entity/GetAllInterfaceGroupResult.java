@@ -58,6 +58,15 @@ public class GetAllInterfaceGroupResult {
         private String name;
         private String createUserName;
         private String id;
+        private String ip;
+
+        public String getIp() {
+            return ip;
+        }
+
+        public void setIp(String ip) {
+            this.ip = ip;
+        }
 
         public String getCreateUserId() {
             return createUserId;

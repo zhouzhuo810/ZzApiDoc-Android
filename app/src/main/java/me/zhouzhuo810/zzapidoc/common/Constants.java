@@ -10,7 +10,8 @@ import java.io.File;
 
 public class Constants {
 
-    public static final String SERVER_IP = "http://192.168.0.218:8080/";
+//    public static final String SERVER_IP = "http://192.168.0.218:8080/";
+    public static final String SERVER_IP = "http://115.195.40.10:8888/";
 
     public static final String PIC_HEAD = "http://www.qqwork.net/HighnetCloudFile/";
 

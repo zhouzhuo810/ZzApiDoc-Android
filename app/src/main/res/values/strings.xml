@@ -74,4 +74,6 @@
     <string name="arg_name_hint_text">请输入参数名称</string>
     <string name="arg_note_text">参数说明</string>
     <string name="arg_note_hint_text">参数说明</string>
+    <string name="ip_text">IP地址</string>
+    <string name="ip_hint_text">请输入服务器IP地址</string>
 </resources>

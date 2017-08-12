@@ -44,6 +44,7 @@ public class AddRequestParamsActivity extends BaseActivity {
     private int typeId = 0;
     private String pid;
     private String interfaceId;
+    private boolean global = false;
 
 
     @Override
@@ -75,6 +76,7 @@ public class AddRequestParamsActivity extends BaseActivity {
         groupId = getIntent().getStringExtra("groupId");
         interfaceId = getIntent().getStringExtra("interfaceId");
         pid = getIntent().getStringExtra("pid");
+        global = getIntent().getBooleanExtra("global", false);
     }
 
     @Override
@@ -137,7 +139,7 @@ public class AddRequestParamsActivity extends BaseActivity {
         String note = etArgNote.getText().toString().trim();
         showPd(getString(R.string.submiting_text), false);
         Api.getApi0()
-                .addRequestArg(pid, name, typeId, projectId, interfaceId, note, getUserId())
+                .addRequestArg(pid, name, typeId, projectId, interfaceId, note, getUserId(), global)
                 .compose(RxHelper.<AddResponseArgResult>io_main())
                 .subscribe(new Subscriber<AddResponseArgResult>() {
                     @Override

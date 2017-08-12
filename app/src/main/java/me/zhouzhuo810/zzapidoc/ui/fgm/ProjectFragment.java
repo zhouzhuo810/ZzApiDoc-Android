@@ -1,7 +1,12 @@
 package me.zhouzhuo810.zzapidoc.ui.fgm;
 
 import android.app.Dialog;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -26,9 +31,12 @@ import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllProjectResult;
 import me.zhouzhuo810.zzapidoc.common.base.BaseActivity;
 import me.zhouzhuo810.zzapidoc.common.base.BaseFragment;
 import me.zhouzhuo810.zzapidoc.common.rx.RxHelper;
+import me.zhouzhuo810.zzapidoc.common.utils.CopyUtils;
 import me.zhouzhuo810.zzapidoc.common.utils.ExportUtils;
 import me.zhouzhuo810.zzapidoc.common.utils.ToastUtils;
 import me.zhouzhuo810.zzapidoc.ui.act.AddProjectActivity;
+import me.zhouzhuo810.zzapidoc.ui.act.AddRequestParamsActivity;
+import me.zhouzhuo810.zzapidoc.ui.act.AddResponseParamsActivity;
 import me.zhouzhuo810.zzapidoc.ui.act.InterfaceGroupManageActivity;
 import me.zhouzhuo810.zzapidoc.ui.adapter.ProjectListAdapter;
 import retrofit2.http.POST;
@@ -99,6 +107,7 @@ public class ProjectFragment extends BaseFragment {
                             }
                         } else {
                             tvNoData.setVisibility(View.GONE);
+                            ToastUtils.showCustomBgToast(getAllProjectResult.getMsg());
                         }
                     }
                 });
@@ -126,19 +135,29 @@ public class ProjectFragment extends BaseFragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(), InterfaceGroupManageActivity.class);
                 intent.putExtra("projectId", adapter.getmDatas().get(position).getId());
-                startActivity(intent);
+                getBaseAct().startActWithIntent(intent);
             }
         });
 
         lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
-                getBaseAct().showListDialog(Arrays.asList("导出JSON"), true, null, new BaseActivity.OnItemClick() {
+                getBaseAct().showListDialog(Arrays.asList("导出JSON文件", "复制JSON下载地址","添加全局请求参数",
+                        "添加全局返回参数"), true, null, new BaseActivity.OnItemClick() {
                     @Override
                     public void onItemClick(int pos, String content) {
                         switch (pos) {
                             case 0:
                                 export(adapter.getmDatas().get(position).getId());
+                                break;
+                            case 1:
+                                copy(adapter.getmDatas().get(position).getName(), Constants.SERVER_IP + "v1/interface/downloadJson?userId=" + getUserId() + "&projectId=" + adapter.getmDatas().get(position).getId());
+                                break;
+                            case 2:
+                                addGlobalRequestArg(adapter.getmDatas().get(position).getId());
+                                break;
+                            case 3:
+                                addGlobalResponseArg(adapter.getmDatas().get(position).getId());
                                 break;
                         }
                     }
@@ -148,11 +167,34 @@ public class ProjectFragment extends BaseFragment {
         });
     }
 
+    private void addGlobalRequestArg(String projectId) {
+        Intent intent = new Intent(getActivity(), AddRequestParamsActivity.class);
+        intent.putExtra("projectId", projectId);
+        intent.putExtra("groupId", "");
+        intent.putExtra("interfaceId", "");
+        intent.putExtra("global", true);
+        getBaseAct().startActWithIntent(intent);
+    }
+
+    private void addGlobalResponseArg(String projectId) {
+        Intent intent = new Intent(getActivity(), AddResponseParamsActivity.class);
+        intent.putExtra("projectId", projectId);
+        intent.putExtra("groupId", "");
+        intent.putExtra("interfaceId", "");
+        intent.putExtra("global", true);
+        getBaseAct().startActWithIntent(intent);
+    }
+
+    private void copy(String name, String s) {
+        CopyUtils.copyPlainText(getActivity(), name, s);
+    }
+
     private void export(String id) {
-        final String name = System.currentTimeMillis()+".txt";
+        final String name = System.currentTimeMillis() + ".txt";
         ExportUtils.exportToJsonFile(getUserId(), id, Constants.EXPORT_PATH, name, new ExportUtils.ProgressListener() {
             TextView tv;
             ProgressBar pb;
+
             @Override
             public void onStart() {
                 getBaseAct().showUpdateDialog("导出", "正在导出...", false, new BaseActivity.OnOneBtnClickListener() {
@@ -171,7 +213,7 @@ public class ProjectFragment extends BaseFragment {
 
             @Override
             public void onLoad(final int progress) {
-                Log.e("TTT", "progress="+progress);
+                Log.e("TTT", "progress=" + progress);
                 tv.setText(progress + "%");
                 pb.setProgress(progress);
             }

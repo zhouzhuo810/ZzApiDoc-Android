@@ -23,6 +23,7 @@ public class InterfaceGroupListAdapter extends CommonAdapter<GetAllInterfaceGrou
     public void convert(ViewHolder holder, GetAllInterfaceGroupResult.DataBean dataEntity) {
 
         holder.setText(R.id.tv_name, dataEntity.getName())
+                .setText(R.id.tv_ip, dataEntity.getIp())
                 .setText(R.id.tv_time, dataEntity.getCreateTime())
                 .setText(R.id.tv_create_man, dataEntity.getCreateUserName())
                 .setText(R.id.tv_interface_no, dataEntity.getInterfaceNo() + "");

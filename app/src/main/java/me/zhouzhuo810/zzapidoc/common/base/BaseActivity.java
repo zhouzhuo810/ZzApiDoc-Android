@@ -249,13 +249,16 @@ public abstract class BaseActivity extends zhouzhuo810.me.zzandframe.ui.act.Base
     }
 
     //Fixme by zz 2017/7/19 下午12:18 修改内容：添加两个按钮输入对话框
-    public void showTwoBtnEditDialog(String title, String hint, boolean cancelable, final OnTwoBtnEditClick onTwoBtnClick) {
+    public void showTwoBtnEditDialog(String title, String hint, String defString, boolean cancelable, final OnTwoBtnEditClick onTwoBtnClick) {
         View convertView = LayoutInflater.from(this).inflate(R.layout.layout_two_btn_et_dialog, null);
         AutoUtils.auto(convertView);
         TextView tvTitle = (TextView) convertView.findViewById(R.id.tv_title);
         tvTitle.setText(title);
         final EditText etContent = (EditText) convertView.findViewById(R.id.tv_msg);
         etContent.setHint(hint);
+        if (defString != null) {
+            etContent.setText(defString);
+        }
         twoBtnEtD = new Dialog(this, R.style.transparentWindow);
         Button btnOk = (Button) convertView.findViewById(R.id.btn_ok);
         Button btnCancel = (Button) convertView.findViewById(R.id.btn_cancel);

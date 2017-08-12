@@ -11,16 +11,20 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import me.zhouzhuo810.zzapidoc.R;
 import me.zhouzhuo810.zzapidoc.common.api.Api;
+import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteInterfaceResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllInterfaceGroupResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllInterfaceResult;
 import me.zhouzhuo810.zzapidoc.common.base.BaseActivity;
 import me.zhouzhuo810.zzapidoc.common.rx.RxHelper;
+import me.zhouzhuo810.zzapidoc.common.utils.CopyUtils;
+import me.zhouzhuo810.zzapidoc.common.utils.ToastUtils;
 import me.zhouzhuo810.zzapidoc.ui.adapter.InterfaceGroupListAdapter;
 import me.zhouzhuo810.zzapidoc.ui.adapter.InterfaceListAdapter;
 import rx.Subscriber;
@@ -74,7 +78,7 @@ public class InterfaceManageActivity extends BaseActivity {
     private void getData() {
 
         Api.getApi0()
-                .getInterfaceByGroupId(groupId, getUserId())
+                .getInterfaceByGroupId(projectId, groupId, getUserId())
                 .compose(RxHelper.<GetAllInterfaceResult>io_main())
                 .subscribe(new Subscriber<GetAllInterfaceResult>() {
                     @Override
@@ -126,7 +130,7 @@ public class InterfaceManageActivity extends BaseActivity {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-                showListDialog(Arrays.asList("请求参数", "返回参数"), false, new DialogInterface.OnDismissListener() {
+                showListDialog(Arrays.asList("请求参数", "返回参数"), true, new DialogInterface.OnDismissListener() {
                     @Override
                     public void onDismiss(DialogInterface dialog) {
 
@@ -156,6 +160,30 @@ public class InterfaceManageActivity extends BaseActivity {
             }
         });
 
+        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+                showListDialog(Arrays.asList("删除接口", "复制接口地址"), true, null, new OnItemClick() {
+                    @Override
+                    public void onItemClick(int pos, String content) {
+                        switch (pos) {
+                            case 0:
+                                deleteInterface(adapter.getmDatas().get(position).getId());
+                                break;
+                            case 1:
+                                CopyUtils.copyPlainText(InterfaceManageActivity.this,
+                                        adapter.getmDatas().get(position).getName(),
+                                        adapter.getmDatas().get(position).getIp()
+                                                + File.separator
+                                                + adapter.getmDatas().get(position).getPath());
+                                break;
+                        }
+                    }
+                });
+                return true;
+            }
+        });
+
         refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -163,6 +191,36 @@ public class InterfaceManageActivity extends BaseActivity {
             }
         });
     }
+
+    private void deleteInterface(String id) {
+        showPd(getString(R.string.submiting_text), false);
+        Api.getApi0()
+                .deleteInterface(id, getUserId())
+                .compose(RxHelper.<DeleteInterfaceResult>io_main())
+                .subscribe(new Subscriber<DeleteInterfaceResult>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        hidePd();
+                        ToastUtils.showCustomBgToast(getString(R.string.no_net_text)+e.toString());
+                    }
+
+                    @Override
+                    public void onNext(DeleteInterfaceResult deleteInterfaceResult) {
+                        hidePd();
+                        ToastUtils.showCustomBgToast(deleteInterfaceResult.getMsg());
+                        if (deleteInterfaceResult.getCode() == 1) {
+                            startRefresh(refresh);
+                            getData();
+                        }
+                    }
+                });
+    }
+
 
     @Override
     public void resume() {

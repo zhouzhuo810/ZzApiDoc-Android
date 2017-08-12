@@ -89,7 +89,7 @@ public interface Api0 {
      * 查询接口列表根据分组
      */
     @GET("/v1/interface/getInterfaceByGroupId")
-    Observable<GetAllInterfaceResult> getInterfaceByGroupId(@Query("groupId") String groupId, @Query("userId") String userId);
+    Observable<GetAllInterfaceResult> getInterfaceByGroupId(@Query("projectId") String projectId, @Query("groupId") String groupId, @Query("userId") String userId);
 
 
     /*
@@ -97,7 +97,7 @@ public interface Api0 {
      */
     @FormUrlEncoded
     @POST("/v1/interfaceGroup/addInterfaceGroup")
-    Observable<AddInterfaceGroupResult> addInterfaceGroup(@Field("name") String name, @Field("projectId") String projectId, @Field("userId") String userId);
+    Observable<AddInterfaceGroupResult> addInterfaceGroup(@Field("name") String name, @Field("projectId") String projectId, @Field("ip") String ip, @Field("userId") String userId);
 
     /*
      * 添加接口
@@ -123,6 +123,17 @@ public interface Api0 {
      */
     @GET("/v1/interface/updateInterface")
     Observable<UpdateInterfaceResult> updateInterface(@Query("interfaceId") String interfaceId, @Query("name") String name, @Query("path") String path, @Query("projectId") String projectId, @Query("groupId") String groupId, @Query("httpMethodId") String httpMethodId, @Query("note") String note, @Query("userId") String userId, @Query("requestArgs") String requestArgs, @Query("responseArgs") String responseArgs);
+
+    /*
+     * 更新接口分组
+     */
+    @FormUrlEncoded
+    @POST("/v1/interfaceGroup/updateInterfaceGroup")
+    Observable<UpdateInterfaceResult> updateInterfaceGroup(@Field("interfaceGroupId") String interfaceGroupId,
+                                                           @Field("name") String name,
+                                                           @Field("projectId") String projectId,
+                                                           @Field("ip") String ip,
+                                                           @Field("userId") String userId);
 
     /*
      * 删除接口
@@ -168,7 +179,8 @@ public interface Api0 {
             @Field("projectId") String projectId,
             @Field("interfaceId") String interfaceId,
             @Field("note") String note,
-            @Field("userId") String userId
+            @Field("userId") String userId,
+            @Field("isGlobal") boolean isGlobal
     );
 
     /*添加请求参数*/
@@ -181,7 +193,8 @@ public interface Api0 {
             @Field("projectId") String projectId,
             @Field("interfaceId") String interfaceId,
             @Field("note") String note,
-            @Field("userId") String userId
+            @Field("userId") String userId,
+            @Field("isGlobal") boolean isGlobal
     );
 
     /*删除返回参数*/

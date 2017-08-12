@@ -16,21 +16,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40px"
-            android:text="GET-"
+            android:text="GET"
             android:textColor="@color/colorExitPress"
             android:textSize="40px" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=" - "
             android:textColor="@color/colorGrayB"
             android:textSize="40px" />
+
         <TextView
             android:id="@+id/tv_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="登陆接口"
+            android:text="v1/user/userLogin"
             android:textColor="@color/colorPrimary"
             android:textSize="40px" />
 
@@ -43,6 +45,19 @@
             android:textColor="#999"
             android:textSize="30px" />
     </com.zhy.autolayout.AutoLinearLayout>
+
+    <TextView
+        android:id="@+id/tv_path"
+        android:layout_width="match_parent"
+        android:layout_height="80px"
+        android:layout_marginLeft="40px"
+        android:layout_marginRight="40px"
+        android:layout_marginTop="20px"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:text="登陆接口"
+        android:textColor="#999"
+        android:textSize="36px" />
 
     <com.zhy.autolayout.AutoLinearLayout
         android:layout_width="match_parent"
