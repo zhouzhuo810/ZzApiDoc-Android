@@ -89,6 +89,7 @@ public class InterfaceManageActivity extends BaseActivity {
                     @Override
                     public void onError(Throwable e) {
                         stopRefresh(refresh);
+                        ToastUtils.showCustomBgToast(getString(R.string.no_net_text) + e.toString());
                     }
 
                     @Override
@@ -206,7 +207,7 @@ public class InterfaceManageActivity extends BaseActivity {
                     @Override
                     public void onError(Throwable e) {
                         hidePd();
-                        ToastUtils.showCustomBgToast(getString(R.string.no_net_text)+e.toString());
+                        ToastUtils.showCustomBgToast(getString(R.string.no_net_text) + e.toString());
                     }
 
                     @Override

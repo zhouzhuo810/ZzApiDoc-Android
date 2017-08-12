@@ -18,6 +18,7 @@ import me.zhouzhuo810.zzapidoc.common.api.entity.GetProjectDetailsResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetRequestArgResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetResponseArgResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.UpdateInterfaceResult;
+import me.zhouzhuo810.zzapidoc.common.api.entity.UpdateResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.UpdateUserPasswordResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.UserLoginResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.UserRegisterResult;
@@ -212,4 +213,9 @@ public interface Api0 {
             @Field("id") String id,
             @Field("userId") String userId
     );
+
+    /*检查更新*/
+    @FormUrlEncoded
+    @POST("/v1/update/checkUpdate")
+    Observable<UpdateResult> checkUpdate(@Field("versionCode") int versionCode);
 }

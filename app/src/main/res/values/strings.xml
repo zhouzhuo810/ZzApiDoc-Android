@@ -76,4 +76,6 @@
     <string name="arg_note_hint_text">参数说明</string>
     <string name="ip_text">IP地址</string>
     <string name="ip_hint_text">请输入服务器IP地址</string>
+    <string name="add_request_params_text">添加请求参数</string>
+    <string name="checking_text">检查中...</string>
 </resources>

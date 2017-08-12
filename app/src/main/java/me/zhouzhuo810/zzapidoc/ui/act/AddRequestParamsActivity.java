@@ -77,6 +77,9 @@ public class AddRequestParamsActivity extends BaseActivity {
         interfaceId = getIntent().getStringExtra("interfaceId");
         pid = getIntent().getStringExtra("pid");
         global = getIntent().getBooleanExtra("global", false);
+
+        typeId = 0;
+        tvArgType.setText("string");
     }
 
     @Override

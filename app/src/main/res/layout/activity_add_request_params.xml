@@ -14,7 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="@string/add_response_params_text"
+            android:text="@string/add_request_params_text"
             android:textColor="@color/colorWhite"
             android:textSize="@dimen/activity_title_text_size" />
 
