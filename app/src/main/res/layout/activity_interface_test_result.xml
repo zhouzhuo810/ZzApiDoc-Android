@@ -39,8 +39,7 @@
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:background="@drawable/btn_main_selecotr"
-            android:clickable="true"
-            >
+            android:clickable="true">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -142,28 +141,48 @@
 
             </LinearLayout>
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="80px"
-                android:gravity="center_vertical"
-                android:paddingLeft="40px"
-                android:paddingRight="40px"
-                android:text="请求结果:"
-                android:textColor="@color/colorBlack"
-                android:textSize="30px" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20px"
+                android:layout_marginBottom="30px"
+                android:orientation="horizontal">
 
-            <TextView
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="80px"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="40px"
+                    android:paddingRight="40px"
+                    android:text="请求结果:"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="30px" />
+
+                <Button
+                    android:id="@+id/btn_example"
+                    android:layout_width="300px"
+                    android:layout_height="80px"
+                    android:layout_marginRight="40px"
+                    android:background="@drawable/btn_save_selector"
+                    android:text="添加到接口示例"
+                    android:textColor="#fff"
+                    android:textSize="30px" />
+
+            </LinearLayout>
+
+            <EditText
                 android:id="@+id/tv_result"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorWhite"
+                android:background="@color/colorWhite"
+                android:enabled="false"
                 android:paddingLeft="40px"
                 android:paddingRight="40px"
-                android:background="@color/colorPrimary"
-                android:textSize="42px"
-                >
+                android:textColor="@color/colorBlack"
+                android:textSize="42px">
 
-            </TextView>
+            </EditText>
         </LinearLayout>
     </ScrollView>
 

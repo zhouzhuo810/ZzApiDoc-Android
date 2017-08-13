@@ -36,9 +36,9 @@ public class Api {
                     logging1.setLevel(HttpLoggingInterceptor.Level.BODY);
                     OkHttpClient client = new OkHttpClient.Builder()
                             .cache(new Cache(cache, 10 * 1024 * 1024))
-                            .readTimeout(20, TimeUnit.SECONDS)
-                            .writeTimeout(20, TimeUnit.SECONDS)
-                            .connectTimeout(20, TimeUnit.SECONDS)
+                            .readTimeout(30, TimeUnit.SECONDS)
+                            .writeTimeout(30, TimeUnit.SECONDS)
+                            .connectTimeout(30, TimeUnit.SECONDS)
                             .addInterceptor(logging)
                             .addInterceptor(logging1)
                             .build();

@@ -5,7 +5,7 @@ package me.zhouzhuo810.zzapidoc.common.utils;
  */
 public class JSONTool {
 
-    private boolean isTab = true;
+    private boolean isTab = false;
 
     public String stringToJSON(String strJson) {
         // 计数tab的个数

@@ -1,9 +1,15 @@
 package me.zhouzhuo810.zzapidoc.common.utils;
 
+import android.content.Context;
+
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.FileCallback;
+import com.lzy.okgo.model.Progress;
+import com.lzy.okgo.model.Response;
+
 import java.io.File;
 
-import me.zhouzhuo.zzhttp.ZzHttp;
-import me.zhouzhuo.zzhttp.callback.Callback;
+import me.zhouzhuo810.zzapidoc.ZApplication;
 import me.zhouzhuo810.zzapidoc.common.Constants;
 
 /**
@@ -30,7 +36,7 @@ public class ExportUtils {
      * @param fileName
      * @param listener
      */
-    public static void exportToJsonFile(String userId, String projectId, String filePath, String fileName, final ProgressListener listener) {
+    public static void exportToJsonFile(Context context, String userId, String projectId, String filePath, String fileName, final ProgressListener listener) {
         File file = new File(filePath);
         if (!file.exists()) {
             file.mkdirs();
@@ -40,85 +46,78 @@ public class ExportUtils {
         if (listener != null) {
             listener.onStart();
         }
-        ZzHttp.getInstance().download(url, filePath, new Callback.ProgressDownloadCallback() {
-            @Override
-            public void onProgress(float progress, int currentSize, int totalSize) {
-                if (listener != null) {
-                    listener.onLoad((int) (progress+0.5f));
-                }
-            }
+        OkGo.<File> get(url)
+                .tag(context)
+                .execute(new FileCallback(filePath, fileName) {
+                    @Override
+                    public void onSuccess(Response<File> response) {
+                        if (listener != null) {
+                            listener.onOk();
+                        }
+                    }
 
-            @Override
-            public void onSuccess(String result) {
+                    @Override
+                    public void onError(Response<File> response) {
+                        super.onError(response);
+                        if (listener != null) {
+                            listener.onFail(response.getException() == null ? "" : response.getException().toString());
+                        }
+                    }
 
-                if (listener != null) {
-                    listener.onOk();
-                }
-            }
+                    @Override
+                    public void downloadProgress(Progress progress) {
+                        super.downloadProgress(progress);
+                        if (listener != null) {
+                            listener.onLoad((int) (progress.currentSize*100.0f/progress.totalSize+0.5f));
+                        }
+                    }
+                });
 
-            @Override
-            public void onFailure(String error) {
-                if (listener != null) {
-                    listener.onFail(error);
-                }
-            }
-        });
-/*
-        RequestParams params = new RequestParams(Constants.SERVER_IP+"/v1/interface/downloadJson");
-        params.addQueryStringParameter("userId", userId);
-        params.addQueryStringParameter("projectId", projectId);
-        params.setSaveFilePath(filePath+fileName);
-        params.setConnectTimeout(2*60*1000);
-        params.setMultipart(true);
-        params.setAutoRename(false);
-        params.setAutoResume(true);
-        x.http().get(params, new Callback.ProgressCallback<File>() {
-            @Override
-            public void onSuccess(File result) {
-                if (listener != null) {
-                    listener.onOk();
-                }
-            }
+    }
 
-            @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
-                if (listener != null) {
-                    listener.onFail(ex.toString());
-                }
-            }
+    /**
+     * 导出pdf文件并下载工具
+     * @param userId
+     * @param projectId
+     * @param filePath
+     * @param fileName
+     * @param listener
+     */
+    public static void exportToPdfFile(Context context, String userId, String projectId, String filePath, String fileName, final ProgressListener listener) {
+        File file = new File(filePath);
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+        String url = Constants.SERVER_IP+"/v1/interface/downloadPdf?userId="+userId+"&projectId="+projectId;
+        if (listener != null) {
+            listener.onStart();
+        }
+        OkGo.<File> get(url)
+                .tag(context)
+                .execute(new FileCallback(filePath, fileName) {
+                    @Override
+                    public void onSuccess(Response<File> response) {
+                        if (listener != null) {
+                            listener.onOk();
+                        }
+                    }
 
-            @Override
-            public void onCancelled(CancelledException cex) {
-                if (listener != null) {
-                    listener.onCancel();
-                }
-            }
+                    @Override
+                    public void onError(Response<File> response) {
+                        super.onError(response);
+                        if (listener != null) {
+                            listener.onFail(response.getException() == null ? "" : response.getException().toString());
+                        }
+                    }
 
-            @Override
-            public void onFinished() {
-                if (listener != null) {
-                    listener.onOk();
-                }
-            }
-
-            @Override
-            public void onWaiting() {
-
-            }
-
-            @Override
-            public void onStarted() {
-
-            }
-
-            @Override
-            public void onLoading(long total, long current, boolean isDownloading) {
-                if (listener != null) {
-                    listener.onLoad((int) (current*100.0/total+0.5));
-                }
-            }
-        });*/
-
+                    @Override
+                    public void downloadProgress(Progress progress) {
+                        super.downloadProgress(progress);
+                        if (listener != null) {
+                            listener.onLoad((int) (progress.currentSize*100.0f/progress.totalSize+0.5f));
+                        }
+                    }
+                });
 
     }
 }

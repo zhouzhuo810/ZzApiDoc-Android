@@ -82,6 +82,13 @@ public class RegisterActivity extends BaseActivity {
 
     @Override
     public void initEvent() {
+        rlBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                closeAct();
+            }
+        });
+
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

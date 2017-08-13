@@ -1,19 +1,11 @@
 package me.zhouzhuo810.zzapidoc.ui.fgm;
 
-import android.app.Dialog;
-import android.content.ClipData;
-import android.content.ClipboardManager;
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -39,7 +31,6 @@ import me.zhouzhuo810.zzapidoc.ui.act.AddRequestParamsActivity;
 import me.zhouzhuo810.zzapidoc.ui.act.AddResponseParamsActivity;
 import me.zhouzhuo810.zzapidoc.ui.act.InterfaceGroupManageActivity;
 import me.zhouzhuo810.zzapidoc.ui.adapter.ProjectListAdapter;
-import retrofit2.http.POST;
 import rx.Subscriber;
 
 /**
@@ -142,21 +133,27 @@ public class ProjectFragment extends BaseFragment {
         lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
-                getBaseAct().showListDialog(Arrays.asList("导出JSON文件", "复制JSON下载地址","添加全局请求参数",
+                getBaseAct().showListDialog(Arrays.asList("导出JSON文件", "导出PDF文件", "复制JSON下载地址","复制PDF下载地址","添加全局请求参数",
                         "添加全局返回参数"), true, null, new BaseActivity.OnItemClick() {
                     @Override
                     public void onItemClick(int pos, String content) {
                         switch (pos) {
                             case 0:
-                                export(adapter.getmDatas().get(position).getId());
+                                exportJson(adapter.getmDatas().get(position).getId());
                                 break;
                             case 1:
-                                copy(adapter.getmDatas().get(position).getName(), Constants.SERVER_IP + "v1/interface/downloadJson?userId=" + getUserId() + "&projectId=" + adapter.getmDatas().get(position).getId());
+                                exportPdf(adapter.getmDatas().get(position).getId());
                                 break;
                             case 2:
-                                addGlobalRequestArg(adapter.getmDatas().get(position).getId());
+                                copy(adapter.getmDatas().get(position).getName(), Constants.SERVER_IP + "v1/interface/downloadJson?userId=" + getUserId() + "&projectId=" + adapter.getmDatas().get(position).getId());
                                 break;
                             case 3:
+                                copy(adapter.getmDatas().get(position).getName(), Constants.SERVER_IP+"/v1/interface/downloadPdf?userId="+getUserId()+"&projectId="+adapter.getmDatas().get(position).getId());
+                                break;
+                            case 4:
+                                addGlobalRequestArg(adapter.getmDatas().get(position).getId());
+                                break;
+                            case 5:
                                 addGlobalResponseArg(adapter.getmDatas().get(position).getId());
                                 break;
                         }
@@ -190,9 +187,9 @@ public class ProjectFragment extends BaseFragment {
         ToastUtils.showCustomBgToast("已复制到剪切板");
     }
 
-    private void export(String id) {
+    private void exportJson(String id) {
         final String name = System.currentTimeMillis() + ".txt";
-        ExportUtils.exportToJsonFile(getUserId(), id, Constants.EXPORT_PATH, name, new ExportUtils.ProgressListener() {
+        ExportUtils.exportToJsonFile(getActivity(), getUserId(), id, Constants.EXPORT_PATH, name, new ExportUtils.ProgressListener() {
             TextView tv;
             ProgressBar pb;
 
@@ -237,6 +234,57 @@ public class ProjectFragment extends BaseFragment {
                 Log.e("TTT", "ok");
                 getBaseAct().hideUpdateDialog();
                 ToastUtils.showCustomBgToast("文件已保存到" + Constants.EXPORT_PATH + name);
+            }
+        });
+    }
+
+    private void exportPdf(String id) {
+        final String name = System.currentTimeMillis() + ".pdf";
+        ExportUtils.exportToPdfFile(getActivity(), getUserId(), id, Constants.EXPORT_PDF_PATH, name, new ExportUtils.ProgressListener() {
+            TextView tv;
+            ProgressBar pb;
+
+            @Override
+            public void onStart() {
+                getBaseAct().showUpdateDialog("导出", "正在导出...", false, new BaseActivity.OnOneBtnClickListener() {
+                    @Override
+                    public void onProgress(TextView tvProgress, ProgressBar progressBar) {
+                        tv = tvProgress;
+                        pb = progressBar;
+                    }
+
+                    @Override
+                    public void onOK() {
+                        getBaseAct().hideUpdateDialog();
+                    }
+                });
+            }
+
+            @Override
+            public void onLoad(final int progress) {
+                Log.e("TTT", "progress=" + progress);
+                tv.setText(progress + "%");
+                pb.setProgress(progress);
+            }
+
+            @Override
+            public void onCancel() {
+                Log.e("TTT", "cancel");
+                getBaseAct().hideUpdateDialog();
+            }
+
+            @Override
+            public void onFail(String error) {
+                Log.e("TTT", "fail");
+                getBaseAct().hideUpdateDialog();
+                ToastUtils.showCustomBgToast(error);
+            }
+
+            @Override
+            public void onOk() {
+                Log.e("TTT", "ok");
+                getBaseAct().hideUpdateDialog();
+                ToastUtils.showCustomBgToast("文件已保存到" + Constants.EXPORT_PDF_PATH + name);
             }
         });
     }

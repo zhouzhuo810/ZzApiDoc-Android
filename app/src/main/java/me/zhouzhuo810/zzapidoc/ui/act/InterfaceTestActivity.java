@@ -99,6 +99,7 @@ public class InterfaceTestActivity extends BaseActivity {
                 Intent intent = new Intent(InterfaceTestActivity.this, InterfaceTestResultActivity.class);
                 intent.putExtra("params", params);
                 intent.putExtra("method", method);
+                intent.putExtra("interfaceId", interfaceId);
                 intent.putExtra("path", ip+path);
                 startActWithIntent(intent);
             }

@@ -1,6 +1,7 @@
 package me.zhouzhuo810.zzapidoc.common.api;
 
 import me.zhouzhuo810.zzapidoc.common.api.entity.AddDictionaryResult;
+import me.zhouzhuo810.zzapidoc.common.api.entity.AddInterfaceExampleResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.AddInterfaceGroupResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.AddInterfaceResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.AddProjectResult;
@@ -48,10 +49,15 @@ public interface Api0 {
     @POST("/v1/user/userRegister")
     Observable<UserRegisterResult> userRegister(@Field("phone") String phone, @Field("password") String password, @Field("name") String name, @Field("email") String email, @Field("sex") String sex);
 
-
+    /*修改登录密码*/
     @FormUrlEncoded
     @POST("/v1/user/updateUserPassword")
     Observable<UpdateUserPasswordResult> updateUserPassword(@Field("userId") String userId, @Field("oldPassword") String oldPassword, @Field("newPassword") String newPassword);
+
+    /*添加接口示例*/
+    @FormUrlEncoded
+    @POST("/v1/interface/addInterfaceExample")
+    Observable<AddInterfaceExampleResult> addInterfaceExample(@Field("userId") String userId, @Field("example") String example, @Field("interfaceId") String interfaceId);
 
     /*
      * 添加字典

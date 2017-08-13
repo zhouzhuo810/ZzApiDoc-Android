@@ -4,24 +4,31 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
+import com.lzy.okgo.request.GetRequest;
+import com.lzy.okgo.request.PostRequest;
 import com.zhy.autolayout.utils.AutoUtils;
 
 import java.util.ArrayList;
 
-import me.zhouzhuo.zzhttp.ZzHttp;
-import me.zhouzhuo.zzhttp.callback.Callback;
-import me.zhouzhuo.zzhttp.params.HttpParams;
 import me.zhouzhuo810.zzapidoc.R;
+import me.zhouzhuo810.zzapidoc.common.api.Api;
+import me.zhouzhuo810.zzapidoc.common.api.entity.AddInterfaceExampleResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.InterfaceTestEntity;
 import me.zhouzhuo810.zzapidoc.common.base.BaseActivity;
+import me.zhouzhuo810.zzapidoc.common.rx.RxHelper;
 import me.zhouzhuo810.zzapidoc.common.utils.CopyUtils;
 import me.zhouzhuo810.zzapidoc.common.utils.JSONTool;
 import me.zhouzhuo810.zzapidoc.common.utils.ToastUtils;
+import rx.Subscriber;
 
 /**
  * Created by admin on 2017/8/12.
@@ -36,8 +43,10 @@ public class InterfaceTestResultActivity extends BaseActivity {
     private TextView tvTime;
     private LinearLayout llParams;
     private ArrayList<InterfaceTestEntity> params;
-    private TextView tvResult;
+    private EditText tvResult;
     private TextView tvMethod;
+    private Button btnExample;
+    private String interfaceId;
 
     @Override
     public int getLayoutId() {
@@ -58,11 +67,13 @@ public class InterfaceTestResultActivity extends BaseActivity {
         tvPath = (TextView) findViewById(R.id.tv_path);
         tvTime = (TextView) findViewById(R.id.tv_time);
         llParams = (LinearLayout) findViewById(R.id.ll_params);
-        tvResult = (TextView) findViewById(R.id.tv_result);
+        tvResult = (EditText) findViewById(R.id.tv_result);
+        btnExample = (Button) findViewById(R.id.btn_example);
     }
 
     @Override
     public void initData() {
+        interfaceId = getIntent().getStringExtra("interfaceId");
         String path = getIntent().getStringExtra("path");
         tvPath.setText(path);
         String method = getIntent().getStringExtra("method");
@@ -102,60 +113,58 @@ public class InterfaceTestResultActivity extends BaseActivity {
     }
 
     private void doPost(String path) {
-        HttpParams httpParams = new HttpParams();
-        httpParams.setConnectTimeout(20*1000);
-        httpParams.setReadTimeout(20*1000);
+        PostRequest<String> post = OkGo.<String>post(path);
         for (InterfaceTestEntity param : params) {
-            httpParams.addStringParam(param.getName(), param.getValue());
+            post.params(param.getName(), param.getValue());
         }
         showPd(getString(R.string.submiting_text), false);
         final long time = System.currentTimeMillis();
-        ZzHttp.getInstance().setBaseUrl(path).post(httpParams, String.class, new Callback.ZzCallback<String>() {
+        post.execute(new StringCallback() {
             @Override
-            public void onSuccess(String result) {
+            public void onSuccess(Response<String> response) {
                 hidePd();
                 long duration = System.currentTimeMillis() - time;
                 tvTime.setText(duration + "毫秒");
                 JSONTool tool = new JSONTool();
-                tvResult.setText(tool.stringToJSON(result));
+                tvResult.setText(tool.stringToJSON(response.body()));
             }
 
             @Override
-            public void onFailure(String error) {
+            public void onError(Response<String> response) {
+                super.onError(response);
                 hidePd();
                 long duration = System.currentTimeMillis() - time;
                 tvTime.setText(duration + "毫秒");
-                tvResult.setText(error);
+                tvResult.setText(response.getException() == null ? "" : response.getException().toString());
             }
         });
     }
 
 
     private void doGet(String path) {
-        HttpParams httpParams = new HttpParams();
-        httpParams.setConnectTimeout(20*1000);
-        httpParams.setReadTimeout(20*1000);
+        GetRequest<String> get = OkGo.<String>get(path);
         for (InterfaceTestEntity param : params) {
-            httpParams.addStringParam(param.getName(), param.getValue());
+            get.params(param.getName(), param.getValue());
         }
         showPd(getString(R.string.submiting_text), false);
         final long time = System.currentTimeMillis();
-        ZzHttp.getInstance().setBaseUrl(path).get(httpParams, String.class, new Callback.ZzCallback<String>() {
+        get.execute(new StringCallback() {
             @Override
-            public void onSuccess(String result) {
+            public void onSuccess(Response<String> response) {
                 hidePd();
                 long duration = System.currentTimeMillis() - time;
                 tvTime.setText(duration + "毫秒");
                 JSONTool tool = new JSONTool();
-                tvResult.setText(tool.stringToJSON(result));
+                tvResult.setText(tool.stringToJSON(response.body()));
             }
 
             @Override
-            public void onFailure(String error) {
+            public void onError(Response<String> response) {
+                super.onError(response);
                 hidePd();
                 long duration = System.currentTimeMillis() - time;
                 tvTime.setText(duration + "毫秒");
-                tvResult.setText(error);
+                tvResult.setText(response.getException() == null ? "" : response.getException().toString());
             }
         });
     }
@@ -177,7 +186,43 @@ public class InterfaceTestResultActivity extends BaseActivity {
             }
         });
 
+        btnExample.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String result = tvResult.getText().toString();
+                if (result.length() == 0) {
+                    ToastUtils.showCustomBgToast("结果不能为空！");
+                    return;
+                }
+                addExample(result);
+            }
+        });
 
+    }
+
+    private void addExample(String result) {
+        showPd(getString(R.string.submiting_text), false);
+        Api.getApi0().
+                addInterfaceExample(getUserId(), result, interfaceId)
+                .compose(RxHelper.<AddInterfaceExampleResult>io_main())
+                .subscribe(new Subscriber<AddInterfaceExampleResult>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        hidePd();
+                        ToastUtils.showCustomBgToast(getString(R.string.no_net_text) + e.toString());
+                    }
+
+                    @Override
+                    public void onNext(AddInterfaceExampleResult addInterfaceExampleResult) {
+                        hidePd();
+                        ToastUtils.showCustomBgToast(addInterfaceExampleResult.getMsg());
+                    }
+                });
     }
 
     @Override

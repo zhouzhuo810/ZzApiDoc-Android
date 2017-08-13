@@ -4,18 +4,20 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.FileCallback;
+import com.lzy.okgo.model.Progress;
+import com.lzy.okgo.model.Response;
 
-import me.zhouzhuo.zzhttp.ZzHttp;
-import me.zhouzhuo.zzhttp.callback.Callback;
+import java.io.File;
+
 import me.zhouzhuo810.zzapidoc.R;
 import me.zhouzhuo810.zzapidoc.common.Constants;
 import me.zhouzhuo810.zzapidoc.common.api.Api;
@@ -167,21 +169,11 @@ public class MeFragment extends BaseFragment {
             public void onOK() {
             }
         });
-        ZzHttp.getInstance().download(Constants.SERVER_IP + address,
-                Constants.APK_DOWNLOAD_DIR, new Callback.ProgressDownloadCallback() {
+        OkGo.<File> get(Constants.SERVER_IP + address)
+                .tag(getActivity())
+                .execute(new FileCallback(Constants.APK_DOWNLOAD_DIR, "ZzApiDoc_"+versionName+".apk") {
                     @Override
-                    public void onProgress(float progress, int currentSize, int totalSize) {
-                        if (tv[0] != null) {
-                            tv[0].setText("已下载 " +((int)progress)+"%");
-                        }
-                        if (pb[0] != null) {
-                            pb[0].setProgress(((int)(progress+0.5)));
-                        }
-
-                    }
-
-                    @Override
-                    public void onSuccess(String result) {
+                    public void onSuccess(Response<File> response) {
                         if (tv[0] != null) {
                             tv[0].setText("下载完成！");
                         }
@@ -190,9 +182,22 @@ public class MeFragment extends BaseFragment {
                     }
 
                     @Override
-                    public void onFailure(String error) {
+                    public void onError(Response<File> response) {
+                        super.onError(response);
                         if (tv[0] != null) {
-                            tv[0].setText("下载出错了！"+error);
+                            tv[0].setText("下载出错了！"+response.getException() == null ? "" : response.getException().toString());
+                        }
+                    }
+
+                    @Override
+                    public void downloadProgress(Progress progress) {
+                        super.downloadProgress(progress);
+                        int pro = (int) (progress.currentSize*100.0f/progress.totalSize+0.5f);
+                        if (tv[0] != null) {
+                            tv[0].setText("已下载 " +pro+"%");
+                        }
+                        if (pb[0] != null) {
+                            pb[0].setProgress((pro));
                         }
                     }
                 });

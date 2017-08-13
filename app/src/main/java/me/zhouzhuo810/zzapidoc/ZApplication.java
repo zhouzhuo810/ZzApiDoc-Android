@@ -2,6 +2,7 @@ package me.zhouzhuo810.zzapidoc;
 
 import android.app.Application;
 
+import com.lzy.okgo.OkGo;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
 import com.tencent.bugly.crashreport.CrashReport;
@@ -41,6 +42,13 @@ public class ZApplication extends Application {
             e.printStackTrace();
         }
 
+
+        initOkGo();
+    }
+
+    private void initOkGo() {
+        //以下都不是必须的，根据需要自行选择,一般来说只需要 debug,缓存相关,cookie相关的 就可以了
+        OkGo.getInstance().init(this);
     }
 
 
