@@ -26,6 +26,7 @@ public class InterfaceListAdapter extends CommonAdapter<GetAllInterfaceResult.Da
                 .setText(R.id.tv_method, dataEntity.getMethod())
                 .setText(R.id.tv_path, dataEntity.getPath())
                 .setText(R.id.tv_create_man, dataEntity.getCreateUserName())
+                .setText(R.id.tv_request_header_no, dataEntity.getRequestHeadersNo() + "")
                 .setText(R.id.tv_request_params_no, dataEntity.getRequestParamsNo() + "")
                 .setText(R.id.tv_response_params_no, dataEntity.getResponseParamsNo() + "");
     }

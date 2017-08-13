@@ -18,11 +18,13 @@ import com.lzy.okgo.request.PostRequest;
 import com.zhy.autolayout.utils.AutoUtils;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import me.zhouzhuo810.zzapidoc.R;
 import me.zhouzhuo810.zzapidoc.common.api.Api;
 import me.zhouzhuo810.zzapidoc.common.api.entity.AddInterfaceExampleResult;
-import me.zhouzhuo810.zzapidoc.common.api.entity.InterfaceTestEntity;
+import me.zhouzhuo810.zzapidoc.common.api.entity.InterfaceTestRequestArgEntity;
+import me.zhouzhuo810.zzapidoc.common.api.entity.InterfaceTestRequestHeaderEntity;
 import me.zhouzhuo810.zzapidoc.common.base.BaseActivity;
 import me.zhouzhuo810.zzapidoc.common.rx.RxHelper;
 import me.zhouzhuo810.zzapidoc.common.utils.CopyUtils;
@@ -39,14 +41,17 @@ public class InterfaceTestResultActivity extends BaseActivity {
     private RelativeLayout rlBack;
     private RelativeLayout rlRight;
     private LinearLayout llScroll;
+    private TextView tvMethod;
     private TextView tvPath;
     private TextView tvTime;
+    private LinearLayout llHeaders;
     private LinearLayout llParams;
-    private ArrayList<InterfaceTestEntity> params;
-    private EditText tvResult;
-    private TextView tvMethod;
     private Button btnExample;
+    private EditText tvResult;
+
     private String interfaceId;
+    private ArrayList<InterfaceTestRequestArgEntity> params;
+    private ArrayList<InterfaceTestRequestHeaderEntity> headers;
 
     @Override
     public int getLayoutId() {
@@ -66,9 +71,10 @@ public class InterfaceTestResultActivity extends BaseActivity {
         tvMethod = (TextView) findViewById(R.id.tv_method);
         tvPath = (TextView) findViewById(R.id.tv_path);
         tvTime = (TextView) findViewById(R.id.tv_time);
+        llHeaders = (LinearLayout) findViewById(R.id.ll_headers);
         llParams = (LinearLayout) findViewById(R.id.ll_params);
-        tvResult = (EditText) findViewById(R.id.tv_result);
         btnExample = (Button) findViewById(R.id.btn_example);
+        tvResult = (EditText) findViewById(R.id.tv_result);
     }
 
     @Override
@@ -78,6 +84,10 @@ public class InterfaceTestResultActivity extends BaseActivity {
         tvPath.setText(path);
         String method = getIntent().getStringExtra("method");
         tvMethod.setText(method);
+        headers = getIntent().getParcelableArrayListExtra("headers");
+        if (headers != null) {
+            fillHeaderParams();
+        }
         params = getIntent().getParcelableArrayListExtra("params");
         if (params != null) {
             fillParams();
@@ -91,14 +101,31 @@ public class InterfaceTestResultActivity extends BaseActivity {
         }
     }
 
-    private void fillParams() {
-        llParams.removeAllViews();
-        for (int i = 0; i < params.size(); i++) {
-            InterfaceTestEntity entity = params.get(i);
-            addItem(i, entity.getName(), entity.getValue());
+    private void fillHeaderParams() {
+        llHeaders.removeAllViews();
+        for (int i = 0; i < headers.size(); i++) {
+            InterfaceTestRequestHeaderEntity entity = headers.get(i);
+            addHeaderItem(i, entity.getName(), entity.getValue());
         }
     }
 
+    private void addHeaderItem(final int position, String title, String value) {
+        View root = LayoutInflater.from(this).inflate(R.layout.interface_test_item, null);
+        TextView tvName = (TextView) root.findViewById(R.id.tv_name);
+        final EditText etValue = (EditText) root.findViewById(R.id.et_value);
+        etValue.setEnabled(false);
+        tvName.setText(title);
+        etValue.setText(value);
+        AutoUtils.auto(root);
+        llHeaders.addView(root, position);
+    }
+    private void fillParams() {
+        llParams.removeAllViews();
+        for (int i = 0; i < params.size(); i++) {
+            InterfaceTestRequestArgEntity entity = params.get(i);
+            addItem(i, entity.getName(), entity.getValue());
+        }
+    }
 
     private void addItem(final int position, String title, String value) {
         View root = LayoutInflater.from(this).inflate(R.layout.interface_test_item, null);
@@ -109,13 +136,19 @@ public class InterfaceTestResultActivity extends BaseActivity {
         etValue.setText(value);
         AutoUtils.auto(root);
         llParams.addView(root, position);
-
     }
 
     private void doPost(String path) {
         PostRequest<String> post = OkGo.<String>post(path);
-        for (InterfaceTestEntity param : params) {
-            post.params(param.getName(), param.getValue());
+        if (headers != null) {
+            for (InterfaceTestRequestHeaderEntity header : headers) {
+                post.headers(header.getName(), header.getValue());
+            }
+        }
+        if (params != null) {
+            for (InterfaceTestRequestArgEntity param : params) {
+                post.params(param.getName(), param.getValue());
+            }
         }
         showPd(getString(R.string.submiting_text), false);
         final long time = System.currentTimeMillis();
@@ -143,8 +176,15 @@ public class InterfaceTestResultActivity extends BaseActivity {
 
     private void doGet(String path) {
         GetRequest<String> get = OkGo.<String>get(path);
-        for (InterfaceTestEntity param : params) {
-            get.params(param.getName(), param.getValue());
+        if (headers != null) {
+            for (InterfaceTestRequestHeaderEntity header : headers) {
+                get.headers(header.getName(), header.getValue());
+            }
+        }
+        if (params != null) {
+            for (InterfaceTestRequestArgEntity param : params) {
+                get.params(param.getName(), param.getValue());
+            }
         }
         showPd(getString(R.string.submiting_text), false);
         final long time = System.currentTimeMillis();

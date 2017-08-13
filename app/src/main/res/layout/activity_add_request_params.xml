@@ -22,7 +22,7 @@
             android:id="@+id/rl_back"
             android:layout_width="160px"
             android:layout_height="match_parent"
-            android:background="@drawable/btn_main_selecotr"
+            android:background="@drawable/btn_main_selector"
             android:clickable="true">
 
             <ImageView
@@ -38,7 +38,7 @@
             android:layout_width="160px"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
-            android:background="@drawable/btn_main_selecotr"
+            android:background="@drawable/btn_main_selector"
             android:clickable="true"
             android:visibility="gone">
 
@@ -83,6 +83,53 @@
             android:background="@null"
             android:gravity="right|center_vertical"
             android:hint="@string/choose_arg_type_hint"
+            android:textColor="@color/colorBlack"
+            android:textSize="44px" />
+
+        <ImageView
+            android:layout_width="40px"
+            android:layout_height="40px"
+            android:layout_marginRight="30px"
+            android:src="@drawable/more" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginLeft="30px"
+        android:background="@color/colorGrayBg" />
+
+    <!--签订日期-->
+
+    <LinearLayout
+        android:id="@+id/ll_require"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/setting_item_bg_selector"
+        android:clickable="true"
+        android:gravity="center_vertical"
+        android:minHeight="130px"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="280px"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40px"
+            android:gravity="center|left"
+            android:text="@string/require_text"
+            android:textColor="#415868"
+            android:textSize="44px" />
+
+        <TextView
+            android:id="@+id/tv_require"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30px"
+            android:layout_marginRight="30px"
+            android:layout_weight="1"
+            android:background="@null"
+            android:gravity="right|center_vertical"
+            android:hint="@string/choose_require_hint"
             android:textColor="@color/colorBlack"
             android:textSize="44px" />
 

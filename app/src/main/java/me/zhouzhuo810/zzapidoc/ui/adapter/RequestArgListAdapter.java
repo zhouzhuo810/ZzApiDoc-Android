@@ -24,7 +24,7 @@ public class RequestArgListAdapter extends CommonAdapter<GetRequestArgResult.Dat
         holder.setText(R.id.tv_name, dataEntity.getName())
                 .setText(R.id.tv_time, dataEntity.getCreateTime())
                 .setText(R.id.tv_note, dataEntity.getNote())
-                .setText(R.id.tv_create_man, dataEntity.getCreateUserName());
+                .setText(R.id.tv_create_man, dataEntity.getCreateUserName()+" ("+(dataEntity.isRequire()?"必填":"非必填")+")");
         switch (dataEntity.getType()) {
             case 0:
                 holder.setText(R.id.tv_type, "string");

@@ -101,9 +101,19 @@ public class GetAllInterfaceResult {
 
         private int responseParamsNo;
 
+        private int requestHeadersNo;
+
         private String createTime;
 
         private String createUserName;
+
+        public int getRequestHeadersNo() {
+            return requestHeadersNo;
+        }
+
+        public void setRequestHeadersNo(int requestHeadersNo) {
+            this.requestHeadersNo = requestHeadersNo;
+        }
 
         public int getRequestParamsNo() {
             return requestParamsNo;

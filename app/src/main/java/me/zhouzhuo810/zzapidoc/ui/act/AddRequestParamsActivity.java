@@ -31,6 +31,8 @@ public class AddRequestParamsActivity extends BaseActivity {
     private RelativeLayout rlRight;
     private LinearLayout llArgType;
     private TextView tvArgType;
+    private LinearLayout llRequire;
+    private TextView tvRequire;
     private EditText etArgName;
     private ImageView ivClearArgName;
     private EditText etArgNote;
@@ -45,6 +47,7 @@ public class AddRequestParamsActivity extends BaseActivity {
     private String pid;
     private String interfaceId;
     private boolean global = false;
+    private boolean require = true;
 
 
     @Override
@@ -63,6 +66,8 @@ public class AddRequestParamsActivity extends BaseActivity {
         rlRight = (RelativeLayout) findViewById(R.id.rl_right);
         llArgType = (LinearLayout) findViewById(R.id.ll_arg_type);
         tvArgType = (TextView) findViewById(R.id.tv_arg_type);
+        llRequire = (LinearLayout) findViewById(R.id.ll_require);
+        tvRequire = (TextView) findViewById(R.id.tv_require);
         etArgName = (EditText) findViewById(R.id.et_arg_name);
         ivClearArgName = (ImageView) findViewById(R.id.iv_clear_arg_name);
         etArgNote = (EditText) findViewById(R.id.et_arg_note);
@@ -80,6 +85,8 @@ public class AddRequestParamsActivity extends BaseActivity {
 
         typeId = 0;
         tvArgType.setText("string");
+
+        tvRequire.setText("true");
     }
 
     @Override
@@ -100,6 +107,15 @@ public class AddRequestParamsActivity extends BaseActivity {
             }
         });
 
+        llRequire.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!show) {
+                    chooseRequire();
+                }
+            }
+        });
+
         setEditListener(etArgName, ivClearArgName);
         setEditListener(etArgNote, ivClearArgNote);
 
@@ -111,6 +127,23 @@ public class AddRequestParamsActivity extends BaseActivity {
         });
 
 
+    }
+
+    private void chooseRequire() {
+        show = true;
+        showListDialog(Arrays.asList("true", "false"), true, new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                show = false;
+            }
+        }, new OnItemClick() {
+            @Override
+            public void onItemClick(int position, String content) {
+                show = false;
+                require = position == 0;
+                tvRequire.setText(content);
+            }
+        });
     }
 
     private void chooseType() {
@@ -142,7 +175,7 @@ public class AddRequestParamsActivity extends BaseActivity {
         String note = etArgNote.getText().toString().trim();
         showPd(getString(R.string.submiting_text), false);
         Api.getApi0()
-                .addRequestArg(pid, name, typeId, projectId, interfaceId, note, getUserId(), global)
+                .addRequestArg(pid, name, typeId, projectId, interfaceId, note, getUserId(), require, global)
                 .compose(RxHelper.<AddResponseArgResult>io_main())
                 .subscribe(new Subscriber<AddResponseArgResult>() {
                     @Override

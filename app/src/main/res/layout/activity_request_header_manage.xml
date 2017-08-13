@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorGrayBg"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -13,7 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="@string/my_project"
+            android:text="@string/request_header_manage_text"
             android:textColor="@color/colorWhite"
             android:textSize="@dimen/activity_title_text_size" />
 
@@ -21,7 +22,6 @@
             android:id="@+id/rl_back"
             android:layout_width="160px"
             android:layout_height="match_parent"
-            android:visibility="gone"
             android:background="@drawable/btn_main_selector"
             android:clickable="true">
 

@@ -22,7 +22,7 @@
             android:id="@+id/rl_back"
             android:layout_width="160px"
             android:layout_height="match_parent"
-            android:background="@drawable/btn_main_selecotr"
+            android:background="@drawable/btn_main_selector"
             android:clickable="true">
 
             <ImageView
@@ -38,7 +38,7 @@
             android:layout_width="200px"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
-            android:background="@drawable/btn_main_selecotr"
+            android:background="@drawable/btn_main_selector"
             android:clickable="true">
 
             <TextView
@@ -71,6 +71,7 @@
         android:paddingRight="40px"
         android:textColor="@color/colorPress"
         android:textSize="40px" />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="80px"
@@ -90,15 +91,6 @@
         android:paddingRight="40px"
         android:textColor="@color/colorPress"
         android:textSize="40px" />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="80px"
-        android:gravity="center_vertical"
-        android:paddingLeft="40px"
-        android:paddingRight="40px"
-        android:text="请求参数:"
-        android:textColor="@color/colorBlack"
-        android:textSize="30px" />
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/refresh"
@@ -111,12 +103,47 @@
             android:layout_height="wrap_content">
 
             <LinearLayout
-                android:id="@+id/ll_scroll"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorWhite"
                 android:orientation="vertical">
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="80px"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="40px"
+                    android:paddingRight="40px"
+                    android:text="请求头:"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="30px" />
+
+                <LinearLayout
+                    android:id="@+id/ll_header"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorWhite"
+                    android:orientation="vertical">
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="80px"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="40px"
+                    android:paddingRight="40px"
+                    android:text="请求参数:"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="30px" />
+
+                <LinearLayout
+                    android:id="@+id/ll_scroll"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorWhite"
+                    android:orientation="vertical">
+
+                </LinearLayout>
             </LinearLayout>
         </ScrollView>
     </android.support.v4.widget.SwipeRefreshLayout>

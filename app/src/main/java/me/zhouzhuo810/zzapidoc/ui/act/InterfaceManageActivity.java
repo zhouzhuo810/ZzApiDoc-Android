@@ -131,7 +131,7 @@ public class InterfaceManageActivity extends BaseActivity {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-                showListDialog(Arrays.asList("请求参数", "返回参数"), true, new DialogInterface.OnDismissListener() {
+                showListDialog(Arrays.asList("请求头", "请求参数", "返回参数"), true, new DialogInterface.OnDismissListener() {
                     @Override
                     public void onDismiss(DialogInterface dialog) {
 
@@ -142,13 +142,20 @@ public class InterfaceManageActivity extends BaseActivity {
                         Intent intent;
                         switch (pos) {
                             case 0:
-                                intent = new Intent(InterfaceManageActivity.this, RequestParamsManageActivity.class);
+                                intent = new Intent(InterfaceManageActivity.this, RequestHeaderManageActivity.class);
                                 intent.putExtra("projectId", projectId);
                                 intent.putExtra("groupId", groupId);
                                 intent.putExtra("interfaceId", adapter.getmDatas().get(position).getId());
                                 startActWithIntent(intent);
                                 break;
                             case 1:
+                                intent = new Intent(InterfaceManageActivity.this, RequestParamsManageActivity.class);
+                                intent.putExtra("projectId", projectId);
+                                intent.putExtra("groupId", groupId);
+                                intent.putExtra("interfaceId", adapter.getmDatas().get(position).getId());
+                                startActWithIntent(intent);
+                                break;
+                            case 2:
                                 intent = new Intent(InterfaceManageActivity.this, ResponseParamsManageActivity.class);
                                 intent.putExtra("projectId", projectId);
                                 intent.putExtra("groupId", groupId);

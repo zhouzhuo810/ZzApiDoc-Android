@@ -83,4 +83,16 @@
     <string name="vaule_hint_text">请输入参数值</string>
     <string name="test_result_text">测试结果</string>
     <string name="copy_result_text">复制结果</string>
+    <string name="require_text">是否必填</string>
+    <string name="choose_require_hint">请选择是否必填</string>
+    <string name="request_header_manage_text">请求头管理</string>
+    <string name="add_request_header_text">添加请求头</string>
+    <string name="header_name_text">头名称</string>
+    <string name="header_value_text">默认值</string>
+    <string name="header_value_hint_text">请输入请求头默认值</string>
+    <string name="header_name_hint_text">请输入请求头名称</string>
+    <string name="header_name_not_nul_text">请求头名称不能为空</string>
+    <string name="header_value_not_nul_text">请求头值不能为空</string>
+    <string name="note_text">说明</string>
+    <string name="note_hint_text">请输入说明</string>
 </resources>

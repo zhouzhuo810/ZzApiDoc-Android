@@ -1,5 +1,7 @@
 package me.zhouzhuo810.zzapidoc.common.api.entity;
 
+import com.google.gson.Gson;
+
 import java.util.List;
 
 /**
@@ -56,8 +58,17 @@ public class GetRequestArgResult {
         private String pid;
         private String interfaceId;
         private int type;
+        private boolean require = true;
         private String createTime;
         private String createUserName;
+
+        public boolean isRequire() {
+            return require;
+        }
+
+        public void setRequire(boolean require) {
+            this.require = require;
+        }
 
         public String getId() {
             return id;

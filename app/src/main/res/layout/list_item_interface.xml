@@ -80,7 +80,33 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="40px"
+            android:layout_marginLeft="20px"
+            android:text="共"
+            android:textColor="#999"
+            android:textSize="36px" />
+
+        <TextView
+            android:id="@+id/tv_request_header_no"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10px"
+            android:text="0"
+            android:textColor="@color/colorPrimary"
+            android:textSize="36px" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10px"
+            android:layout_marginRight="20px"
+            android:text="个请求头"
+            android:textColor="#999"
+            android:textSize="36px" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20px"
             android:text="共"
             android:textColor="#999"
             android:textSize="36px" />
@@ -89,16 +115,16 @@
             android:id="@+id/tv_request_params_no"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20px"
-            android:text="0"
+            android:layout_marginLeft="10px"
+            android:text="10"
             android:textColor="@color/colorPrimary"
             android:textSize="36px" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20px"
-            android:layout_marginRight="40px"
+            android:layout_marginLeft="10px"
+            android:layout_marginRight="20px"
             android:text="个请求参数"
             android:textColor="#999"
             android:textSize="36px" />
@@ -107,7 +133,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="40px"
+            android:layout_marginLeft="20px"
             android:text="共"
             android:textColor="#999"
             android:textSize="36px" />
@@ -116,15 +142,15 @@
             android:id="@+id/tv_response_params_no"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20px"
-            android:text="0"
+            android:layout_marginLeft="10px"
+            android:text="20"
             android:textColor="@color/colorPrimary"
             android:textSize="36px" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20px"
+            android:layout_marginLeft="10px"
             android:layout_marginRight="40px"
             android:text="个返回参数"
             android:textColor="#999"

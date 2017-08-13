@@ -5,11 +5,13 @@ import me.zhouzhuo810.zzapidoc.common.api.entity.AddInterfaceExampleResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.AddInterfaceGroupResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.AddInterfaceResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.AddProjectResult;
+import me.zhouzhuo810.zzapidoc.common.api.entity.AddRequestHeaderResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.AddResponseArgResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteArgResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteInterfaceGroupResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteInterfaceResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteProjectResult;
+import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteRequestHeaderResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllInterfaceGroupResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllInterfaceResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllProjectResult;
@@ -17,6 +19,7 @@ import me.zhouzhuo810.zzapidoc.common.api.entity.GetDictionaryResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetInterfaceDetailsResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetProjectDetailsResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetRequestArgResult;
+import me.zhouzhuo810.zzapidoc.common.api.entity.GetRequestHeaderResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetResponseArgResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.UpdateInterfaceResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.UpdateResult;
@@ -201,6 +204,7 @@ public interface Api0 {
             @Field("interfaceId") String interfaceId,
             @Field("note") String note,
             @Field("userId") String userId,
+            @Field("isRequire") boolean isRequire,
             @Field("isGlobal") boolean isGlobal
     );
 
@@ -224,4 +228,32 @@ public interface Api0 {
     @FormUrlEncoded
     @POST("/v1/update/checkUpdate")
     Observable<UpdateResult> checkUpdate(@Field("versionCode") int versionCode);
+
+    /*添加请求头*/
+    @FormUrlEncoded
+    @POST("/v1/requestHeader/addRequestHeader")
+    Observable<AddRequestHeaderResult> addRequestHeader(
+            @Field("name") String name,
+            @Field("value") String value,
+            @Field("note") String note,
+            @Field("interfaceId") String interfaceId,
+            @Field("projectId") String projectId,
+            @Field("userId") String userId,
+            @Field("isGlobal") boolean isGlobal
+    );
+
+    /*删除请求头*/
+    @FormUrlEncoded
+    @POST("/v1/requestHeader/deleteRequestHeader")
+    Observable<DeleteRequestHeaderResult> deleteRequestHeader(
+            @Field("id") String id,
+            @Field("userId") String userId
+    );
+
+    /*根据接口id获取请求头*/
+    @GET("/v1/requestHeader/getRequestHeaderByInterfaceId")
+    Observable<GetRequestHeaderResult> getRequestHeaderByInterfaceId(
+            @Query("interfaceId") String interfaceId,
+            @Query("userId") String userId
+    );
 }

@@ -7,7 +7,7 @@ import android.os.Parcelable;
  * Created by admin on 2017/8/12.
  */
 
-public class InterfaceTestEntity implements Parcelable {
+public class InterfaceTestRequestArgEntity implements Parcelable {
     private String name;
     private int type = 0;
     private String value;
@@ -36,7 +36,7 @@ public class InterfaceTestEntity implements Parcelable {
         this.value = value;
     }
 
-    public InterfaceTestEntity() {
+    public InterfaceTestRequestArgEntity() {
     }
 
     @Override
@@ -51,21 +51,21 @@ public class InterfaceTestEntity implements Parcelable {
         dest.writeString(this.value);
     }
 
-    protected InterfaceTestEntity(Parcel in) {
+    protected InterfaceTestRequestArgEntity(Parcel in) {
         this.name = in.readString();
         this.type = in.readInt();
         this.value = in.readString();
     }
 
-    public static final Creator<InterfaceTestEntity> CREATOR = new Creator<InterfaceTestEntity>() {
+    public static final Creator<InterfaceTestRequestArgEntity> CREATOR = new Creator<InterfaceTestRequestArgEntity>() {
         @Override
-        public InterfaceTestEntity createFromParcel(Parcel source) {
-            return new InterfaceTestEntity(source);
+        public InterfaceTestRequestArgEntity createFromParcel(Parcel source) {
+            return new InterfaceTestRequestArgEntity(source);
         }
 
         @Override
-        public InterfaceTestEntity[] newArray(int size) {
-            return new InterfaceTestEntity[size];
+        public InterfaceTestRequestArgEntity[] newArray(int size) {
+            return new InterfaceTestRequestArgEntity[size];
         }
     };
 }
