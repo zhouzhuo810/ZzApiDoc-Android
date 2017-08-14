@@ -51,6 +51,28 @@
         </RelativeLayout>
     </RelativeLayout>
 
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="80px"
+        android:gravity="center_vertical"
+        android:paddingLeft="40px"
+        android:paddingRight="40px"
+        android:text="接口名称:"
+        android:textColor="@color/colorBlack"
+        android:textSize="30px" />
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:minHeight="80px"
+        android:paddingLeft="90px"
+        android:paddingRight="40px"
+        android:textColor="@color/colorPress"
+        android:textSize="40px" />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="80px"

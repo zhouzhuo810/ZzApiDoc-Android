@@ -25,7 +25,6 @@ import rx.Subscriber;
 /**
  * Created by zhouzhuo810 on 2017/8/11.
  */
-
 public class AddProjectActivity extends BaseActivity {
 
     private RelativeLayout rlBack;
@@ -67,7 +66,7 @@ public class AddProjectActivity extends BaseActivity {
     @Override
     public void initData() {
         property = 0;
-        tvProjectProperty.setText("共有");
+        tvProjectProperty.setText("公有");
     }
 
     @Override

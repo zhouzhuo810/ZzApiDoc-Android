@@ -54,7 +54,8 @@ public class ImportProjectActivity extends BaseActivity {
 
     @Override
     public void initData() {
-
+        property = 0;
+        tvProjectProperty.setText("公有");
     }
 
     @Override

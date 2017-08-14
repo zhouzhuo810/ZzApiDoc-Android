@@ -35,7 +35,7 @@
 
         <RelativeLayout
             android:id="@+id/rl_right"
-            android:layout_width="160px"
+            android:layout_width="200px"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:background="@drawable/btn_main_selector"

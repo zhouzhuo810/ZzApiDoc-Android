@@ -109,6 +109,9 @@ public class ResponseParamsManageActivity extends BaseActivity {
                             } else {
                                 tvNoData.setVisibility(View.GONE);
                             }
+                        } else {
+                            adapter.setmDatas(null);
+                            adapter.notifyDataSetChanged();
                         }
                     }
                 });

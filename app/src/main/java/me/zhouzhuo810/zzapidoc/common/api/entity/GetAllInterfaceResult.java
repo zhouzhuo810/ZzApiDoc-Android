@@ -2,6 +2,8 @@ package me.zhouzhuo810.zzapidoc.common.api.entity;
 
 import java.util.List;
 
+import me.zhouzhuo810.zzapidoc.common.rule.SearchAble;
+
 /**
  * 查询接口列表
  */
@@ -36,7 +38,7 @@ public class GetAllInterfaceResult {
         return data;
     }
 
-    public static class DataEntity {
+    public static class DataEntity implements SearchAble {
         private String method;
 
         public void setMethod(String method) {
@@ -155,6 +157,11 @@ public class GetAllInterfaceResult {
 
         public void setCreateUserName(String createUserName) {
             this.createUserName = createUserName;
+        }
+
+        @Override
+        public String toSearch() {
+            return name + note + path;
         }
     }
 }

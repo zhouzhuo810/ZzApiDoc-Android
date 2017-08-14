@@ -101,4 +101,7 @@
     <string name="import_json_text">JSON导入</string>
     <string name="import_project_text">项目导入</string>
     <string name="import_text">开始导入</string>
+    <string name="interface_details_text">接口详情</string>
+    <string name="copy_example_text">复制示例</string>
+    <string name="search_text">搜索</string>
 </resources>

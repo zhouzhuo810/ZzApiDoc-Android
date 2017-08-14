@@ -14,11 +14,11 @@
 
         <TextView
             android:id="@+id/tv_name"
-            android:layout_width="280px"
+            android:layout_width="400px"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40px"
             android:gravity="center|left"
-            android:textColor="#415868"
+            android:textColor="@color/colorMain"
             android:textSize="44px" />
 
         <EditText
@@ -45,7 +45,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1px"
+        android:layout_height="2px"
         android:layout_marginLeft="30px"
         android:background="@color/colorGrayBg" />
 

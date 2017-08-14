@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorGrayBg"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/activity_title_height"
+        android:background="@color/colorMain">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/interface_details_text"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/activity_title_text_size" />
+
+        <RelativeLayout
+            android:id="@+id/rl_back"
+            android:layout_width="160px"
+            android:layout_height="match_parent"
+            android:background="@drawable/btn_main_selector"
+            android:clickable="true">
+
+            <ImageView
+                android:layout_width="80px"
+                android:layout_height="80px"
+                android:layout_centerInParent="true"
+                android:src="@drawable/back" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_right"
+            android:layout_width="200px"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/btn_main_selector"
+            android:clickable="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="@string/copy_example_text"
+                android:textColor="@color/colorWhite"
+                android:textSize="40px" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/ll_scroll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="80px"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="40px"
+                    android:paddingRight="40px"
+                    android:text="接口名称:"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="30px" />
+
+                <TextView
+                    android:id="@+id/tv_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:minHeight="80px"
+                    android:paddingLeft="90px"
+                    android:paddingRight="40px"
+                    android:textColor="@color/colorPress"
+                    android:textSize="40px" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="80px"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="40px"
+                    android:paddingRight="40px"
+                    android:text="请求方式:"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="30px" />
+
+                <TextView
+                    android:id="@+id/tv_method"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:minHeight="80px"
+                    android:paddingLeft="90px"
+                    android:paddingRight="40px"
+                    android:textColor="@color/colorPress"
+                    android:textSize="40px" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="80px"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="40px"
+                    android:paddingRight="40px"
+                    android:text="请求路径:"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="30px" />
+
+                <TextView
+                    android:id="@+id/tv_path"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:minHeight="80px"
+                    android:paddingLeft="90px"
+                    android:paddingRight="40px"
+                    android:textColor="@color/colorPress"
+                    android:textSize="40px" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="80px"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="40px"
+                    android:paddingRight="40px"
+                    android:text="全局请求头:"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="30px" />
+
+                <LinearLayout
+                    android:id="@+id/ll_global_headers"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorWhite"
+                    android:orientation="vertical">
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="80px"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="40px"
+                    android:paddingRight="40px"
+                    android:text="其他请求头:"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="30px" />
+
+                <LinearLayout
+                    android:id="@+id/ll_headers"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorWhite"
+                    android:orientation="vertical">
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="80px"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="40px"
+                    android:paddingRight="40px"
+                    android:text="全局请求参数:"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="30px" />
+
+                <LinearLayout
+                    android:id="@+id/ll_global_req"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorWhite"
+                    android:orientation="vertical">
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="80px"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="40px"
+                    android:paddingRight="40px"
+                    android:text="请求参数:"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="30px" />
+
+                <LinearLayout
+                    android:id="@+id/ll_req"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorWhite"
+                    android:orientation="vertical">
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="80px"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="40px"
+                    android:paddingRight="40px"
+                    android:text="全局返回参数:"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="30px" />
+
+                <LinearLayout
+                    android:id="@+id/ll_global_res"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorWhite"
+                    android:orientation="vertical">
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="80px"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="40px"
+                    android:paddingRight="40px"
+                    android:text="其他返回参数:"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="30px" />
+
+                <LinearLayout
+                    android:id="@+id/ll_res"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorWhite"
+                    android:orientation="vertical">
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="80px"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="40px"
+                    android:paddingRight="40px"
+                    android:text="返回示例:"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="30px" />
+
+                <TextView
+                    android:id="@+id/tv_result"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="50px"
+                    android:background="@color/colorWhite"
+                    android:enabled="false"
+                    android:paddingLeft="40px"
+                    android:paddingRight="40px"
+                    android:textColor="@color/colorMain"
+                    android:textSize="42px">
+
+                </TextView>
+            </LinearLayout>
+        </ScrollView>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+</LinearLayout>

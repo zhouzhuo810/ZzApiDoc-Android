@@ -51,6 +51,8 @@ public class InterfaceTestActivity extends BaseActivity {
     private String ip;
     private String method;
     private String path;
+    private TextView tvName;
+    private String name;
 
 
     @Override
@@ -67,6 +69,7 @@ public class InterfaceTestActivity extends BaseActivity {
     public void initView() {
         rlBack = (RelativeLayout) findViewById(R.id.rl_back);
         rlRight = (RelativeLayout) findViewById(R.id.rl_right);
+        tvName = (TextView) findViewById(R.id.tv_name);
         tvMethod = (TextView) findViewById(R.id.tv_method);
         tvPath = (TextView) findViewById(R.id.tv_path);
         refresh = (SwipeRefreshLayout) findViewById(R.id.refresh);
@@ -82,8 +85,10 @@ public class InterfaceTestActivity extends BaseActivity {
         projectId = getIntent().getStringExtra("projectId");
         method = getIntent().getStringExtra("method");
         ip = getIntent().getStringExtra("ip");
+        name = getIntent().getStringExtra("name");
+        tvName.setText(name);
         path = getIntent().getStringExtra("path");
-        tvPath.setText(ip+path);
+        tvPath.setText(ip + path);
         tvMethod.setText(method);
 
         startRefresh(refresh);
@@ -104,7 +109,7 @@ public class InterfaceTestActivity extends BaseActivity {
                     @Override
                     public void onError(Throwable e) {
                         stopRefresh(refresh);
-                        ToastUtils.showCustomBgToast(getString(R.string.no_net_text)+e.toString());
+                        ToastUtils.showCustomBgToast(getString(R.string.no_net_text) + e.toString());
                     }
 
                     @Override
@@ -136,7 +141,7 @@ public class InterfaceTestActivity extends BaseActivity {
                 intent.putExtra("params", params);
                 intent.putExtra("method", method);
                 intent.putExtra("interfaceId", interfaceId);
-                intent.putExtra("path", ip+path);
+                intent.putExtra("path", ip + path);
                 startActWithIntent(intent);
             }
         });

@@ -5,8 +5,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -37,9 +41,12 @@ public class InterfaceManageActivity extends BaseActivity {
 
     private RelativeLayout rlBack;
     private RelativeLayout rlRight;
+    private EditText etSearch;
+    private ImageView ivClearSearch;
     private SwipeRefreshLayout refresh;
     private ListView lv;
     private TextView tvNoData;
+
     private String projectId;
     private List<GetAllInterfaceResult.DataEntity> list;
     private InterfaceListAdapter adapter;
@@ -60,6 +67,8 @@ public class InterfaceManageActivity extends BaseActivity {
     public void initView() {
         rlBack = (RelativeLayout) findViewById(R.id.rl_back);
         rlRight = (RelativeLayout) findViewById(R.id.rl_right);
+        etSearch = (EditText) findViewById(R.id.et_search);
+        ivClearSearch = (ImageView) findViewById(R.id.iv_clear_search);
         refresh = (SwipeRefreshLayout) findViewById(R.id.refresh);
         lv = (ListView) findViewById(R.id.lv);
         tvNoData = (TextView) findViewById(R.id.tv_no_data);
@@ -99,11 +108,18 @@ public class InterfaceManageActivity extends BaseActivity {
                             list = getAllInterfaceGroupResult.getData();
                             adapter.setmDatas(list);
                             adapter.notifyDataSetChanged();
+                            String content = etSearch.getText().toString().trim();
+                            if (content.length() > 0) {
+                                adapter.startSearch(content);
+                            }
                             if (list == null || list.size() == 0) {
                                 tvNoData.setVisibility(View.VISIBLE);
                             } else {
                                 tvNoData.setVisibility(View.GONE);
                             }
+                        } else {
+                            adapter.setmDatas(null);
+                            adapter.notifyDataSetChanged();
                         }
                     }
                 });
@@ -128,10 +144,32 @@ public class InterfaceManageActivity extends BaseActivity {
             }
         });
 
+        setEditListener(etSearch, ivClearSearch);
+        etSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.length() > 0) {
+                    adapter.startSearch(s.toString());
+                } else {
+                    adapter.cancelSearch(list);
+                }
+            }
+        });
+
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-                showListDialog(Arrays.asList("请求头", "请求参数", "返回参数"), true, new DialogInterface.OnDismissListener() {
+                showListDialog(Arrays.asList("请求头", "请求参数", "返回参数", "接口详情"), true, new DialogInterface.OnDismissListener() {
                     @Override
                     public void onDismiss(DialogInterface dialog) {
 
@@ -157,6 +195,13 @@ public class InterfaceManageActivity extends BaseActivity {
                                 break;
                             case 2:
                                 intent = new Intent(InterfaceManageActivity.this, ResponseParamsManageActivity.class);
+                                intent.putExtra("projectId", projectId);
+                                intent.putExtra("groupId", groupId);
+                                intent.putExtra("interfaceId", adapter.getmDatas().get(position).getId());
+                                startActWithIntent(intent);
+                                break;
+                            case 3:
+                                intent = new Intent(InterfaceManageActivity.this, InterfaceDetailsActivity.class);
                                 intent.putExtra("projectId", projectId);
                                 intent.putExtra("groupId", groupId);
                                 intent.putExtra("interfaceId", adapter.getmDatas().get(position).getId());
@@ -199,6 +244,7 @@ public class InterfaceManageActivity extends BaseActivity {
                                 intent.putExtra("ip", adapter.getmDatas().get(position).getIp());
                                 intent.putExtra("path", adapter.getmDatas().get(position).getPath());
                                 intent.putExtra("method", adapter.getmDatas().get(position).getMethod());
+                                intent.putExtra("name", adapter.getmDatas().get(position).getName());
                                 startActWithIntent(intent);
 
                                 break;

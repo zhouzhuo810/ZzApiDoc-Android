@@ -50,6 +50,43 @@
                 android:textSize="40px" />
         </RelativeLayout>
     </RelativeLayout>
+    <!--备注-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="130px"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/et_search"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="20px"
+            android:layout_marginLeft="30px"
+            android:layout_marginRight="30px"
+            android:layout_marginTop="20px"
+            android:layout_weight="1"
+            android:background="@drawable/remark_et_bg_selector"
+            android:gravity="center"
+            android:hint="@string/search_text"
+            android:maxLines="1"
+            android:textColor="@color/colorBlack"
+            android:textSize="44px" />
+
+        <ImageView
+            android:id="@+id/iv_clear_search"
+            android:layout_width="60px"
+            android:layout_height="60px"
+            android:layout_marginRight="30px"
+            android:src="@drawable/clear"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginLeft="30px"
+        android:background="@color/colorGrayBg" />
 
     <RelativeLayout
         android:layout_width="match_parent"

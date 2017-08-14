@@ -34,9 +34,10 @@
     <TextView
         android:id="@+id/tv_ip"
         android:layout_width="match_parent"
-        android:layout_height="90px"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="40px"
         android:layout_marginTop="20px"
+        android:minHeight="40px"
         android:ellipsize="end"
         android:gravity="center_vertical"
         android:maxLines="2"

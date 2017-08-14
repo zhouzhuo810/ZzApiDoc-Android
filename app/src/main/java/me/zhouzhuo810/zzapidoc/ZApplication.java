@@ -46,7 +46,10 @@ public class ZApplication extends Application {
             e.printStackTrace();
         }
 
-        SharedUtil.putString(this, "server_config", Constants.SERVER_IP);
+        String server_config = SharedUtil.getString(this, "server_config");
+        if (server_config == null) {
+            SharedUtil.putString(this, "server_config", Constants.SERVER_IP);
+        }
 
         initOkGo();
     }
