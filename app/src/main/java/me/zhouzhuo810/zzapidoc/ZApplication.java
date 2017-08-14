@@ -9,6 +9,10 @@ import com.tencent.bugly.crashreport.CrashReport;
 
 import org.xutils.x;
 
+import me.zhouzhuo810.zzapidoc.common.Constants;
+import me.zhouzhuo810.zzapidoc.common.api.Api;
+import me.zhouzhuo810.zzapidoc.common.utils.SharedUtil;
+
 
 /**
  * Created by zhouzhuo810 on 2017/7/21.
@@ -42,6 +46,7 @@ public class ZApplication extends Application {
             e.printStackTrace();
         }
 
+        SharedUtil.putString(this, "server_config", Constants.SERVER_IP);
 
         initOkGo();
     }

@@ -1,6 +1,7 @@
 package me.zhouzhuo810.zzapidoc.ui.act;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -65,7 +66,8 @@ public class AddProjectActivity extends BaseActivity {
 
     @Override
     public void initData() {
-
+        property = 0;
+        tvProjectProperty.setText("共有");
     }
 
     @Override
@@ -74,6 +76,14 @@ public class AddProjectActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 closeAct();
+            }
+        });
+
+        rlRight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AddProjectActivity.this, ImportProjectActivity.class);
+                startActWithIntent(intent);
             }
         });
 
@@ -135,7 +145,7 @@ public class AddProjectActivity extends BaseActivity {
 
     private void chooseProperty() {
         show = true;
-        showListDialog(Arrays.asList("公有", "私有"), false, new DialogInterface.OnDismissListener() {
+        showListDialog(Arrays.asList("公有", "私有"), true, new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialog) {
                 show = false;

@@ -95,4 +95,10 @@
     <string name="header_value_not_nul_text">请求头值不能为空</string>
     <string name="note_text">说明</string>
     <string name="note_hint_text">请输入说明</string>
+    <string name="server_setting_text">服务器配置</string>
+    <string name="save_text">保存</string>
+    <string name="ip_not_nul_text">IP地址不能为空</string>
+    <string name="import_json_text">JSON导入</string>
+    <string name="import_project_text">项目导入</string>
+    <string name="import_text">开始导入</string>
 </resources>

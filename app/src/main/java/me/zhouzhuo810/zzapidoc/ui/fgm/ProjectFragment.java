@@ -17,6 +17,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import me.zhouzhuo810.zzapidoc.R;
+import me.zhouzhuo810.zzapidoc.ZApplication;
 import me.zhouzhuo810.zzapidoc.common.Constants;
 import me.zhouzhuo810.zzapidoc.common.api.Api;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllProjectResult;
@@ -25,6 +26,7 @@ import me.zhouzhuo810.zzapidoc.common.base.BaseFragment;
 import me.zhouzhuo810.zzapidoc.common.rx.RxHelper;
 import me.zhouzhuo810.zzapidoc.common.utils.CopyUtils;
 import me.zhouzhuo810.zzapidoc.common.utils.ExportUtils;
+import me.zhouzhuo810.zzapidoc.common.utils.SharedUtil;
 import me.zhouzhuo810.zzapidoc.common.utils.ToastUtils;
 import me.zhouzhuo810.zzapidoc.ui.act.AddProjectActivity;
 import me.zhouzhuo810.zzapidoc.ui.act.AddRequestHeaderActivity;
@@ -146,10 +148,10 @@ public class ProjectFragment extends BaseFragment {
                                 exportPdf(adapter.getmDatas().get(position).getId());
                                 break;
                             case 2:
-                                copy(adapter.getmDatas().get(position).getName(), Constants.SERVER_IP + "v1/interface/downloadJson?userId=" + getUserId() + "&projectId=" + adapter.getmDatas().get(position).getId());
+                                copy(adapter.getmDatas().get(position).getName(), SharedUtil.getString(ZApplication.getInstance(), "server_config") + "ZzApiDoc/v1/interface/downloadJson?userId=" + getUserId() + "&projectId=" + adapter.getmDatas().get(position).getId());
                                 break;
                             case 3:
-                                copy(adapter.getmDatas().get(position).getName(), Constants.SERVER_IP + "/v1/interface/downloadPdf?userId=" + getUserId() + "&projectId=" + adapter.getmDatas().get(position).getId());
+                                copy(adapter.getmDatas().get(position).getName(), SharedUtil.getString(ZApplication.getInstance(), "server_config") + "ZzApiDoc/v1/interface/downloadPdf?userId=" + getUserId() + "&projectId=" + adapter.getmDatas().get(position).getId());
                                 break;
                             case 4:
                                 addGlobalRequestHeader(adapter.getmDatas().get(position).getId());

@@ -19,12 +19,14 @@ import com.lzy.okgo.model.Response;
 import java.io.File;
 
 import me.zhouzhuo810.zzapidoc.R;
+import me.zhouzhuo810.zzapidoc.ZApplication;
 import me.zhouzhuo810.zzapidoc.common.Constants;
 import me.zhouzhuo810.zzapidoc.common.api.Api;
 import me.zhouzhuo810.zzapidoc.common.api.entity.UpdateResult;
 import me.zhouzhuo810.zzapidoc.common.base.BaseActivity;
 import me.zhouzhuo810.zzapidoc.common.base.BaseFragment;
 import me.zhouzhuo810.zzapidoc.common.rx.RxHelper;
+import me.zhouzhuo810.zzapidoc.common.utils.SharedUtil;
 import me.zhouzhuo810.zzapidoc.common.utils.SystemUtil;
 import me.zhouzhuo810.zzapidoc.common.utils.ToastUtils;
 import me.zhouzhuo810.zzapidoc.common.utils.ZSharedUtil;
@@ -169,7 +171,7 @@ public class MeFragment extends BaseFragment {
             public void onOK() {
             }
         });
-        OkGo.<File> get(Constants.SERVER_IP + address)
+        OkGo.<File> get(SharedUtil.getString(ZApplication.getInstance(), "server_config") + address)
                 .tag(getActivity())
                 .execute(new FileCallback(Constants.APK_DOWNLOAD_DIR, "ZzApiDoc_"+versionName+".apk") {
                     @Override

@@ -23,8 +23,8 @@ public class RequestArgListAdapter extends CommonAdapter<GetRequestArgResult.Dat
     public void convert(ViewHolder holder, GetRequestArgResult.DataBean dataEntity) {
         holder.setText(R.id.tv_name, dataEntity.getName())
                 .setText(R.id.tv_time, dataEntity.getCreateTime())
-                .setText(R.id.tv_note, dataEntity.getNote())
-                .setText(R.id.tv_create_man, dataEntity.getCreateUserName()+" ("+(dataEntity.isRequire()?"必填":"非必填")+")");
+                .setText(R.id.tv_note, dataEntity.getNote()+" ("+(dataEntity.isRequire()?"必填":"非必填")+")")
+                .setText(R.id.tv_create_man, dataEntity.getCreateUserName());
         switch (dataEntity.getType()) {
             case 0:
                 holder.setText(R.id.tv_type, "string");

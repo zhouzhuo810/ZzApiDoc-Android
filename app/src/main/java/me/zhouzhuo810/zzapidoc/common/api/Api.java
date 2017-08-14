@@ -9,6 +9,7 @@ import java.util.concurrent.TimeUnit;
 
 import me.zhouzhuo810.zzapidoc.ZApplication;
 import me.zhouzhuo810.zzapidoc.common.Constants;
+import me.zhouzhuo810.zzapidoc.common.utils.SharedUtil;
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -25,8 +26,10 @@ import android.content.Context;
  */
 public class Api {
     private static Api0 api0;
+
     public static Api0 getApi0() {
         if (api0 == null) {
+            String serverIp = SharedUtil.getString(ZApplication.getInstance(), "server_config");
             synchronized (Api.class) {
                 if (api0 == null) {
                     File cache = ZApplication.getInstance().getCacheDir();
@@ -49,7 +52,7 @@ public class Api {
                             .client(client)
                             .addConverterFactory(GsonConverterFactory.create())//添加 json 转换器
                             .addCallAdapterFactory(RxJavaCallAdapterFactory.create())//添加 RxJava 适配器
-                            .baseUrl(Constants.SERVER_IP)
+                            .baseUrl(serverIp == null ? Constants.SERVER_IP : serverIp)
                             .build();
                     api0 = retrofit.create(Api0.class);
                 }
@@ -58,6 +61,9 @@ public class Api {
         return api0;
     }
 
+    public static void clearApi0() {
+        api0 = null;
+    }
 
     private static CookieManager getCookieManager() {
         CookieManager cookieManager = new CookieManager();

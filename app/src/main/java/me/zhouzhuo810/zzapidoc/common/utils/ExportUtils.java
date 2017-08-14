@@ -10,7 +10,6 @@ import com.lzy.okgo.model.Response;
 import java.io.File;
 
 import me.zhouzhuo810.zzapidoc.ZApplication;
-import me.zhouzhuo810.zzapidoc.common.Constants;
 
 /**
  * Created by zhouzhuo810 on 2017/8/10.
@@ -42,7 +41,7 @@ public class ExportUtils {
             file.mkdirs();
         }
 
-        String url = Constants.SERVER_IP+"/v1/interface/downloadJson?userId="+userId+"&projectId="+projectId;
+        String url = SharedUtil.getString(ZApplication.getInstance(), "server_config")+"/ZzApiDoc/v1/interface/downloadJson?userId="+userId+"&projectId="+projectId;
         if (listener != null) {
             listener.onStart();
         }
@@ -88,7 +87,7 @@ public class ExportUtils {
         if (!file.exists()) {
             file.mkdirs();
         }
-        String url = Constants.SERVER_IP+"/v1/interface/downloadPdf?userId="+userId+"&projectId="+projectId;
+        String url = SharedUtil.getString(ZApplication.getInstance(), "server_config")+"/ZzApiDoc/v1/interface/downloadPdf?userId="+userId+"&projectId="+projectId;
         if (listener != null) {
             listener.onStart();
         }

@@ -40,13 +40,13 @@
             android:layout_alignParentRight="true"
             android:background="@drawable/btn_main_selector"
             android:clickable="true"
-            android:visibility="gone">
+            >
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:text="@string/finish_text"
+                android:text="@string/import_json_text"
                 android:textColor="@color/colorWhite"
                 android:textSize="40px" />
         </RelativeLayout>

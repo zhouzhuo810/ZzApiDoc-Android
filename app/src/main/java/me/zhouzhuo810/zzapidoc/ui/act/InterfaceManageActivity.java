@@ -19,13 +19,13 @@ import java.util.List;
 import me.zhouzhuo810.zzapidoc.R;
 import me.zhouzhuo810.zzapidoc.common.api.Api;
 import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteInterfaceResult;
-import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllInterfaceGroupResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllInterfaceResult;
+import me.zhouzhuo810.zzapidoc.common.api.entity.GetDictionaryResult;
+import me.zhouzhuo810.zzapidoc.common.api.entity.UpdateInterfaceResult;
 import me.zhouzhuo810.zzapidoc.common.base.BaseActivity;
 import me.zhouzhuo810.zzapidoc.common.rx.RxHelper;
 import me.zhouzhuo810.zzapidoc.common.utils.CopyUtils;
 import me.zhouzhuo810.zzapidoc.common.utils.ToastUtils;
-import me.zhouzhuo810.zzapidoc.ui.adapter.InterfaceGroupListAdapter;
 import me.zhouzhuo810.zzapidoc.ui.adapter.InterfaceListAdapter;
 import rx.Subscriber;
 
@@ -171,14 +171,20 @@ public class InterfaceManageActivity extends BaseActivity {
         lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
-                showListDialog(Arrays.asList("删除接口", "复制接口地址", "测试接口"), true, null, new OnItemClick() {
+                showListDialog(Arrays.asList("修改请求方式", "修改接口路径", "删除接口", "复制接口地址", "测试接口"), true, null, new OnItemClick() {
                     @Override
                     public void onItemClick(int pos, String content) {
                         switch (pos) {
                             case 0:
-                                deleteInterface(adapter.getmDatas().get(position).getId());
+                                reviseMethod(adapter.getmDatas().get(position));
                                 break;
                             case 1:
+                                revisePath(adapter.getmDatas().get(position));
+                                break;
+                            case 2:
+                                deleteInterface(adapter.getmDatas().get(position).getId());
+                                break;
+                            case 3:
                                 CopyUtils.copyPlainText(InterfaceManageActivity.this,
                                         adapter.getmDatas().get(position).getName(),
                                         adapter.getmDatas().get(position).getIp()
@@ -186,7 +192,7 @@ public class InterfaceManageActivity extends BaseActivity {
                                                 + adapter.getmDatas().get(position).getPath());
                                 ToastUtils.showCustomBgToast("已复制到剪切板");
                                 break;
-                            case 2:
+                            case 4:
                                 Intent intent = new Intent(InterfaceManageActivity.this, InterfaceTestActivity.class);
                                 intent.putExtra("interfaceId", adapter.getmDatas().get(position).getId());
                                 intent.putExtra("projectId", projectId);
@@ -211,12 +217,52 @@ public class InterfaceManageActivity extends BaseActivity {
         });
     }
 
-    private void deleteInterface(String id) {
-        showPd(getString(R.string.submiting_text), false);
+    private void revisePath(final GetAllInterfaceResult.DataEntity entity) {
+        showTwoBtnEditDialog("修改路径", "请输入接口路径", entity.getPath(), false, new OnTwoBtnEditClick() {
+            @Override
+            public void onOk(String content) {
+                showPd(getString(R.string.submiting_text), false);
+                Api.getApi0()
+                        .updateInterface(entity.getId(), entity.getName(), content, projectId, groupId, "", entity.getNote(), getUserId(), null, null)
+                        .compose(RxHelper.<UpdateInterfaceResult>io_main())
+                        .subscribe(new Subscriber<UpdateInterfaceResult>() {
+                            @Override
+                            public void onCompleted() {
+
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                hidePd();
+                                ToastUtils.showCustomBgToast(getString(R.string.no_net_text) + e.toString());
+                            }
+
+                            @Override
+                            public void onNext(UpdateInterfaceResult updateInterfaceResult) {
+                                hidePd();
+                                ToastUtils.showCustomBgToast(updateInterfaceResult.getMsg());
+                                if (updateInterfaceResult.getCode() == 1) {
+                                    startRefresh(refresh);
+                                    getData();
+                                }
+                            }
+                        });
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+        });
+
+    }
+
+    private void reviseMethod(final GetAllInterfaceResult.DataEntity entity) {
+        showPd(getString(R.string.loading_text), false);
         Api.getApi0()
-                .deleteInterface(id, getUserId())
-                .compose(RxHelper.<DeleteInterfaceResult>io_main())
-                .subscribe(new Subscriber<DeleteInterfaceResult>() {
+                .getDictionary("method")
+                .compose(RxHelper.<GetDictionaryResult>io_main())
+                .subscribe(new Subscriber<GetDictionaryResult>() {
                     @Override
                     public void onCompleted() {
 
@@ -224,20 +270,92 @@ public class InterfaceManageActivity extends BaseActivity {
 
                     @Override
                     public void onError(Throwable e) {
-                        hidePd();
                         ToastUtils.showCustomBgToast(getString(R.string.no_net_text) + e.toString());
+                        hidePd();
                     }
 
                     @Override
-                    public void onNext(DeleteInterfaceResult deleteInterfaceResult) {
+                    public void onNext(final GetDictionaryResult getDictionaryResult) {
                         hidePd();
-                        ToastUtils.showCustomBgToast(deleteInterfaceResult.getMsg());
-                        if (deleteInterfaceResult.getCode() == 1) {
-                            startRefresh(refresh);
-                            getData();
+                        if (getDictionaryResult.getCode() == 1) {
+                            List<String> strings = dicToList(getDictionaryResult.getData());
+                            showListDialog(strings, true, null, new OnItemClick() {
+                                @Override
+                                public void onItemClick(int position, String content) {
+                                    showPd(getString(R.string.submiting_text), false);
+                                    Api.getApi0()
+                                            .updateInterface(entity.getId(), entity.getName(), "", projectId, groupId, getDictionaryResult.getData().get(position).getId(), entity.getNote(), getUserId(), null, null)
+                                            .compose(RxHelper.<UpdateInterfaceResult>io_main())
+                                            .subscribe(new Subscriber<UpdateInterfaceResult>() {
+                                                @Override
+                                                public void onCompleted() {
+
+                                                }
+
+                                                @Override
+                                                public void onError(Throwable e) {
+                                                    hidePd();
+                                                    ToastUtils.showCustomBgToast(getString(R.string.no_net_text) + e.toString());
+                                                }
+
+                                                @Override
+                                                public void onNext(UpdateInterfaceResult updateInterfaceResult) {
+                                                    hidePd();
+                                                    ToastUtils.showCustomBgToast(updateInterfaceResult.getMsg());
+                                                    if (updateInterfaceResult.getCode() == 1) {
+                                                        startRefresh(refresh);
+                                                        getData();
+                                                    }
+                                                }
+                                            });
+                                }
+                            });
+                        } else {
+                            ToastUtils.showCustomBgToast(getDictionaryResult.getMsg());
                         }
                     }
                 });
+
+    }
+
+    private void deleteInterface(final String id) {
+        showTwoBtnDialog("删除接口", "确定删除吗？", true, new OnTwoBtnClick() {
+            @Override
+            public void onOk() {
+                showPd(getString(R.string.submiting_text), false);
+                Api.getApi0()
+                        .deleteInterface(id, getUserId())
+                        .compose(RxHelper.<DeleteInterfaceResult>io_main())
+                        .subscribe(new Subscriber<DeleteInterfaceResult>() {
+                            @Override
+                            public void onCompleted() {
+
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                hidePd();
+                                ToastUtils.showCustomBgToast(getString(R.string.no_net_text) + e.toString());
+                            }
+
+                            @Override
+                            public void onNext(DeleteInterfaceResult deleteInterfaceResult) {
+                                hidePd();
+                                ToastUtils.showCustomBgToast(deleteInterfaceResult.getMsg());
+                                if (deleteInterfaceResult.getCode() == 1) {
+                                    startRefresh(refresh);
+                                    getData();
+                                }
+                            }
+                        });
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+        });
+
     }
 
 

@@ -76,6 +76,8 @@ public class AddInterfaceActivity extends BaseActivity {
     public void initData() {
         projectId = getIntent().getStringExtra("projectId");
         groupId = getIntent().getStringExtra("groupId");
+
+        chooseMethodAuto();
     }
 
     @Override
@@ -147,6 +149,34 @@ public class AddInterfaceActivity extends BaseActivity {
                                     tvRequestMethod.setText(content);
                                 }
                             });
+                        } else {
+                            ToastUtils.showCustomBgToast(getDictionaryResult.getMsg());
+                        }
+                    }
+                });
+    }
+
+    private void chooseMethodAuto() {
+        Api.getApi0()
+                .getDictionary("method")
+                .compose(RxHelper.<GetDictionaryResult>io_main())
+                .subscribe(new Subscriber<GetDictionaryResult>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onNext(final GetDictionaryResult getDictionaryResult) {
+                        if (getDictionaryResult.getCode() == 1) {
+                            if (getDictionaryResult.getData() != null && getDictionaryResult.getData().size() > 0) {
+                                methodId = getDictionaryResult.getData().get(0).getId();
+                                tvRequestMethod.setText(getDictionaryResult.getData().get(0).getName());
+                            }
                         } else {
                             ToastUtils.showCustomBgToast(getDictionaryResult.getMsg());
                         }

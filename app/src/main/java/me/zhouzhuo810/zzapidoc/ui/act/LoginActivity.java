@@ -36,6 +36,7 @@ public class LoginActivity extends BaseActivity {
     private Button btnLogin;
     private ImageView ivClearPhone;
     private ImageView ivClearPswd;
+    private ImageView ivSetting;
     private LinearLayout llTop;
     private Button btnRegister;
 
@@ -61,6 +62,8 @@ public class LoginActivity extends BaseActivity {
 
         ivClearPhone = (ImageView) findViewById(R.id.iv_clear_phone);
         ivClearPswd = (ImageView) findViewById(R.id.iv_clear_pswd);
+
+        ivSetting = (ImageView) findViewById(R.id.iv_setting);
     }
 
     @Override
@@ -102,6 +105,14 @@ public class LoginActivity extends BaseActivity {
                 final String phone = etPhone.getText().toString().trim();
                 final String pswd = etPswd.getText().toString().trim();
                 doLogin(phone, pswd);
+            }
+        });
+
+        ivSetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, SettingServerActivity.class);
+                startActWithIntent(intent);
             }
         });
 

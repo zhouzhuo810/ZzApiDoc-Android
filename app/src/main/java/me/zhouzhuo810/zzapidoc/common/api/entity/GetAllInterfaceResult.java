@@ -87,6 +87,16 @@ public class GetAllInterfaceResult {
             return id;
         }
 
+        private String note;
+
+        public String getNote() {
+            return note;
+        }
+
+        public void setNote(String note) {
+            this.note = note;
+        }
+
         private String group;
 
         public void setGroup(String group) {

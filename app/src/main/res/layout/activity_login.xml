@@ -6,11 +6,26 @@
     android:background="@color/colorWhite"
     android:orientation="vertical">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorMain">
+
+        <ImageView
+            android:id="@+id/iv_setting"
+            android:layout_width="120px"
+            android:layout_height="120px"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="40px"
+            android:layout_marginTop="50px"
+            android:src="@drawable/me_setting" />
+    </RelativeLayout>
+
     <LinearLayout
         android:id="@+id/ll_top"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="7"
+        android:layout_weight="5"
         android:background="@color/colorMain"
         android:gravity="center"
         android:orientation="vertical">
@@ -67,11 +82,11 @@
                 android:id="@+id/iv_clear_phone"
                 android:layout_width="60px"
                 android:layout_height="60px"
-                android:visibility="gone"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="30px"
-                android:src="@drawable/clear" />
+                android:src="@drawable/clear"
+                android:visibility="gone" />
 
         </RelativeLayout>
 
@@ -98,11 +113,11 @@
                 android:id="@+id/iv_clear_pswd"
                 android:layout_width="60px"
                 android:layout_height="60px"
-                android:visibility="gone"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="30px"
-                android:src="@drawable/clear" />
+                android:src="@drawable/clear"
+                android:visibility="gone" />
         </RelativeLayout>
 
         <Button
