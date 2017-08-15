@@ -151,8 +151,9 @@ public interface Api0 {
     /*
      * 删除接口
      */
-    @GET("/ZzApiDoc/v1/interface/deleteInterface")
-    Observable<DeleteInterfaceResult> deleteInterface(@Query("id") String id, @Query("userId") String userId);
+    @FormUrlEncoded
+    @POST("/ZzApiDoc/v1/interface/deleteInterface")
+    Observable<DeleteInterfaceResult> deleteInterface(@Field("id") String id, @Field("userId") String userId);
 
     /*
      * 删除项目
