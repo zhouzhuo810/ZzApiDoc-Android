@@ -17,6 +17,7 @@ import com.lzy.okgo.model.Progress;
 import com.lzy.okgo.model.Response;
 
 import java.io.File;
+import java.util.Arrays;
 
 import me.zhouzhuo810.zzapidoc.R;
 import me.zhouzhuo810.zzapidoc.ZApplication;
@@ -36,6 +37,7 @@ import me.zhouzhuo810.zzapidoc.ui.act.RevisePswdActivity;
 import me.zhouzhuo810.zzapidoc.ui.widget.roundimage.RoundedImageView;
 import rx.Subscriber;
 import zhouzhuo810.me.zzandframe.common.utils.ApkUtils;
+import zhouzhuo810.me.zzandframe.common.utils.FileUtils;
 
 /**
  * Created by zz on 2017/6/26.
@@ -102,6 +104,13 @@ public class MeFragment extends BaseFragment {
             }
         });
 
+        llClear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clearCache();
+            }
+        });
+
         llVersion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -125,6 +134,26 @@ public class MeFragment extends BaseFragment {
         });
     }
 
+    private void clearCache() {
+        getBaseAct().showListDialog(Arrays.asList("清理JSON文件", "清理PDF文件", "清理APK文件"), false, null, new BaseActivity.OnItemClick() {
+            @Override
+            public void onItemClick(int position, String content) {
+                switch (position) {
+                    case 0:
+                        FileUtils.deleteFiles(Constants.EXPORT_PATH);
+                        break;
+                    case 1:
+                        FileUtils.deleteFiles(Constants.EXPORT_PDF_PATH);
+                        break;
+                    case 2:
+                        FileUtils.deleteFiles(Constants.APK_DOWNLOAD_DIR);
+                        break;
+                }
+                ToastUtils.showCustomBgToast(getString(R.string.clear_ok));
+            }
+        });
+    }
+
     private void publish() {
         Intent intent = new Intent(getActivity(), PublishVersionActivity.class);
         startActivity(intent);
@@ -144,7 +173,7 @@ public class MeFragment extends BaseFragment {
                     @Override
                     public void onError(Throwable e) {
                         getBaseAct().hidePd();
-                        ToastUtils.showCustomBgToast(getString(R.string.no_net_text)+e.toString());
+                        ToastUtils.showCustomBgToast(getString(R.string.no_net_text) + e.toString());
                     }
 
                     @Override
@@ -185,32 +214,32 @@ public class MeFragment extends BaseFragment {
                 getBaseAct().hideUpdateDialog();
             }
         });
-        OkGo.<File> get(SharedUtil.getString(ZApplication.getInstance(), "server_config") + address)
+        OkGo.<File>get(SharedUtil.getString(ZApplication.getInstance(), "server_config") + address)
                 .tag(getActivity())
-                .execute(new FileCallback(Constants.APK_DOWNLOAD_DIR, "ZzApiDoc_"+versionName+".apk") {
+                .execute(new FileCallback(Constants.APK_DOWNLOAD_DIR, "ZzApiDoc_" + versionName + ".apk") {
                     @Override
                     public void onSuccess(Response<File> response) {
                         if (tv[0] != null) {
                             tv[0].setText("下载完成！");
                         }
                         getBaseAct().hideUpdateDialog();
-                        installApk(Constants.APK_DOWNLOAD_DIR, "ZzApiDoc_"+versionName+".apk");
+                        installApk(Constants.APK_DOWNLOAD_DIR, "ZzApiDoc_" + versionName + ".apk");
                     }
 
                     @Override
                     public void onError(Response<File> response) {
                         super.onError(response);
                         if (tv[0] != null) {
-                            tv[0].setText("下载出错了！"+response.getException() == null ? "" : response.getException().toString());
+                            tv[0].setText("下载出错了！" + response.getException() == null ? "" : response.getException().toString());
                         }
                     }
 
                     @Override
                     public void downloadProgress(Progress progress) {
                         super.downloadProgress(progress);
-                        int pro = (int) (progress.currentSize*100.0f/progress.totalSize+0.5f);
+                        int pro = (int) (progress.currentSize * 100.0f / progress.totalSize + 0.5f);
                         if (tv[0] != null) {
-                            tv[0].setText("已下载 " +pro+"%");
+                            tv[0].setText("已下载 " + pro + "%");
                         }
                         if (pb[0] != null) {
                             pb[0].setProgress((pro));

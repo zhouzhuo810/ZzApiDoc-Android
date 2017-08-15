@@ -114,4 +114,5 @@
     <string name="version_code_hint_text">请输入版本号</string>
     <string name="version_name_text">版本名称</string>
     <string name="version_name_hint_text">请输入版本名称</string>
+    <string name="clear_ok">清理成功！</string>
 </resources>
