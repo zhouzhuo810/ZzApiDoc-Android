@@ -7,8 +7,8 @@ android {
         applicationId "me.zhouzhuo810.zzapidoc"
         minSdkVersion 15
         targetSdkVersion 25
-        versionCode 6
-        versionName "1.5"
+        versionCode 10
+        versionName "1.9"
     }
 
     applicationVariants.all {variant ->
@@ -65,8 +65,8 @@ dependencies {
     //okgo
     compile 'com.lzy.net:okgo:3.0.4'
 //    compile 'me.zhouzhuo.zzhttp:zz-http:1.0.4'
-
-
+    //AndroidPickerView
+    compile 'com.contrarywind:Android-PickerView:3.2.5'
 
 
 }

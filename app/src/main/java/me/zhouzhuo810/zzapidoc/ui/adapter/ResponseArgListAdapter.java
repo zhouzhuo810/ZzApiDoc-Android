@@ -41,6 +41,17 @@ public class ResponseArgListAdapter extends CommonAdapter<GetResponseArgResult.D
             case 4:
                 holder.setText(R.id.tv_type, "array[string]");
                 break;
+            case 5:
+                //array
+                holder.setText(R.id.tv_type, "array");
+                break;
+            case 6:
+                //file
+                holder.setText(R.id.tv_type, "file");
+                break;
+            default:
+                holder.setText(R.id.tv_type, "未知");
+                break;
         }
     }
 

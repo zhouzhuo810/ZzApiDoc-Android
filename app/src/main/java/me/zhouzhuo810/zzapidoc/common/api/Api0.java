@@ -22,6 +22,7 @@ import me.zhouzhuo810.zzapidoc.common.api.entity.GetRequestArgResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetRequestHeaderResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetResponseArgResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.ImportProjectEntity;
+import me.zhouzhuo810.zzapidoc.common.api.entity.PublishVersionEntity;
 import me.zhouzhuo810.zzapidoc.common.api.entity.UpdateInterfaceResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.UpdateResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.UpdateUserPasswordResult;
@@ -259,11 +260,24 @@ public interface Api0 {
             @Query("userId") String userId
     );
 
+    /*导入项目*/
     @FormUrlEncoded
     @POST("/ZzApiDoc/v1/project/importProject")
     Observable<ImportProjectEntity> importProject(
             @Field("json") String json,
             @Field("property") String property,
+            @Field("userId") String userId
+    );
+
+
+    /*发布新版本*/
+    @FormUrlEncoded
+    @POST("/ZzApiDoc/v1/update/publishVersion")
+    Observable<PublishVersionEntity> publishVersion(
+            @Field("versionCode") String versionCode,
+            @Field("versionName") String versionName,
+            @Field("updateInfo") String updateInfo,
+            @Field("releaseDate") String releaseDate,
             @Field("userId") String userId
     );
 }

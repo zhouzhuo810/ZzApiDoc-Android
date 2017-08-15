@@ -23,7 +23,7 @@ public class RequestArgListAdapter extends CommonAdapter<GetRequestArgResult.Dat
     public void convert(ViewHolder holder, GetRequestArgResult.DataBean dataEntity) {
         holder.setText(R.id.tv_name, dataEntity.getName())
                 .setText(R.id.tv_time, dataEntity.getCreateTime())
-                .setText(R.id.tv_note, dataEntity.getNote()+" ("+(dataEntity.isRequire()?"必填":"非必填")+")")
+                .setText(R.id.tv_note, dataEntity.getNote() + " (" + (dataEntity.isRequire() ? "必填" : "非必填") + ")")
                 .setText(R.id.tv_create_man, dataEntity.getCreateUserName());
         switch (dataEntity.getType()) {
             case 0:
@@ -40,6 +40,17 @@ public class RequestArgListAdapter extends CommonAdapter<GetRequestArgResult.Dat
                 break;
             case 4:
                 holder.setText(R.id.tv_type, "array[string]");
+                break;
+            case 5:
+                //array
+                holder.setText(R.id.tv_type, "array");
+                break;
+            case 6:
+                //file
+                holder.setText(R.id.tv_type, "file");
+                break;
+            default:
+                holder.setText(R.id.tv_type, "未知");
                 break;
         }
     }

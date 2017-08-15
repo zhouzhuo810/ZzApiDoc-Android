@@ -104,4 +104,14 @@
     <string name="interface_details_text">接口详情</string>
     <string name="copy_example_text">复制示例</string>
     <string name="search_text">搜索</string>
+    <string name="msg_version_text">新版本发布</string>
+    <string name="version_publish_text">版本发布</string>
+    <string name="release_date_text">发布时间</string>
+    <string name="choose_release_date_hint">请选择发布时间</string>
+    <string name="update_info_text">更新内容</string>
+    <string name="update_info_hint_text">请输入更新内容</string>
+    <string name="version_code_text">版本号</string>
+    <string name="version_code_hint_text">请输入版本号</string>
+    <string name="version_name_text">版本名称</string>
+    <string name="version_name_hint_text">请输入版本名称</string>
 </resources>

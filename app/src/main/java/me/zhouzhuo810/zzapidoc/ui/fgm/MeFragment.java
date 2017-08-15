@@ -31,6 +31,7 @@ import me.zhouzhuo810.zzapidoc.common.utils.SystemUtil;
 import me.zhouzhuo810.zzapidoc.common.utils.ToastUtils;
 import me.zhouzhuo810.zzapidoc.common.utils.ZSharedUtil;
 import me.zhouzhuo810.zzapidoc.ui.act.LoginActivity;
+import me.zhouzhuo810.zzapidoc.ui.act.PublishVersionActivity;
 import me.zhouzhuo810.zzapidoc.ui.act.RevisePswdActivity;
 import me.zhouzhuo810.zzapidoc.ui.widget.roundimage.RoundedImageView;
 import rx.Subscriber;
@@ -44,7 +45,7 @@ public class MeFragment extends BaseFragment {
     private RoundedImageView ivPhoto;
     private TextView tvName;
     private TextView tvPosition;
-    private LinearLayout llNotice;
+    private LinearLayout llVersion;
     private LinearLayout llClear;
     private LinearLayout llUpdate;
     private LinearLayout llAbout;
@@ -63,7 +64,7 @@ public class MeFragment extends BaseFragment {
         ivPhoto = (RoundedImageView) rootView.findViewById(R.id.iv_photo);
         tvName = (TextView) rootView.findViewById(R.id.tv_name);
         tvPosition = (TextView) rootView.findViewById(R.id.tv_position);
-        llNotice = (LinearLayout) rootView.findViewById(R.id.ll_notice);
+        llVersion = (LinearLayout) rootView.findViewById(R.id.ll_version_publish);
         llClear = (LinearLayout) rootView.findViewById(R.id.ll_clear);
         llUpdate = (LinearLayout) rootView.findViewById(R.id.ll_update);
         llAbout = (LinearLayout) rootView.findViewById(R.id.ll_about);
@@ -101,6 +102,13 @@ public class MeFragment extends BaseFragment {
             }
         });
 
+        llVersion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                publish();
+            }
+        });
+
         llUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -115,6 +123,11 @@ public class MeFragment extends BaseFragment {
                 startActivityForResult(intent, 0x01);
             }
         });
+    }
+
+    private void publish() {
+        Intent intent = new Intent(getActivity(), PublishVersionActivity.class);
+        startActivity(intent);
     }
 
     private void checkUpdate() {
@@ -169,6 +182,7 @@ public class MeFragment extends BaseFragment {
 
             @Override
             public void onOK() {
+                getBaseAct().hideUpdateDialog();
             }
         });
         OkGo.<File> get(SharedUtil.getString(ZApplication.getInstance(), "server_config") + address)

@@ -165,6 +165,15 @@ public class RequestParamsManageActivity extends BaseActivity {
                         break;
                     case 4:
                         //array[string]
+
+                        break;
+                    case 5:
+                        //array
+
+                        break;
+                    case 6:
+                        //file
+
                         break;
                 }
             }

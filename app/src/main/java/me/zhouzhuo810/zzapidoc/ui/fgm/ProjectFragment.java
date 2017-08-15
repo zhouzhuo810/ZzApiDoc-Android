@@ -20,6 +20,7 @@ import me.zhouzhuo810.zzapidoc.R;
 import me.zhouzhuo810.zzapidoc.ZApplication;
 import me.zhouzhuo810.zzapidoc.common.Constants;
 import me.zhouzhuo810.zzapidoc.common.api.Api;
+import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteProjectResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllProjectResult;
 import me.zhouzhuo810.zzapidoc.common.base.BaseActivity;
 import me.zhouzhuo810.zzapidoc.common.base.BaseFragment;
@@ -137,7 +138,7 @@ public class ProjectFragment extends BaseFragment {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
                 getBaseAct().showListDialog(Arrays.asList("导出JSON文件", "导出PDF文件", "复制JSON下载地址", "复制PDF下载地址", "添加全局请求头", "添加全局请求参数",
-                        "添加全局返回参数"), true, null, new BaseActivity.OnItemClick() {
+                        "添加全局返回参数", "删除项目"), true, null, new BaseActivity.OnItemClick() {
                     @Override
                     public void onItemClick(int pos, String content) {
                         switch (pos) {
@@ -162,10 +163,52 @@ public class ProjectFragment extends BaseFragment {
                             case 6:
                                 addGlobalResponseArg(adapter.getmDatas().get(position).getId());
                                 break;
+                            case 7:
+                                deleteProject(adapter.getmDatas().get(position).getId());
+                                break;
                         }
                     }
                 });
                 return true;
+            }
+        });
+    }
+
+    private void deleteProject(final String projectId) {
+        getBaseAct().showTwoBtnDialog("删除项目", "确定删除吗？", true, new BaseActivity.OnTwoBtnClick() {
+            @Override
+            public void onOk() {
+                getBaseAct().showPd(getString(R.string.submiting_text), false);
+                Api.getApi0()
+                        .deleteProject(projectId, getUserId())
+                        .compose(RxHelper.<DeleteProjectResult>io_main())
+                        .subscribe(new Subscriber<DeleteProjectResult>() {
+                            @Override
+                            public void onCompleted() {
+
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                getBaseAct().hidePd();
+                                ToastUtils.showCustomBgToast(getString(R.string.no_net_text) + e.toString());
+                            }
+
+                            @Override
+                            public void onNext(DeleteProjectResult deleteProjectResult) {
+                                getBaseAct().hidePd();
+                                ToastUtils.showCustomBgToast(deleteProjectResult.getMsg());
+                                if (deleteProjectResult.getCode() == 1) {
+                                    getBaseAct().startRefresh(refresh);
+                                    getData();
+                                }
+                            }
+                        });
+            }
+
+            @Override
+            public void onCancel() {
+
             }
         });
     }
