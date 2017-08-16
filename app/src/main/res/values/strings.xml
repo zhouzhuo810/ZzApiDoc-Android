@@ -117,4 +117,5 @@
     <string name="clear_ok">清理成功！</string>
     <string name="arg_def_value_text">默认值</string>
     <string name="arg_def_value_hint_text">请输入默认值</string>
+    <string name="generating_text">生成中...</string>
 </resources>

@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -17,6 +18,7 @@ import java.util.List;
 import me.zhouzhuo810.zzapidoc.R;
 import me.zhouzhuo810.zzapidoc.ZApplication;
 import me.zhouzhuo810.zzapidoc.common.api.Api;
+import me.zhouzhuo810.zzapidoc.common.api.entity.GenerateEmptyExampleResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetInterfaceDetailsResult;
 import me.zhouzhuo810.zzapidoc.common.base.BaseActivity;
 import me.zhouzhuo810.zzapidoc.common.rx.RxHelper;
@@ -45,6 +47,7 @@ public class InterfaceDetailsActivity extends BaseActivity {
     private TextView tvResult;
     private SwipeRefreshLayout refresh;
     private String interfaceId;
+    private Button btnExample;
 
 
     @Override
@@ -73,6 +76,7 @@ public class InterfaceDetailsActivity extends BaseActivity {
         llGlobalRes = (LinearLayout) findViewById(R.id.ll_global_res);
         llRes = (LinearLayout) findViewById(R.id.ll_res);
         tvResult = (TextView) findViewById(R.id.tv_result);
+        btnExample = (Button) findViewById(R.id.btn_example);
     }
 
     @Override
@@ -133,7 +137,7 @@ public class InterfaceDetailsActivity extends BaseActivity {
         }
         llRes.removeAllViews();
         for (GetInterfaceDetailsResult.DataBean.ResponseArgsBean responseArg : responseArgs) {
-            addItem(llRes, 0, responseArg.getName(), responseArg.getDefValue(),responseArg.getNote());
+            addItem(llRes, llRes.getChildCount(), responseArg.getName(), responseArg.getDefValue(), responseArg.getNote());
         }
     }
 
@@ -143,7 +147,7 @@ public class InterfaceDetailsActivity extends BaseActivity {
         }
         llGlobalRes.removeAllViews();
         for (GetInterfaceDetailsResult.DataBean.GlobalResponseArgsBean globalResponseArg : globalResponseArgs) {
-            addItem(llGlobalRes, 0, globalResponseArg.getName(), globalResponseArg.getDefValue(),globalResponseArg.getNote());
+            addItem(llGlobalRes, llGlobalRes.getChildCount(), globalResponseArg.getName(), globalResponseArg.getDefValue(), globalResponseArg.getNote());
         }
     }
 
@@ -153,7 +157,7 @@ public class InterfaceDetailsActivity extends BaseActivity {
         }
         llReq.removeAllViews();
         for (GetInterfaceDetailsResult.DataBean.RequestArgsBean requestArg : requestArgs) {
-            addItem(llReq, 0, requestArg.getName(), requestArg.getDefValue(),requestArg.getNote());
+            addItem(llReq, llReq.getChildCount(), requestArg.getName(), requestArg.getDefValue(), requestArg.getNote());
         }
     }
 
@@ -163,7 +167,7 @@ public class InterfaceDetailsActivity extends BaseActivity {
         }
         llGlobalReq.removeAllViews();
         for (GetInterfaceDetailsResult.DataBean.GlobalRequestArgsBean globalRequestArg : globalRequestArgs) {
-            addItem(llGlobalReq, 0, globalRequestArg.getName(), globalRequestArg.getDefValue(),globalRequestArg.getNote());
+            addItem(llGlobalReq, llGlobalReq.getChildCount(), globalRequestArg.getName(), globalRequestArg.getDefValue(), globalRequestArg.getNote());
         }
     }
 
@@ -173,8 +177,8 @@ public class InterfaceDetailsActivity extends BaseActivity {
         }
         llHeaders.removeAllViews();
         for (GetInterfaceDetailsResult.DataBean.RequestHeaderBean requestHeaderBean : requestHeader) {
-            addItem(llHeaders, 0, requestHeaderBean.getName(), requestHeaderBean.getValue()
-                    ,requestHeaderBean.getNote());
+            addItem(llHeaders, llHeaders.getChildCount(), requestHeaderBean.getName(), requestHeaderBean.getValue()
+                    , requestHeaderBean.getNote());
         }
     }
 
@@ -184,8 +188,8 @@ public class InterfaceDetailsActivity extends BaseActivity {
         }
         llGlobalHeaders.removeAllViews();
         for (GetInterfaceDetailsResult.DataBean.GlobalrequestHeaderBean globalrequestHeaderBean : globalrequestHeader) {
-            addItem(llGlobalHeaders, 0, globalrequestHeaderBean.getName(), globalrequestHeaderBean.getValue()
-            ,globalrequestHeaderBean.getNote());
+            addItem(llGlobalHeaders, llGlobalHeaders.getChildCount(), globalrequestHeaderBean.getName(), globalrequestHeaderBean.getValue()
+                    , globalrequestHeaderBean.getNote());
         }
     }
 
@@ -219,12 +223,47 @@ public class InterfaceDetailsActivity extends BaseActivity {
             }
         });
 
+        btnExample.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                generateExample();
+            }
+        });
+
         refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 getData();
             }
         });
+    }
+
+    private void generateExample() {
+        showPd(getString(R.string.generating_text), false);
+        Api.getApi0()
+                .generateEmptyExample(getUserId(), interfaceId)
+                .compose(RxHelper.<GenerateEmptyExampleResult>io_main())
+                .subscribe(new Subscriber<GenerateEmptyExampleResult>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        hidePd();
+                        ToastUtils.showCustomBgToast(getString(R.string.no_net_text) + e.toString());
+                    }
+
+                    @Override
+                    public void onNext(GenerateEmptyExampleResult generateEmptyExampleResult) {
+                        hidePd();
+                        ToastUtils.showCustomBgToast(generateEmptyExampleResult.getMsg());
+                        if (generateEmptyExampleResult.getCode() == 1) {
+                            getData();
+                        }
+                    }
+                });
     }
 
     @Override

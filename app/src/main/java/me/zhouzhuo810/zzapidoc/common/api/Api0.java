@@ -12,6 +12,7 @@ import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteInterfaceGroupResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteInterfaceResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteProjectResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteRequestHeaderResult;
+import me.zhouzhuo810.zzapidoc.common.api.entity.GenerateEmptyExampleResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllInterfaceGroupResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllInterfaceResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllProjectResult;
@@ -158,8 +159,9 @@ public interface Api0 {
     /*
      * 删除项目
      */
-    @GET("/ZzApiDoc/v1/project/deleteProject")
-    Observable<DeleteProjectResult> deleteProject(@Query("id") String id, @Query("userId") String userId);
+    @FormUrlEncoded
+    @POST("/ZzApiDoc/v1/project/deleteProject")
+    Observable<DeleteProjectResult> deleteProject(@Field("id") String id, @Field("userId") String userId);
 
     /*
      * 刪除接口分組
@@ -282,5 +284,12 @@ public interface Api0 {
             @Field("updateInfo") String updateInfo,
             @Field("releaseDate") String releaseDate,
             @Field("userId") String userId
+    );
+
+    /*生成空json示例*/
+    @GET("/ZzApiDoc/v1/interface/generateEmptyExample")
+    Observable<GenerateEmptyExampleResult> generateEmptyExample(
+            @Query("userId") String userId,
+            @Query("interfaceId") String interfaceId
     );
 }
