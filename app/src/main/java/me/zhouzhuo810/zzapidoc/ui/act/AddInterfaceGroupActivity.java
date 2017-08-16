@@ -60,6 +60,8 @@ public class AddInterfaceGroupActivity extends BaseActivity {
     @Override
     public void initData() {
         projectId = getIntent().getStringExtra("projectId");
+
+        ivClearIp.setVisibility(View.VISIBLE);
     }
 
     @Override

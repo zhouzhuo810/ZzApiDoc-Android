@@ -61,6 +61,15 @@ public class GetRequestArgResult {
         private boolean require = true;
         private String createTime;
         private String createUserName;
+        private String defValue;
+
+        public String getDefValue() {
+            return defValue;
+        }
+
+        public void setDefValue(String defValue) {
+            this.defValue = defValue;
+        }
 
         public boolean isRequire() {
             return require;

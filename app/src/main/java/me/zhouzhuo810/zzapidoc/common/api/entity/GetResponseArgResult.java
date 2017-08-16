@@ -60,6 +60,15 @@ public class GetResponseArgResult {
         private int type;
         private String createTime;
         private String createUserName;
+        private String defValue;
+
+        public String getDefValue() {
+            return defValue;
+        }
+
+        public void setDefValue(String defValue) {
+            this.defValue = defValue;
+        }
 
         public String getId() {
             return id;

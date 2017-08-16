@@ -189,6 +189,7 @@ public interface Api0 {
     Observable<AddResponseArgResult> addResponseArg(
             @Field("pid") String pid,
             @Field("name") String name,
+            @Field("defValue") String defValue,
             @Field("type") int type,
             @Field("projectId") String projectId,
             @Field("interfaceId") String interfaceId,
@@ -203,6 +204,7 @@ public interface Api0 {
     Observable<AddResponseArgResult> addRequestArg(
             @Field("pid") String pid,
             @Field("name") String name,
+            @Field("defValue") String defValue,
             @Field("type") int type,
             @Field("projectId") String projectId,
             @Field("interfaceId") String interfaceId,

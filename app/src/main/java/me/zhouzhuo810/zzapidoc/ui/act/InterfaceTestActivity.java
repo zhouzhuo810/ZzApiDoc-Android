@@ -254,7 +254,7 @@ public class InterfaceTestActivity extends BaseActivity {
                 InterfaceTestRequestArgEntity entity = new InterfaceTestRequestArgEntity();
                 entity.setType(bean.getType());
                 entity.setName(bean.getName());
-                entity.setValue(null);
+                entity.setValue(bean.getDefValue());
                 params.add(entity);
             }
         }

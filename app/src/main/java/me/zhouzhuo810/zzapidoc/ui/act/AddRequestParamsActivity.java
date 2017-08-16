@@ -35,6 +35,8 @@ public class AddRequestParamsActivity extends BaseActivity {
     private TextView tvRequire;
     private EditText etArgName;
     private ImageView ivClearArgName;
+    private EditText etArgDefValue;
+    private ImageView ivClearArgDefValue;
     private EditText etArgNote;
     private ImageView ivClearArgNote;
     private Button btnSubmit;
@@ -70,6 +72,8 @@ public class AddRequestParamsActivity extends BaseActivity {
         tvRequire = (TextView) findViewById(R.id.tv_require);
         etArgName = (EditText) findViewById(R.id.et_arg_name);
         ivClearArgName = (ImageView) findViewById(R.id.iv_clear_arg_name);
+        etArgDefValue = (EditText) findViewById(R.id.et_arg_def_value);
+        ivClearArgDefValue = (ImageView) findViewById(R.id.iv_clear_arg_def_value);
         etArgNote = (EditText) findViewById(R.id.et_arg_note);
         ivClearArgNote = (ImageView) findViewById(R.id.iv_clear_arg_note);
         btnSubmit = (Button) findViewById(R.id.btn_submit);
@@ -118,6 +122,7 @@ public class AddRequestParamsActivity extends BaseActivity {
 
         setEditListener(etArgName, ivClearArgName);
         setEditListener(etArgNote, ivClearArgNote);
+        setEditListener(etArgDefValue, ivClearArgDefValue);
 
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -172,10 +177,11 @@ public class AddRequestParamsActivity extends BaseActivity {
         if (pid == null) {
             pid = "0";
         }
+        String defValue = etArgDefValue.getText().toString().trim();
         String note = etArgNote.getText().toString().trim();
         showPd(getString(R.string.submiting_text), false);
         Api.getApi0()
-                .addRequestArg(pid, name, typeId, projectId, interfaceId, note, getUserId(), require, global)
+                .addRequestArg(pid, name, defValue, typeId, projectId, interfaceId, note, getUserId(), require, global)
                 .compose(RxHelper.<AddResponseArgResult>io_main())
                 .subscribe(new Subscriber<AddResponseArgResult>() {
                     @Override

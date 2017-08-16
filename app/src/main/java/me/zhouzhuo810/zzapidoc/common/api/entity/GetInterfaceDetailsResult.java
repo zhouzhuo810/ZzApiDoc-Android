@@ -320,6 +320,15 @@ public class GetInterfaceDetailsResult {
             private String require;
             private String typeId;
             private String id;
+            private String defValue;
+
+            public String getDefValue() {
+                return defValue;
+            }
+
+            public void setDefValue(String defValue) {
+                this.defValue = defValue;
+            }
 
             public String getNote() {
                 return note;
@@ -394,6 +403,15 @@ public class GetInterfaceDetailsResult {
             private String pid;
             private String typeId;
             private String id;
+            private String defValue;
+
+            public String getDefValue() {
+                return defValue;
+            }
+
+            public void setDefValue(String defValue) {
+                this.defValue = defValue;
+            }
 
             public String getNote() {
                 return note;
@@ -460,6 +478,15 @@ public class GetInterfaceDetailsResult {
             private String pid;
             private String typeId;
             private String id;
+            private String defValue;
+
+            public String getDefValue() {
+                return defValue;
+            }
+
+            public void setDefValue(String defValue) {
+                this.defValue = defValue;
+            }
 
             public String getNote() {
                 return note;
@@ -622,6 +649,15 @@ public class GetInterfaceDetailsResult {
             private String pid;
             private String typeId;
             private String id;
+            private String defValue;
+
+            public String getDefValue() {
+                return defValue;
+            }
+
+            public void setDefValue(String defValue) {
+                this.defValue = defValue;
+            }
 
             public String getNote() {
                 return note;

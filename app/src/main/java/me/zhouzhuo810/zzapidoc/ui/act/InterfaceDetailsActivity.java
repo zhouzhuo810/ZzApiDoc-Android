@@ -133,7 +133,7 @@ public class InterfaceDetailsActivity extends BaseActivity {
         }
         llRes.removeAllViews();
         for (GetInterfaceDetailsResult.DataBean.ResponseArgsBean responseArg : responseArgs) {
-            addItem(llRes, 0, responseArg.getName(), "",responseArg.getNote());
+            addItem(llRes, 0, responseArg.getName(), responseArg.getDefValue(),responseArg.getNote());
         }
     }
 
@@ -143,7 +143,7 @@ public class InterfaceDetailsActivity extends BaseActivity {
         }
         llGlobalRes.removeAllViews();
         for (GetInterfaceDetailsResult.DataBean.GlobalResponseArgsBean globalResponseArg : globalResponseArgs) {
-            addItem(llGlobalRes, 0, globalResponseArg.getName(), "",globalResponseArg.getNote());
+            addItem(llGlobalRes, 0, globalResponseArg.getName(), globalResponseArg.getDefValue(),globalResponseArg.getNote());
         }
     }
 
@@ -153,7 +153,7 @@ public class InterfaceDetailsActivity extends BaseActivity {
         }
         llReq.removeAllViews();
         for (GetInterfaceDetailsResult.DataBean.RequestArgsBean requestArg : requestArgs) {
-            addItem(llReq, 0, requestArg.getName(), "",requestArg.getNote());
+            addItem(llReq, 0, requestArg.getName(), requestArg.getDefValue(),requestArg.getNote());
         }
     }
 
@@ -163,7 +163,7 @@ public class InterfaceDetailsActivity extends BaseActivity {
         }
         llGlobalReq.removeAllViews();
         for (GetInterfaceDetailsResult.DataBean.GlobalRequestArgsBean globalRequestArg : globalRequestArgs) {
-            addItem(llGlobalReq, 0, globalRequestArg.getName(), "",globalRequestArg.getNote());
+            addItem(llGlobalReq, 0, globalRequestArg.getName(), globalRequestArg.getDefValue(),globalRequestArg.getNote());
         }
     }
 

@@ -78,7 +78,7 @@
             android:layout_marginRight="30px"
             android:layout_weight="1"
             android:background="@null"
-            android:gravity="right|center_vertical"
+            android:gravity="left|center_vertical"
             android:hint="@string/interface_group_name_hint_text"
             android:textColor="@color/colorBlack"
             android:textSize="44px" />
@@ -124,8 +124,9 @@
             android:layout_marginLeft="30px"
             android:layout_marginRight="30px"
             android:layout_weight="1"
+            android:text="http://"
             android:background="@null"
-            android:gravity="right|center_vertical"
+            android:gravity="left|center_vertical"
             android:hint="@string/ip_hint_text"
             android:textColor="@color/colorBlack"
             android:textSize="44px" />

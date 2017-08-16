@@ -36,10 +36,11 @@ public class AddResponseParamsActivity extends BaseActivity {
     private TextView tvArgType;
     private EditText etArgName;
     private ImageView ivClearArgName;
+    private EditText etArgDefValue;
+    private ImageView ivClearArgDefValue;
     private EditText etArgNote;
     private ImageView ivClearArgNote;
     private Button btnSubmit;
-
 
     private String projectId;
     private String groupId;
@@ -68,6 +69,8 @@ public class AddResponseParamsActivity extends BaseActivity {
         tvArgType = (TextView) findViewById(R.id.tv_arg_type);
         etArgName = (EditText) findViewById(R.id.et_arg_name);
         ivClearArgName = (ImageView) findViewById(R.id.iv_clear_arg_name);
+        etArgDefValue = (EditText) findViewById(R.id.et_arg_def_value);
+        ivClearArgDefValue = (ImageView) findViewById(R.id.iv_clear_arg_def_value);
         etArgNote = (EditText) findViewById(R.id.et_arg_note);
         ivClearArgNote = (ImageView) findViewById(R.id.iv_clear_arg_note);
         btnSubmit = (Button) findViewById(R.id.btn_submit);
@@ -105,6 +108,7 @@ public class AddResponseParamsActivity extends BaseActivity {
 
         setEditListener(etArgName, ivClearArgName);
         setEditListener(etArgNote, ivClearArgNote);
+        setEditListener(etArgDefValue, ivClearArgDefValue);
 
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -144,8 +148,9 @@ public class AddResponseParamsActivity extends BaseActivity {
         }
         String note = etArgNote.getText().toString().trim();
         showPd(getString(R.string.submiting_text), false);
+        String defValue = etArgDefValue.getText().toString().trim();
         Api.getApi0()
-                .addResponseArg(pid, name, typeId, projectId, interfaceId, note, getUserId(), global)
+                .addResponseArg(pid, name, defValue, typeId, projectId, interfaceId, note, getUserId(), global)
                 .compose(RxHelper.<AddResponseArgResult>io_main())
                 .subscribe(new Subscriber<AddResponseArgResult>() {
                     @Override
