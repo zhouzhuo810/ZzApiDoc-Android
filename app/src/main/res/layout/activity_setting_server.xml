@@ -68,13 +68,14 @@
             android:textColor="#415868"
             android:textSize="44px" />
 
-        <EditText
+        <AutoCompleteTextView
             android:id="@+id/et_ip"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30px"
             android:layout_marginRight="30px"
             android:layout_weight="1"
+            android:completionThreshold="1"
             android:background="@null"
             android:gravity="left|center_vertical"
             android:hint="@string/ip_hint_text"

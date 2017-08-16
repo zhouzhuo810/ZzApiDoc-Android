@@ -7,7 +7,7 @@
 
     <com.zhy.autolayout.AutoLinearLayout
         android:layout_width="600px"
-        android:layout_height="350px"
+        android:layout_height="wrap_content"
         android:background="@drawable/remark_et_bg_selector"
         android:gravity="center"
         android:orientation="vertical">
@@ -17,7 +17,7 @@
             android:id="@+id/tv_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20px"
+            android:layout_marginTop="30px"
             android:gravity="center"
             android:text="你好"
             android:textColor="@color/colorBlack"
@@ -28,15 +28,17 @@
             android:layout_height="1px"
             android:layout_marginLeft="30px"
             android:layout_marginRight="30px"
-            android:layout_marginTop="10px"
+            android:layout_marginTop="20px"
             android:background="@color/colorGrayBg" />
 
         <TextView
             android:id="@+id/tv_msg"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:gravity="center|left"
+            android:minHeight="200px"
+            android:paddingLeft="40px"
+            android:paddingRight="40px"
             android:text="你好"
             android:textColor="#999"
             android:textSize="34px" />

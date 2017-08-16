@@ -6,6 +6,7 @@ import org.xutils.ex.DbException;
 
 import java.util.List;
 
+import me.zhouzhuo810.zzapidoc.common.api.entity.IpEntity;
 import me.zhouzhuo810.zzapidoc.common.api.entity.PhoneEntity;
 
 /**
@@ -38,6 +39,28 @@ public class DbUtils {
     }
 
     /**
+     * 保存没有保存的IP
+     */
+    public static void saveIp(String ip) {
+        DbManager dbManager = DbHelper
+                .getInstance()
+                .getDbManager();
+        if (dbManager == null)
+            return;
+
+        try {
+            long count = dbManager.selector(IpEntity.class).where("ip", "=", ip).count();
+            IpEntity entity = new IpEntity();
+            entity.setIp(ip);
+            if (count <= 0) {
+                dbManager.save(entity);
+            }
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
      * 获取所有手机号
      *
      * @return
@@ -50,6 +73,25 @@ public class DbUtils {
             return null;
         try {
             return dbManager.findAll(PhoneEntity.class);
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * 获取所有Ip
+     *
+     * @return
+     */
+    public static List<IpEntity> getAllIps() {
+        DbManager dbManager = DbHelper
+                .getInstance()
+                .getDbManager();
+        if (dbManager == null)
+            return null;
+        try {
+            return dbManager.findAll(IpEntity.class);
         } catch (DbException e) {
             e.printStackTrace();
         }

@@ -3,15 +3,22 @@ package me.zhouzhuo810.zzapidoc.ui.act;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import me.zhouzhuo810.zzapidoc.R;
 import me.zhouzhuo810.zzapidoc.ZApplication;
 import me.zhouzhuo810.zzapidoc.common.api.Api;
+import me.zhouzhuo810.zzapidoc.common.api.entity.IpEntity;
+import me.zhouzhuo810.zzapidoc.common.api.entity.PhoneEntity;
 import me.zhouzhuo810.zzapidoc.common.base.BaseActivity;
+import me.zhouzhuo810.zzapidoc.common.db.DbUtils;
 import me.zhouzhuo810.zzapidoc.common.utils.SharedUtil;
 import me.zhouzhuo810.zzapidoc.common.utils.ToastUtils;
 
@@ -23,7 +30,7 @@ public class SettingServerActivity extends BaseActivity {
 
     private RelativeLayout rlBack;
     private RelativeLayout rlRight;
-    private EditText etIp;
+    private AutoCompleteTextView etIp;
     private ImageView ivClearIp;
     private Button btnSave;
 
@@ -41,7 +48,7 @@ public class SettingServerActivity extends BaseActivity {
     public void initView() {
         rlBack = (RelativeLayout) findViewById(R.id.rl_back);
         rlRight = (RelativeLayout) findViewById(R.id.rl_right);
-        etIp = (EditText) findViewById(R.id.et_ip);
+        etIp = (AutoCompleteTextView) findViewById(R.id.et_ip);
         ivClearIp = (ImageView) findViewById(R.id.iv_clear_ip);
         btnSave = (Button) findViewById(R.id.btn_save);
     }
@@ -52,6 +59,23 @@ public class SettingServerActivity extends BaseActivity {
         if (ip != null) {
             etIp.setText(ip);
         }
+        initAuto();
+    }
+
+    private void initAuto() {
+        List<IpEntity> allIps = DbUtils.getAllIps();
+        List<String> phones = generateIps(allIps);
+        etIp.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, phones));
+    }
+
+    private List<String> generateIps(List<IpEntity> allPhones) {
+        List<String> p = new ArrayList<>();
+        if (allPhones != null) {
+            for (IpEntity allPhone : allPhones) {
+                p.add(allPhone.getIp());
+            }
+        }
+        return p;
     }
 
     @Override
@@ -76,6 +100,7 @@ public class SettingServerActivity extends BaseActivity {
                     ToastUtils.showCustomBgToast("IP地址必须以'/'结尾");
                     return;
                 }
+                DbUtils.saveIp(ip);
                 SharedUtil.putString(ZApplication.getInstance(), "server_config", ip);
                 Api.clearApi0();
                 Api.getApi0();
