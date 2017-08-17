@@ -49,6 +49,10 @@ public class RequestArgListAdapter extends CommonAdapter<GetRequestArgResult.Dat
                 //file
                 holder.setText(R.id.tv_type, "file");
                 break;
+            case 8:
+                //array[number]
+                holder.setText(R.id.tv_type, "array[number]");
+                break;
             default:
                 holder.setText(R.id.tv_type, "未知");
                 break;
