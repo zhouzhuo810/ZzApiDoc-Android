@@ -153,7 +153,7 @@ public class AddRequestParamsActivity extends BaseActivity {
 
     private void chooseType() {
         show = true;
-        showListDialog(Arrays.asList("string", "number", "object", "array[object]", "array[string]"), true, new DialogInterface.OnDismissListener() {
+        showListDialog(Arrays.asList("string","number","object","array[object]","array[string]","array","file", "unknown", "array[number]"), true, new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialog) {
                 show = false;
