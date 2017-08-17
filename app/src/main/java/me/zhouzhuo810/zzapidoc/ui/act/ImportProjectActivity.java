@@ -60,6 +60,14 @@ public class ImportProjectActivity extends BaseActivity {
 
     @Override
     public void initEvent() {
+
+        rlBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                closeAct();
+            }
+        });
+
         rlRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
