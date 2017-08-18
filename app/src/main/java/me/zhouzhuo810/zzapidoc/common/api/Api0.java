@@ -1,5 +1,8 @@
 package me.zhouzhuo810.zzapidoc.common.api;
 
+import java.util.List;
+
+import me.zhouzhuo810.zzapidoc.common.api.entity.AddApplicationResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.AddDictionaryResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.AddInterfaceExampleResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.AddInterfaceGroupResult;
@@ -7,12 +10,14 @@ import me.zhouzhuo810.zzapidoc.common.api.entity.AddInterfaceResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.AddProjectResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.AddRequestHeaderResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.AddResponseArgResult;
+import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteApplicationResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteArgResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteInterfaceGroupResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteInterfaceResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteProjectResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteRequestHeaderResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GenerateEmptyExampleResult;
+import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllApplicationResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllInterfaceGroupResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllInterfaceResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllProjectResult;
@@ -29,10 +34,14 @@ import me.zhouzhuo810.zzapidoc.common.api.entity.UpdateResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.UpdateUserPasswordResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.UserLoginResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.UserRegisterResult;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Query;
 import rx.Observable;
 
@@ -292,4 +301,38 @@ public interface Api0 {
             @Query("userId") String userId,
             @Query("interfaceId") String interfaceId
     );
+
+    /*添加应用*/
+    @Multipart
+    @POST("/ZzApiDoc/v1/application/addApplication")
+    Observable<AddApplicationResult> addApplication(
+            @Part("appName") RequestBody appName,
+            @Part("versionName") RequestBody versionName,
+            @Part("packageName") RequestBody packageName,
+            @Part("logo") RequestBody logo,
+            @Part("colorMain") RequestBody colorMain,
+            @Part("minSDK") RequestBody minSDK,
+            @Part("compileSDK") RequestBody compileSDK,
+            @Part("targetSDK") RequestBody targetSDK,
+            @Part("versionCode") RequestBody versionCode,
+            @Part("multiDex") RequestBody multiDex,
+            @Part("minifyEnabled") RequestBody minifyEnabled,
+            @Part("apiId") RequestBody apiId,
+            @Part("userId") RequestBody userId
+    );
+
+    /*获取application列表*/
+    @GET("/ZzApiDoc/v1/application/getAllMyApplication")
+    Observable<GetAllApplicationResult> getAllMyApplication(
+            @Query("userId") String userId
+    );
+
+    /*删除应用*/
+    @FormUrlEncoded
+    @POST("/ZzApiDoc/v1/application/deleteApplication")
+    Observable<DeleteApplicationResult> deleteApplication(
+            @Field("userId") String userId,
+            @Field("id") String id
+    );
+
 }

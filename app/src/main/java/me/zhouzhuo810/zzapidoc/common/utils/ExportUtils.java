@@ -35,13 +35,60 @@ public class ExportUtils {
      * @param fileName
      * @param listener
      */
-    public static void exportToJsonFile(Context context, String userId, String projectId, String filePath, String fileName, final ProgressListener listener) {
+    public static void exportDocToJsonFile(Context context, String userId, String projectId, String filePath, String fileName, final ProgressListener listener) {
         File file = new File(filePath);
         if (!file.exists()) {
             file.mkdirs();
         }
 
         String url = SharedUtil.getString(ZApplication.getInstance(), "server_config")+"/ZzApiDoc/v1/interface/downloadJson?userId="+userId+"&projectId="+projectId;
+        if (listener != null) {
+            listener.onStart();
+        }
+        OkGo.<File> get(url)
+                .tag(context)
+                .execute(new FileCallback(filePath, fileName) {
+                    @Override
+                    public void onSuccess(Response<File> response) {
+                        if (listener != null) {
+                            listener.onOk();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Response<File> response) {
+                        super.onError(response);
+                        if (listener != null) {
+                            listener.onFail(response.getException() == null ? "" : response.getException().toString());
+                        }
+                    }
+
+                    @Override
+                    public void downloadProgress(Progress progress) {
+                        super.downloadProgress(progress);
+                        if (listener != null) {
+                            listener.onLoad((int) (progress.currentSize*100.0f/progress.totalSize+0.5f));
+                        }
+                    }
+                });
+
+    }
+
+    /**
+     * 导出JSON文件并下载工具
+     * @param userId
+     * @param appId
+     * @param filePath
+     * @param fileName
+     * @param listener
+     */
+    public static void exportAppToJsonFile(Context context, String userId, String appId, String filePath, String fileName, final ProgressListener listener) {
+        File file = new File(filePath);
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+
+        String url = SharedUtil.getString(ZApplication.getInstance(), "server_config")+"/ZzApiDoc/v1/interface/downloadAppJson?userId="+userId+"&appId="+appId;
         if (listener != null) {
             listener.onStart();
         }
@@ -88,6 +135,51 @@ public class ExportUtils {
             file.mkdirs();
         }
         String url = SharedUtil.getString(ZApplication.getInstance(), "server_config")+"/ZzApiDoc/v1/interface/downloadPdf?userId="+userId+"&projectId="+projectId;
+        if (listener != null) {
+            listener.onStart();
+        }
+        OkGo.<File> get(url)
+                .tag(context)
+                .execute(new FileCallback(filePath, fileName) {
+                    @Override
+                    public void onSuccess(Response<File> response) {
+                        if (listener != null) {
+                            listener.onOk();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Response<File> response) {
+                        super.onError(response);
+                        if (listener != null) {
+                            listener.onFail(response.getException() == null ? "" : response.getException().toString());
+                        }
+                    }
+
+                    @Override
+                    public void downloadProgress(Progress progress) {
+                        super.downloadProgress(progress);
+                        if (listener != null) {
+                            listener.onLoad((int) (progress.currentSize*100.0f/progress.totalSize+0.5f));
+                        }
+                    }
+                });
+
+    }
+    /**
+     * 导出Android项目文件并下载工具
+     * @param userId
+     * @param appId
+     * @param filePath
+     * @param fileName
+     * @param listener
+     */
+    public static void exportToAppZipFile(Context context, String userId, String appId, String filePath, String fileName, final ProgressListener listener) {
+        File file = new File(filePath);
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+        String url = SharedUtil.getString(ZApplication.getInstance(), "server_config")+"/ZzApiDoc/v1/interface/downloadAppZip?userId="+userId+"&appId="+appId;
         if (listener != null) {
             listener.onStart();
         }

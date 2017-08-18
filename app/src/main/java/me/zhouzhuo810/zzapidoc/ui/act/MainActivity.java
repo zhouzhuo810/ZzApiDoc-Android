@@ -18,20 +18,23 @@ import java.util.TimerTask;
 import me.zhouzhuo810.zzapidoc.R;
 import me.zhouzhuo810.zzapidoc.common.base.BaseActivity;
 import me.zhouzhuo810.zzapidoc.common.utils.ToastUtils;
+import me.zhouzhuo810.zzapidoc.ui.fgm.AppFragment;
 import me.zhouzhuo810.zzapidoc.ui.fgm.MeFragment;
 import me.zhouzhuo810.zzapidoc.ui.fgm.ProjectFragment;
 import rx.functions.Action1;
 
-public class MainActivity extends BaseActivity implements View.OnClickListener{
+public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     private int position;
 
     int[] tabPic = {
             R.drawable.ic_project,
+            R.drawable.ic_app,
             R.drawable.me
     };
     int[] tabPicPress = {
             R.drawable.ic_project_press,
+            R.drawable.ic_app_press,
             R.drawable.me_checked
     };
     String[] tabName;
@@ -40,14 +43,20 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     private boolean isExit = false;
 
     private ProjectFragment projectFragment;
+    private AppFragment appFragment;
     private MeFragment meFragment;
 
-    private LinearLayout llWork;
-    private LinearLayout llMe;
-    private ImageView ivWork;
-    private ImageView ivMe;
-    private TextView tvWork;
-    private TextView tvMe;
+    private LinearLayout llProject;
+    private ImageView ivImageProject;
+    private TextView tvNameProject;
+    private LinearLayout llApp;
+    private ImageView ivImageApp;
+    private TextView tvNameApp;
+    private LinearLayout llSetting;
+    private ImageView ivImageSetting;
+    private TextView tvNameSetting;
+
+
     private RxPermissions rxPermissions;
 
     @Override
@@ -56,6 +65,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         //TODO FIX ME 2016.09.22  by zz 重叠处理
         if (projectFragment == null && fragment instanceof ProjectFragment) {
             projectFragment = (ProjectFragment) fragment;
+        } else if (appFragment == null && fragment instanceof AppFragment) {
+            appFragment = (AppFragment) fragment;
         } else if (meFragment == null && fragment instanceof MeFragment) {
             meFragment = (MeFragment) fragment;
         }
@@ -76,20 +87,24 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     public void initView() {
         rxPermissions = new RxPermissions(this);
 
-        llWork = (LinearLayout) findViewById(R.id.ll_project);
-        llMe = (LinearLayout) findViewById(R.id.ll_setting);
-        ivWork = (ImageView) findViewById(R.id.tab_image_project);
-        ivMe = (ImageView) findViewById(R.id.tab_image_setting);
-        tvWork = (TextView) findViewById(R.id.tab_name_project);
-        tvMe = (TextView) findViewById(R.id.tab_name_setting);
+        llProject = (LinearLayout) findViewById(R.id.ll_project);
+        ivImageProject = (ImageView) findViewById(R.id.iv_image_project);
+        tvNameProject = (TextView) findViewById(R.id.tv_name_project);
+        llApp = (LinearLayout) findViewById(R.id.ll_app);
+        ivImageApp = (ImageView) findViewById(R.id.iv_image_app);
+        tvNameApp = (TextView) findViewById(R.id.tv_name_app);
+        llSetting = (LinearLayout) findViewById(R.id.ll_setting);
+        ivImageSetting = (ImageView) findViewById(R.id.iv_image_setting);
+        tvNameSetting = (TextView) findViewById(R.id.tv_name_setting);
     }
 
     @Override
     public void initData() {
         tabName = getResources().getStringArray(R.array.tab_name);
 
-        tvWork.setText(tabName[0]);
-        tvMe.setText(tabName[1]);
+        tvNameProject.setText(tabName[0]);
+        tvNameApp.setText(tabName[1]);
+        tvNameSetting.setText(tabName[2]);
 
         check(0);
         select(0);
@@ -112,8 +127,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
     @Override
     public void initEvent() {
-        llWork.setOnClickListener(this);
-        llMe.setOnClickListener(this);
+        llProject.setOnClickListener(this);
+        llApp.setOnClickListener(this);
+        llSetting.setOnClickListener(this);
     }
 
     @Override
@@ -133,18 +149,24 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
 
     public void check(int position) {
-        ivWork.setImageResource(tabPic[0]);
-        ivMe.setImageResource(tabPic[1]);
-        tvWork.setTextColor(getResources().getColor(R.color.colorTabNormal));
-        tvMe.setTextColor(getResources().getColor(R.color.colorTabNormal));
+        ivImageProject.setImageResource(tabPic[0]);
+        ivImageApp.setImageResource(tabPic[1]);
+        ivImageSetting.setImageResource(tabPic[2]);
+        tvNameProject.setTextColor(getResources().getColor(R.color.colorTabNormal));
+        tvNameApp.setTextColor(getResources().getColor(R.color.colorTabNormal));
+        tvNameSetting.setTextColor(getResources().getColor(R.color.colorTabNormal));
         switch (position) {
             case 0:
-                tvWork.setTextColor(getResources().getColor(R.color.colorTabPress));
-                ivWork.setImageResource(tabPicPress[0]);
+                tvNameProject.setTextColor(getResources().getColor(R.color.colorTabPress));
+                ivImageProject.setImageResource(tabPicPress[0]);
                 break;
             case 1:
-                tvMe.setTextColor(getResources().getColor(R.color.colorTabPress));
-                ivMe.setImageResource(tabPicPress[1]);
+                tvNameApp.setTextColor(getResources().getColor(R.color.colorTabPress));
+                ivImageApp.setImageResource(tabPicPress[1]);
+                break;
+            case 2:
+                tvNameSetting.setTextColor(getResources().getColor(R.color.colorTabPress));
+                ivImageSetting.setImageResource(tabPicPress[2]);
                 break;
         }
 
@@ -165,6 +187,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                 }
                 break;
             case 1:
+                if (appFragment == null) {
+                    appFragment = new AppFragment();
+                    ft.add(R.id.act_main_realtabcontent, appFragment);
+                } else {
+                    ft.attach(appFragment);
+                }
+                break;
+            case 2:
                 if (meFragment == null) {
                     meFragment = new MeFragment();
                     ft.add(R.id.act_main_realtabcontent, meFragment);
@@ -180,6 +210,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     private void hideFragment(FragmentTransaction ft) {
         if (projectFragment != null) {
             ft.detach(projectFragment);
+        }
+        if (appFragment != null) {
+            ft.detach(appFragment);
         }
         if (meFragment != null) {
             ft.detach(meFragment);
@@ -203,7 +236,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     }
 
 
-
     @Override
     public void saveState(Bundle bundle) {
 
@@ -224,11 +256,18 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                     position = 0;
                 }
                 break;
-            case R.id.ll_setting:
+            case R.id.ll_app:
                 if (position != 1) {
                     check(1);
                     select(1);
                     position = 1;
+                }
+                break;
+            case R.id.ll_setting:
+                if (position != 2) {
+                    check(2);
+                    select(2);
+                    position = 2;
                 }
                 break;
         }

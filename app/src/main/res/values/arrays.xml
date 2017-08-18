@@ -2,6 +2,7 @@
 <resources>
     <string-array name="tab_name">
         <item>项目</item>
+        <item>应用</item>
         <item>我</item>
     </string-array>
 </resources>

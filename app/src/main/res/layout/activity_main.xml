@@ -38,14 +38,14 @@
             android:paddingTop="5px">
 
             <ImageView
-                android:id="@+id/tab_image_project"
+                android:id="@+id/iv_image_project"
                 android:layout_width="@dimen/activity_tab_img_size"
                 android:layout_height="@dimen/activity_tab_img_size"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10px" />
 
             <TextView
-                android:id="@+id/tab_name_project"
+                android:id="@+id/tv_name_project"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5px"
@@ -53,7 +53,36 @@
                 android:textColor="@color/colorTabNormal"
                 android:textSize="@dimen/activity_tab_text_size" />
         </LinearLayout>
+        <LinearLayout
+            android:id="@+id/ll_app"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_weight="1"
+            android:background="@drawable/setting_item_bg_selector"
+            android:clickable="true"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingBottom="5px"
+            android:paddingTop="5px">
 
+            <ImageView
+                android:id="@+id/iv_image_app"
+                android:layout_width="@dimen/activity_tab_img_size"
+                android:layout_height="@dimen/activity_tab_img_size"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10px" />
+
+            <TextView
+                android:id="@+id/tv_name_app"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5px"
+                android:gravity="center"
+                android:textColor="@color/colorTabNormal"
+                android:textSize="@dimen/activity_tab_text_size" />
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/ll_setting"
@@ -70,14 +99,14 @@
             android:paddingTop="5px">
 
             <ImageView
-                android:id="@+id/tab_image_setting"
+                android:id="@+id/iv_image_setting"
                 android:layout_width="@dimen/activity_tab_img_size"
                 android:layout_height="@dimen/activity_tab_img_size"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10px" />
 
             <TextView
-                android:id="@+id/tab_name_setting"
+                android:id="@+id/tv_name_setting"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5px"

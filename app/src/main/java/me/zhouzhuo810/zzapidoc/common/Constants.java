@@ -11,7 +11,8 @@ import java.io.File;
 
 public class Constants {
 
-    public static final String SERVER_IP = "http://192.168.0.169:8080/";
+//    public static final String SERVER_IP = "http://192.168.0.169:8080/";
+    public static final String SERVER_IP = "http://192.168.0.191:8080/";
     //public static final String SERVER_IP = "http://125.118.59.1:8888/";
 
     public static final String PIC_HEAD = "http://www.qqwork.net/HighnetCloudFile/";
@@ -30,11 +31,17 @@ public class Constants {
 
     public static final String DBPATH = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "ZzApiDoc/Db"
             ;
-    public static final String EXPORT_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "ZzApiDoc/JSON/";
+    public static final String EXPORT_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "ZzApiDoc/JSON/Doc/";
+
+    public static final String EXPORT_ANDROID_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "ZzApiDoc/JSON/Android/";
 
     public static final String EXPORT_PDF_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "ZzApiDoc/PDF/";
 
+    public static final String EXPORT_ZIP_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "ZzApiDoc/APP/";
+
     public static final String PIC_UPLOAD_ROOT_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "ZzApiDoc/Image/Upload/";
+
+    public static final String PIC_CROP_ROOT_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "ZzApiDoc/Image/Crop/";
 
     public static final String DBNAME = "QWork.db";
 

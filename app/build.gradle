@@ -68,5 +68,6 @@ dependencies {
     //AndroidPickerView
     compile 'com.contrarywind:Android-PickerView:3.2.5'
 
+    compile 'com.github.yalantis:ucrop:2.2.1'
 
 }

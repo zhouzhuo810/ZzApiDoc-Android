@@ -20,8 +20,9 @@ import me.zhouzhuo810.zzapidoc.R;
 import me.zhouzhuo810.zzapidoc.ZApplication;
 import me.zhouzhuo810.zzapidoc.common.Constants;
 import me.zhouzhuo810.zzapidoc.common.api.Api;
+import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteApplicationResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteProjectResult;
-import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllProjectResult;
+import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllApplicationResult;
 import me.zhouzhuo810.zzapidoc.common.base.BaseActivity;
 import me.zhouzhuo810.zzapidoc.common.base.BaseFragment;
 import me.zhouzhuo810.zzapidoc.common.rx.RxHelper;
@@ -29,23 +30,23 @@ import me.zhouzhuo810.zzapidoc.common.utils.CopyUtils;
 import me.zhouzhuo810.zzapidoc.common.utils.ExportUtils;
 import me.zhouzhuo810.zzapidoc.common.utils.SharedUtil;
 import me.zhouzhuo810.zzapidoc.common.utils.ToastUtils;
-import me.zhouzhuo810.zzapidoc.ui.act.AddProjectActivity;
+import me.zhouzhuo810.zzapidoc.ui.act.ActivityManageActivity;
+import me.zhouzhuo810.zzapidoc.ui.act.AddApplicationActivity;
 import me.zhouzhuo810.zzapidoc.ui.act.AddRequestHeaderActivity;
 import me.zhouzhuo810.zzapidoc.ui.act.AddRequestParamsActivity;
 import me.zhouzhuo810.zzapidoc.ui.act.AddResponseParamsActivity;
-import me.zhouzhuo810.zzapidoc.ui.act.InterfaceGroupManageActivity;
-import me.zhouzhuo810.zzapidoc.ui.adapter.ProjectListAdapter;
+import me.zhouzhuo810.zzapidoc.ui.adapter.ApplicationListAdapter;
 import rx.Subscriber;
 
 /**
  * Created by zhouzhuo810 on 2017/7/21.
  */
 
-public class ProjectFragment extends BaseFragment {
+public class AppFragment extends BaseFragment {
 
-    private ProjectListAdapter adapter;
+    private ApplicationListAdapter adapter;
 
-    private List<GetAllProjectResult.DataEntity> list;
+    private List<GetAllApplicationResult.DataBean> list;
     private SwipeRefreshLayout refresh;
     private ListView lv;
     private TextView tvNoData;
@@ -53,7 +54,7 @@ public class ProjectFragment extends BaseFragment {
 
     @Override
     public int getLayoutId() {
-        return R.layout.fgm_project;
+        return R.layout.fgm_app;
     }
 
     @Override
@@ -64,7 +65,7 @@ public class ProjectFragment extends BaseFragment {
         tvNoData = (TextView) rootView.findViewById(R.id.tv_no_data);
 
         list = new ArrayList<>();
-        adapter = new ProjectListAdapter(getActivity(), list, R.layout.list_item_my_project, true);
+        adapter = new ApplicationListAdapter(getActivity(), list, R.layout.list_item_my_application, true);
         lv.setAdapter(adapter);
     }
 
@@ -74,9 +75,9 @@ public class ProjectFragment extends BaseFragment {
 
     private void getData() {
         Api.getApi0()
-                .getAllProject(getUserId())
-                .compose(RxHelper.<GetAllProjectResult>io_main())
-                .subscribe(new Subscriber<GetAllProjectResult>() {
+                .getAllMyApplication(getUserId())
+                .compose(RxHelper.<GetAllApplicationResult>io_main())
+                .subscribe(new Subscriber<GetAllApplicationResult>() {
                     @Override
                     public void onCompleted() {
 
@@ -89,7 +90,7 @@ public class ProjectFragment extends BaseFragment {
                     }
 
                     @Override
-                    public void onNext(GetAllProjectResult getAllProjectResult) {
+                    public void onNext(GetAllApplicationResult getAllProjectResult) {
                         getBaseAct().stopRefresh(refresh);
                         if (getAllProjectResult.getCode() == 1) {
                             list = getAllProjectResult.getData();
@@ -120,7 +121,7 @@ public class ProjectFragment extends BaseFragment {
         rlRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), AddProjectActivity.class);
+                Intent intent = new Intent(getActivity(), AddApplicationActivity.class);
                 getBaseAct().startActWithIntent(intent);
             }
         });
@@ -128,7 +129,7 @@ public class ProjectFragment extends BaseFragment {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getActivity(), InterfaceGroupManageActivity.class);
+                Intent intent = new Intent(getActivity(), ActivityManageActivity.class);
                 intent.putExtra("projectId", adapter.getmDatas().get(position).getId());
                 getBaseAct().startActWithIntent(intent);
             }
@@ -137,8 +138,7 @@ public class ProjectFragment extends BaseFragment {
         lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
-                getBaseAct().showListDialog(Arrays.asList("导出JSON文件", "导出PDF文件", "复制JSON下载地址", "复制PDF下载地址", "添加全局请求头", "添加全局请求参数",
-                        "添加全局返回参数", "删除项目"), true, null, new BaseActivity.OnItemClick() {
+                getBaseAct().showListDialog(Arrays.asList("导出JSON文件", "导出项目文件", "复制JSON下载地址", "复制项目下载地址", "删除项目"), true, null, new BaseActivity.OnItemClick() {
                     @Override
                     public void onItemClick(int pos, String content) {
                         switch (pos) {
@@ -146,24 +146,15 @@ public class ProjectFragment extends BaseFragment {
                                 exportJson(adapter.getmDatas().get(position).getId());
                                 break;
                             case 1:
-                                exportPdf(adapter.getmDatas().get(position).getId());
+                                exportApp(adapter.getmDatas().get(position).getId());
                                 break;
                             case 2:
-                                copy(adapter.getmDatas().get(position).getName(), SharedUtil.getString(ZApplication.getInstance(), "server_config") + "ZzApiDoc/v1/interface/downloadJson?userId=" + getUserId() + "&projectId=" + adapter.getmDatas().get(position).getId());
+                                copy(adapter.getmDatas().get(position).getAppName(), SharedUtil.getString(ZApplication.getInstance(), "server_config") + "ZzApiDoc/v1/interface/downloadAppJson?userId=" + getUserId() + "&projectId=" + adapter.getmDatas().get(position).getId());
                                 break;
                             case 3:
-                                copy(adapter.getmDatas().get(position).getName(), SharedUtil.getString(ZApplication.getInstance(), "server_config") + "ZzApiDoc/v1/interface/downloadPdf?userId=" + getUserId() + "&projectId=" + adapter.getmDatas().get(position).getId());
+                                copy(adapter.getmDatas().get(position).getAppName(), SharedUtil.getString(ZApplication.getInstance(), "server_config") + "ZzApiDoc/v1/interface/downloadAppZip?userId=" + getUserId() + "&projectId=" + adapter.getmDatas().get(position).getId());
                                 break;
                             case 4:
-                                addGlobalRequestHeader(adapter.getmDatas().get(position).getId());
-                                break;
-                            case 5:
-                                addGlobalRequestArg(adapter.getmDatas().get(position).getId());
-                                break;
-                            case 6:
-                                addGlobalResponseArg(adapter.getmDatas().get(position).getId());
-                                break;
-                            case 7:
                                 deleteProject(adapter.getmDatas().get(position).getId());
                                 break;
                         }
@@ -175,14 +166,14 @@ public class ProjectFragment extends BaseFragment {
     }
 
     private void deleteProject(final String projectId) {
-        getBaseAct().showTwoBtnDialog("删除项目", "确定删除吗？", true, new BaseActivity.OnTwoBtnClick() {
+        getBaseAct().showTwoBtnDialog("删除应用", "确定删除吗？", true, new BaseActivity.OnTwoBtnClick() {
             @Override
             public void onOk() {
                 getBaseAct().showPd(getString(R.string.submiting_text), false);
                 Api.getApi0()
-                        .deleteProject(projectId, getUserId())
-                        .compose(RxHelper.<DeleteProjectResult>io_main())
-                        .subscribe(new Subscriber<DeleteProjectResult>() {
+                        .deleteApplication(projectId, getUserId())
+                        .compose(RxHelper.<DeleteApplicationResult>io_main())
+                        .subscribe(new Subscriber<DeleteApplicationResult>() {
                             @Override
                             public void onCompleted() {
 
@@ -195,7 +186,7 @@ public class ProjectFragment extends BaseFragment {
                             }
 
                             @Override
-                            public void onNext(DeleteProjectResult deleteProjectResult) {
+                            public void onNext(DeleteApplicationResult deleteProjectResult) {
                                 getBaseAct().hidePd();
                                 ToastUtils.showCustomBgToast(deleteProjectResult.getMsg());
                                 if (deleteProjectResult.getCode() == 1) {
@@ -213,32 +204,6 @@ public class ProjectFragment extends BaseFragment {
         });
     }
 
-    private void addGlobalRequestHeader(String projectId) {
-        Intent intent = new Intent(getActivity(), AddRequestHeaderActivity.class);
-        intent.putExtra("projectId", projectId);
-        intent.putExtra("interfaceId", "");
-        intent.putExtra("global", true);
-        getBaseAct().startActWithIntent(intent);
-    }
-
-    private void addGlobalRequestArg(String projectId) {
-        Intent intent = new Intent(getActivity(), AddRequestParamsActivity.class);
-        intent.putExtra("projectId", projectId);
-        intent.putExtra("groupId", "");
-        intent.putExtra("interfaceId", "");
-        intent.putExtra("global", true);
-        getBaseAct().startActWithIntent(intent);
-    }
-
-    private void addGlobalResponseArg(String projectId) {
-        Intent intent = new Intent(getActivity(), AddResponseParamsActivity.class);
-        intent.putExtra("projectId", projectId);
-        intent.putExtra("groupId", "");
-        intent.putExtra("interfaceId", "");
-        intent.putExtra("global", true);
-        getBaseAct().startActWithIntent(intent);
-    }
-
     private void copy(String name, String s) {
         CopyUtils.copyPlainText(getActivity(), name, s);
         ToastUtils.showCustomBgToast("已复制到剪切板");
@@ -246,7 +211,7 @@ public class ProjectFragment extends BaseFragment {
 
     private void exportJson(String id) {
         final String name = System.currentTimeMillis() + ".txt";
-        ExportUtils.exportDocToJsonFile(getActivity(), getUserId(), id, Constants.EXPORT_PATH, name, new ExportUtils.ProgressListener() {
+        ExportUtils.exportAppToJsonFile(getActivity(), getUserId(), id, Constants.EXPORT_ANDROID_PATH, name, new ExportUtils.ProgressListener() {
             TextView tv;
             ProgressBar pb;
 
@@ -290,14 +255,14 @@ public class ProjectFragment extends BaseFragment {
             public void onOk() {
                 Log.e("TTT", "ok");
                 getBaseAct().hideUpdateDialog();
-                ToastUtils.showCustomBgToast("文件已保存到" + Constants.EXPORT_PATH + name);
+                ToastUtils.showCustomBgToast("文件已保存到" + Constants.EXPORT_ANDROID_PATH + name);
             }
         });
     }
 
-    private void exportPdf(String id) {
-        final String name = System.currentTimeMillis() + ".pdf";
-        ExportUtils.exportToPdfFile(getActivity(), getUserId(), id, Constants.EXPORT_PDF_PATH, name, new ExportUtils.ProgressListener() {
+    private void exportApp(String id) {
+        final String name = System.currentTimeMillis() + ".zip";
+        ExportUtils.exportToAppZipFile(getActivity(), getUserId(), id, Constants.EXPORT_ZIP_PATH, name, new ExportUtils.ProgressListener() {
             TextView tv;
             ProgressBar pb;
 
@@ -341,7 +306,7 @@ public class ProjectFragment extends BaseFragment {
             public void onOk() {
                 Log.e("TTT", "ok");
                 getBaseAct().hideUpdateDialog();
-                ToastUtils.showCustomBgToast("文件已保存到" + Constants.EXPORT_PDF_PATH + name);
+                ToastUtils.showCustomBgToast("文件已保存到" + Constants.EXPORT_ZIP_PATH + name);
             }
         });
     }
