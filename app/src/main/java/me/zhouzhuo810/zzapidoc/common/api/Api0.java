@@ -10,6 +10,7 @@ import me.zhouzhuo810.zzapidoc.common.api.entity.AddInterfaceResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.AddProjectResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.AddRequestHeaderResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.AddResponseArgResult;
+import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteActivityResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteApplicationResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteArgResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteInterfaceGroupResult;
@@ -20,6 +21,7 @@ import me.zhouzhuo810.zzapidoc.common.api.entity.GenerateEmptyExampleResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllApplicationResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllInterfaceGroupResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllInterfaceResult;
+import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllMyActivityResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllProjectResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetDictionaryResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetInterfaceDetailsResult;
@@ -302,25 +304,6 @@ public interface Api0 {
             @Query("interfaceId") String interfaceId
     );
 
-    /*添加应用*/
-    @Multipart
-    @POST("/ZzApiDoc/v1/application/addApplication")
-    Observable<AddApplicationResult> addApplication(
-            @Part("appName") RequestBody appName,
-            @Part("versionName") RequestBody versionName,
-            @Part("packageName") RequestBody packageName,
-            @Part("logo") RequestBody logo,
-            @Part("colorMain") RequestBody colorMain,
-            @Part("minSDK") RequestBody minSDK,
-            @Part("compileSDK") RequestBody compileSDK,
-            @Part("targetSDK") RequestBody targetSDK,
-            @Part("versionCode") RequestBody versionCode,
-            @Part("multiDex") RequestBody multiDex,
-            @Part("minifyEnabled") RequestBody minifyEnabled,
-            @Part("apiId") RequestBody apiId,
-            @Part("userId") RequestBody userId
-    );
-
     /*获取application列表*/
     @GET("/ZzApiDoc/v1/application/getAllMyApplication")
     Observable<GetAllApplicationResult> getAllMyApplication(
@@ -333,6 +316,20 @@ public interface Api0 {
     Observable<DeleteApplicationResult> deleteApplication(
             @Field("userId") String userId,
             @Field("id") String id
+    );
+
+    @GET("/ZzApiDoc/v1/activity/getAllMyActivity")
+    Observable<GetAllMyActivityResult> getAllMyActivity(
+            @Query("appId") String appId,
+            @Query("userId") String userId
+    );
+
+
+    @FormUrlEncoded
+    @POST("/ZzApiDoc/v1/activity/deleteActivity")
+    Observable<DeleteActivityResult> deleteActivity(
+            @Field("id") String id,
+            @Field("userId") String userId
     );
 
 }

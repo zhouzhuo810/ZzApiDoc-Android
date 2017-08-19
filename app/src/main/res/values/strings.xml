@@ -154,4 +154,20 @@
     <string name="app_name_not_nul_text">应用名称不能为空</string>
     <string name="activity_manage_text">Activity管理</string>
     <string name="fragment_manage_text">Fragment管理</string>
+    <string name="add_activity_text">新建Activity</string>
+    <string name="act_name_text">名称</string>
+    <string name="act_name_hint_text">请输入Activity的名称</string>
+    <string name="act_title_text">标题</string>
+    <string name="act_title_hint_text">请输入Activity的标题</string>
+    <string name="act_type_text">类型</string>
+    <string name="choose_act_type_hint">请选择Activity的类型</string>
+    <string name="show_title_text">显示标题</string>
+    <string name="choose_show_title_hint">是否显示标题</string>
+    <string name="act_splash_text">启动图片</string>
+    <string name="splash_duration_text">启动时间(秒)</string>
+    <string name="splash_duration_hint_text">请输入欢迎界面停留时间</string>
+    <string name="target_act_text">跳转页面</string>
+    <string name="target_act_hint_text">请选择跳转的Activity</string>
+    <string name="choose_target_act_hint">请选择跳转的Activity</string>
+    <string name="widget_manage_text">控件管理</string>
 </resources>

@@ -16,19 +16,20 @@ import java.util.List;
 
 import me.zhouzhuo810.zzapidoc.R;
 import me.zhouzhuo810.zzapidoc.common.api.Api;
+import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteActivityResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteInterfaceGroupResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllInterfaceGroupResult;
+import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllMyActivityResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.UpdateInterfaceResult;
 import me.zhouzhuo810.zzapidoc.common.base.BaseActivity;
 import me.zhouzhuo810.zzapidoc.common.rx.RxHelper;
 import me.zhouzhuo810.zzapidoc.common.utils.ToastUtils;
-import me.zhouzhuo810.zzapidoc.ui.adapter.InterfaceGroupListAdapter;
+import me.zhouzhuo810.zzapidoc.ui.adapter.ActivityListAdapter;
 import rx.Subscriber;
 
 /**
  * Created by zhouzhuo810 on 2017/8/11.
  */
-
 public class ActivityManageActivity extends BaseActivity {
 
     private RelativeLayout rlBack;
@@ -36,10 +37,10 @@ public class ActivityManageActivity extends BaseActivity {
     private SwipeRefreshLayout refresh;
     private ListView lv;
     private TextView tvNoData;
-    private String projectId;
-    private List<GetAllInterfaceGroupResult.DataBean> list;
-    private InterfaceGroupListAdapter adapter;
-
+    private String appId;
+    private List<GetAllMyActivityResult.DataBean> list;
+    private ActivityListAdapter adapter;
+    private boolean choose;
 
     @Override
     public int getLayoutId() {
@@ -60,21 +61,22 @@ public class ActivityManageActivity extends BaseActivity {
         tvNoData = (TextView) findViewById(R.id.tv_no_data);
 
         list = new ArrayList<>();
-        adapter = new InterfaceGroupListAdapter(this, list, R.layout.list_item_interface_group, true);
+        adapter = new ActivityListAdapter(this, list, R.layout.list_item_interface_group, true);
         lv.setAdapter(adapter);
     }
 
     @Override
     public void initData() {
-        projectId = getIntent().getStringExtra("projectId");
+        appId = getIntent().getStringExtra("appId");
+        choose = getIntent().getBooleanExtra("choose", false);
     }
 
     private void getData() {
 
         Api.getApi0()
-                .getAllInterfaceGroup(projectId, getUserId())
-                .compose(RxHelper.<GetAllInterfaceGroupResult>io_main())
-                .subscribe(new Subscriber<GetAllInterfaceGroupResult>() {
+                .getAllMyActivity(appId, getUserId())
+                .compose(RxHelper.<GetAllMyActivityResult>io_main())
+                .subscribe(new Subscriber<GetAllMyActivityResult>() {
                     @Override
                     public void onCompleted() {
 
@@ -86,7 +88,7 @@ public class ActivityManageActivity extends BaseActivity {
                     }
 
                     @Override
-                    public void onNext(GetAllInterfaceGroupResult getAllInterfaceGroupResult) {
+                    public void onNext(GetAllMyActivityResult getAllInterfaceGroupResult) {
                         stopRefresh(refresh);
                         if (getAllInterfaceGroupResult.getCode() == 1) {
                             list = getAllInterfaceGroupResult.getData();
@@ -114,8 +116,8 @@ public class ActivityManageActivity extends BaseActivity {
         rlRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ActivityManageActivity.this, AddInterfaceGroupActivity.class);
-                intent.putExtra("projectId", projectId);
+                Intent intent = new Intent(ActivityManageActivity.this, AddActivityActivity.class);
+                intent.putExtra("appId", appId);
                 startActWithIntent(intent);
             }
         });
@@ -124,25 +126,30 @@ public class ActivityManageActivity extends BaseActivity {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(ActivityManageActivity.this, InterfaceManageActivity.class);
-                intent.putExtra("projectId", projectId);
-                intent.putExtra("groupId", adapter.getmDatas().get(position).getId());
-                startActWithIntent(intent);
+                if (choose) {
+                    Intent intent = new Intent();
+                    intent.putExtra("id", adapter.getmDatas().get(position).getId());
+                    intent.putExtra("name", adapter.getmDatas().get(position).getName());
+                    setResult(RESULT_OK, intent);
+                    closeAct();
+                } else {
+                    Intent intent = new Intent(ActivityManageActivity.this, WidgetManageActivity.class);
+                    intent.putExtra("appId", appId);
+                    intent.putExtra("groupId", adapter.getmDatas().get(position).getId());
+                    startActWithIntent(intent);
+                }
             }
         });
 
         lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
-                showListDialog(Arrays.asList("删除接口", "修改接口地址"), true, null, new OnItemClick() {
+                showListDialog(Arrays.asList("删除Activity"), true, null, new OnItemClick() {
                     @Override
                     public void onItemClick(int pos, String content) {
                         switch (pos) {
                             case 0:
-                                deleteGroup(adapter.getmDatas().get(position).getId());
-                                break;
-                            case 1:
-                                changeIpAddr(adapter.getmDatas().get(position));
+                                deleteActivity(adapter.getmDatas().get(position).getId());
                                 break;
                         }
                     }
@@ -159,27 +166,12 @@ public class ActivityManageActivity extends BaseActivity {
         });
     }
 
-    private void changeIpAddr(final GetAllInterfaceGroupResult.DataBean group) {
-        showTwoBtnEditDialog("修改接口地址", "请输入新的接口地址", group.getIp(), false, new OnTwoBtnEditClick() {
-            @Override
-            public void onOk(String content) {
-                group.setIp(content);
-                updateGroup(group);
-            }
-
-            @Override
-            public void onCancel() {
-
-            }
-        });
-    }
-
-    private void updateGroup(GetAllInterfaceGroupResult.DataBean group) {
+    private void deleteActivity(String id) {
         showPd(getString(R.string.submiting_text), false);
         Api.getApi0()
-                .updateInterfaceGroup(group.getId(), group.getName(), projectId, group.getIp(), getUserId())
-                .compose(RxHelper.<UpdateInterfaceResult>io_main())
-                .subscribe(new Subscriber<UpdateInterfaceResult>() {
+                .deleteActivity(id, getUserId())
+                .compose(RxHelper.<DeleteActivityResult>io_main())
+                .subscribe(new Subscriber<DeleteActivityResult>() {
                     @Override
                     public void onCompleted() {
 
@@ -192,36 +184,7 @@ public class ActivityManageActivity extends BaseActivity {
                     }
 
                     @Override
-                    public void onNext(UpdateInterfaceResult updateInterfaceResult) {
-                        hidePd();
-                        ToastUtils.showCustomBgToast(updateInterfaceResult.getMsg());
-                        if (updateInterfaceResult.getCode() == 1) {
-                            startRefresh(refresh);
-                            getData();
-                        }
-                    }
-                });
-    }
-
-    private void deleteGroup(String id) {
-        showPd(getString(R.string.submiting_text), false);
-        Api.getApi0()
-                .deleteInterfaceGroup(id, getUserId())
-                .compose(RxHelper.<DeleteInterfaceGroupResult>io_main())
-                .subscribe(new Subscriber<DeleteInterfaceGroupResult>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        hidePd();
-                        ToastUtils.showCustomBgToast(getString(R.string.no_net_text) + e.toString());
-                    }
-
-                    @Override
-                    public void onNext(DeleteInterfaceGroupResult deleteInterfaceGroupResult) {
+                    public void onNext(DeleteActivityResult deleteInterfaceGroupResult) {
                         hidePd();
                         ToastUtils.showCustomBgToast(deleteInterfaceGroupResult.getMsg());
                         if (deleteInterfaceGroupResult.getCode() == 1) {

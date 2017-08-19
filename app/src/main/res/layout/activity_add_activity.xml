@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorGrayBg"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/activity_title_height"
+        android:background="@color/colorMain">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/add_activity_text"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/activity_title_text_size" />
+
+        <RelativeLayout
+            android:id="@+id/rl_back"
+            android:layout_width="160px"
+            android:layout_height="match_parent"
+            android:background="@drawable/btn_main_selector"
+            android:clickable="true">
+
+            <ImageView
+                android:layout_width="80px"
+                android:layout_height="80px"
+                android:layout_centerInParent="true"
+                android:src="@drawable/back" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_right"
+            android:layout_width="200px"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/btn_main_selector"
+            android:clickable="true"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="@string/import_json_text"
+                android:textColor="@color/colorWhite"
+                android:textSize="40px" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_splash"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:gravity="bottom"
+        android:orientation="horizontal"
+        android:paddingBottom="20px"
+        android:paddingTop="20px"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40px"
+            android:layout_weight="1"
+            android:gravity="center|left"
+            android:text="@string/act_splash_text"
+            android:textColor="#415868"
+            android:textSize="44px" />
+
+        <ImageView
+            android:id="@+id/iv_splash"
+            android:layout_width="200px"
+            android:layout_height="200px"
+            android:layout_marginLeft="40px"
+            android:layout_marginRight="40px"
+            android:src="@drawable/ic_add"
+            app:layout_auto_baseheight="width" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_splash_duration"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:gravity="center_vertical"
+        android:minHeight="130px"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="280px"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40px"
+            android:gravity="center|left"
+            android:text="@string/splash_duration_text"
+            android:textColor="#415868"
+            android:textSize="44px" />
+
+        <EditText
+            android:id="@+id/et_splash_duration"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30px"
+            android:layout_marginRight="30px"
+            android:layout_weight="1"
+            android:background="@null"
+            android:gravity="right|center_vertical"
+            android:hint="@string/splash_duration_hint_text"
+            android:inputType="number"
+            android:text="4"
+            android:textColor="@color/colorBlack"
+            android:textSize="44px" />
+
+        <ImageView
+            android:id="@+id/iv_clear_splash_duration"
+            android:layout_width="60px"
+            android:layout_height="60px"
+            android:layout_marginRight="30px"
+            android:src="@drawable/clear"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginLeft="30px"
+        android:background="@color/colorGrayBg" />
+
+    <LinearLayout
+        android:id="@+id/ll_target_act"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/setting_item_bg_selector"
+        android:clickable="true"
+        android:gravity="center_vertical"
+        android:minHeight="130px"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="280px"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40px"
+            android:gravity="center|left"
+            android:text="@string/target_act_text"
+            android:textColor="#415868"
+            android:textSize="44px" />
+
+        <TextView
+            android:id="@+id/tv_target_act"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30px"
+            android:layout_marginRight="30px"
+            android:layout_weight="1"
+            android:background="@null"
+            android:gravity="right|center_vertical"
+            android:hint="@string/choose_target_act_hint"
+            android:textColor="@color/colorBlack"
+            android:textSize="44px" />
+
+        <ImageView
+            android:layout_width="40px"
+            android:layout_height="40px"
+            android:layout_marginRight="30px"
+            android:src="@drawable/more" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginLeft="30px"
+        android:background="@color/colorGrayBg" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:gravity="center_vertical"
+        android:minHeight="130px"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="280px"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40px"
+            android:gravity="center|left"
+            android:text="@string/act_name_text"
+            android:textColor="#415868"
+            android:textSize="44px" />
+
+        <EditText
+            android:id="@+id/et_act_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30px"
+            android:layout_marginRight="30px"
+            android:layout_weight="1"
+            android:background="@null"
+            android:gravity="right|center_vertical"
+            android:hint="@string/act_name_hint_text"
+            android:textColor="@color/colorBlack"
+            android:textSize="44px" />
+
+        <ImageView
+            android:id="@+id/iv_clear_act_name"
+            android:layout_width="60px"
+            android:layout_height="60px"
+            android:layout_marginRight="30px"
+            android:src="@drawable/clear"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginLeft="30px"
+        android:background="@color/colorGrayBg" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:gravity="center_vertical"
+        android:minHeight="130px"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="280px"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40px"
+            android:gravity="center|left"
+            android:text="@string/act_title_text"
+            android:textColor="#415868"
+            android:textSize="44px" />
+
+        <EditText
+            android:id="@+id/et_act_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30px"
+            android:layout_marginRight="30px"
+            android:layout_weight="1"
+            android:background="@null"
+            android:gravity="right|center_vertical"
+            android:hint="@string/act_title_hint_text"
+            android:textColor="@color/colorBlack"
+            android:textSize="44px" />
+
+        <ImageView
+            android:id="@+id/iv_clear_act_title"
+            android:layout_width="60px"
+            android:layout_height="60px"
+            android:layout_marginRight="30px"
+            android:src="@drawable/clear"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginLeft="30px"
+        android:background="@color/colorGrayBg" />
+
+    <LinearLayout
+        android:id="@+id/ll_act_type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/setting_item_bg_selector"
+        android:clickable="true"
+        android:gravity="center_vertical"
+        android:minHeight="130px"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="280px"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40px"
+            android:gravity="center|left"
+            android:text="@string/act_type_text"
+            android:textColor="#415868"
+            android:textSize="44px" />
+
+        <TextView
+            android:id="@+id/tv_act_type"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30px"
+            android:layout_marginRight="30px"
+            android:layout_weight="1"
+            android:background="@null"
+            android:gravity="right|center_vertical"
+            android:hint="@string/choose_act_type_hint"
+            android:textColor="@color/colorBlack"
+            android:textSize="44px" />
+
+        <ImageView
+            android:layout_width="40px"
+            android:layout_height="40px"
+            android:layout_marginRight="30px"
+            android:src="@drawable/more" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginLeft="30px"
+        android:background="@color/colorGrayBg" />
+
+    <LinearLayout
+        android:id="@+id/ll_show_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/setting_item_bg_selector"
+        android:clickable="true"
+        android:gravity="center_vertical"
+        android:minHeight="130px"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="280px"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40px"
+            android:gravity="center|left"
+            android:text="@string/show_title_text"
+            android:textColor="#415868"
+            android:textSize="44px" />
+
+        <TextView
+            android:id="@+id/tv_show_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30px"
+            android:layout_marginRight="30px"
+            android:layout_weight="1"
+            android:background="@null"
+            android:gravity="right|center_vertical"
+            android:hint="@string/choose_show_title_hint"
+            android:textColor="@color/colorBlack"
+            android:textSize="44px" />
+
+        <ImageView
+            android:layout_width="40px"
+            android:layout_height="40px"
+            android:layout_marginRight="30px"
+            android:src="@drawable/more" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginLeft="30px"
+        android:background="@color/colorGrayBg" />
+
+    <Button
+        android:id="@+id/btn_submit"
+        android:layout_width="match_parent"
+        android:layout_height="120px"
+        android:layout_marginBottom="40px"
+        android:layout_marginLeft="30px"
+        android:layout_marginRight="30px"
+        android:layout_marginTop="40px"
+        android:background="@drawable/btn_save_selector"
+        android:gravity="center"
+        android:text="@string/submit_text"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/activity_title_text_size" />
+</LinearLayout>

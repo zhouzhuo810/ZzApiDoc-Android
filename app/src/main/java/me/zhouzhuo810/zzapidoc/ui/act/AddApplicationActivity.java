@@ -21,12 +21,14 @@ import android.widget.Toast;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
+import com.lzy.okgo.request.PostRequest;
 import com.yalantis.ucrop.UCrop;
 
 import java.io.File;
 import java.util.Arrays;
 
 import me.zhouzhuo810.zzapidoc.R;
+import me.zhouzhuo810.zzapidoc.ZApplication;
 import me.zhouzhuo810.zzapidoc.common.Constants;
 import me.zhouzhuo810.zzapidoc.common.api.Api;
 import me.zhouzhuo810.zzapidoc.common.api.JsonCallback;
@@ -34,6 +36,7 @@ import me.zhouzhuo810.zzapidoc.common.api.entity.AddApplicationResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.AddProjectResult;
 import me.zhouzhuo810.zzapidoc.common.base.BaseActivity;
 import me.zhouzhuo810.zzapidoc.common.rx.RxHelper;
+import me.zhouzhuo810.zzapidoc.common.utils.SharedUtil;
 import me.zhouzhuo810.zzapidoc.common.utils.ToastUtils;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -309,7 +312,8 @@ public class AddApplicationActivity extends BaseActivity {
             return;
         }
         showPd(getString(R.string.submiting_text), false);
-        OkGo.<AddApplicationResult>post(Constants.SERVER_IP + "/ZzApiDoc/v1/application/addApplication")
+        PostRequest<AddApplicationResult> post = OkGo.<AddApplicationResult>post(SharedUtil.getString(ZApplication.getInstance(), "server_config")
+                + "/ZzApiDoc/v1/application/addApplication")
                 .params("appName", name)
                 .params("versionName", versionName)
                 .params("packageName", packageName)
@@ -322,26 +326,28 @@ public class AddApplicationActivity extends BaseActivity {
                 .params("minifyEnabled", minify.equals("true"))
                 .params("apiId", apiId)
                 .params("userId", getUserId())
-                .params("logo", logoPath == null ? null : new File(logoPath))
-                .isMultipart(true)
-                .execute(new JsonCallback<AddApplicationResult>(AddApplicationResult.class) {
-                    @Override
-                    public void onSuccess(Response<AddApplicationResult> response) {
-                        AddApplicationResult body = response.body();
-                        hidePd();
-                        ToastUtils.showCustomBgToast(body.getMsg());
-                        if (body.getCode() == 1) {
-                            closeAct();
-                        }
-                    }
+                .isMultipart(true);
+        if (logoPath != null) {
+            post.params("logo", new File(logoPath));
+        }
+        post.execute(new JsonCallback<AddApplicationResult>(AddApplicationResult.class) {
+            @Override
+            public void onSuccess(Response<AddApplicationResult> response) {
+                AddApplicationResult body = response.body();
+                hidePd();
+                ToastUtils.showCustomBgToast(body.getMsg());
+                if (body.getCode() == 1) {
+                    closeAct();
+                }
+            }
 
-                    @Override
-                    public void onError(Response<AddApplicationResult> response) {
-                        super.onError(response);
-                        hidePd();
-                        ToastUtils.showCustomBgToast(getString(R.string.no_net_text) + response.getException() == null ? "" : response.getException().toString());
-                    }
-                });
+            @Override
+            public void onError(Response<AddApplicationResult> response) {
+                super.onError(response);
+                hidePd();
+                ToastUtils.showCustomBgToast(getString(R.string.no_net_text) + (response.getException() == null ? "" : response.getException().toString()));
+            }
+        });
     }
 
 
