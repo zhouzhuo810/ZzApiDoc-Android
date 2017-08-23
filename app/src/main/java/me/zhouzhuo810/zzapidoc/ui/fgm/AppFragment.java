@@ -21,7 +21,6 @@ import me.zhouzhuo810.zzapidoc.ZApplication;
 import me.zhouzhuo810.zzapidoc.common.Constants;
 import me.zhouzhuo810.zzapidoc.common.api.Api;
 import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteApplicationResult;
-import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteProjectResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllApplicationResult;
 import me.zhouzhuo810.zzapidoc.common.base.BaseActivity;
 import me.zhouzhuo810.zzapidoc.common.base.BaseFragment;
@@ -32,9 +31,6 @@ import me.zhouzhuo810.zzapidoc.common.utils.SharedUtil;
 import me.zhouzhuo810.zzapidoc.common.utils.ToastUtils;
 import me.zhouzhuo810.zzapidoc.ui.act.ActivityManageActivity;
 import me.zhouzhuo810.zzapidoc.ui.act.AddApplicationActivity;
-import me.zhouzhuo810.zzapidoc.ui.act.AddRequestHeaderActivity;
-import me.zhouzhuo810.zzapidoc.ui.act.AddRequestParamsActivity;
-import me.zhouzhuo810.zzapidoc.ui.act.AddResponseParamsActivity;
 import me.zhouzhuo810.zzapidoc.ui.adapter.ApplicationListAdapter;
 import rx.Subscriber;
 
@@ -149,10 +145,10 @@ public class AppFragment extends BaseFragment {
                                 exportApp(adapter.getmDatas().get(position).getId());
                                 break;
                             case 2:
-                                copy(adapter.getmDatas().get(position).getAppName(), SharedUtil.getString(ZApplication.getInstance(), "server_config") + "ZzApiDoc/v1/interface/downloadAppJson?userId=" + getUserId() + "&projectId=" + adapter.getmDatas().get(position).getId());
+                                copy(adapter.getmDatas().get(position).getAppName(), SharedUtil.getString(ZApplication.getInstance(), "server_config") + "ZzApiDoc/v1/application/downloadAppJson?userId=" + getUserId() + "&projectId=" + adapter.getmDatas().get(position).getId());
                                 break;
                             case 3:
-                                copy(adapter.getmDatas().get(position).getAppName(), SharedUtil.getString(ZApplication.getInstance(), "server_config") + "ZzApiDoc/v1/interface/downloadAppZip?userId=" + getUserId() + "&projectId=" + adapter.getmDatas().get(position).getId());
+                                copy(adapter.getmDatas().get(position).getAppName(), SharedUtil.getString(ZApplication.getInstance(), "server_config") + "ZzApiDoc/v1/application/downloadApplication?userId=" + getUserId() + "&projectId=" + adapter.getmDatas().get(position).getId());
                                 break;
                             case 4:
                                 deleteProject(adapter.getmDatas().get(position).getId());

@@ -88,7 +88,7 @@ public class ExportUtils {
             file.mkdirs();
         }
 
-        String url = SharedUtil.getString(ZApplication.getInstance(), "server_config")+"/ZzApiDoc/v1/interface/downloadAppJson?userId="+userId+"&appId="+appId;
+        String url = SharedUtil.getString(ZApplication.getInstance(), "server_config")+"/ZzApiDoc/v1/application/downloadAppJson?userId="+userId+"&appId="+appId;
         if (listener != null) {
             listener.onStart();
         }
@@ -179,7 +179,7 @@ public class ExportUtils {
         if (!file.exists()) {
             file.mkdirs();
         }
-        String url = SharedUtil.getString(ZApplication.getInstance(), "server_config")+"/ZzApiDoc/v1/interface/downloadAppZip?userId="+userId+"&appId="+appId;
+        String url = SharedUtil.getString(ZApplication.getInstance(), "server_config")+"/ZzApiDoc/v1/application/downloadApplication?userId="+userId+"&appId="+appId;
         if (listener != null) {
             listener.onStart();
         }

@@ -88,6 +88,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorWhite"
+        android:visibility="gone"
         android:gravity="center_vertical"
         android:minHeight="130px"
         android:orientation="horizontal">
@@ -137,6 +138,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/setting_item_bg_selector"
         android:clickable="true"
+        android:visibility="gone"
         android:gravity="center_vertical"
         android:minHeight="130px"
         android:orientation="horizontal">

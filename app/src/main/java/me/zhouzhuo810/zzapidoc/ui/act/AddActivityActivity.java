@@ -1,9 +1,12 @@
 package me.zhouzhuo810.zzapidoc.ui.act;
 
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
@@ -29,6 +32,7 @@ import me.zhouzhuo810.zzapidoc.common.api.Api;
 import me.zhouzhuo810.zzapidoc.common.api.JsonCallback;
 import me.zhouzhuo810.zzapidoc.common.api.entity.AddActivityResult;
 import me.zhouzhuo810.zzapidoc.common.base.BaseActivity;
+import me.zhouzhuo810.zzapidoc.common.utils.ContentUtils;
 import me.zhouzhuo810.zzapidoc.common.utils.SharedUtil;
 import me.zhouzhuo810.zzapidoc.common.utils.ToastUtils;
 
@@ -157,10 +161,8 @@ public class AddActivityActivity extends BaseActivity {
     }
 
     private void choosePic() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        Intent intent = new Intent(Intent.ACTION_PICK, null);
+        intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
         startActivityForResult(Intent.createChooser(intent, "选择图片"), REQUEST_SELECT_PICTURE);
     }
 
@@ -178,7 +180,7 @@ public class AddActivityActivity extends BaseActivity {
                     final Uri selectedUri = data.getData();
                     if (selectedUri != null) {
                         ivSplash.setImageURI(selectedUri);
-                        splashPath = selectedUri.getPath();
+                        splashPath = ContentUtils.getRealPathFromUri(AddActivityActivity.this, selectedUri);
                     } else {
                         ToastUtils.showCustomBgToast("选择图片出错了，请选择其他图片");
                     }
@@ -186,6 +188,7 @@ public class AddActivityActivity extends BaseActivity {
             }
         }
     }
+
 
     private void addAct() {
         String name = etActName.getText().toString().trim();
@@ -209,7 +212,7 @@ public class AddActivityActivity extends BaseActivity {
                 .params("userId", getUserId())
                 .isMultipart(true);
         if (splashPath != null) {
-            post.params("splashFile", new File(splashPath));
+            post.params("splashImg", new File(splashPath));
         }
         post.execute(new JsonCallback<AddActivityResult>(AddActivityResult.class) {
             @Override
@@ -257,10 +260,14 @@ public class AddActivityActivity extends BaseActivity {
                     llSplash.setVisibility(View.VISIBLE);
                     llSplashDuration.setVisibility(View.VISIBLE);
                     llTargetAct.setVisibility(View.VISIBLE);
+                    etActName.setText("SplashActivity");
+                    tvShowTitle.setText("false");
                 } else {
                     llSplash.setVisibility(View.GONE);
                     llSplashDuration.setVisibility(View.GONE);
                     llTargetAct.setVisibility(View.GONE);
+                    etActName.setText("");
+                    tvShowTitle.setText("true");
                 }
                 actType = position;
                 tvActType.setText(content);
