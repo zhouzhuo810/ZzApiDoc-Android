@@ -24,10 +24,37 @@ public class GetAllMyActivityResult {
         private String name;
         private String type;
         private String splashImg;
+        private String splashSecond;
+        private String targetActId;
+        private String targetActName;
         private String title;
         private boolean showTitle;
         private String appId;
         private String createTime;
+
+        public String getTargetActId() {
+            return targetActId;
+        }
+
+        public void setTargetActId(String targetActId) {
+            this.targetActId = targetActId;
+        }
+
+        public String getTargetActName() {
+            return targetActName;
+        }
+
+        public void setTargetActName(String targetActName) {
+            this.targetActName = targetActName;
+        }
+
+        public String getSplashSecond() {
+            return splashSecond;
+        }
+
+        public void setSplashSecond(String splashSecond) {
+            this.splashSecond = splashSecond;
+        }
 
         public String getId() {
             return id;

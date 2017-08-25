@@ -10,7 +10,6 @@ import com.tencent.bugly.crashreport.CrashReport;
 import org.xutils.x;
 
 import me.zhouzhuo810.zzapidoc.common.Constants;
-import me.zhouzhuo810.zzapidoc.common.api.Api;
 import me.zhouzhuo810.zzapidoc.common.utils.SharedUtil;
 
 

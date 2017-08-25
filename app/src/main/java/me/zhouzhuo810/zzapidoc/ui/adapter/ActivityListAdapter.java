@@ -25,7 +25,7 @@ public class ActivityListAdapter extends CommonAdapter<GetAllMyActivityResult.Da
         holder.setText(R.id.tv_name, dataEntity.getName())
                 .setText(R.id.tv_ip, dataEntity.getTitle())
                 .setText(R.id.tv_time, dataEntity.getCreateTime())
-                .setText(R.id.tv_create_man, dataEntity.getSplashImg())
+                .setText(R.id.tv_create_man, "-> "+dataEntity.getTargetActName())
                 .setText(R.id.tv_interface_no,  "0");
     }
 

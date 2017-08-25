@@ -28,8 +28,7 @@ public class WidgetManageActivity extends BaseActivity {
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_widget_manage
-                ;
+        return R.layout.activity_widget_manage;
     }
 
     @Override

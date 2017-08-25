@@ -208,7 +208,7 @@ public class AddActivityActivity extends BaseActivity {
                 .params("type", actType)
                 .params("appId", appId)
                 .params("targetActId", targetActId)
-                .params("splashDuration", Integer.parseInt(duration))
+                .params("splashSecond", Integer.parseInt(duration))
                 .params("userId", getUserId())
                 .isMultipart(true);
         if (splashPath != null) {
