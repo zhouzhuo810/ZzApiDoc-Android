@@ -263,7 +263,7 @@ public class AddApplicationActivity extends BaseActivity {
         if (!dir.exists()) {
             dir.mkdirs();
         }
-        String destinationFileName = Constants.PIC_CROP_ROOT_PATH + "ic_launcher.png";
+        String destinationFileName = Constants.PIC_CROP_ROOT_PATH + "ic_launcher_"+System.currentTimeMillis()%1000+".png";
 
         UCrop.Options options = new UCrop.Options();
         options.setToolbarColor(getResources().getColor(R.color.colorMain));

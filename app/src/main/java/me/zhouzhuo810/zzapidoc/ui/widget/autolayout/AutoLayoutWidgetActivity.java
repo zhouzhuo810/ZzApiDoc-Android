@@ -20,7 +20,7 @@ public class AutoLayoutWidgetActivity extends AutoLayoutActivity {
         View view = null;
 
         if (name.equals(RADIO_GROUP)) {
-            view = new RadioGroup(context, attrs);
+            view = new AutoRadioGroup(context, attrs);
         }
 
 
