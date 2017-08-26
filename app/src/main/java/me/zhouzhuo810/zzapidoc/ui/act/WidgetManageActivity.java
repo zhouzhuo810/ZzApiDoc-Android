@@ -1,5 +1,6 @@
 package me.zhouzhuo810.zzapidoc.ui.act;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -13,6 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import me.zhouzhuo810.zzapidoc.R;
+import me.zhouzhuo810.zzapidoc.common.api.Api;
 import me.zhouzhuo810.zzapidoc.common.base.BaseActivity;
 
 /**
@@ -58,10 +60,22 @@ public class WidgetManageActivity extends BaseActivity {
                 closeAct();
             }
         });
+
+        rlRight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(WidgetManageActivity.this, AddWidgetActivity.class);
+                startActWithIntent(intent);
+            }
+        });
     }
 
     @Override
     public void resume() {
+        getData();
+    }
+
+    private void getData() {
 
     }
 
