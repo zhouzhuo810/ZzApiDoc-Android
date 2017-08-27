@@ -5,7 +5,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,8 +14,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.PostRequest;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -48,12 +52,19 @@ public class AddWidgetActivity extends BaseActivity {
     private TextView tvWidgetName;
     private EditText etHint;
     private ImageView ivClearHint;
-    private EditText etDefValue;
-    private ImageView ivClearDefValue;
+    private LinearLayout llTitle;
     private EditText etTitle;
     private ImageView ivClearTitle;
+    private LinearLayout llKeyWord;
+    private TextView tvKeyWord;
+    private Button btnKeyWord;
+    private LinearLayout llDefValue;
+    private EditText etDefValue;
+    private ImageView ivClearDefValue;
+    private LinearLayout llLeftText;
     private EditText etLeftTitle;
     private ImageView ivClearLeftTitle;
+    private LinearLayout llRightText;
     private EditText etRightText;
     private ImageView ivClearRightText;
     private LinearLayout llRightImg;
@@ -73,6 +84,7 @@ public class AddWidgetActivity extends BaseActivity {
     private TextView tvShowRightLayout;
     private Button btnSubmit;
 
+
     private int widgetType;
     private String splashPath;
     private String appId;
@@ -81,7 +93,7 @@ public class AddWidgetActivity extends BaseActivity {
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_add_activity;
+        return R.layout.activity_add_widget;
     }
 
     @Override
@@ -100,12 +112,19 @@ public class AddWidgetActivity extends BaseActivity {
         tvWidgetName = (TextView) findViewById(R.id.tv_widget_name);
         etHint = (EditText) findViewById(R.id.et_hint);
         ivClearHint = (ImageView) findViewById(R.id.iv_clear_hint);
-        etDefValue = (EditText) findViewById(R.id.et_def_value);
-        ivClearDefValue = (ImageView) findViewById(R.id.iv_clear_def_value);
+        llTitle = (LinearLayout) findViewById(R.id.ll_title);
         etTitle = (EditText) findViewById(R.id.et_title);
         ivClearTitle = (ImageView) findViewById(R.id.iv_clear_title);
+        llKeyWord = (LinearLayout) findViewById(R.id.ll_key_word);
+        tvKeyWord = (TextView) findViewById(R.id.tv_key_word);
+        btnKeyWord = (Button) findViewById(R.id.btn_key_word);
+        llDefValue = (LinearLayout) findViewById(R.id.ll_def_value);
+        etDefValue = (EditText) findViewById(R.id.et_def_value);
+        ivClearDefValue = (ImageView) findViewById(R.id.iv_clear_def_value);
+        llLeftText = (LinearLayout) findViewById(R.id.ll_left_text);
         etLeftTitle = (EditText) findViewById(R.id.et_left_title);
         ivClearLeftTitle = (ImageView) findViewById(R.id.iv_clear_left_title);
+        llRightText = (LinearLayout) findViewById(R.id.ll_right_text);
         etRightText = (EditText) findViewById(R.id.et_right_text);
         ivClearRightText = (ImageView) findViewById(R.id.iv_clear_right_text);
         llRightImg = (LinearLayout) findViewById(R.id.ll_right_img);
@@ -163,6 +182,13 @@ public class AddWidgetActivity extends BaseActivity {
             }
         });
 
+        btnKeyWord.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                generateKeyword();
+            }
+        });
+
         chooseShow(llShowLeftImg, tvShowLeftImg);
         chooseShow(llShowLeftText, tvShowLeftText);
         chooseShow(llShowRightImg, tvShowRightImg);
@@ -179,9 +205,46 @@ public class AddWidgetActivity extends BaseActivity {
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addAct();
+                addWidget();
             }
         });
+    }
+
+    private void generateKeyword() {
+        String title = etTitle.getText().toString().trim();
+        showPd(getString(R.string.submiting_text), false);
+        OkGo.<String>get("http://fanyi.youdao.com/openapi.do")
+                .params("keyfrom", "WordsHelper")
+                .params("key", "1678465943")
+                .params("type", "data")
+                .params("doctype", "json")
+                .params("version", "1.1")
+                .params("q", title)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        hidePd();
+                        String body = response.body();
+                        try {
+                            JSONObject object = new JSONObject(body);
+                            JSONArray array = object.getJSONArray("translation");
+                            String word = array.getString(0);
+                            String newWord = word.replace(" ", "").replace("the", "").replace("The", "").toLowerCase();
+                            tvKeyWord.setText(newWord);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            ToastUtils.showCustomBgToast(e.toString());
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(Response<String> response) {
+                        super.onError(response);
+                        hidePd();
+                        ToastUtils.showCustomBgToast(response.getException().toString());
+                    }
+                });
     }
 
     private void chooseTargetAct() {
@@ -221,7 +284,7 @@ public class AddWidgetActivity extends BaseActivity {
     }
 
 
-    private void addAct() {
+    private void addWidget() {
         String defvalue = etDefValue.getText().toString().trim();
         String hint = etHint.getText().toString().trim();
         String title = etTitle.getText().toString().trim();
@@ -233,11 +296,13 @@ public class AddWidgetActivity extends BaseActivity {
         String showRightText = tvShowRightText.getText().toString().trim();
         String showRightLayout = tvShowRightLayout.getText().toString().trim();
         String name = tvWidgetName.getText().toString().trim();
+        String resId = tvKeyWord.getText().toString().trim();
 
         PostRequest<AddActivityResult> post = OkGo.<AddActivityResult>post(SharedUtil.getString(ZApplication.getInstance(), "server_config")
-                + "/ZzApiDoc/v1/activity/addWidget")
+                + "/ZzApiDoc/v1/widget/addWidget")
                 .params("name", name)
                 .params("title", title)
+                .params("resId", resId)
                 .params("type", widgetType)
                 .params("appId", appId)
                 .params("relativeId", relativeId)
@@ -302,25 +367,44 @@ public class AddWidgetActivity extends BaseActivity {
             public void onItemClick(int position, String content) {
                 switch (position) {
                     case 0:
-
+                        tvWidgetName.setText("TitleBar");
+                        showTitleBarItem(true);
                         break;
                     case 1:
-
+                        tvWidgetName.setText("SettingItem");
+                        showTitleBarItem(false);
                         break;
                     case 2:
-
+                        tvWidgetName.setText("Edit");
+                        showTitleBarItem(false);
                         break;
                     case 3:
-
+                        tvWidgetName.setText("Info");
+                        showTitleBarItem(false);
                         break;
                     case 4:
-
+                        tvWidgetName.setText("Button");
+                        showTitleBarItem(false);
                         break;
                 }
                 widgetType = position;
                 tvWidgetType.setText(content);
             }
         });
+    }
+
+    private void showTitleBarItem(boolean b) {
+        llTargetAct.setVisibility(b?View.VISIBLE:View.GONE);
+        llDefValue.setVisibility(b?View.GONE:View.VISIBLE);
+        llShowLeftText.setVisibility(b?View.VISIBLE:View.GONE);
+        llLeftLayout.setVisibility(b?View.VISIBLE:View.GONE);
+        llShowRightLayout.setVisibility(b?View.VISIBLE:View.GONE);
+        llLeftText.setVisibility(b?View.VISIBLE:View.GONE);
+        llShowLeftImg.setVisibility(b?View.VISIBLE:View.GONE);
+        llRightImg.setVisibility(b?View.VISIBLE:View.GONE);
+        llShowRightImg.setVisibility(b?View.VISIBLE:View.GONE);
+        llRightText.setVisibility(b?View.VISIBLE:View.GONE);
+        llShowRightText.setVisibility(b?View.VISIBLE:View.GONE);
     }
 
     @Override

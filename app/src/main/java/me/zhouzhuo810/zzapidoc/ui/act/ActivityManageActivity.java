@@ -132,7 +132,7 @@ public class ActivityManageActivity extends BaseActivity {
                 } else {
                     Intent intent = new Intent(ActivityManageActivity.this, WidgetManageActivity.class);
                     intent.putExtra("appId", appId);
-                    intent.putExtra("groupId", adapter.getmDatas().get(position).getId());
+                    intent.putExtra("relativeId", adapter.getmDatas().get(position).getId());
                     startActWithIntent(intent);
                 }
             }

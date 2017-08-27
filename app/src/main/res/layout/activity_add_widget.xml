@@ -199,9 +199,9 @@
                 android:layout_height="wrap_content"
                 android:background="@color/colorWhite"
                 android:gravity="center_vertical"
-                android:visibility="gone"
                 android:minHeight="130px"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="280px"
@@ -241,58 +241,9 @@
                 android:layout_marginLeft="30px"
                 android:background="@color/colorGrayBg" />
 
-
             <!--备注-->
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorWhite"
-                android:gravity="center_vertical"
-                android:minHeight="130px"
-                android:visibility="gone"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="280px"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="40px"
-                    android:gravity="center|left"
-                    android:text="@string/def_value_text"
-                    android:textColor="#415868"
-                    android:textSize="44px" />
-
-                <EditText
-                    android:id="@+id/et_def_value"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="30px"
-                    android:layout_marginRight="30px"
-                    android:layout_weight="1"
-                    android:background="@null"
-                    android:gravity="right|center_vertical"
-                    android:hint="@string/def_value_hint_text"
-                    android:textColor="@color/colorBlack"
-                    android:textSize="44px" />
-
-                <ImageView
-                    android:id="@+id/iv_clear_def_value"
-                    android:layout_width="60px"
-                    android:layout_height="60px"
-                    android:layout_marginRight="30px"
-                    android:src="@drawable/clear"
-                    android:visibility="gone" />
-            </LinearLayout>
-
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:layout_marginLeft="30px"
-                android:background="@color/colorGrayBg" />
-
-
-            <!--备注-->
-            <LinearLayout
+                android:id="@+id/ll_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/colorWhite"
@@ -337,10 +288,106 @@
                 android:layout_height="1px"
                 android:layout_marginLeft="30px"
                 android:background="@color/colorGrayBg" />
+            <!--备注-->
+            <LinearLayout
+                android:id="@+id/ll_key_word"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorWhite"
+                android:gravity="center_vertical"
+                android:minHeight="130px"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="280px"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="40px"
+                    android:gravity="center|left"
+                    android:text="@string/key_word_text"
+                    android:textColor="#415868"
+                    android:textSize="44px" />
+
+                <TextView
+                    android:id="@+id/tv_key_word"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30px"
+                    android:layout_marginRight="30px"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:gravity="right|center_vertical"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="44px" />
+
+                <Button
+                    android:id="@+id/btn_key_word"
+                    android:layout_width="100px"
+                    android:layout_height="60px"
+                    android:layout_marginRight="30px"
+                    android:background="@drawable/btn_save_selector"
+                    android:text="生成"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="30px" />
+            </LinearLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="30px"
+                android:background="@color/colorGrayBg" />
 
 
             <!--备注-->
             <LinearLayout
+                android:id="@+id/ll_def_value"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorWhite"
+                android:gravity="center_vertical"
+                android:minHeight="130px"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="280px"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="40px"
+                    android:gravity="center|left"
+                    android:text="@string/def_value_text"
+                    android:textColor="#415868"
+                    android:textSize="44px" />
+
+                <EditText
+                    android:id="@+id/et_def_value"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30px"
+                    android:layout_marginRight="30px"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:gravity="right|center_vertical"
+                    android:hint="@string/def_value_hint_text"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="44px" />
+
+                <ImageView
+                    android:id="@+id/iv_clear_def_value"
+                    android:layout_width="60px"
+                    android:layout_height="60px"
+                    android:layout_marginRight="30px"
+                    android:src="@drawable/clear"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="30px"
+                android:background="@color/colorGrayBg" />
+            <!--备注-->
+            <LinearLayout
+                android:id="@+id/ll_left_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/colorWhite"
@@ -388,6 +435,7 @@
 
             <!--备注-->
             <LinearLayout
+                android:id="@+id/ll_right_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/colorWhite"
@@ -512,10 +560,10 @@
                     android:layout_marginLeft="30px"
                     android:layout_marginRight="30px"
                     android:layout_weight="1"
-                    android:text="true"
                     android:background="@null"
                     android:gravity="right|center_vertical"
                     android:hint="@string/choose_show_left_img_hint"
+                    android:text="true"
                     android:textColor="@color/colorBlack"
                     android:textSize="44px" />
 
@@ -561,9 +609,9 @@
                     android:layout_marginRight="30px"
                     android:layout_weight="1"
                     android:background="@null"
-                    android:text="false"
                     android:gravity="right|center_vertical"
                     android:hint="@string/choose_show_right_img_hint"
+                    android:text="false"
                     android:textColor="@color/colorBlack"
                     android:textSize="44px" />
 
@@ -609,9 +657,9 @@
                     android:layout_marginRight="30px"
                     android:layout_weight="1"
                     android:background="@null"
-                    android:text="true"
                     android:gravity="right|center_vertical"
                     android:hint="@string/choose_show_left_text_hint"
+                    android:text="true"
                     android:textColor="@color/colorBlack"
                     android:textSize="44px" />
 
@@ -657,9 +705,9 @@
                     android:layout_marginRight="30px"
                     android:layout_weight="1"
                     android:background="@null"
-                    android:text="false"
                     android:gravity="right|center_vertical"
                     android:hint="@string/choose_show_right_text_hint"
+                    android:text="false"
                     android:textColor="@color/colorBlack"
                     android:textSize="44px" />
 
@@ -703,11 +751,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="30px"
                     android:layout_marginRight="30px"
-                    android:text="true"
                     android:layout_weight="1"
                     android:background="@null"
                     android:gravity="right|center_vertical"
                     android:hint="@string/choose_left_layout_hint"
+                    android:text="true"
                     android:textColor="@color/colorBlack"
                     android:textSize="44px" />
 
@@ -752,10 +800,10 @@
                     android:layout_marginLeft="30px"
                     android:layout_marginRight="30px"
                     android:layout_weight="1"
-                    android:text="false"
                     android:background="@null"
                     android:gravity="right|center_vertical"
                     android:hint="@string/choose_show_right_layout_hint"
+                    android:text="false"
                     android:textColor="@color/colorBlack"
                     android:textSize="44px" />
 

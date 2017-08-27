@@ -22,6 +22,7 @@ import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllApplicationResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllInterfaceGroupResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllInterfaceResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllMyActivityResult;
+import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllMyWidgetResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllProjectResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetDictionaryResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetInterfaceDetailsResult;
@@ -318,16 +319,33 @@ public interface Api0 {
             @Field("id") String id
     );
 
+    /*获取Activity列表*/
     @GET("/ZzApiDoc/v1/activity/getAllMyActivity")
     Observable<GetAllMyActivityResult> getAllMyActivity(
             @Query("appId") String appId,
             @Query("userId") String userId
     );
 
+    /*获取控件列表*/
+    @GET("/ZzApiDoc/v1/widget/getAllMyWidget")
+    Observable<GetAllMyWidgetResult> getAllMyWidget(
+            @Query("relativeId") String relativeId,
+            @Query("userId") String userId
+    );
 
+
+    /*删除activity*/
     @FormUrlEncoded
     @POST("/ZzApiDoc/v1/activity/deleteActivity")
     Observable<DeleteActivityResult> deleteActivity(
+            @Field("id") String id,
+            @Field("userId") String userId
+    );
+
+    /*删除widget*/
+    @FormUrlEncoded
+    @POST("/ZzApiDoc/v1/widget/deleteWidget")
+    Observable<DeleteActivityResult> deleteWidget(
             @Field("id") String id,
             @Field("userId") String userId
     );
