@@ -127,6 +127,7 @@ public class AppFragment extends BaseFragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(), ActivityManageActivity.class);
                 intent.putExtra("appId", adapter.getmDatas().get(position).getId());
+                intent.putExtra("projectId", adapter.getmDatas().get(position).getApiId());
                 getBaseAct().startActWithIntent(intent);
             }
         });

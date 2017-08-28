@@ -200,4 +200,6 @@
     <string name="def_value_text">默认值</string>
     <string name="def_value_hint_text">请输入默认值</string>
     <string name="key_word_text">资源ID名</string>
+    <string name="target_api_text">目标API接口</string>
+    <string name="choose_target_api_hint">请选择点击按钮调用的接口</string>
 </resources>

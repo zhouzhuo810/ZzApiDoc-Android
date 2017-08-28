@@ -38,6 +38,7 @@ public class ActivityManageActivity extends BaseActivity {
     private List<GetAllMyActivityResult.DataBean> list;
     private ActivityListAdapter adapter;
     private boolean choose;
+    private String projectId;
 
     @Override
     public int getLayoutId() {
@@ -65,6 +66,7 @@ public class ActivityManageActivity extends BaseActivity {
     @Override
     public void initData() {
         appId = getIntent().getStringExtra("appId");
+        projectId = getIntent().getStringExtra("projectId");
         choose = getIntent().getBooleanExtra("choose", false);
     }
 
@@ -133,6 +135,7 @@ public class ActivityManageActivity extends BaseActivity {
                     Intent intent = new Intent(ActivityManageActivity.this, WidgetManageActivity.class);
                     intent.putExtra("appId", appId);
                     intent.putExtra("relativeId", adapter.getmDatas().get(position).getId());
+                    intent.putExtra("projectId", projectId);
                     startActWithIntent(intent);
                 }
             }

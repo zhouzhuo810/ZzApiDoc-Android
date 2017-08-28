@@ -51,6 +51,7 @@ public class InterfaceManageActivity extends BaseActivity {
     private List<GetAllInterfaceResult.DataEntity> list;
     private InterfaceListAdapter adapter;
     private String groupId;
+    private boolean choose;
 
 
     @Override
@@ -82,6 +83,7 @@ public class InterfaceManageActivity extends BaseActivity {
     public void initData() {
         projectId = getIntent().getStringExtra("projectId");
         groupId = getIntent().getStringExtra("groupId");
+        choose = getIntent().getBooleanExtra("choose", false);
     }
 
     private void getData() {
@@ -169,47 +171,56 @@ public class InterfaceManageActivity extends BaseActivity {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-                showListDialog(Arrays.asList("请求头", "请求参数", "返回参数", "接口详情"), true, new DialogInterface.OnDismissListener() {
-                    @Override
-                    public void onDismiss(DialogInterface dialog) {
+                if (choose) {
+                    Intent intent = new Intent();
+                    intent.putExtra("id", adapter.getmDatas().get(position).getId());
+                    intent.putExtra("name", adapter.getmDatas().get(position).getName());
+                    setResult(RESULT_OK, intent);
+                    closeAct();
+                } else {
+                    showListDialog(Arrays.asList("请求头", "请求参数", "返回参数", "接口详情"), true, new DialogInterface.OnDismissListener() {
+                        @Override
+                        public void onDismiss(DialogInterface dialog) {
 
-                    }
-                }, new OnItemClick() {
-                    @Override
-                    public void onItemClick(int pos, String content) {
-                        Intent intent;
-                        switch (pos) {
-                            case 0:
-                                intent = new Intent(InterfaceManageActivity.this, RequestHeaderManageActivity.class);
-                                intent.putExtra("projectId", projectId);
-                                intent.putExtra("groupId", groupId);
-                                intent.putExtra("interfaceId", adapter.getmDatas().get(position).getId());
-                                startActWithIntent(intent);
-                                break;
-                            case 1:
-                                intent = new Intent(InterfaceManageActivity.this, RequestParamsManageActivity.class);
-                                intent.putExtra("projectId", projectId);
-                                intent.putExtra("groupId", groupId);
-                                intent.putExtra("interfaceId", adapter.getmDatas().get(position).getId());
-                                startActWithIntent(intent);
-                                break;
-                            case 2:
-                                intent = new Intent(InterfaceManageActivity.this, ResponseParamsManageActivity.class);
-                                intent.putExtra("projectId", projectId);
-                                intent.putExtra("groupId", groupId);
-                                intent.putExtra("interfaceId", adapter.getmDatas().get(position).getId());
-                                startActWithIntent(intent);
-                                break;
-                            case 3:
-                                intent = new Intent(InterfaceManageActivity.this, InterfaceDetailsActivity.class);
-                                intent.putExtra("projectId", projectId);
-                                intent.putExtra("groupId", groupId);
-                                intent.putExtra("interfaceId", adapter.getmDatas().get(position).getId());
-                                startActWithIntent(intent);
-                                break;
                         }
-                    }
-                });
+                    }, new OnItemClick() {
+                        @Override
+                        public void onItemClick(int pos, String content) {
+                            Intent intent;
+                            switch (pos) {
+                                case 0:
+                                    intent = new Intent(InterfaceManageActivity.this, RequestHeaderManageActivity.class);
+                                    intent.putExtra("projectId", projectId);
+                                    intent.putExtra("groupId", groupId);
+                                    intent.putExtra("interfaceId", adapter.getmDatas().get(position).getId());
+                                    startActWithIntent(intent);
+                                    break;
+                                case 1:
+                                    intent = new Intent(InterfaceManageActivity.this, RequestParamsManageActivity.class);
+                                    intent.putExtra("projectId", projectId);
+                                    intent.putExtra("groupId", groupId);
+                                    intent.putExtra("interfaceId", adapter.getmDatas().get(position).getId());
+                                    startActWithIntent(intent);
+                                    break;
+                                case 2:
+                                    intent = new Intent(InterfaceManageActivity.this, ResponseParamsManageActivity.class);
+                                    intent.putExtra("projectId", projectId);
+                                    intent.putExtra("groupId", groupId);
+                                    intent.putExtra("interfaceId", adapter.getmDatas().get(position).getId());
+                                    startActWithIntent(intent);
+                                    break;
+                                case 3:
+                                    intent = new Intent(InterfaceManageActivity.this, InterfaceDetailsActivity.class);
+                                    intent.putExtra("projectId", projectId);
+                                    intent.putExtra("groupId", groupId);
+                                    intent.putExtra("interfaceId", adapter.getmDatas().get(position).getId());
+                                    startActWithIntent(intent);
+                                    break;
+                            }
+                        }
+                    });
+                }
+
             }
         });
 

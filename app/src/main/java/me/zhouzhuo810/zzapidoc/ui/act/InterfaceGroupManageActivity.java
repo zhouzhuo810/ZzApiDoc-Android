@@ -41,6 +41,7 @@ public class InterfaceGroupManageActivity extends BaseActivity {
     private String projectId;
     private List<GetAllInterfaceGroupResult.DataBean> list;
     private InterfaceGroupListAdapter adapter;
+    private boolean choose;
 
 
     @Override
@@ -69,6 +70,7 @@ public class InterfaceGroupManageActivity extends BaseActivity {
     @Override
     public void initData() {
         projectId = getIntent().getStringExtra("projectId");
+        choose = getIntent().getBooleanExtra("choose", false);
     }
 
     private void getData() {
@@ -128,8 +130,9 @@ public class InterfaceGroupManageActivity extends BaseActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(InterfaceGroupManageActivity.this, InterfaceManageActivity.class);
                 intent.putExtra("projectId", projectId);
+                intent.putExtra("choose", choose);
                 intent.putExtra("groupId", adapter.getmDatas().get(position).getId());
-                startActWithIntent(intent);
+                startActForResultWithIntent(intent, 0x04);
             }
         });
 
@@ -159,6 +162,24 @@ public class InterfaceGroupManageActivity extends BaseActivity {
                 getData();
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case 0x04:
+                    String id = data.getStringExtra("id");
+                    String name = data.getStringExtra("name");
+                    Intent intent = new Intent();
+                    intent.putExtra("id",id);
+                    intent.putExtra("name", name);
+                    setResult(RESULT_OK, intent);
+                    closeAct();
+                    break;
+            }
+        }
     }
 
     private void changeIpAddr(final GetAllInterfaceGroupResult.DataBean group) {

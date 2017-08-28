@@ -49,6 +49,8 @@ public class AddWidgetActivity extends BaseActivity {
     private TextView tvWidgetType;
     private LinearLayout llTargetAct;
     private TextView tvTargetAct;
+    private LinearLayout llTargetApi;
+    private TextView tvTargetApi;
     private TextView tvWidgetName;
     private EditText etHint;
     private ImageView ivClearHint;
@@ -84,12 +86,13 @@ public class AddWidgetActivity extends BaseActivity {
     private TextView tvShowRightLayout;
     private Button btnSubmit;
 
-
     private int widgetType;
     private String splashPath;
     private String appId;
     private String targetActId;
     private String relativeId;
+    private String targetApiId;
+    private String projectId;
 
     @Override
     public int getLayoutId() {
@@ -109,6 +112,8 @@ public class AddWidgetActivity extends BaseActivity {
         tvWidgetType = (TextView) findViewById(R.id.tv_widget_type);
         llTargetAct = (LinearLayout) findViewById(R.id.ll_target_act);
         tvTargetAct = (TextView) findViewById(R.id.tv_target_act);
+        llTargetApi = (LinearLayout) findViewById(R.id.ll_target_api);
+        tvTargetApi = (TextView) findViewById(R.id.tv_target_api);
         tvWidgetName = (TextView) findViewById(R.id.tv_widget_name);
         etHint = (EditText) findViewById(R.id.et_hint);
         ivClearHint = (ImageView) findViewById(R.id.iv_clear_hint);
@@ -150,6 +155,7 @@ public class AddWidgetActivity extends BaseActivity {
         appId = getIntent().getStringExtra("appId");
 
         relativeId = getIntent().getStringExtra("relativeId");
+        projectId = getIntent().getStringExtra("projectId");
 
 
     }
@@ -179,6 +185,13 @@ public class AddWidgetActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 chooseTargetAct();
+            }
+        });
+
+        llTargetApi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chooseTargetApi();
             }
         });
 
@@ -254,6 +267,13 @@ public class AddWidgetActivity extends BaseActivity {
         startActForResultWithIntent(intent, 0x01);
     }
 
+    private void chooseTargetApi() {
+        Intent intent = new Intent(this, InterfaceGroupManageActivity.class);
+        intent.putExtra("choose", true);
+        intent.putExtra("projectId", projectId);
+        startActForResultWithIntent(intent, 0x02);
+    }
+
     private void choosePic() {
         Intent intent = new Intent(Intent.ACTION_PICK, null);
         intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
@@ -269,6 +289,11 @@ public class AddWidgetActivity extends BaseActivity {
                     targetActId = data.getStringExtra("id");
                     String name = data.getStringExtra("name");
                     tvTargetAct.setText(name);
+                    break;
+                case 0x02:
+                    targetApiId = data.getStringExtra("id");
+                    String apiName = data.getStringExtra("name");
+                    tvTargetApi.setText(apiName);
                     break;
                 case REQUEST_SELECT_PICTURE:
                     final Uri selectedUri = data.getData();
@@ -307,6 +332,7 @@ public class AddWidgetActivity extends BaseActivity {
                 .params("appId", appId)
                 .params("relativeId", relativeId)
                 .params("targetActId", targetActId)
+                .params("targetApiId", targetApiId)
                 .params("defValue", defvalue)
                 .params("hint", hint)
                 .params("leftTitleText", leftTitle)
@@ -359,9 +385,11 @@ public class AddWidgetActivity extends BaseActivity {
         List<String> items = new ArrayList<>();
         items.add("TitleBar");
         items.add("SettingItem");
-        items.add("EditText");
-        items.add("InfoText");
-        items.add("Button");
+        items.add("Tv+Et+Iv");
+        items.add("Tv+Tv");
+        items.add("SubmitButton");
+        items.add("ExitButton");
+        items.add("Letter+Rv");
         showListDialog(items, true, null, new OnItemClick() {
             @Override
             public void onItemClick(int position, String content) {
@@ -369,22 +397,38 @@ public class AddWidgetActivity extends BaseActivity {
                     case 0:
                         tvWidgetName.setText("TitleBar");
                         showTitleBarItem(true);
+                        llTargetApi.setVisibility(View.GONE);
                         break;
                     case 1:
                         tvWidgetName.setText("SettingItem");
                         showTitleBarItem(false);
+                        llTargetApi.setVisibility(View.GONE);
                         break;
                     case 2:
                         tvWidgetName.setText("Edit");
                         showTitleBarItem(false);
+                        showEdit();
+                        llTargetApi.setVisibility(View.GONE);
                         break;
                     case 3:
                         tvWidgetName.setText("Info");
                         showTitleBarItem(false);
+                        llTargetApi.setVisibility(View.GONE);
                         break;
                     case 4:
-                        tvWidgetName.setText("Button");
+                        tvWidgetName.setText("Submit Button");
                         showTitleBarItem(false);
+                        llTargetApi.setVisibility(View.VISIBLE);
+                        break;
+                    case 5:
+                        tvWidgetName.setText("Exit Button");
+                        showTitleBarItem(false);
+                        llTargetApi.setVisibility(View.VISIBLE);
+                        break;
+                    case 6:
+                        tvWidgetName.setText("Rv SideBar");
+                        showTitleBarItem(false);
+                        llTargetApi.setVisibility(View.VISIBLE);
                         break;
                 }
                 widgetType = position;
@@ -393,8 +437,12 @@ public class AddWidgetActivity extends BaseActivity {
         });
     }
 
+    private void showEdit() {
+        llTargetAct.setVisibility(View.GONE);
+    }
+
     private void showTitleBarItem(boolean b) {
-        llTargetAct.setVisibility(b?View.VISIBLE:View.GONE);
+        llTargetAct.setVisibility(View.VISIBLE);
         llDefValue.setVisibility(b?View.GONE:View.VISIBLE);
         llShowLeftText.setVisibility(b?View.VISIBLE:View.GONE);
         llLeftLayout.setVisibility(b?View.VISIBLE:View.GONE);

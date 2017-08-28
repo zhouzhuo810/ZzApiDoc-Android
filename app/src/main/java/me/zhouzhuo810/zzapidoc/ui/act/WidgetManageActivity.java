@@ -38,6 +38,8 @@ public class WidgetManageActivity extends BaseActivity {
 
     private List<GetAllMyWidgetResult.DataBean> list;
     private WidgetListAdapter adapter;
+    private String projectId;
+    private String appId;
 
     @Override
     public int getLayoutId() {
@@ -64,7 +66,9 @@ public class WidgetManageActivity extends BaseActivity {
 
     @Override
     public void initData() {
+        appId = getIntent().getStringExtra("appId");
         relativeId = getIntent().getStringExtra("relativeId");
+        projectId = getIntent().getStringExtra("projectId");
     }
 
     @Override
@@ -81,6 +85,8 @@ public class WidgetManageActivity extends BaseActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(WidgetManageActivity.this, AddWidgetActivity.class);
                 intent.putExtra("relativeId", relativeId);
+                intent.putExtra("appId", appId);
+                intent.putExtra("projectId", projectId);
                 startActWithIntent(intent);
             }
         });
