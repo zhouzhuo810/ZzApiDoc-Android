@@ -195,9 +195,10 @@ public class AddInterfaceActivity extends BaseActivity {
             ToastUtils.showCustomBgToast(getString(R.string.path_not_nul_text));
             return;
         }
+        String note = etPs.getText().toString().trim();
         showPd(getString(R.string.submiting_text), false);
         Api.getApi0()
-                .addInterface(name, groupId, methodId, getUserId(), projectId, path, null, null)
+                .addInterface(name, groupId, methodId, getUserId(),note, projectId, path, null, null)
                 .compose(RxHelper.<AddInterfaceResult>io_main())
                 .subscribe(new Subscriber<AddInterfaceResult>() {
                     @Override

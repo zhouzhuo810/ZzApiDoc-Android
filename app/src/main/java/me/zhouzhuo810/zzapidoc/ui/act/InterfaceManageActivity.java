@@ -227,7 +227,7 @@ public class InterfaceManageActivity extends BaseActivity {
         lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
-                showListDialog(Arrays.asList("修改请求方式", "修改接口路径", "删除接口", "复制接口地址", "测试接口"), true, null, new OnItemClick() {
+                showListDialog(Arrays.asList("修改请求方式", "修改接口路径", "添加备注", "删除接口", "复制接口地址", "测试接口"), true, null, new OnItemClick() {
                     @Override
                     public void onItemClick(int pos, String content) {
                         switch (pos) {
@@ -238,9 +238,12 @@ public class InterfaceManageActivity extends BaseActivity {
                                 revisePath(adapter.getmDatas().get(position));
                                 break;
                             case 2:
-                                deleteInterface(adapter.getmDatas().get(position).getId());
+                                addNote(adapter.getmDatas().get(position));
                                 break;
                             case 3:
+                                deleteInterface(adapter.getmDatas().get(position).getId());
+                                break;
+                            case 4:
                                 CopyUtils.copyPlainText(InterfaceManageActivity.this,
                                         adapter.getmDatas().get(position).getName(),
                                         adapter.getmDatas().get(position).getIp()
@@ -248,7 +251,7 @@ public class InterfaceManageActivity extends BaseActivity {
                                                 + adapter.getmDatas().get(position).getPath());
                                 ToastUtils.showCustomBgToast("已复制到剪切板");
                                 break;
-                            case 4:
+                            case 5:
                                 Intent intent = new Intent(InterfaceManageActivity.this, InterfaceTestActivity.class);
                                 intent.putExtra("interfaceId", adapter.getmDatas().get(position).getId());
                                 intent.putExtra("projectId", projectId);
@@ -272,6 +275,46 @@ public class InterfaceManageActivity extends BaseActivity {
                 getData();
             }
         });
+    }
+
+    private void addNote(final GetAllInterfaceResult.DataEntity entity) {
+        showTwoBtnEditDialog("添加备注", "请输入接口备注", entity.getNote(), false, new OnTwoBtnEditClick() {
+            @Override
+            public void onOk(String content) {
+                showPd(getString(R.string.submiting_text), false);
+                Api.getApi0()
+                        .updateInterface(entity.getId(), entity.getName(), entity.getPath(), projectId, groupId, "", content, getUserId(), null, null)
+                        .compose(RxHelper.<UpdateInterfaceResult>io_main())
+                        .subscribe(new Subscriber<UpdateInterfaceResult>() {
+                            @Override
+                            public void onCompleted() {
+
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                hidePd();
+                                ToastUtils.showCustomBgToast(getString(R.string.no_net_text) + e.toString());
+                            }
+
+                            @Override
+                            public void onNext(UpdateInterfaceResult updateInterfaceResult) {
+                                hidePd();
+                                ToastUtils.showCustomBgToast(updateInterfaceResult.getMsg());
+                                if (updateInterfaceResult.getCode() == 1) {
+                                    startRefresh(refresh);
+                                    getData();
+                                }
+                            }
+                        });
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+        });
+
     }
 
     private void revisePath(final GetAllInterfaceResult.DataEntity entity) {

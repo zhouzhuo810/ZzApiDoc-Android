@@ -129,7 +129,10 @@ public interface Api0 {
      */
     @FormUrlEncoded
     @POST("/ZzApiDoc/v1/interface/addInterface")
-    Observable<AddInterfaceResult> addInterface(@Field("name") String name, @Field("groupId") String groupId, @Field("httpMethodId") String httpMethodId, @Field("userId") String userId, @Field("projectId") String projectId, @Field("path") String path, @Field("requestArgs") String requestArgs, @Field("responseArgs") String responseArgs);
+    Observable<AddInterfaceResult> addInterface(@Field("name") String name, @Field("groupId") String groupId,
+                                                @Field("httpMethodId") String httpMethodId, @Field("userId") String userId,
+                                                @Field("note") String note, @Field("projectId") String projectId,
+                                                @Field("path") String path, @Field("requestArgs") String requestArgs, @Field("responseArgs") String responseArgs);
 
     /*
      * 查询接口详情
