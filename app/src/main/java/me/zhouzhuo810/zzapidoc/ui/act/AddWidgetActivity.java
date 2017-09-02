@@ -60,6 +60,39 @@ public class AddWidgetActivity extends BaseActivity {
     private LinearLayout llKeyWord;
     private TextView tvKeyWord;
     private Button btnKeyWord;
+    private EditText etWidgetWidth;
+    private ImageView ivClearWidgetWidth;
+    private EditText etWidgetHeight;
+    private ImageView ivClearWidgetHeight;
+    private LinearLayout llWidgetWeight;
+    private EditText etWidgetWeight;
+    private ImageView ivClearWidgetWeight;
+    private LinearLayout llLeftMargin;
+    private EditText etLeftMargin;
+    private ImageView ivClearLeftMargin;
+    private LinearLayout llRightMargin;
+    private EditText etRightMargin;
+    private ImageView ivClearRightMargin;
+    private LinearLayout llTopMargin;
+    private EditText etTopMargin;
+    private ImageView ivClearTopMargin;
+    private LinearLayout bottomMargin;
+    private EditText etBottomMargin;
+    private ImageView ivClearBottomMargin;
+    private LinearLayout llLeftPadding;
+    private EditText etLeftPadding;
+    private ImageView ivClearLeftPadding;
+    private LinearLayout llRightPadding;
+    private EditText etRightPadding;
+    private ImageView ivClearRightPadding;
+    private LinearLayout llTopPadding;
+    private EditText etTopPadding;
+    private ImageView ivClearTopPadding;
+    private LinearLayout llBottomPadding;
+    private EditText etBottomPadding;
+    private ImageView ivClearBottomPadding;
+    private LinearLayout llBackground;
+    private TextView tvBackground;
     private LinearLayout llDefValue;
     private EditText etDefValue;
     private ImageView ivClearDefValue;
@@ -86,26 +119,7 @@ public class AddWidgetActivity extends BaseActivity {
     private TextView tvShowRightLayout;
     private Button btnSubmit;
 
-    private int widgetType;
-    private String splashPath;
-    private String appId;
-    private String targetActId;
-    private String relativeId;
-    private String targetApiId;
-    private String projectId;
-
-    @Override
-    public int getLayoutId() {
-        return R.layout.activity_add_widget;
-    }
-
-    @Override
-    public boolean defaultBack() {
-        return false;
-    }
-
-    @Override
-    public void initView() {
+    private void assignViews() {
         rlBack = (RelativeLayout) findViewById(R.id.rl_back);
         rlRight = (RelativeLayout) findViewById(R.id.rl_right);
         llWidgetType = (LinearLayout) findViewById(R.id.ll_widget_type);
@@ -123,6 +137,39 @@ public class AddWidgetActivity extends BaseActivity {
         llKeyWord = (LinearLayout) findViewById(R.id.ll_key_word);
         tvKeyWord = (TextView) findViewById(R.id.tv_key_word);
         btnKeyWord = (Button) findViewById(R.id.btn_key_word);
+        etWidgetWidth = (EditText) findViewById(R.id.et_widget_width);
+        ivClearWidgetWidth = (ImageView) findViewById(R.id.iv_clear_widget_width);
+        etWidgetHeight = (EditText) findViewById(R.id.et_widget_height);
+        ivClearWidgetHeight = (ImageView) findViewById(R.id.iv_clear_widget_height);
+        llWidgetWeight = (LinearLayout) findViewById(R.id.ll_widget_weight);
+        etWidgetWeight = (EditText) findViewById(R.id.et_widget_weight);
+        ivClearWidgetWeight = (ImageView) findViewById(R.id.iv_clear_widget_weight);
+        llLeftMargin = (LinearLayout) findViewById(R.id.ll_left_margin);
+        etLeftMargin = (EditText) findViewById(R.id.et_left_margin);
+        ivClearLeftMargin = (ImageView) findViewById(R.id.iv_clear_left_margin);
+        llRightMargin = (LinearLayout) findViewById(R.id.ll_right_margin);
+        etRightMargin = (EditText) findViewById(R.id.et_right_margin);
+        ivClearRightMargin = (ImageView) findViewById(R.id.iv_clear_right_margin);
+        llTopMargin = (LinearLayout) findViewById(R.id.ll_top_margin);
+        etTopMargin = (EditText) findViewById(R.id.et_top_margin);
+        ivClearTopMargin = (ImageView) findViewById(R.id.iv_clear_top_margin);
+        bottomMargin = (LinearLayout) findViewById(R.id.bottom_margin);
+        etBottomMargin = (EditText) findViewById(R.id.et_bottom_margin);
+        ivClearBottomMargin = (ImageView) findViewById(R.id.iv_clear_bottom_margin);
+        llLeftPadding = (LinearLayout) findViewById(R.id.ll_left_padding);
+        etLeftPadding = (EditText) findViewById(R.id.et_left_padding);
+        ivClearLeftPadding = (ImageView) findViewById(R.id.iv_clear_left_padding);
+        llRightPadding = (LinearLayout) findViewById(R.id.ll_right_padding);
+        etRightPadding = (EditText) findViewById(R.id.et_right_padding);
+        ivClearRightPadding = (ImageView) findViewById(R.id.iv_clear_right_padding);
+        llTopPadding = (LinearLayout) findViewById(R.id.ll_top_padding);
+        etTopPadding = (EditText) findViewById(R.id.et_top_padding);
+        ivClearTopPadding = (ImageView) findViewById(R.id.iv_clear_top_padding);
+        llBottomPadding = (LinearLayout) findViewById(R.id.ll_bottom_padding);
+        etBottomPadding = (EditText) findViewById(R.id.et_bottom_padding);
+        ivClearBottomPadding = (ImageView) findViewById(R.id.iv_clear_bottom_padding);
+        llBackground = (LinearLayout) findViewById(R.id.ll_background);
+        tvBackground = (TextView) findViewById(R.id.tv_background);
         llDefValue = (LinearLayout) findViewById(R.id.ll_def_value);
         etDefValue = (EditText) findViewById(R.id.et_def_value);
         ivClearDefValue = (ImageView) findViewById(R.id.iv_clear_def_value);
@@ -150,13 +197,39 @@ public class AddWidgetActivity extends BaseActivity {
         btnSubmit = (Button) findViewById(R.id.btn_submit);
     }
 
+
+    private int widgetType;
+    private String splashPath;
+    private String appId;
+    private String targetActId;
+    private String relativeId;
+    private String targetApiId;
+    private String projectId;
+    private String pid;
+    private String background;
+
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_add_widget;
+    }
+
+    @Override
+    public boolean defaultBack() {
+        return false;
+    }
+
+    @Override
+    public void initView() {
+        assignViews();
+    }
+
     @Override
     public void initData() {
         appId = getIntent().getStringExtra("appId");
 
         relativeId = getIntent().getStringExtra("relativeId");
         projectId = getIntent().getStringExtra("projectId");
-
+        pid = getIntent().getStringExtra("pid");
 
     }
 
@@ -320,6 +393,17 @@ public class AddWidgetActivity extends BaseActivity {
         String showLeftText = tvShowLeftText.getText().toString().trim();
         String showRightText = tvShowRightText.getText().toString().trim();
         String showRightLayout = tvShowRightLayout.getText().toString().trim();
+        String width = etWidgetWidth.getText().toString().trim();
+        String height = etWidgetHeight.getText().toString().trim();
+        String weight = etWidgetWeight.getText().toString().trim();
+        String leftMargin = etLeftMargin.getText().toString().trim();
+        String rightMargin = etLeftMargin.getText().toString().trim();
+        String topMargin = etTopMargin.getText().toString().trim();
+        String bottomMargin = etBottomMargin.getText().toString().trim();
+        String leftPadding = etLeftPadding.getText().toString().trim();
+        String rightPadding = etLeftPadding.getText().toString().trim();
+        String topPadding = etTopPadding.getText().toString().trim();
+        String bottomPadding = etBottomPadding.getText().toString().trim();
         String name = tvWidgetName.getText().toString().trim();
         String resId = tvKeyWord.getText().toString().trim();
         showPd(getString(R.string.submiting_text), false);
@@ -342,6 +426,19 @@ public class AddWidgetActivity extends BaseActivity {
                 .params("showLeftTitleText", showLeftText.equals("true"))
                 .params("showRightTitleText", showRightText.equals("true"))
                 .params("showRightTitleLayout", showRightLayout.equals("true"))
+                .params("pid", pid)
+                .params("background", background)
+                .params("width", width)
+                .params("height", height)
+                .params("weight", weight)
+                .params("marginLeft", leftPadding)
+                .params("marginRight", rightMargin)
+                .params("marginTop", topMargin)
+                .params("marginBottom", bottomMargin)
+                .params("paddingLeft", leftPadding)
+                .params("paddingRight", rightPadding)
+                .params("paddingTop", topPadding)
+                .params("paddingBottom", bottomPadding)
                 .params("userId", getUserId())
                 .isMultipart(true);
         if (splashPath != null) {
@@ -445,16 +542,16 @@ public class AddWidgetActivity extends BaseActivity {
 
     private void showTitleBarItem(boolean b) {
         llTargetAct.setVisibility(View.VISIBLE);
-        llDefValue.setVisibility(b?View.GONE:View.VISIBLE);
-        llShowLeftText.setVisibility(b?View.VISIBLE:View.GONE);
-        llLeftLayout.setVisibility(b?View.VISIBLE:View.GONE);
-        llShowRightLayout.setVisibility(b?View.VISIBLE:View.GONE);
-        llLeftText.setVisibility(b?View.VISIBLE:View.GONE);
-        llShowLeftImg.setVisibility(b?View.VISIBLE:View.GONE);
-        llRightImg.setVisibility(b?View.VISIBLE:View.GONE);
-        llShowRightImg.setVisibility(b?View.VISIBLE:View.GONE);
-        llRightText.setVisibility(b?View.VISIBLE:View.GONE);
-        llShowRightText.setVisibility(b?View.VISIBLE:View.GONE);
+        llDefValue.setVisibility(b ? View.GONE : View.VISIBLE);
+        llShowLeftText.setVisibility(b ? View.VISIBLE : View.GONE);
+        llLeftLayout.setVisibility(b ? View.VISIBLE : View.GONE);
+        llShowRightLayout.setVisibility(b ? View.VISIBLE : View.GONE);
+        llLeftText.setVisibility(b ? View.VISIBLE : View.GONE);
+        llShowLeftImg.setVisibility(b ? View.VISIBLE : View.GONE);
+        llRightImg.setVisibility(b ? View.VISIBLE : View.GONE);
+        llShowRightImg.setVisibility(b ? View.VISIBLE : View.GONE);
+        llRightText.setVisibility(b ? View.VISIBLE : View.GONE);
+        llShowRightText.setVisibility(b ? View.VISIBLE : View.GONE);
     }
 
     @Override
