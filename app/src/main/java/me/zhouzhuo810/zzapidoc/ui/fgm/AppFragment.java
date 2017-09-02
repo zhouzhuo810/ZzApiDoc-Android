@@ -28,11 +28,13 @@ import me.zhouzhuo810.zzapidoc.common.rx.RxHelper;
 import me.zhouzhuo810.zzapidoc.common.utils.CopyUtils;
 import me.zhouzhuo810.zzapidoc.common.utils.ExportUtils;
 import me.zhouzhuo810.zzapidoc.common.utils.SharedUtil;
+import me.zhouzhuo810.zzapidoc.common.utils.SystemUtil;
 import me.zhouzhuo810.zzapidoc.common.utils.ToastUtils;
 import me.zhouzhuo810.zzapidoc.ui.act.ActivityManageActivity;
 import me.zhouzhuo810.zzapidoc.ui.act.AddApplicationActivity;
 import me.zhouzhuo810.zzapidoc.ui.adapter.ApplicationListAdapter;
 import rx.Subscriber;
+import zhouzhuo810.me.zzandframe.common.utils.ApkUtils;
 
 /**
  * Created by zhouzhuo810 on 2017/7/21.
@@ -135,7 +137,7 @@ public class AppFragment extends BaseFragment {
         lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
-                getBaseAct().showListDialog(Arrays.asList("导出JSON文件", "导出项目文件", "复制JSON下载地址", "复制项目下载地址", "删除项目"), true, null, new BaseActivity.OnItemClick() {
+                getBaseAct().showListDialog(Arrays.asList("导出JSON文件", "导出项目文件","导出并安装APK文件", "复制JSON下载地址", "复制项目下载地址", "删除项目"), true, null, new BaseActivity.OnItemClick() {
                     @Override
                     public void onItemClick(int pos, String content) {
                         switch (pos) {
@@ -146,12 +148,15 @@ public class AppFragment extends BaseFragment {
                                 exportApp(adapter.getmDatas().get(position).getId());
                                 break;
                             case 2:
-                                copy(adapter.getmDatas().get(position).getAppName(), SharedUtil.getString(ZApplication.getInstance(), "server_config") + "ZzApiDoc/v1/application/downloadAppJson?userId=" + getUserId() + "&projectId=" + adapter.getmDatas().get(position).getId());
+                                exportApk(adapter.getmDatas().get(position).getId());
                                 break;
                             case 3:
-                                copy(adapter.getmDatas().get(position).getAppName(), SharedUtil.getString(ZApplication.getInstance(), "server_config") + "ZzApiDoc/v1/application/downloadApplication?userId=" + getUserId() + "&projectId=" + adapter.getmDatas().get(position).getId());
+                                copy(adapter.getmDatas().get(position).getAppName(), SharedUtil.getString(ZApplication.getInstance(), "server_config") + "ZzApiDoc/v1/application/downloadAppJson?userId=" + getUserId() + "&appId=" + adapter.getmDatas().get(position).getId());
                                 break;
                             case 4:
+                                copy(adapter.getmDatas().get(position).getAppName(), SharedUtil.getString(ZApplication.getInstance(), "server_config") + "ZzApiDoc/v1/application/downloadApplication?userId=" + getUserId() + "&appId=" + adapter.getmDatas().get(position).getId());
+                                break;
+                            case 5:
                                 deleteProject(adapter.getmDatas().get(position).getId());
                                 break;
                         }
@@ -162,13 +167,65 @@ public class AppFragment extends BaseFragment {
         });
     }
 
-    private void deleteProject(final String projectId) {
+    private void exportApk(final String appId) {
+        final String name = System.currentTimeMillis() + ".apk";
+        ExportUtils.exportToApkFile(getActivity(), getUserId(), appId, Constants.EXPORT_DEBUG_APK_PATH, name, new ExportUtils.ProgressListener() {
+            TextView tv;
+            ProgressBar pb;
+
+            @Override
+            public void onStart() {
+                getBaseAct().showUpdateDialog("导出", "正在导出...", false, new BaseActivity.OnOneBtnClickListener() {
+                    @Override
+                    public void onProgress(TextView tvProgress, ProgressBar progressBar) {
+                        tv = tvProgress;
+                        pb = progressBar;
+                    }
+
+                    @Override
+                    public void onOK() {
+                        getBaseAct().hideUpdateDialog();
+                    }
+                });
+            }
+
+            @Override
+            public void onLoad(final int progress) {
+                Log.e("TTT", "progress=" + progress);
+                tv.setText(progress + "%");
+                pb.setProgress(progress);
+            }
+
+            @Override
+            public void onCancel() {
+                Log.e("TTT", "cancel");
+                getBaseAct().hideUpdateDialog();
+            }
+
+            @Override
+            public void onFail(String error) {
+                Log.e("TTT", "fail");
+                getBaseAct().hideUpdateDialog();
+                ToastUtils.showCustomBgToast(error);
+            }
+
+            @Override
+            public void onOk() {
+                Log.e("TTT", "ok");
+                getBaseAct().hideUpdateDialog();
+                ToastUtils.showCustomBgToast("文件已保存到" + Constants.EXPORT_DEBUG_APK_PATH + name);
+                ApkUtils.installApk(ZApplication.getInstance(), SystemUtil.getPackageInfo(ZApplication.getInstance()).packageName, Constants.EXPORT_DEBUG_APK_PATH, name);
+            }
+        });
+    }
+
+    private void deleteProject(final String appId) {
         getBaseAct().showTwoBtnDialog("删除应用", "确定删除吗？", true, new BaseActivity.OnTwoBtnClick() {
             @Override
             public void onOk() {
                 getBaseAct().showPd(getString(R.string.submiting_text), false);
                 Api.getApi0()
-                        .deleteApplication(projectId, getUserId())
+                        .deleteApplication(getUserId(), appId)
                         .compose(RxHelper.<DeleteApplicationResult>io_main())
                         .subscribe(new Subscriber<DeleteApplicationResult>() {
                             @Override

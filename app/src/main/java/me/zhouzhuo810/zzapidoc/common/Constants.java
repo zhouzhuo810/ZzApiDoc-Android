@@ -39,11 +39,13 @@ public class Constants {
 
     public static final String EXPORT_ZIP_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "ZzApiDoc/APP/";
 
+    public static final String EXPORT_DEBUG_APK_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "ZzApiDoc/Debug_Apk/";
+
     public static final String PIC_UPLOAD_ROOT_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "ZzApiDoc/Image/Upload/";
 
     public static final String PIC_CROP_ROOT_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "ZzApiDoc/Image/Crop/";
 
-    public static final String DBNAME = "QWork.db";
+    public static final String DBNAME = "ZzApiDoc.db";
 
     public static final int DBVERSION = 1;
 

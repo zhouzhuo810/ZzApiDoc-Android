@@ -211,4 +211,49 @@ public class ExportUtils {
                 });
 
     }
+    /**
+     * 导出Android apk文件
+     * @param userId
+     * @param appId
+     * @param filePath
+     * @param fileName
+     * @param listener
+     */
+    public static void exportToApkFile(Context context, String userId, String appId, String filePath, String fileName, final ProgressListener listener) {
+        File file = new File(filePath);
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+        String url = SharedUtil.getString(ZApplication.getInstance(), "server_config")+"/ZzApiDoc/v1/application/downloadApk?userId="+userId+"&appId="+appId;
+        if (listener != null) {
+            listener.onStart();
+        }
+        OkGo.<File> get(url)
+                .tag(context)
+                .execute(new FileCallback(filePath, fileName) {
+                    @Override
+                    public void onSuccess(Response<File> response) {
+                        if (listener != null) {
+                            listener.onOk();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Response<File> response) {
+                        super.onError(response);
+                        if (listener != null) {
+                            listener.onFail(response.getException() == null ? "" : response.getException().toString());
+                        }
+                    }
+
+                    @Override
+                    public void downloadProgress(Progress progress) {
+                        super.downloadProgress(progress);
+                        if (listener != null) {
+                            listener.onLoad((int) (progress.currentSize*100.0f/progress.totalSize+0.5f));
+                        }
+                    }
+                });
+
+    }
 }

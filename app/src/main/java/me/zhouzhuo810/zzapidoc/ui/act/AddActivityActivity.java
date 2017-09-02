@@ -200,6 +200,7 @@ public class AddActivityActivity extends BaseActivity {
             return;
         }
         Log.e("TTT", "splashPath=" + splashPath);
+        showPd(getString(R.string.submiting_text), false);
         PostRequest<AddActivityResult> post = OkGo.<AddActivityResult>post(SharedUtil.getString(ZApplication.getInstance(), "server_config")
                 + "/ZzApiDoc/v1/activity/addActivity")
                 .params("name", name)
@@ -217,6 +218,7 @@ public class AddActivityActivity extends BaseActivity {
         post.execute(new JsonCallback<AddActivityResult>(AddActivityResult.class) {
             @Override
             public void onSuccess(Response<AddActivityResult> response) {
+                hidePd();
                 AddActivityResult body = response.body();
                 ToastUtils.showCustomBgToast(body.getMsg());
                 if (body.getCode() == 1) {
@@ -227,6 +229,7 @@ public class AddActivityActivity extends BaseActivity {
             @Override
             public void onError(Response<AddActivityResult> response) {
                 super.onError(response);
+                hidePd();
                 Throwable exception = response.getException();
                 ToastUtils.showCustomBgToast(getString(R.string.no_net_text) + (exception == null ? "" : exception.toString()));
 
