@@ -7,8 +7,8 @@ android {
         applicationId "me.zhouzhuo810.zzapidoc"
         minSdkVersion 15
         targetSdkVersion 25
-        versionCode 16
-        versionName "1.15"
+        versionCode 20
+        versionName "1.19"
     }
 
     applicationVariants.all {variant ->

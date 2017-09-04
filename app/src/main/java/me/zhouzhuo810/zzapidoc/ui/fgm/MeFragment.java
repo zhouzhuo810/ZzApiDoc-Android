@@ -34,6 +34,7 @@ import me.zhouzhuo810.zzapidoc.common.utils.ZSharedUtil;
 import me.zhouzhuo810.zzapidoc.ui.act.LoginActivity;
 import me.zhouzhuo810.zzapidoc.ui.act.PublishVersionActivity;
 import me.zhouzhuo810.zzapidoc.ui.act.RevisePswdActivity;
+import me.zhouzhuo810.zzapidoc.ui.act.SettingServerActivity;
 import me.zhouzhuo810.zzapidoc.ui.widget.roundimage.RoundedImageView;
 import rx.Subscriber;
 import zhouzhuo810.me.zzandframe.common.utils.ApkUtils;
@@ -130,6 +131,14 @@ public class MeFragment extends BaseFragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), RevisePswdActivity.class);
                 startActivityForResult(intent, 0x01);
+            }
+        });
+
+        llSetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), SettingServerActivity.class);
+                startActivityForResult(intent, 0x03);
             }
         });
     }
@@ -267,6 +276,9 @@ public class MeFragment extends BaseFragment {
             switch (requestCode) {
                 case 0x01:
                     exitLogin();
+                    break;
+                case 0x03:
+                    getBaseAct().closeAct();
                     break;
             }
         }

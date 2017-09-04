@@ -333,6 +333,7 @@ public interface Api0 {
     @GET("/ZzApiDoc/v1/widget/getAllMyWidget")
     Observable<GetAllMyWidgetResult> getAllMyWidget(
             @Query("relativeId") String relativeId,
+            @Query("pid") String pid,
             @Query("userId") String userId
     );
 
@@ -352,6 +353,7 @@ public interface Api0 {
             @Field("id") String id,
             @Field("userId") String userId
     );
+
 
 
 }

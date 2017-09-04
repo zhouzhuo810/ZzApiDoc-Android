@@ -230,4 +230,10 @@
     <string name="right_margin_hint_text">请输入右边距</string>
     <string name="_hint_text">请输入右内边距</string>
     <string name="right_padding_hint_text">请输入右內边距</string>
+    <string name="left_img_text">左边图片</string>
+    <string name="et_hint_text">提示文字</string>
+    <string name="et_hint_hint_text">请输入提示文字</string>
+    <string name="_text">Gravity</string>
+    <string name="gravity_text">Gravity</string>
+    <string name="choose_gravity_hint">请选择Gravity</string>
 </resources>

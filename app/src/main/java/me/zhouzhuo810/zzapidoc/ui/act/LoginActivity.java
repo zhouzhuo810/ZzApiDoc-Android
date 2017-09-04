@@ -112,7 +112,7 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(LoginActivity.this, SettingServerActivity.class);
-                startActWithIntent(intent);
+                startActForResultWithIntent(intent, 0x03);
             }
         });
 
@@ -165,6 +165,9 @@ public class LoginActivity extends BaseActivity {
                     String phone = data.getStringExtra("phone");
                     String pswd = data.getStringExtra("pswd");
                     doLogin(phone, pswd);
+                    break;
+                case 0x03:
+
                     break;
             }
         }

@@ -105,6 +105,7 @@ public class SettingServerActivity extends BaseActivity {
                 Api.clearApi0();
                 Api.getApi0();
                 ToastUtils.showCustomBgToast("保存成功");
+                setResult(RESULT_OK, null);
                 closeAct();
             }
         });

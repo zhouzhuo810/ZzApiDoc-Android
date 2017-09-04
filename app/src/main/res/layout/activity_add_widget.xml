@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -400,6 +401,27 @@
                     android:textColor="#415868"
                     android:textSize="44px" />
 
+
+                <Button
+                    android:id="@+id/btn_width_match_parent"
+                    android:layout_width="140px"
+                    android:layout_height="60px"
+                    android:layout_marginRight="20px"
+                    android:background="@drawable/btn_save_selector"
+                    android:text="match_parent"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="15px" />
+
+                <Button
+                    android:id="@+id/btn_width_wrap_content"
+                    android:layout_width="140px"
+                    android:layout_height="60px"
+                    android:layout_marginRight="30px"
+                    android:background="@drawable/btn_save_selector"
+                    android:text="wrap_content"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="15px" />
+
                 <EditText
                     android:id="@+id/et_widget_width"
                     android:layout_width="0dp"
@@ -444,6 +466,28 @@
                     android:text="@string/widget_height_text"
                     android:textColor="#415868"
                     android:textSize="44px" />
+
+
+                <Button
+                    android:id="@+id/btn_height_match_parent"
+                    android:layout_width="140px"
+                    android:layout_height="60px"
+                    android:layout_marginRight="20px"
+                    android:background="@drawable/btn_save_selector"
+                    android:text="match_parent"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="15px" />
+
+                <Button
+                    android:id="@+id/btn_height_wrap_content"
+                    android:layout_width="140px"
+                    android:layout_height="60px"
+                    android:layout_marginRight="30px"
+                    android:background="@drawable/btn_save_selector"
+                    android:text="wrap_content"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="15px" />
+
 
                 <EditText
                     android:id="@+id/et_widget_height"
@@ -499,6 +543,7 @@
                     android:layout_marginRight="30px"
                     android:layout_weight="1"
                     android:background="@null"
+                    android:text="0"
                     android:gravity="right|center_vertical"
                     android:hint="@string/widget_weight_hint_text"
                     android:textColor="@color/colorBlack"
@@ -595,6 +640,7 @@
                     android:background="@null"
                     android:gravity="right|center_vertical"
                     android:hint="@string/right_margin_hint_text"
+                    android:text="0"
                     android:textColor="@color/colorBlack"
                     android:textSize="44px" />
 
@@ -662,7 +708,7 @@
                 android:background="@color/colorGrayBg" />
 
             <LinearLayout
-                android:id="@+id/bottom_margin"
+                android:id="@+id/ll_bottom_margin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/colorWhite"
@@ -785,6 +831,7 @@
                     android:background="@null"
                     android:gravity="right|center_vertical"
                     android:hint="@string/right_padding_hint_text"
+                    android:text="0"
                     android:textColor="@color/colorBlack"
                     android:textSize="44px" />
 
@@ -948,6 +995,55 @@
 
             <!--备注-->
             <LinearLayout
+                android:id="@+id/ll_hint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorWhite"
+                android:gravity="center_vertical"
+                android:minHeight="130px"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="280px"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="40px"
+                    android:gravity="center|left"
+                    android:text="@string/et_hint_text"
+                    android:textColor="#415868"
+                    android:textSize="44px" />
+
+                <EditText
+                    android:id="@+id/et_et_hint"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30px"
+                    android:layout_marginRight="30px"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:gravity="right|center_vertical"
+                    android:hint="@string/et_hint_hint_text"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="44px" />
+
+                <ImageView
+                    android:id="@+id/iv_clear_et_hint"
+                    android:layout_width="60px"
+                    android:layout_height="60px"
+                    android:layout_marginRight="30px"
+                    android:src="@drawable/clear"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="30px"
+                android:background="@color/colorGrayBg" />
+
+
+            <!--备注-->
+            <LinearLayout
                 android:id="@+id/ll_def_value"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -1092,6 +1188,59 @@
             <!--签订日期-->
 
             <LinearLayout
+                android:id="@+id/ll_left_img"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/setting_item_bg_selector"
+                android:clickable="true"
+                android:gravity="center_vertical"
+                android:minHeight="130px"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="280px"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="40px"
+                    android:gravity="center|left"
+                    android:text="@string/left_img_text"
+                    android:textColor="#415868"
+                    android:textSize="44px" />
+
+                <ImageView
+                    android:id="@+id/iv_left_img"
+                    android:layout_width="50px"
+                    android:layout_height="50px" />
+
+                <TextView
+                    android:id="@+id/tv_left_img"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30px"
+                    android:layout_marginRight="30px"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:gravity="right|center_vertical"
+                    android:hint="@string/choose_right_img_hint"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="44px" />
+
+                <ImageView
+                    android:layout_width="40px"
+                    android:layout_height="40px"
+                    android:layout_marginRight="30px"
+                    android:src="@drawable/more" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="30px"
+                android:background="@color/colorGrayBg" />
+            <!--签订日期-->
+
+            <!--签订日期-->
+
+            <LinearLayout
                 android:id="@+id/ll_right_img"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -1153,7 +1302,8 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="280px"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="40px"
                     android:gravity="center|left"
@@ -1161,25 +1311,15 @@
                     android:textColor="#415868"
                     android:textSize="44px" />
 
-                <TextView
-                    android:id="@+id/tv_show_left_img"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="30px"
-                    android:layout_marginRight="30px"
-                    android:layout_weight="1"
-                    android:background="@null"
-                    android:gravity="right|center_vertical"
-                    android:hint="@string/choose_show_left_img_hint"
-                    android:text="true"
-                    android:textColor="@color/colorBlack"
-                    android:textSize="44px" />
-
-                <ImageView
-                    android:layout_width="40px"
-                    android:layout_height="40px"
-                    android:layout_marginRight="30px"
-                    android:src="@drawable/more" />
+                <CheckBox
+                    android:id="@+id/cb_show_left_img"
+                    app:layout_auto_baseheight="width"
+                    android:layout_width="99px"
+                    android:layout_height="75px"
+                    android:checked="true"
+                    android:layout_marginRight="40px"
+                    android:button="@null"
+                    android:background="@drawable/cb_selector"/>
             </LinearLayout>
 
             <View
@@ -1201,7 +1341,8 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="280px"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="40px"
                     android:gravity="center|left"
@@ -1209,25 +1350,14 @@
                     android:textColor="#415868"
                     android:textSize="44px" />
 
-                <TextView
-                    android:id="@+id/tv_show_right_img"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="30px"
-                    android:layout_marginRight="30px"
-                    android:layout_weight="1"
-                    android:background="@null"
-                    android:gravity="right|center_vertical"
-                    android:hint="@string/choose_show_right_img_hint"
-                    android:text="false"
-                    android:textColor="@color/colorBlack"
-                    android:textSize="44px" />
-
-                <ImageView
-                    android:layout_width="40px"
-                    android:layout_height="40px"
-                    android:layout_marginRight="30px"
-                    android:src="@drawable/more" />
+                <CheckBox
+                    android:id="@+id/cb_show_right_img"
+                    app:layout_auto_baseheight="width"
+                    android:layout_width="99px"
+                    android:layout_height="75px"
+                    android:layout_marginRight="40px"
+                    android:button="@null"
+                    android:background="@drawable/cb_selector"/>
             </LinearLayout>
 
             <View
@@ -1249,33 +1379,22 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="280px"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="40px"
                     android:gravity="center|left"
                     android:text="@string/show_left_text_text"
                     android:textColor="#415868"
                     android:textSize="44px" />
-
-                <TextView
-                    android:id="@+id/tv_show_left_text"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="30px"
-                    android:layout_marginRight="30px"
-                    android:layout_weight="1"
-                    android:background="@null"
-                    android:gravity="right|center_vertical"
-                    android:hint="@string/choose_show_left_text_hint"
-                    android:text="true"
-                    android:textColor="@color/colorBlack"
-                    android:textSize="44px" />
-
-                <ImageView
-                    android:layout_width="40px"
-                    android:layout_height="40px"
-                    android:layout_marginRight="30px"
-                    android:src="@drawable/more" />
+                <CheckBox
+                    android:id="@+id/cb_show_left_text"
+                    app:layout_auto_baseheight="width"
+                    android:layout_width="99px"
+                    android:layout_height="75px"
+                    android:layout_marginRight="40px"
+                    android:button="@null"
+                    android:background="@drawable/cb_selector"/>
             </LinearLayout>
 
             <View
@@ -1297,33 +1416,22 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="280px"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="40px"
                     android:gravity="center|left"
                     android:text="@string/show_right_text_text"
                     android:textColor="#415868"
                     android:textSize="44px" />
-
-                <TextView
-                    android:id="@+id/tv_show_right_text"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="30px"
-                    android:layout_marginRight="30px"
-                    android:layout_weight="1"
-                    android:background="@null"
-                    android:gravity="right|center_vertical"
-                    android:hint="@string/choose_show_right_text_hint"
-                    android:text="false"
-                    android:textColor="@color/colorBlack"
-                    android:textSize="44px" />
-
-                <ImageView
-                    android:layout_width="40px"
-                    android:layout_height="40px"
-                    android:layout_marginRight="30px"
-                    android:src="@drawable/more" />
+                <CheckBox
+                    android:id="@+id/cb_show_right_text"
+                    app:layout_auto_baseheight="width"
+                    android:layout_width="99px"
+                    android:layout_height="75px"
+                    android:layout_marginRight="40px"
+                    android:button="@null"
+                    android:background="@drawable/cb_selector"/>
             </LinearLayout>
 
             <View
@@ -1335,7 +1443,7 @@
             <!--签订日期-->
 
             <LinearLayout
-                android:id="@+id/ll_left_layout"
+                android:id="@+id/ll_show_left_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/setting_item_bg_selector"
@@ -1345,7 +1453,8 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="280px"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="40px"
                     android:gravity="center|left"
@@ -1353,25 +1462,15 @@
                     android:textColor="#415868"
                     android:textSize="44px" />
 
-                <TextView
-                    android:id="@+id/tv_left_layout"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="30px"
-                    android:layout_marginRight="30px"
-                    android:layout_weight="1"
-                    android:background="@null"
-                    android:gravity="right|center_vertical"
-                    android:hint="@string/choose_left_layout_hint"
-                    android:text="true"
-                    android:textColor="@color/colorBlack"
-                    android:textSize="44px" />
-
-                <ImageView
-                    android:layout_width="40px"
-                    android:layout_height="40px"
-                    android:layout_marginRight="30px"
-                    android:src="@drawable/more" />
+                <CheckBox
+                    android:id="@+id/cb_show_left_layout"
+                    app:layout_auto_baseheight="width"
+                    android:layout_width="99px"
+                    android:layout_height="75px"
+                    android:checked="true"
+                    android:layout_marginRight="40px"
+                    android:button="@null"
+                    android:background="@drawable/cb_selector"/>
             </LinearLayout>
 
             <View
@@ -1393,7 +1492,8 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="280px"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="40px"
                     android:gravity="center|left"
@@ -1401,8 +1501,45 @@
                     android:textColor="#415868"
                     android:textSize="44px" />
 
+                <CheckBox
+                    android:id="@+id/cb_show_right_layout"
+                    app:layout_auto_baseheight="width"
+                    android:layout_width="99px"
+                    android:layout_height="75px"
+                    android:layout_marginRight="40px"
+                    android:button="@null"
+                    android:background="@drawable/cb_selector"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="30px"
+                android:background="@color/colorGrayBg" />
+
+            <!--签订日期-->
+
+            <LinearLayout
+                android:id="@+id/ll_gravity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/setting_item_bg_selector"
+                android:clickable="true"
+                android:gravity="center_vertical"
+                android:minHeight="130px"
+                android:orientation="horizontal">
+
                 <TextView
-                    android:id="@+id/tv_show_right_layout"
+                    android:layout_width="280px"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="40px"
+                    android:gravity="center|left"
+                    android:text="@string/gravity_text"
+                    android:textColor="#415868"
+                    android:textSize="44px" />
+
+                <TextView
+                    android:id="@+id/tv_gravity"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="30px"
@@ -1410,8 +1547,8 @@
                     android:layout_weight="1"
                     android:background="@null"
                     android:gravity="right|center_vertical"
-                    android:hint="@string/choose_show_right_layout_hint"
-                    android:text="false"
+                    android:hint="@string/choose_gravity_hint"
+                    android:text="center_vertical"
                     android:textColor="@color/colorBlack"
                     android:textSize="44px" />
 
@@ -1427,6 +1564,7 @@
                 android:layout_height="1px"
                 android:layout_marginLeft="30px"
                 android:background="@color/colorGrayBg" />
+
 
         </LinearLayout>
     </ScrollView>

@@ -18,8 +18,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.PostRequest;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -45,6 +50,8 @@ public class AddActivityActivity extends BaseActivity {
 
     private RelativeLayout rlBack;
     private RelativeLayout rlRight;
+    private LinearLayout llActType;
+    private TextView tvActType;
     private LinearLayout llSplash;
     private ImageView ivSplash;
     private LinearLayout llSplashDuration;
@@ -52,12 +59,10 @@ public class AddActivityActivity extends BaseActivity {
     private ImageView ivClearSplashDuration;
     private LinearLayout llTargetAct;
     private TextView tvTargetAct;
-    private EditText etActName;
-    private ImageView ivClearActName;
     private EditText etActTitle;
     private ImageView ivClearActTitle;
-    private LinearLayout llActType;
-    private TextView tvActType;
+    private TextView tvActName;
+    private Button btnKeyWord;
     private LinearLayout llShowTitle;
     private TextView tvShowTitle;
     private Button btnSubmit;
@@ -81,6 +86,8 @@ public class AddActivityActivity extends BaseActivity {
     public void initView() {
         rlBack = (RelativeLayout) findViewById(R.id.rl_back);
         rlRight = (RelativeLayout) findViewById(R.id.rl_right);
+        llActType = (LinearLayout) findViewById(R.id.ll_act_type);
+        tvActType = (TextView) findViewById(R.id.tv_act_type);
         llSplash = (LinearLayout) findViewById(R.id.ll_splash);
         ivSplash = (ImageView) findViewById(R.id.iv_splash);
         llSplashDuration = (LinearLayout) findViewById(R.id.ll_splash_duration);
@@ -88,12 +95,10 @@ public class AddActivityActivity extends BaseActivity {
         ivClearSplashDuration = (ImageView) findViewById(R.id.iv_clear_splash_duration);
         llTargetAct = (LinearLayout) findViewById(R.id.ll_target_act);
         tvTargetAct = (TextView) findViewById(R.id.tv_target_act);
-        etActName = (EditText) findViewById(R.id.et_act_name);
-        ivClearActName = (ImageView) findViewById(R.id.iv_clear_act_name);
         etActTitle = (EditText) findViewById(R.id.et_act_title);
         ivClearActTitle = (ImageView) findViewById(R.id.iv_clear_act_title);
-        llActType = (LinearLayout) findViewById(R.id.ll_act_type);
-        tvActType = (TextView) findViewById(R.id.tv_act_type);
+        tvActName = (TextView) findViewById(R.id.tv_act_name);
+        btnKeyWord = (Button) findViewById(R.id.btn_key_word);
         llShowTitle = (LinearLayout) findViewById(R.id.ll_show_title);
         tvShowTitle = (TextView) findViewById(R.id.tv_show_title);
         btnSubmit = (Button) findViewById(R.id.btn_submit);
@@ -113,7 +118,6 @@ public class AddActivityActivity extends BaseActivity {
                 closeAct();
             }
         });
-        setEditListener(etActName, ivClearActName);
         setEditListener(etActTitle, ivClearActTitle);
         setEditListener(etSplashDuration, ivClearSplashDuration);
 
@@ -121,6 +125,13 @@ public class AddActivityActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 chooseTargetAct();
+            }
+        });
+
+        btnKeyWord.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                generateKeyword();
             }
         });
 
@@ -152,6 +163,50 @@ public class AddActivityActivity extends BaseActivity {
             }
         });
     }
+
+
+    private void generateKeyword() {
+        String title = etActTitle.getText().toString().trim();
+        showPd(getString(R.string.submiting_text), false);
+        OkGo.<String>get("http://fanyi.youdao.com/openapi.do")
+                .params("keyfrom", "WordsHelper")
+                .params("key", "1678465943")
+                .params("type", "data")
+                .params("doctype", "json")
+                .params("version", "1.1")
+                .params("q", title)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        hidePd();
+                        String body = response.body();
+                        try {
+                            JSONObject object = new JSONObject(body);
+                            JSONArray array = object.getJSONArray("translation");
+                            StringBuilder sb = new StringBuilder();
+                            String words = array.getString(0).replace("the ", "").replace("The ", "");
+                            String child[] = words.split(" ");
+                            for (String s : child) {
+                                sb.append(s.substring(0,1).toUpperCase()).append(s.substring(1, s.length()));
+                            }
+                            sb.append("Activity");
+                            tvActName.setText(sb.toString());
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            ToastUtils.showCustomBgToast(e.toString());
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(Response<String> response) {
+                        super.onError(response);
+                        hidePd();
+                        ToastUtils.showCustomBgToast(response.getException().toString());
+                    }
+                });
+    }
+
 
     private void chooseTargetAct() {
         Intent intent = new Intent(this, ActivityManageActivity.class);
@@ -191,12 +246,16 @@ public class AddActivityActivity extends BaseActivity {
 
 
     private void addAct() {
-        String name = etActName.getText().toString().trim();
+        String name = tvActName.getText().toString().trim();
         String title = etActTitle.getText().toString().trim();
         String showTitle = tvShowTitle.getText().toString().trim();
         String duration = etSplashDuration.getText().toString().trim();
         if (duration.length()==0 && actType == 5) {
             ToastUtils.showCustomBgToast("启动时间不能为空");
+            return;
+        }
+        if (name.length() == 0) {
+            ToastUtils.showCustomBgToast("Activity名称不能为空");
             return;
         }
         Log.e("TTT", "splashPath=" + splashPath);
@@ -263,13 +322,13 @@ public class AddActivityActivity extends BaseActivity {
                     llSplash.setVisibility(View.VISIBLE);
                     llSplashDuration.setVisibility(View.VISIBLE);
                     llTargetAct.setVisibility(View.VISIBLE);
-                    etActName.setText("SplashActivity");
+                    tvActName.setText("SplashActivity");
                     tvShowTitle.setText("false");
                 } else {
                     llSplash.setVisibility(View.GONE);
                     llSplashDuration.setVisibility(View.GONE);
                     llTargetAct.setVisibility(View.GONE);
-                    etActName.setText("");
+                    tvActName.setText("");
                     tvShowTitle.setText("true");
                 }
                 actType = position;

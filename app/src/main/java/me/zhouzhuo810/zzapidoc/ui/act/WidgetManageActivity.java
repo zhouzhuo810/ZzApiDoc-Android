@@ -40,6 +40,7 @@ public class WidgetManageActivity extends BaseActivity {
     private WidgetListAdapter adapter;
     private String projectId;
     private String appId;
+    private String pid;
 
     @Override
     public int getLayoutId() {
@@ -69,6 +70,7 @@ public class WidgetManageActivity extends BaseActivity {
         appId = getIntent().getStringExtra("appId");
         relativeId = getIntent().getStringExtra("relativeId");
         projectId = getIntent().getStringExtra("projectId");
+        pid = getIntent().getStringExtra("pid");
     }
 
     @Override
@@ -86,8 +88,67 @@ public class WidgetManageActivity extends BaseActivity {
                 Intent intent = new Intent(WidgetManageActivity.this, AddWidgetActivity.class);
                 intent.putExtra("relativeId", relativeId);
                 intent.putExtra("appId", appId);
+                intent.putExtra("pid", pid);
                 intent.putExtra("projectId", projectId);
                 startActWithIntent(intent);
+            }
+        });
+
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                int type = adapter.getmDatas().get(position).getType();
+                Intent intent;
+                switch (type) {
+                    case 0:
+                        // titlebar
+
+                        break;
+                    case 1:
+                        //setting item
+
+                        break;
+                    case 2:
+                        //edit item
+
+                        break;
+                    case 3:
+                        //info item
+                        break;
+                    case 4:
+                        //submit btn
+                        break;
+                    case 5:
+                        //exit btn
+                        break;
+                    case 6:
+                        //sidebar
+                        break;
+                    case 7:
+                        //scrollview
+                        intent = new Intent(WidgetManageActivity.this, WidgetManageActivity.class);
+                        intent.putExtra("pid", adapter.getmDatas().get(position).getId());
+                        intent.putExtra("relativeId", relativeId);
+                        intent.putExtra("projectId", projectId);
+                        startActWithIntent(intent);
+                        break;
+                    case 8:
+                        //linear
+                        intent = new Intent(WidgetManageActivity.this, WidgetManageActivity.class);
+                        intent.putExtra("pid", adapter.getmDatas().get(position).getId());
+                        intent.putExtra("relativeId", relativeId);
+                        intent.putExtra("projectId", projectId);
+                        startActWithIntent(intent);
+                        break;
+                    case 9:
+                        //relative
+                        intent = new Intent(WidgetManageActivity.this, WidgetManageActivity.class);
+                        intent.putExtra("pid", adapter.getmDatas().get(position).getId());
+                        intent.putExtra("relativeId", relativeId);
+                        intent.putExtra("projectId", projectId);
+                        startActWithIntent(intent);
+                        break;
+                }
             }
         });
 
@@ -146,8 +207,11 @@ public class WidgetManageActivity extends BaseActivity {
     }
 
     private void getData() {
+        if (pid == null) {
+            pid = "0";
+        }
         Api.getApi0()
-                .getAllMyWidget(relativeId, getUserId())
+                .getAllMyWidget(relativeId, pid, getUserId())
                 .compose(RxHelper.<GetAllMyWidgetResult>io_main())
                 .subscribe(new Subscriber<GetAllMyWidgetResult>() {
                     @Override
@@ -163,7 +227,7 @@ public class WidgetManageActivity extends BaseActivity {
                     @Override
                     public void onNext(GetAllMyWidgetResult getAllMyWidgetResult) {
                         stopRefresh(refresh);
-                        if (getAllMyWidgetResult.getCode()==1) {
+                        if (getAllMyWidgetResult.getCode() == 1) {
                             list = getAllMyWidgetResult.getData();
                             adapter.setmDatas(list);
                             adapter.notifyDataSetChanged();

@@ -7,6 +7,7 @@ import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -60,8 +61,12 @@ public class AddWidgetActivity extends BaseActivity {
     private LinearLayout llKeyWord;
     private TextView tvKeyWord;
     private Button btnKeyWord;
+    private Button btnWidthMatchParent;
+    private Button btnWidthWrapContent;
     private EditText etWidgetWidth;
     private ImageView ivClearWidgetWidth;
+    private Button btnHeightMatchParent;
+    private Button btnHeightWrapContent;
     private EditText etWidgetHeight;
     private ImageView ivClearWidgetHeight;
     private LinearLayout llWidgetWeight;
@@ -76,7 +81,7 @@ public class AddWidgetActivity extends BaseActivity {
     private LinearLayout llTopMargin;
     private EditText etTopMargin;
     private ImageView ivClearTopMargin;
-    private LinearLayout bottomMargin;
+    private LinearLayout llBottomMargin;
     private EditText etBottomMargin;
     private ImageView ivClearBottomMargin;
     private LinearLayout llLeftPadding;
@@ -93,6 +98,9 @@ public class AddWidgetActivity extends BaseActivity {
     private ImageView ivClearBottomPadding;
     private LinearLayout llBackground;
     private TextView tvBackground;
+    private LinearLayout llHint;
+    private EditText etEtHint;
+    private ImageView ivClearEtHint;
     private LinearLayout llDefValue;
     private EditText etDefValue;
     private ImageView ivClearDefValue;
@@ -102,21 +110,26 @@ public class AddWidgetActivity extends BaseActivity {
     private LinearLayout llRightText;
     private EditText etRightText;
     private ImageView ivClearRightText;
+    private LinearLayout llLeftImg;
+    private ImageView ivLeftImg;
+    private TextView tvLeftImg;
     private LinearLayout llRightImg;
     private ImageView ivRightImg;
     private TextView tvRightImg;
     private LinearLayout llShowLeftImg;
-    private TextView tvShowLeftImg;
+    private CheckBox cbShowLeftImg;
     private LinearLayout llShowRightImg;
-    private TextView tvShowRightImg;
+    private CheckBox cbShowRightImg;
     private LinearLayout llShowLeftText;
-    private TextView tvShowLeftText;
+    private CheckBox cbShowLeftText;
     private LinearLayout llShowRightText;
-    private TextView tvShowRightText;
-    private LinearLayout llLeftLayout;
-    private TextView tvLeftLayout;
+    private CheckBox cbShowRightText;
+    private LinearLayout llShowLeftLayout;
+    private CheckBox cbShowLeftLayout;
     private LinearLayout llShowRightLayout;
-    private TextView tvShowRightLayout;
+    private CheckBox cbShowRightLayout;
+    private LinearLayout llGravity;
+    private TextView tvGravity;
     private Button btnSubmit;
 
     private void assignViews() {
@@ -137,8 +150,12 @@ public class AddWidgetActivity extends BaseActivity {
         llKeyWord = (LinearLayout) findViewById(R.id.ll_key_word);
         tvKeyWord = (TextView) findViewById(R.id.tv_key_word);
         btnKeyWord = (Button) findViewById(R.id.btn_key_word);
+        btnWidthMatchParent = (Button) findViewById(R.id.btn_width_match_parent);
+        btnWidthWrapContent = (Button) findViewById(R.id.btn_width_wrap_content);
         etWidgetWidth = (EditText) findViewById(R.id.et_widget_width);
         ivClearWidgetWidth = (ImageView) findViewById(R.id.iv_clear_widget_width);
+        btnHeightMatchParent = (Button) findViewById(R.id.btn_height_match_parent);
+        btnHeightWrapContent = (Button) findViewById(R.id.btn_height_wrap_content);
         etWidgetHeight = (EditText) findViewById(R.id.et_widget_height);
         ivClearWidgetHeight = (ImageView) findViewById(R.id.iv_clear_widget_height);
         llWidgetWeight = (LinearLayout) findViewById(R.id.ll_widget_weight);
@@ -153,7 +170,7 @@ public class AddWidgetActivity extends BaseActivity {
         llTopMargin = (LinearLayout) findViewById(R.id.ll_top_margin);
         etTopMargin = (EditText) findViewById(R.id.et_top_margin);
         ivClearTopMargin = (ImageView) findViewById(R.id.iv_clear_top_margin);
-        bottomMargin = (LinearLayout) findViewById(R.id.bottom_margin);
+        llBottomMargin = (LinearLayout) findViewById(R.id.ll_bottom_margin);
         etBottomMargin = (EditText) findViewById(R.id.et_bottom_margin);
         ivClearBottomMargin = (ImageView) findViewById(R.id.iv_clear_bottom_margin);
         llLeftPadding = (LinearLayout) findViewById(R.id.ll_left_padding);
@@ -170,6 +187,9 @@ public class AddWidgetActivity extends BaseActivity {
         ivClearBottomPadding = (ImageView) findViewById(R.id.iv_clear_bottom_padding);
         llBackground = (LinearLayout) findViewById(R.id.ll_background);
         tvBackground = (TextView) findViewById(R.id.tv_background);
+        llHint = (LinearLayout) findViewById(R.id.ll_hint);
+        etEtHint = (EditText) findViewById(R.id.et_et_hint);
+        ivClearEtHint = (ImageView) findViewById(R.id.iv_clear_et_hint);
         llDefValue = (LinearLayout) findViewById(R.id.ll_def_value);
         etDefValue = (EditText) findViewById(R.id.et_def_value);
         ivClearDefValue = (ImageView) findViewById(R.id.iv_clear_def_value);
@@ -179,24 +199,28 @@ public class AddWidgetActivity extends BaseActivity {
         llRightText = (LinearLayout) findViewById(R.id.ll_right_text);
         etRightText = (EditText) findViewById(R.id.et_right_text);
         ivClearRightText = (ImageView) findViewById(R.id.iv_clear_right_text);
+        llLeftImg = (LinearLayout) findViewById(R.id.ll_left_img);
+        ivLeftImg = (ImageView) findViewById(R.id.iv_left_img);
+        tvLeftImg = (TextView) findViewById(R.id.tv_left_img);
         llRightImg = (LinearLayout) findViewById(R.id.ll_right_img);
         ivRightImg = (ImageView) findViewById(R.id.iv_right_img);
         tvRightImg = (TextView) findViewById(R.id.tv_right_img);
         llShowLeftImg = (LinearLayout) findViewById(R.id.ll_show_left_img);
-        tvShowLeftImg = (TextView) findViewById(R.id.tv_show_left_img);
+        cbShowLeftImg = (CheckBox) findViewById(R.id.cb_show_left_img);
         llShowRightImg = (LinearLayout) findViewById(R.id.ll_show_right_img);
-        tvShowRightImg = (TextView) findViewById(R.id.tv_show_right_img);
+        cbShowRightImg = (CheckBox) findViewById(R.id.cb_show_right_img);
         llShowLeftText = (LinearLayout) findViewById(R.id.ll_show_left_text);
-        tvShowLeftText = (TextView) findViewById(R.id.tv_show_left_text);
+        cbShowLeftText = (CheckBox) findViewById(R.id.cb_show_left_text);
         llShowRightText = (LinearLayout) findViewById(R.id.ll_show_right_text);
-        tvShowRightText = (TextView) findViewById(R.id.tv_show_right_text);
-        llLeftLayout = (LinearLayout) findViewById(R.id.ll_left_layout);
-        tvLeftLayout = (TextView) findViewById(R.id.tv_left_layout);
+        cbShowRightText = (CheckBox) findViewById(R.id.cb_show_right_text);
+        llShowLeftLayout = (LinearLayout) findViewById(R.id.ll_show_left_layout);
+        cbShowLeftLayout = (CheckBox) findViewById(R.id.cb_show_left_layout);
         llShowRightLayout = (LinearLayout) findViewById(R.id.ll_show_right_layout);
-        tvShowRightLayout = (TextView) findViewById(R.id.tv_show_right_layout);
+        cbShowRightLayout = (CheckBox) findViewById(R.id.cb_show_right_layout);
+        llGravity = (LinearLayout) findViewById(R.id.ll_gravity);
+        tvGravity = (TextView) findViewById(R.id.tv_gravity);
         btnSubmit = (Button) findViewById(R.id.btn_submit);
     }
-
 
     private int widgetType;
     private String splashPath;
@@ -246,6 +270,46 @@ public class AddWidgetActivity extends BaseActivity {
         setEditListener(etLeftTitle, ivClearLeftTitle);
         setEditListener(etRightText, ivClearRightText);
         setEditListener(etTitle, ivClearTitle);
+        setEditListener(etLeftMargin, ivClearLeftMargin);
+        setEditListener(etLeftPadding, ivClearLeftPadding);
+        setEditListener(etRightMargin, ivClearRightMargin);
+        setEditListener(etRightPadding, ivClearRightPadding);
+        setEditListener(etTopMargin, ivClearTopMargin);
+        setEditListener(etTopPadding, ivClearTopPadding);
+        setEditListener(etBottomMargin, ivClearBottomMargin);
+        setEditListener(etBottomPadding, ivClearBottomPadding);
+        setEditListener(etWidgetHeight, ivClearWidgetHeight);
+        setEditListener(etWidgetWidth, ivClearWidgetWidth);
+        setEditListener(etWidgetWeight, ivClearWidgetWeight);
+
+        btnWidthMatchParent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                etWidgetWidth.setText("-1");
+            }
+        });
+
+        btnWidthWrapContent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                etWidgetWidth.setText("-2");
+            }
+        });
+
+        btnHeightMatchParent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                etWidgetHeight.setText("-1");
+            }
+        });
+
+        btnHeightWrapContent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                etWidgetHeight.setText("-2");
+            }
+        });
+
 
         llWidgetType.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -275,11 +339,12 @@ public class AddWidgetActivity extends BaseActivity {
             }
         });
 
-        chooseShow(llShowLeftImg, tvShowLeftImg);
-        chooseShow(llShowLeftText, tvShowLeftText);
-        chooseShow(llShowRightImg, tvShowRightImg);
-        chooseShow(llShowRightText, tvShowRightText);
-        chooseShow(llShowRightLayout, tvShowRightLayout);
+        llGravity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chooseGravity();
+            }
+        });
 
         llRightImg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -292,6 +357,23 @@ public class AddWidgetActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 addWidget();
+            }
+        });
+    }
+
+    private void chooseGravity() {
+        List<String> items = new ArrayList<>();
+        items.add("center_vertical");
+        items.add("center_horizontal");
+        items.add("center");
+        items.add("left");
+        items.add("right");
+        items.add("right|center_vertical");
+        items.add("top|left");
+        showListDialog(items, true, null, new OnItemClick() {
+            @Override
+            public void onItemClick(int position, String content) {
+                tvGravity.setText(content);
             }
         });
     }
@@ -388,11 +470,6 @@ public class AddWidgetActivity extends BaseActivity {
         String title = etTitle.getText().toString().trim();
         String leftTitle = etLeftTitle.getText().toString().trim();
         String rightText = etRightText.getText().toString().trim();
-        String showLeftImg = tvShowLeftImg.getText().toString().trim();
-        String showRightImg = tvShowRightImg.getText().toString().trim();
-        String showLeftText = tvShowLeftText.getText().toString().trim();
-        String showRightText = tvShowRightText.getText().toString().trim();
-        String showRightLayout = tvShowRightLayout.getText().toString().trim();
         String width = etWidgetWidth.getText().toString().trim();
         String height = etWidgetHeight.getText().toString().trim();
         String weight = etWidgetWeight.getText().toString().trim();
@@ -406,6 +483,7 @@ public class AddWidgetActivity extends BaseActivity {
         String bottomPadding = etBottomPadding.getText().toString().trim();
         String name = tvWidgetName.getText().toString().trim();
         String resId = tvKeyWord.getText().toString().trim();
+
         showPd(getString(R.string.submiting_text), false);
         PostRequest<AddActivityResult> post = OkGo.<AddActivityResult>post(SharedUtil.getString(ZApplication.getInstance(), "server_config")
                 + "/ZzApiDoc/v1/widget/addWidget")
@@ -415,23 +493,21 @@ public class AddWidgetActivity extends BaseActivity {
                 .params("type", widgetType)
                 .params("appId", appId)
                 .params("relativeId", relativeId)
-                .params("targetActId", targetActId)
-                .params("targetApiId", targetApiId)
                 .params("defValue", defvalue)
                 .params("hint", hint)
                 .params("leftTitleText", leftTitle)
                 .params("rightTitleText", rightText)
-                .params("showLeftTitleImg", showLeftImg.equals("true"))
-                .params("showRightTitleImg", showRightImg.equals("true"))
-                .params("showLeftTitleText", showLeftText.equals("true"))
-                .params("showRightTitleText", showRightText.equals("true"))
-                .params("showRightTitleLayout", showRightLayout.equals("true"))
+                .params("showLeftTitleImg", cbShowLeftImg.isChecked())
+                .params("showRightTitleImg", cbShowRightImg.isChecked())
+                .params("showLeftTitleText", cbShowLeftText.isChecked())
+                .params("showRightTitleText", cbShowRightText.isChecked())
+                .params("showRightTitleLayout", cbShowRightLayout.isChecked())
                 .params("pid", pid)
                 .params("background", background)
                 .params("width", width)
                 .params("height", height)
                 .params("weight", weight)
-                .params("marginLeft", leftPadding)
+                .params("marginLeft", leftMargin)
                 .params("marginRight", rightMargin)
                 .params("marginTop", topMargin)
                 .params("marginBottom", bottomMargin)
@@ -441,6 +517,12 @@ public class AddWidgetActivity extends BaseActivity {
                 .params("paddingBottom", bottomPadding)
                 .params("userId", getUserId())
                 .isMultipart(true);
+        if (targetActId != null) {
+            post.params("targetActId", targetActId);
+        }
+        if (targetApiId != null) {
+            post.params("targetApiId", targetApiId);
+        }
         if (splashPath != null) {
             post.params("rightTitleImg", new File(splashPath));
         }
@@ -484,50 +566,61 @@ public class AddWidgetActivity extends BaseActivity {
         List<String> items = new ArrayList<>();
         items.add("TitleBar");
         items.add("SettingItem");
-        items.add("Tv+Et+Iv");
-        items.add("Tv+Tv");
+        items.add("EditItem");
+        items.add("InfoItem");
         items.add("SubmitButton");
         items.add("ExitButton");
-        items.add("Letter+Rv");
+        items.add("SideBar+RecyclerView");
+        items.add("ScrollView");
+        items.add("LinearLayout");
+        items.add("RelativeLayout");
+        items.add("ImageView");
+        items.add("TextView");
+        items.add("CheckBox");
         showListDialog(items, true, null, new OnItemClick() {
             @Override
             public void onItemClick(int position, String content) {
+                tvWidgetName.setText(content);
+                hideAll();
                 switch (position) {
                     case 0:
-                        tvWidgetName.setText("TitleBar");
-                        showTitleBarItem(true);
-                        llTargetApi.setVisibility(View.GONE);
+                        showTitleBarItem();
                         break;
                     case 1:
-                        tvWidgetName.setText("SettingItem");
-                        showTitleBarItem(false);
-                        llTargetApi.setVisibility(View.GONE);
+                        showSettingItem();
                         break;
                     case 2:
-                        tvWidgetName.setText("Edit");
-                        showTitleBarItem(false);
-                        showEdit();
-                        llTargetApi.setVisibility(View.GONE);
+                        showEditItem();
                         break;
                     case 3:
-                        tvWidgetName.setText("Info");
-                        showTitleBarItem(false);
-                        llTargetApi.setVisibility(View.GONE);
+                        showInfoItem();
                         break;
                     case 4:
-                        tvWidgetName.setText("Submit Button");
-                        showTitleBarItem(false);
-                        llTargetApi.setVisibility(View.VISIBLE);
+                        showSubmitBtn();
                         break;
                     case 5:
-                        tvWidgetName.setText("Exit Button");
-                        showTitleBarItem(false);
-                        llTargetApi.setVisibility(View.VISIBLE);
+                        showExitBtn();
                         break;
                     case 6:
-                        tvWidgetName.setText("Rv SideBar");
-                        showTitleBarItem(false);
-                        llTargetApi.setVisibility(View.VISIBLE);
+                        showSideBar();
+                        break;
+                    case 7:
+                        showScrollView();
+                        break;
+                    case 8:
+                        showLinear();
+                        break;
+                    case 9:
+                        showRelative();
+                        break;
+                    case 10:
+                        showImageView();
+                        break;
+                    case 11:
+                        showTextView();
+                        break;
+                    case 12:
+                        showCheckBox();
                         break;
                 }
                 widgetType = position;
@@ -536,23 +629,144 @@ public class AddWidgetActivity extends BaseActivity {
         });
     }
 
-    private void showEdit() {
-        llTargetAct.setVisibility(View.GONE);
+    private void showCheckBox() {
+
     }
 
-    private void showTitleBarItem(boolean b) {
-        llTargetAct.setVisibility(View.VISIBLE);
-        llDefValue.setVisibility(b ? View.GONE : View.VISIBLE);
-        llShowLeftText.setVisibility(b ? View.VISIBLE : View.GONE);
-        llLeftLayout.setVisibility(b ? View.VISIBLE : View.GONE);
-        llShowRightLayout.setVisibility(b ? View.VISIBLE : View.GONE);
-        llLeftText.setVisibility(b ? View.VISIBLE : View.GONE);
-        llShowLeftImg.setVisibility(b ? View.VISIBLE : View.GONE);
-        llRightImg.setVisibility(b ? View.VISIBLE : View.GONE);
-        llShowRightImg.setVisibility(b ? View.VISIBLE : View.GONE);
-        llRightText.setVisibility(b ? View.VISIBLE : View.GONE);
-        llShowRightText.setVisibility(b ? View.VISIBLE : View.GONE);
+    private void showTextView() {
     }
+
+    private void showImageView() {
+
+    }
+
+    private void showRelative() {
+        showPaddingMarin();
+    }
+
+    private void showLinear() {
+        showPaddingMarin();
+        llGravity.setVisibility(View.VISIBLE);
+    }
+
+
+    private void showScrollView() {
+        showPaddingMarin();
+    }
+
+    private void showSideBar() {
+    }
+
+    private void showExitBtn() {
+        llTitle.setVisibility(View.VISIBLE);
+        llKeyWord.setVisibility(View.VISIBLE);
+        llTargetAct.setVisibility(View.VISIBLE);
+        llTargetApi.setVisibility(View.VISIBLE);
+
+        showPaddingMarin();
+    }
+
+
+    private void showSubmitBtn() {
+        llTitle.setVisibility(View.VISIBLE);
+        llKeyWord.setVisibility(View.VISIBLE);
+        llTargetAct.setVisibility(View.VISIBLE);
+        llTargetApi.setVisibility(View.VISIBLE);
+
+        showPaddingMarin();
+    }
+
+    private void showInfoItem() {
+        llShowLeftText.setVisibility(View.VISIBLE);
+        llTitle.setVisibility(View.VISIBLE);
+        llKeyWord.setVisibility(View.VISIBLE);
+        llDefValue.setVisibility(View.VISIBLE);
+        llHint.setVisibility(View.VISIBLE);
+
+        showPaddingMarin();
+    }
+
+    private void hideAll() {
+        llTargetAct.setVisibility(View.GONE);
+        llTargetApi.setVisibility(View.GONE);
+        llRightImg.setVisibility(View.GONE);
+        llBackground.setVisibility(View.GONE);
+        llBottomPadding.setVisibility(View.GONE);
+        llDefValue.setVisibility(View.GONE);
+        llKeyWord.setVisibility(View.GONE);
+        llShowLeftLayout.setVisibility(View.GONE);
+        llShowRightLayout.setVisibility(View.GONE);
+        llShowRightImg.setVisibility(View.GONE);
+        llShowRightText.setVisibility(View.GONE);
+        llShowLeftImg.setVisibility(View.GONE);
+        llShowLeftText.setVisibility(View.GONE);
+        llLeftText.setVisibility(View.GONE);
+        llLeftImg.setVisibility(View.GONE);
+        llRightText.setVisibility(View.GONE);
+        llTitle.setVisibility(View.GONE);
+        llWidgetWeight.setVisibility(View.GONE);
+        llRightMargin.setVisibility(View.GONE);
+        llRightPadding.setVisibility(View.GONE);
+        llLeftMargin.setVisibility(View.GONE);
+        llLeftPadding.setVisibility(View.GONE);
+        llTopMargin.setVisibility(View.GONE);
+        llTopPadding.setVisibility(View.GONE);
+        llBottomPadding.setVisibility(View.GONE);
+        llBottomMargin.setVisibility(View.GONE);
+        llGravity.setVisibility(View.GONE);
+    }
+
+    private void showEditItem() {
+        llLeftText.setVisibility(View.VISIBLE);
+        llShowLeftText.setVisibility(View.VISIBLE);
+        llShowLeftImg.setVisibility(View.VISIBLE);
+        llLeftImg.setVisibility(View.VISIBLE);
+        llHint.setVisibility(View.VISIBLE);
+        llDefValue.setVisibility(View.VISIBLE);
+        llTitle.setVisibility(View.VISIBLE);
+        llKeyWord.setVisibility(View.VISIBLE);
+
+        showPaddingMarin();
+    }
+
+    private void showTitleBarItem() {
+        llTargetAct.setVisibility(View.VISIBLE);
+        llShowLeftLayout.setVisibility(View.VISIBLE);
+        llShowRightLayout.setVisibility(View.VISIBLE);
+        llShowRightImg.setVisibility(View.VISIBLE);
+        llShowRightText.setVisibility(View.VISIBLE);
+        llShowLeftImg.setVisibility(View.VISIBLE);
+        llShowLeftText.setVisibility(View.VISIBLE);
+        llLeftText.setVisibility(View.VISIBLE);
+        llRightText.setVisibility(View.VISIBLE);
+        llTitle.setVisibility(View.VISIBLE);
+        llKeyWord.setVisibility(View.VISIBLE);
+        llWidgetWeight.setVisibility(View.VISIBLE);
+    }
+
+    private void showSettingItem() {
+        llTargetAct.setVisibility(View.VISIBLE);
+        llLeftImg.setVisibility(View.VISIBLE);
+        llShowLeftImg.setVisibility(View.VISIBLE);
+        llTitle.setVisibility(View.VISIBLE);
+        llKeyWord.setVisibility(View.VISIBLE);
+        llShowRightImg.setVisibility(View.VISIBLE);
+        llRightImg.setVisibility(View.VISIBLE);
+
+        showPaddingMarin();
+    }
+
+    private void showPaddingMarin() {
+        llRightMargin.setVisibility(View.VISIBLE);
+        llRightPadding.setVisibility(View.VISIBLE);
+        llLeftMargin.setVisibility(View.VISIBLE);
+        llLeftPadding.setVisibility(View.VISIBLE);
+        llTopMargin.setVisibility(View.VISIBLE);
+        llTopPadding.setVisibility(View.VISIBLE);
+        llBottomPadding.setVisibility(View.VISIBLE);
+        llBottomMargin.setVisibility(View.VISIBLE);
+    }
+
 
     @Override
     public void resume() {
