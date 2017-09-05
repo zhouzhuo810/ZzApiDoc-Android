@@ -128,6 +128,8 @@ public class AddWidgetActivity extends BaseActivity {
     private CheckBox cbShowLeftLayout;
     private LinearLayout llShowRightLayout;
     private CheckBox cbShowRightLayout;
+    private LinearLayout llOrientation;
+    private TextView tvOrientation;
     private LinearLayout llGravity;
     private TextView tvGravity;
     private Button btnSubmit;
@@ -217,10 +219,13 @@ public class AddWidgetActivity extends BaseActivity {
         cbShowLeftLayout = (CheckBox) findViewById(R.id.cb_show_left_layout);
         llShowRightLayout = (LinearLayout) findViewById(R.id.ll_show_right_layout);
         cbShowRightLayout = (CheckBox) findViewById(R.id.cb_show_right_layout);
+        llOrientation = (LinearLayout) findViewById(R.id.ll_orientation);
+        tvOrientation = (TextView) findViewById(R.id.tv_orientation);
         llGravity = (LinearLayout) findViewById(R.id.ll_gravity);
         tvGravity = (TextView) findViewById(R.id.tv_gravity);
         btnSubmit = (Button) findViewById(R.id.btn_submit);
     }
+
 
     private int widgetType;
     private String splashPath;
@@ -311,6 +316,13 @@ public class AddWidgetActivity extends BaseActivity {
         });
 
 
+        llOrientation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chooseOrientation();
+            }
+        });
+
         llWidgetType.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -357,6 +369,18 @@ public class AddWidgetActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 addWidget();
+            }
+        });
+    }
+
+    private void chooseOrientation() {
+        List<String> items = new ArrayList<>();
+        items.add("horizontal");
+        items.add("vertical");
+        showListDialog(items, true, null, new OnItemClick() {
+            @Override
+            public void onItemClick(int position, String content) {
+                tvOrientation.setText(content);
             }
         });
     }
@@ -483,6 +507,7 @@ public class AddWidgetActivity extends BaseActivity {
         String bottomPadding = etBottomPadding.getText().toString().trim();
         String name = tvWidgetName.getText().toString().trim();
         String resId = tvKeyWord.getText().toString().trim();
+        String orientation = tvOrientation.getText().toString().trim();
 
         showPd(getString(R.string.submiting_text), false);
         PostRequest<AddActivityResult> post = OkGo.<AddActivityResult>post(SharedUtil.getString(ZApplication.getInstance(), "server_config")
@@ -515,6 +540,7 @@ public class AddWidgetActivity extends BaseActivity {
                 .params("paddingRight", rightPadding)
                 .params("paddingTop", topPadding)
                 .params("paddingBottom", bottomPadding)
+                .params("orientation", orientation)
                 .params("userId", getUserId())
                 .isMultipart(true);
         if (targetActId != null) {
@@ -630,14 +656,24 @@ public class AddWidgetActivity extends BaseActivity {
     }
 
     private void showCheckBox() {
-
+        llTitle.setVisibility(View.VISIBLE);
+        llKeyWord.setVisibility(View.VISIBLE);
+        showPaddingMarin();
     }
 
     private void showTextView() {
+        llTitle.setVisibility(View.VISIBLE);
+        llKeyWord.setVisibility(View.VISIBLE);
+        llHint.setVisibility(View.VISIBLE);
+        showPaddingMarin();
     }
 
     private void showImageView() {
-
+        llTitle.setVisibility(View.VISIBLE);
+        llKeyWord.setVisibility(View.VISIBLE);
+        llLeftImg.setVisibility(View.VISIBLE);
+        llShowLeftImg.setVisibility(View.VISIBLE);
+        showPaddingMarin();
     }
 
     private void showRelative() {
@@ -645,8 +681,9 @@ public class AddWidgetActivity extends BaseActivity {
     }
 
     private void showLinear() {
-        showPaddingMarin();
+        llWidgetWeight.setVisibility(View.VISIBLE);
         llGravity.setVisibility(View.VISIBLE);
+        showPaddingMarin();
     }
 
 
@@ -663,7 +700,16 @@ public class AddWidgetActivity extends BaseActivity {
         llTargetAct.setVisibility(View.VISIBLE);
         llTargetApi.setVisibility(View.VISIBLE);
 
+        setMargin(40);
+
         showPaddingMarin();
+    }
+
+    private void setMargin(int px) {
+        etLeftMargin.setText(px+"");
+        etRightMargin.setText(px+"");
+        etTopMargin.setText(px+"");
+        etBottomMargin.setText(px+"");
     }
 
 
@@ -672,6 +718,8 @@ public class AddWidgetActivity extends BaseActivity {
         llKeyWord.setVisibility(View.VISIBLE);
         llTargetAct.setVisibility(View.VISIBLE);
         llTargetApi.setVisibility(View.VISIBLE);
+
+        setMargin(40);
 
         showPaddingMarin();
     }
@@ -714,6 +762,9 @@ public class AddWidgetActivity extends BaseActivity {
         llBottomPadding.setVisibility(View.GONE);
         llBottomMargin.setVisibility(View.GONE);
         llGravity.setVisibility(View.GONE);
+        llHint.setVisibility(View.GONE);
+
+        setMargin(0);
     }
 
     private void showEditItem() {

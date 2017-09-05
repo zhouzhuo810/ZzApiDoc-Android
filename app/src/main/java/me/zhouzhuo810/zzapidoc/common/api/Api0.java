@@ -22,6 +22,7 @@ import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllApplicationResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllInterfaceGroupResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllInterfaceResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllMyActivityResult;
+import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllMyFragmentResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllMyWidgetResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllProjectResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetDictionaryResult;
@@ -337,6 +338,13 @@ public interface Api0 {
             @Query("userId") String userId
     );
 
+    /*获取fragment列表*/
+    @GET("/ZzApiDoc/v1/fragment/getAllMyFragment")
+    Observable<GetAllMyFragmentResult> getAllMyFragment(
+            @Query("activityId") String activityId,
+            @Query("userId") String userId
+    );
+
 
     /*删除activity*/
     @FormUrlEncoded
@@ -350,6 +358,15 @@ public interface Api0 {
     @FormUrlEncoded
     @POST("/ZzApiDoc/v1/widget/deleteWidget")
     Observable<DeleteActivityResult> deleteWidget(
+            @Field("id") String id,
+            @Field("userId") String userId
+    );
+
+
+    /*删除fragment*/
+    @FormUrlEncoded
+    @POST("/ZzApiDoc/v1/fragment/deleteFragment")
+    Observable<DeleteActivityResult> deleteFragment(
             @Field("id") String id,
             @Field("userId") String userId
     );

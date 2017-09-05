@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -543,9 +543,9 @@
                     android:layout_marginRight="30px"
                     android:layout_weight="1"
                     android:background="@null"
-                    android:text="0"
                     android:gravity="right|center_vertical"
                     android:hint="@string/widget_weight_hint_text"
+                    android:text="0"
                     android:textColor="@color/colorBlack"
                     android:textSize="44px" />
 
@@ -1303,9 +1303,9 @@
 
                 <TextView
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="40px"
+                    android:layout_weight="1"
                     android:gravity="center|left"
                     android:text="@string/show_left_img_text"
                     android:textColor="#415868"
@@ -1313,13 +1313,13 @@
 
                 <CheckBox
                     android:id="@+id/cb_show_left_img"
-                    app:layout_auto_baseheight="width"
                     android:layout_width="99px"
                     android:layout_height="75px"
-                    android:checked="true"
                     android:layout_marginRight="40px"
+                    android:background="@drawable/cb_selector"
                     android:button="@null"
-                    android:background="@drawable/cb_selector"/>
+                    android:checked="true"
+                    app:layout_auto_baseheight="width" />
             </LinearLayout>
 
             <View
@@ -1342,9 +1342,9 @@
 
                 <TextView
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="40px"
+                    android:layout_weight="1"
                     android:gravity="center|left"
                     android:text="@string/show_right_img_text"
                     android:textColor="#415868"
@@ -1352,12 +1352,12 @@
 
                 <CheckBox
                     android:id="@+id/cb_show_right_img"
-                    app:layout_auto_baseheight="width"
                     android:layout_width="99px"
                     android:layout_height="75px"
                     android:layout_marginRight="40px"
+                    android:background="@drawable/cb_selector"
                     android:button="@null"
-                    android:background="@drawable/cb_selector"/>
+                    app:layout_auto_baseheight="width" />
             </LinearLayout>
 
             <View
@@ -1380,21 +1380,22 @@
 
                 <TextView
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="40px"
+                    android:layout_weight="1"
                     android:gravity="center|left"
                     android:text="@string/show_left_text_text"
                     android:textColor="#415868"
                     android:textSize="44px" />
+
                 <CheckBox
                     android:id="@+id/cb_show_left_text"
-                    app:layout_auto_baseheight="width"
                     android:layout_width="99px"
                     android:layout_height="75px"
                     android:layout_marginRight="40px"
+                    android:background="@drawable/cb_selector"
                     android:button="@null"
-                    android:background="@drawable/cb_selector"/>
+                    app:layout_auto_baseheight="width" />
             </LinearLayout>
 
             <View
@@ -1417,21 +1418,22 @@
 
                 <TextView
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="40px"
+                    android:layout_weight="1"
                     android:gravity="center|left"
                     android:text="@string/show_right_text_text"
                     android:textColor="#415868"
                     android:textSize="44px" />
+
                 <CheckBox
                     android:id="@+id/cb_show_right_text"
-                    app:layout_auto_baseheight="width"
                     android:layout_width="99px"
                     android:layout_height="75px"
                     android:layout_marginRight="40px"
+                    android:background="@drawable/cb_selector"
                     android:button="@null"
-                    android:background="@drawable/cb_selector"/>
+                    app:layout_auto_baseheight="width" />
             </LinearLayout>
 
             <View
@@ -1454,9 +1456,9 @@
 
                 <TextView
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="40px"
+                    android:layout_weight="1"
                     android:gravity="center|left"
                     android:text="@string/left_layout_text"
                     android:textColor="#415868"
@@ -1464,13 +1466,13 @@
 
                 <CheckBox
                     android:id="@+id/cb_show_left_layout"
-                    app:layout_auto_baseheight="width"
                     android:layout_width="99px"
                     android:layout_height="75px"
-                    android:checked="true"
                     android:layout_marginRight="40px"
+                    android:background="@drawable/cb_selector"
                     android:button="@null"
-                    android:background="@drawable/cb_selector"/>
+                    android:checked="true"
+                    app:layout_auto_baseheight="width" />
             </LinearLayout>
 
             <View
@@ -1493,9 +1495,9 @@
 
                 <TextView
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="40px"
+                    android:layout_weight="1"
                     android:gravity="center|left"
                     android:text="@string/show_right_layout_text"
                     android:textColor="#415868"
@@ -1503,12 +1505,60 @@
 
                 <CheckBox
                     android:id="@+id/cb_show_right_layout"
-                    app:layout_auto_baseheight="width"
                     android:layout_width="99px"
                     android:layout_height="75px"
                     android:layout_marginRight="40px"
+                    android:background="@drawable/cb_selector"
                     android:button="@null"
-                    android:background="@drawable/cb_selector"/>
+                    app:layout_auto_baseheight="width" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="30px"
+                android:background="@color/colorGrayBg" />
+
+
+            <!--签订日期-->
+
+            <LinearLayout
+                android:id="@+id/ll_orientation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/setting_item_bg_selector"
+                android:clickable="true"
+                android:gravity="center_vertical"
+                android:minHeight="130px"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="280px"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="40px"
+                    android:gravity="center|left"
+                    android:text="@string/orientation_text"
+                    android:textColor="#415868"
+                    android:textSize="44px" />
+
+                <TextView
+                    android:id="@+id/tv_orientation"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30px"
+                    android:layout_marginRight="30px"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:gravity="right|center_vertical"
+                    android:hint="@string/choose_orientation_hint"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="44px" />
+
+                <ImageView
+                    android:layout_width="40px"
+                    android:layout_height="40px"
+                    android:layout_marginRight="30px"
+                    android:src="@drawable/more" />
             </LinearLayout>
 
             <View

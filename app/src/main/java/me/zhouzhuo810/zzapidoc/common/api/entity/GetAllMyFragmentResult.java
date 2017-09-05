@@ -3,58 +3,47 @@ package me.zhouzhuo810.zzapidoc.common.api.entity;
 import java.util.List;
 
 /**
- * Created by admin on 2017/8/19.
+ * Created by zhouzhuo810 on 2017/9/5.
  */
 
-public class GetAllMyActivityResult {
+public class GetAllMyFragmentResult {
     private int code;
     private String msg;
-    private List<DataBean> data;
+    private List<DataEntity> data;
 
-    public List<DataBean> getData() {
+    public List<DataEntity> getData() {
         return data;
     }
 
-    public void setData(List<DataBean> data) {
+    public void setData(List<DataEntity> data) {
         this.data = data;
     }
 
-    public static class DataBean {
+    public int getCode() {
+        return code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+
+    public static class DataEntity {
         private String id;
         private String name;
         private int type;
-        private String splashImg;
-        private String splashSecond;
-        private String targetActId;
-        private String targetActName;
         private String title;
         private boolean showTitle;
         private String appId;
+        private String activityId;
         private String createTime;
-
-        public String getTargetActId() {
-            return targetActId;
-        }
-
-        public void setTargetActId(String targetActId) {
-            this.targetActId = targetActId;
-        }
-
-        public String getTargetActName() {
-            return targetActName;
-        }
-
-        public void setTargetActName(String targetActName) {
-            this.targetActName = targetActName;
-        }
-
-        public String getSplashSecond() {
-            return splashSecond;
-        }
-
-        public void setSplashSecond(String splashSecond) {
-            this.splashSecond = splashSecond;
-        }
 
         public String getId() {
             return id;
@@ -78,14 +67,6 @@ public class GetAllMyActivityResult {
 
         public void setType(int type) {
             this.type = type;
-        }
-
-        public String getSplashImg() {
-            return splashImg;
-        }
-
-        public void setSplashImg(String splashImg) {
-            this.splashImg = splashImg;
         }
 
         public String getTitle() {
@@ -112,6 +93,14 @@ public class GetAllMyActivityResult {
             this.appId = appId;
         }
 
+        public String getActivityId() {
+            return activityId;
+        }
+
+        public void setActivityId(String activityId) {
+            this.activityId = activityId;
+        }
+
         public String getCreateTime() {
             return createTime;
         }
@@ -119,21 +108,5 @@ public class GetAllMyActivityResult {
         public void setCreateTime(String createTime) {
             this.createTime = createTime;
         }
-    }
-
-    public int getCode() {
-        return code;
-    }
-
-    public void setCode(int code) {
-        this.code = code;
-    }
-
-    public String getMsg() {
-        return msg;
-    }
-
-    public void setMsg(String msg) {
-        this.msg = msg;
     }
 }

@@ -3,6 +3,7 @@ package me.zhouzhuo810.zzapidoc.ui.act;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.widget.AdapterView;
@@ -132,11 +133,41 @@ public class ActivityManageActivity extends BaseActivity {
                     setResult(RESULT_OK, intent);
                     closeAct();
                 } else {
-                    Intent intent = new Intent(ActivityManageActivity.this, WidgetManageActivity.class);
-                    intent.putExtra("appId", appId);
-                    intent.putExtra("relativeId", adapter.getmDatas().get(position).getId());
-                    intent.putExtra("projectId", projectId);
-                    startActWithIntent(intent);
+                    Intent intent;
+                    switch (adapter.getmDatas().get(position).getType()) {
+                        case 0:
+                            //empty act
+                            intent = new Intent(ActivityManageActivity.this, WidgetManageActivity.class);
+                            intent.putExtra("appId", appId);
+                            intent.putExtra("relativeId", adapter.getmDatas().get(position).getId());
+                            intent.putExtra("projectId", projectId);
+                            startActWithIntent(intent);
+                            break;
+                        case 1:
+                            //splash
+
+                            break;
+                        case 2:
+                            //guide
+
+                            break;
+                        case 3:
+                            //bottom tab
+                            intent = new Intent(ActivityManageActivity.this, FragmentManageActivity.class);
+                            intent.putExtra("appId", appId);
+                            intent.putExtra("activityId", adapter.getmDatas().get(position).getId());
+                            intent.putExtra("projectId", projectId);
+                            startActWithIntent(intent);
+                            break;
+                        case 4:
+                            //top tab
+                            intent = new Intent(ActivityManageActivity.this, FragmentManageActivity.class);
+                            intent.putExtra("appId", appId);
+                            intent.putExtra("activityId", adapter.getmDatas().get(position).getId());
+                            intent.putExtra("projectId", projectId);
+                            startActWithIntent(intent);
+                            break;
+                    }
                 }
             }
         });

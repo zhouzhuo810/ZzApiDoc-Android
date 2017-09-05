@@ -16,12 +16,15 @@ import java.util.List;
 
 import me.zhouzhuo810.zzapidoc.R;
 import me.zhouzhuo810.zzapidoc.common.api.Api;
+import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteActivityResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteInterfaceGroupResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllInterfaceGroupResult;
+import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllMyFragmentResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.UpdateInterfaceResult;
 import me.zhouzhuo810.zzapidoc.common.base.BaseActivity;
 import me.zhouzhuo810.zzapidoc.common.rx.RxHelper;
 import me.zhouzhuo810.zzapidoc.common.utils.ToastUtils;
+import me.zhouzhuo810.zzapidoc.ui.adapter.FragmentListAdapter;
 import me.zhouzhuo810.zzapidoc.ui.adapter.InterfaceGroupListAdapter;
 import rx.Subscriber;
 
@@ -37,8 +40,10 @@ public class FragmentManageActivity extends BaseActivity {
     private ListView lv;
     private TextView tvNoData;
     private String projectId;
-    private List<GetAllInterfaceGroupResult.DataBean> list;
-    private InterfaceGroupListAdapter adapter;
+    private List<GetAllMyFragmentResult.DataEntity> list;
+    private FragmentListAdapter adapter;
+    private String activityId;
+    private String appId;
 
 
     @Override
@@ -60,21 +65,23 @@ public class FragmentManageActivity extends BaseActivity {
         tvNoData = (TextView) findViewById(R.id.tv_no_data);
 
         list = new ArrayList<>();
-        adapter = new InterfaceGroupListAdapter(this, list, R.layout.list_item_interface_group, true);
+        adapter = new FragmentListAdapter(this, list, R.layout.list_item_fgm_manage, true);
         lv.setAdapter(adapter);
     }
 
     @Override
     public void initData() {
         projectId = getIntent().getStringExtra("projectId");
+        activityId = getIntent().getStringExtra("activityId");
+        appId = getIntent().getStringExtra("appId");
     }
 
     private void getData() {
 
         Api.getApi0()
-                .getAllInterfaceGroup(projectId, getUserId())
-                .compose(RxHelper.<GetAllInterfaceGroupResult>io_main())
-                .subscribe(new Subscriber<GetAllInterfaceGroupResult>() {
+                .getAllMyFragment(activityId, getUserId())
+                .compose(RxHelper.<GetAllMyFragmentResult>io_main())
+                .subscribe(new Subscriber<GetAllMyFragmentResult>() {
                     @Override
                     public void onCompleted() {
 
@@ -86,10 +93,10 @@ public class FragmentManageActivity extends BaseActivity {
                     }
 
                     @Override
-                    public void onNext(GetAllInterfaceGroupResult getAllInterfaceGroupResult) {
+                    public void onNext(GetAllMyFragmentResult getAllMyFragmentResult) {
                         stopRefresh(refresh);
-                        if (getAllInterfaceGroupResult.getCode() == 1) {
-                            list = getAllInterfaceGroupResult.getData();
+                        if (getAllMyFragmentResult.getCode() == 1) {
+                            list = getAllMyFragmentResult.getData();
                             adapter.setmDatas(list);
                             adapter.notifyDataSetChanged();
                             if (list == null || list.size() == 0) {
@@ -114,8 +121,10 @@ public class FragmentManageActivity extends BaseActivity {
         rlRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(FragmentManageActivity.this, AddInterfaceGroupActivity.class);
+                Intent intent = new Intent(FragmentManageActivity.this, AddFragmentActivity.class);
                 intent.putExtra("projectId", projectId);
+                intent.putExtra("appId", appId);
+                intent.putExtra("activityId", activityId);
                 startActWithIntent(intent);
             }
         });
@@ -124,9 +133,11 @@ public class FragmentManageActivity extends BaseActivity {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(FragmentManageActivity.this, InterfaceManageActivity.class);
+                Intent intent = new Intent(FragmentManageActivity.this, WidgetManageActivity.class);
+                intent.putExtra("appId", appId);
                 intent.putExtra("projectId", projectId);
-                intent.putExtra("groupId", adapter.getmDatas().get(position).getId());
+                intent.putExtra("relativeId", adapter.getmDatas().get(position).getId());
+                intent.putExtra("pid", "0");
                 startActWithIntent(intent);
             }
         });
@@ -134,15 +145,12 @@ public class FragmentManageActivity extends BaseActivity {
         lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
-                showListDialog(Arrays.asList("删除接口", "修改接口地址"), true, null, new OnItemClick() {
+                showListDialog(Arrays.asList("删除接口"), true, null, new OnItemClick() {
                     @Override
                     public void onItemClick(int pos, String content) {
                         switch (pos) {
                             case 0:
                                 deleteGroup(adapter.getmDatas().get(position).getId());
-                                break;
-                            case 1:
-                                changeIpAddr(adapter.getmDatas().get(position));
                                 break;
                         }
                     }
@@ -155,21 +163,6 @@ public class FragmentManageActivity extends BaseActivity {
             @Override
             public void onRefresh() {
                 getData();
-            }
-        });
-    }
-
-    private void changeIpAddr(final GetAllInterfaceGroupResult.DataBean group) {
-        showTwoBtnEditDialog("修改接口地址", "请输入新的接口地址", group.getIp(), false, new OnTwoBtnEditClick() {
-            @Override
-            public void onOk(String content) {
-                group.setIp(content);
-                updateGroup(group);
-            }
-
-            @Override
-            public void onCancel() {
-
             }
         });
     }
@@ -206,9 +199,9 @@ public class FragmentManageActivity extends BaseActivity {
     private void deleteGroup(String id) {
         showPd(getString(R.string.submiting_text), false);
         Api.getApi0()
-                .deleteInterfaceGroup(id, getUserId())
-                .compose(RxHelper.<DeleteInterfaceGroupResult>io_main())
-                .subscribe(new Subscriber<DeleteInterfaceGroupResult>() {
+                .deleteFragment(id, getUserId())
+                .compose(RxHelper.<DeleteActivityResult>io_main())
+                .subscribe(new Subscriber<DeleteActivityResult>() {
                     @Override
                     public void onCompleted() {
 
@@ -221,7 +214,7 @@ public class FragmentManageActivity extends BaseActivity {
                     }
 
                     @Override
-                    public void onNext(DeleteInterfaceGroupResult deleteInterfaceGroupResult) {
+                    public void onNext(DeleteActivityResult deleteInterfaceGroupResult) {
                         hidePd();
                         ToastUtils.showCustomBgToast(deleteInterfaceGroupResult.getMsg());
                         if (deleteInterfaceGroupResult.getCode() == 1) {

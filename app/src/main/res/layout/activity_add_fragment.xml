@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="@string/add_activity_text"
+            android:text="@string/add_fragment_text"
             android:textColor="@color/colorWhite"
             android:textSize="@dimen/activity_title_text_size" />
 
@@ -53,51 +53,6 @@
     </RelativeLayout>
 
     <LinearLayout
-        android:id="@+id/ll_act_type"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/setting_item_bg_selector"
-        android:clickable="true"
-        android:gravity="center_vertical"
-        android:minHeight="130px"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="280px"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="40px"
-            android:gravity="center|left"
-            android:text="@string/act_type_text"
-            android:textColor="#415868"
-            android:textSize="44px" />
-
-        <TextView
-            android:id="@+id/tv_act_type"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30px"
-            android:layout_marginRight="30px"
-            android:layout_weight="1"
-            android:background="@null"
-            android:gravity="right|center_vertical"
-            android:hint="@string/choose_act_type_hint"
-            android:textColor="@color/colorBlack"
-            android:textSize="44px" />
-
-        <ImageView
-            android:layout_width="40px"
-            android:layout_height="40px"
-            android:layout_marginRight="30px"
-            android:src="@drawable/more" />
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:layout_marginLeft="30px"
-        android:background="@color/colorGrayBg" />
-
-    <LinearLayout
         android:id="@+id/ll_splash"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -128,42 +83,40 @@
             app:layout_auto_baseheight="width" />
     </LinearLayout>
 
+    <!--备注-->
     <LinearLayout
-        android:id="@+id/ll_splash_duration"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorWhite"
         android:gravity="center_vertical"
         android:minHeight="130px"
-        android:orientation="horizontal"
-        android:visibility="gone">
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="280px"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40px"
             android:gravity="center|left"
-            android:text="@string/splash_duration_text"
+            android:text="@string/fgm_position_text"
             android:textColor="#415868"
             android:textSize="44px" />
 
         <EditText
-            android:id="@+id/et_splash_duration"
+            android:id="@+id/et_fgm_position"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30px"
             android:layout_marginRight="30px"
             android:layout_weight="1"
             android:background="@null"
+            android:text="0"
             android:gravity="right|center_vertical"
-            android:hint="@string/splash_duration_hint_text"
-            android:inputType="number"
-            android:text="4"
+            android:hint="@string/fgm_position_hint_text"
             android:textColor="@color/colorBlack"
             android:textSize="44px" />
 
         <ImageView
-            android:id="@+id/iv_clear_splash_duration"
+            android:id="@+id/iv_clear_fgm_position"
             android:layout_width="60px"
             android:layout_height="60px"
             android:layout_marginRight="30px"
@@ -171,51 +124,6 @@
             android:visibility="gone" />
     </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:layout_marginLeft="30px"
-        android:background="@color/colorGrayBg" />
-
-    <LinearLayout
-        android:id="@+id/ll_target_act"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/setting_item_bg_selector"
-        android:clickable="true"
-        android:gravity="center_vertical"
-        android:minHeight="130px"
-        android:orientation="horizontal"
-        android:visibility="gone">
-
-        <TextView
-            android:layout_width="280px"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="40px"
-            android:gravity="center|left"
-            android:text="@string/target_act_text"
-            android:textColor="#415868"
-            android:textSize="44px" />
-
-        <TextView
-            android:id="@+id/tv_target_act"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30px"
-            android:layout_marginRight="30px"
-            android:layout_weight="1"
-            android:background="@null"
-            android:gravity="right|center_vertical"
-            android:hint="@string/choose_target_act_hint"
-            android:textColor="@color/colorBlack"
-            android:textSize="44px" />
-
-        <ImageView
-            android:layout_width="40px"
-            android:layout_height="40px"
-            android:layout_marginRight="30px"
-            android:src="@drawable/more" />
-    </LinearLayout>
 
     <View
         android:layout_width="match_parent"
@@ -250,7 +158,7 @@
             android:layout_weight="1"
             android:background="@null"
             android:gravity="right|center_vertical"
-            android:hint="@string/act_title_hint_text"
+            android:hint="@string/fgm_title_hint_text"
             android:textColor="@color/colorBlack"
             android:textSize="44px" />
 
@@ -287,7 +195,7 @@
             android:textSize="44px" />
 
         <TextView
-            android:id="@+id/tv_act_name"
+            android:id="@+id/tv_fgm_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30px"
@@ -295,7 +203,7 @@
             android:layout_weight="1"
             android:background="@null"
             android:gravity="right|center_vertical"
-            android:hint="@string/act_name_hint_text"
+            android:hint="@string/fgm_name_hint_text"
             android:textColor="@color/colorBlack"
             android:textSize="44px" />
 
@@ -328,9 +236,9 @@
 
         <TextView
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40px"
+            android:layout_weight="1"
             android:gravity="center|left"
             android:text="@string/show_title_text"
             android:textColor="#415868"
@@ -341,12 +249,12 @@
             android:id="@+id/cb_show_title"
             android:layout_width="99px"
             android:layout_height="75px"
-            android:layout_marginRight="40px"
             android:layout_marginLeft="20px"
+            android:layout_marginRight="40px"
+            android:background="@drawable/cb_selector"
+            android:button="@null"
             android:checked="true"
-            app:layout_auto_baseheight="width"
-            android:background="@drawable/cb_selector"
-            android:button="@null" />
+            app:layout_auto_baseheight="width" />
     </LinearLayout>
 
     <View
@@ -354,44 +262,6 @@
         android:layout_height="1px"
         android:layout_marginLeft="30px"
         android:background="@color/colorGrayBg" />
-    <LinearLayout
-        android:id="@+id/ll_is_first"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorWhite"
-        android:gravity="center_vertical"
-        android:minHeight="130px"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="40px"
-            android:gravity="center|left"
-            android:text="@string/is_first_text"
-            android:textColor="#415868"
-            android:textSize="44px" />
-
-
-        <CheckBox
-            android:id="@+id/cb_is_first"
-            android:layout_width="99px"
-            android:layout_height="75px"
-            android:layout_marginRight="40px"
-            android:layout_marginLeft="20px"
-            app:layout_auto_baseheight="width"
-            android:checked="false"
-            android:background="@drawable/cb_selector"
-            android:button="@null" />
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:layout_marginLeft="30px"
-        android:background="@color/colorGrayBg" />
-
 
     <Button
         android:id="@+id/btn_submit"

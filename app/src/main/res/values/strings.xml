@@ -161,7 +161,7 @@
     <string name="act_title_hint_text">请输入Activity的标题</string>
     <string name="act_type_text">类型</string>
     <string name="choose_act_type_hint">请选择Activity的类型</string>
-    <string name="show_title_text">显示标题</string>
+    <string name="show_title_text">是否显示标题</string>
     <string name="choose_show_title_hint">是否显示标题</string>
     <string name="act_splash_text">启动图片</string>
     <string name="splash_duration_text">启动时间(秒)</string>
@@ -236,4 +236,13 @@
     <string name="_text">Gravity</string>
     <string name="gravity_text">Gravity</string>
     <string name="choose_gravity_hint">请选择Gravity</string>
+    <string name="orientation_text">方向</string>
+    <string name="choose_orientation_hint">请选择方向</string>
+    <string name="is_first_text">是否是入口Actitity</string>
+    <string name="add_fragment_text">添加Fragment</string>
+    <string name="fgm_name_hint_text">请生成Fragment的名字</string>
+    <string name="fgm_title_hint_text">请输入Fragment的标题</string>
+    <string name="choose_fgm_type_hint">请选择Fragment的类型</string>
+    <string name="fgm_position_text">序号</string>
+    <string name="fgm_position_hint_text">请输入序号</string>
 </resources>
