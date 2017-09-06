@@ -665,6 +665,7 @@ public class AddWidgetActivity extends BaseActivity {
         llTitle.setVisibility(View.VISIBLE);
         llKeyWord.setVisibility(View.VISIBLE);
         llHint.setVisibility(View.VISIBLE);
+        llGravity.setVisibility(View.VISIBLE);
         showPaddingMarin();
     }
 
