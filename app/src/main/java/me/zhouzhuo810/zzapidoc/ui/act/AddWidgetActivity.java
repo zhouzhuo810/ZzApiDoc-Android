@@ -128,6 +128,8 @@ public class AddWidgetActivity extends BaseActivity {
     private CheckBox cbShowLeftLayout;
     private LinearLayout llShowRightLayout;
     private CheckBox cbShowRightLayout;
+    private LinearLayout llClickToClose;
+    private CheckBox cbClickToClose;
     private LinearLayout llOrientation;
     private TextView tvOrientation;
     private LinearLayout llGravity;
@@ -219,12 +221,15 @@ public class AddWidgetActivity extends BaseActivity {
         cbShowLeftLayout = (CheckBox) findViewById(R.id.cb_show_left_layout);
         llShowRightLayout = (LinearLayout) findViewById(R.id.ll_show_right_layout);
         cbShowRightLayout = (CheckBox) findViewById(R.id.cb_show_right_layout);
+        llClickToClose = (LinearLayout) findViewById(R.id.ll_clickToClose);
+        cbClickToClose = (CheckBox) findViewById(R.id.cb_click_to_close);
         llOrientation = (LinearLayout) findViewById(R.id.ll_orientation);
         tvOrientation = (TextView) findViewById(R.id.tv_orientation);
         llGravity = (LinearLayout) findViewById(R.id.ll_gravity);
         tvGravity = (TextView) findViewById(R.id.tv_gravity);
         btnSubmit = (Button) findViewById(R.id.btn_submit);
     }
+
 
 
     private int widgetType;
@@ -235,7 +240,6 @@ public class AddWidgetActivity extends BaseActivity {
     private String targetApiId;
     private String projectId;
     private String pid;
-    private String background;
 
     @Override
     public int getLayoutId() {
@@ -315,6 +319,13 @@ public class AddWidgetActivity extends BaseActivity {
             }
         });
 
+        llBackground.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chooseBackground();
+            }
+        });
+
 
         llOrientation.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -373,6 +384,21 @@ public class AddWidgetActivity extends BaseActivity {
         });
     }
 
+    private void chooseBackground() {
+        List<String> items = new ArrayList<>();
+        items.add("@color/colorGrayBg");
+        items.add("@color/colorPrimary");
+        items.add("@color/colorWhite");
+        items.add("@color/colorBlack");
+        items.add("@drawable/setting_item_bg_selector");
+        showListDialog(items, true, null, new OnItemClick() {
+            @Override
+            public void onItemClick(int position, String content) {
+                tvBackground.setText(content);
+            }
+        });
+    }
+
     private void chooseOrientation() {
         List<String> items = new ArrayList<>();
         items.add("horizontal");
@@ -421,7 +447,7 @@ public class AddWidgetActivity extends BaseActivity {
                             JSONObject object = new JSONObject(body);
                             JSONArray array = object.getJSONArray("translation");
                             String word = array.getString(0);
-                            String newWord = word.replace(" ", "").replace("the", "").replace("The", "").toLowerCase();
+                            String newWord = word.replace(" ", "").replace("the", "").replace("The", "").replace(".", "").toLowerCase();
                             tvKeyWord.setText(newWord);
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -508,6 +534,7 @@ public class AddWidgetActivity extends BaseActivity {
         String name = tvWidgetName.getText().toString().trim();
         String resId = tvKeyWord.getText().toString().trim();
         String orientation = tvOrientation.getText().toString().trim();
+        String background = tvBackground.getText().toString().trim();
 
         showPd(getString(R.string.submiting_text), false);
         PostRequest<AddActivityResult> post = OkGo.<AddActivityResult>post(SharedUtil.getString(ZApplication.getInstance(), "server_config")
@@ -520,6 +547,7 @@ public class AddWidgetActivity extends BaseActivity {
                 .params("relativeId", relativeId)
                 .params("defValue", defvalue)
                 .params("hint", hint)
+                .params("clickToClose", cbClickToClose.isChecked())
                 .params("leftTitleText", leftTitle)
                 .params("rightTitleText", rightText)
                 .params("showLeftTitleImg", cbShowLeftImg.isChecked())
@@ -592,7 +620,8 @@ public class AddWidgetActivity extends BaseActivity {
         List<String> items = new ArrayList<>();
         items.add("TitleBar");
         items.add("SettingItem");
-        items.add("EditItem");
+        items.add("TitleEditItem");
+        items.add("UnderlineEditItem");
         items.add("InfoItem");
         items.add("SubmitButton");
         items.add("ExitButton");
@@ -616,36 +645,39 @@ public class AddWidgetActivity extends BaseActivity {
                         showSettingItem();
                         break;
                     case 2:
-                        showEditItem();
+                        showTitleEditItem();
                         break;
                     case 3:
-                        showInfoItem();
+                        showUnderlineEditItem();
                         break;
                     case 4:
-                        showSubmitBtn();
+                        showInfoItem();
                         break;
                     case 5:
-                        showExitBtn();
+                        showSubmitBtn();
                         break;
                     case 6:
-                        showSideBar();
+                        showExitBtn();
                         break;
                     case 7:
-                        showScrollView();
+                        showSideBar();
                         break;
                     case 8:
-                        showLinear();
+                        showScrollView();
                         break;
                     case 9:
-                        showRelative();
+                        showLinear();
                         break;
                     case 10:
-                        showImageView();
+                        showRelative();
                         break;
                     case 11:
-                        showTextView();
+                        showImageView();
                         break;
                     case 12:
+                        showTextView();
+                        break;
+                    case 13:
                         showCheckBox();
                         break;
                 }
@@ -654,6 +686,7 @@ public class AddWidgetActivity extends BaseActivity {
             }
         });
     }
+
 
     private void showCheckBox() {
         llTitle.setVisibility(View.VISIBLE);
@@ -673,7 +706,6 @@ public class AddWidgetActivity extends BaseActivity {
         llTitle.setVisibility(View.VISIBLE);
         llKeyWord.setVisibility(View.VISIBLE);
         llLeftImg.setVisibility(View.VISIBLE);
-        llShowLeftImg.setVisibility(View.VISIBLE);
         showPaddingMarin();
     }
 
@@ -684,6 +716,10 @@ public class AddWidgetActivity extends BaseActivity {
     private void showLinear() {
         llWidgetWeight.setVisibility(View.VISIBLE);
         llGravity.setVisibility(View.VISIBLE);
+        llOrientation.setVisibility(View.VISIBLE);
+        llBackground.setVisibility(View.VISIBLE);
+        llTitle.setVisibility(View.VISIBLE);
+        llKeyWord.setVisibility(View.VISIBLE);
         showPaddingMarin();
     }
 
@@ -693,6 +729,7 @@ public class AddWidgetActivity extends BaseActivity {
     }
 
     private void showSideBar() {
+        llTargetApi.setVisibility(View.VISIBLE);
     }
 
     private void showExitBtn() {
@@ -700,6 +737,7 @@ public class AddWidgetActivity extends BaseActivity {
         llKeyWord.setVisibility(View.VISIBLE);
         llTargetAct.setVisibility(View.VISIBLE);
         llTargetApi.setVisibility(View.VISIBLE);
+        llClickToClose.setVisibility(View.VISIBLE);
 
         setMargin(40);
 
@@ -707,10 +745,10 @@ public class AddWidgetActivity extends BaseActivity {
     }
 
     private void setMargin(int px) {
-        etLeftMargin.setText(px+"");
-        etRightMargin.setText(px+"");
-        etTopMargin.setText(px+"");
-        etBottomMargin.setText(px+"");
+        etLeftMargin.setText(px + "");
+        etRightMargin.setText(px + "");
+        etTopMargin.setText(px + "");
+        etBottomMargin.setText(px + "");
     }
 
 
@@ -719,6 +757,7 @@ public class AddWidgetActivity extends BaseActivity {
         llKeyWord.setVisibility(View.VISIBLE);
         llTargetAct.setVisibility(View.VISIBLE);
         llTargetApi.setVisibility(View.VISIBLE);
+        llClickToClose.setVisibility(View.VISIBLE);
 
         setMargin(40);
 
@@ -764,21 +803,34 @@ public class AddWidgetActivity extends BaseActivity {
         llBottomMargin.setVisibility(View.GONE);
         llGravity.setVisibility(View.GONE);
         llHint.setVisibility(View.GONE);
+        llOrientation.setVisibility(View.GONE);
+        llClickToClose.setVisibility(View.GONE);
 
         setMargin(0);
     }
 
-    private void showEditItem() {
+
+    private void showUnderlineEditItem() {
         llLeftText.setVisibility(View.VISIBLE);
         llShowLeftText.setVisibility(View.VISIBLE);
-        llShowLeftImg.setVisibility(View.VISIBLE);
         llLeftImg.setVisibility(View.VISIBLE);
-        llHint.setVisibility(View.VISIBLE);
         llDefValue.setVisibility(View.VISIBLE);
         llTitle.setVisibility(View.VISIBLE);
         llKeyWord.setVisibility(View.VISIBLE);
 
         showPaddingMarin();
+
+        etLeftMargin.setText("40");
+        etRightMargin.setText("40");
+    }
+
+    private void showTitleEditItem() {
+        llLeftText.setVisibility(View.VISIBLE);
+        llShowLeftText.setVisibility(View.VISIBLE);
+        llLeftImg.setVisibility(View.VISIBLE);
+        llDefValue.setVisibility(View.VISIBLE);
+        llTitle.setVisibility(View.VISIBLE);
+        llKeyWord.setVisibility(View.VISIBLE);
     }
 
     private void showTitleBarItem() {

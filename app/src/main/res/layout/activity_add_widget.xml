@@ -430,6 +430,7 @@
                     android:layout_marginRight="30px"
                     android:layout_weight="1"
                     android:background="@null"
+                    android:inputType="number"
                     android:gravity="right|center_vertical"
                     android:hint="@string/widget_width_hint_text"
                     android:textColor="@color/colorBlack"
@@ -497,6 +498,7 @@
                     android:layout_marginRight="30px"
                     android:layout_weight="1"
                     android:background="@null"
+                    android:inputType="number"
                     android:gravity="right|center_vertical"
                     android:hint="@string/widget_height_hint_text"
                     android:textColor="@color/colorBlack"
@@ -543,6 +545,7 @@
                     android:layout_marginRight="30px"
                     android:layout_weight="1"
                     android:background="@null"
+                    android:inputType="number"
                     android:gravity="right|center_vertical"
                     android:hint="@string/widget_weight_hint_text"
                     android:text="0"
@@ -555,7 +558,7 @@
                     android:layout_height="60px"
                     android:layout_marginRight="30px"
                     android:src="@drawable/clear"
-                    android:visibility="gone" />
+                    />
             </LinearLayout>
 
             <View
@@ -603,7 +606,7 @@
                     android:layout_height="60px"
                     android:layout_marginRight="30px"
                     android:src="@drawable/clear"
-                    android:visibility="gone" />
+                    />
             </LinearLayout>
 
             <View
@@ -638,6 +641,7 @@
                     android:layout_marginRight="30px"
                     android:layout_weight="1"
                     android:background="@null"
+                    android:inputType="number"
                     android:gravity="right|center_vertical"
                     android:hint="@string/right_margin_hint_text"
                     android:text="0"
@@ -650,7 +654,7 @@
                     android:layout_height="60px"
                     android:layout_marginRight="30px"
                     android:src="@drawable/clear"
-                    android:visibility="gone" />
+                    />
             </LinearLayout>
 
             <View
@@ -685,9 +689,9 @@
                     android:layout_marginRight="30px"
                     android:layout_weight="1"
                     android:background="@null"
+                    android:inputType="number"
                     android:gravity="right|center_vertical"
                     android:hint="@string/top_margin_hint_text"
-                    android:inputType="number"
                     android:text="0"
                     android:textColor="@color/colorBlack"
                     android:textSize="44px" />
@@ -698,7 +702,7 @@
                     android:layout_height="60px"
                     android:layout_marginRight="30px"
                     android:src="@drawable/clear"
-                    android:visibility="gone" />
+                    />
             </LinearLayout>
 
             <View
@@ -794,7 +798,7 @@
                     android:layout_height="60px"
                     android:layout_marginRight="30px"
                     android:src="@drawable/clear"
-                    android:visibility="gone" />
+                    />
             </LinearLayout>
 
             <View
@@ -831,6 +835,7 @@
                     android:background="@null"
                     android:gravity="right|center_vertical"
                     android:hint="@string/right_padding_hint_text"
+                    android:inputType="number"
                     android:text="0"
                     android:textColor="@color/colorBlack"
                     android:textSize="44px" />
@@ -841,7 +846,7 @@
                     android:layout_height="60px"
                     android:layout_marginRight="30px"
                     android:src="@drawable/clear"
-                    android:visibility="gone" />
+                    />
             </LinearLayout>
 
             <View
@@ -889,7 +894,7 @@
                     android:layout_height="60px"
                     android:layout_marginRight="30px"
                     android:src="@drawable/clear"
-                    android:visibility="gone" />
+                    />
             </LinearLayout>
 
             <View
@@ -937,7 +942,7 @@
                     android:layout_height="60px"
                     android:layout_marginRight="30px"
                     android:src="@drawable/clear"
-                    android:visibility="gone" />
+                    />
             </LinearLayout>
 
             <View
@@ -1518,6 +1523,43 @@
                 android:layout_height="1px"
                 android:layout_marginLeft="30px"
                 android:background="@color/colorGrayBg" />
+            <!--签订日期-->
+
+            <LinearLayout
+                android:id="@+id/ll_clickToClose"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/setting_item_bg_selector"
+                android:clickable="true"
+                android:gravity="center_vertical"
+                android:minHeight="130px"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="40px"
+                    android:layout_weight="1"
+                    android:gravity="center|left"
+                    android:text="@string/click_to_close_text"
+                    android:textColor="#415868"
+                    android:textSize="44px" />
+
+                <CheckBox
+                    android:id="@+id/cb_click_to_close"
+                    android:layout_width="99px"
+                    android:layout_height="75px"
+                    android:layout_marginRight="40px"
+                    android:background="@drawable/cb_selector"
+                    android:button="@null"
+                    app:layout_auto_baseheight="width" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="30px"
+                android:background="@color/colorGrayBg" />
 
 
             <!--签订日期-->
@@ -1549,6 +1591,7 @@
                     android:layout_marginRight="30px"
                     android:layout_weight="1"
                     android:background="@null"
+                    android:text="horizontal"
                     android:gravity="right|center_vertical"
                     android:hint="@string/choose_orientation_hint"
                     android:textColor="@color/colorBlack"

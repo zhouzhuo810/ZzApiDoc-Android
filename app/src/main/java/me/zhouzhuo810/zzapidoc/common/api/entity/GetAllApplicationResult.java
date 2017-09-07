@@ -71,6 +71,33 @@ public class GetAllApplicationResult {
         private String versionCode;
         private String apiId;
         private String createTime;
+        private String chName;
+        private int actCount;
+        private int fgmCount;
+
+        public int getActCount() {
+            return actCount;
+        }
+
+        public void setActCount(int actCount) {
+            this.actCount = actCount;
+        }
+
+        public int getFgmCount() {
+            return fgmCount;
+        }
+
+        public void setFgmCount(int fgmCount) {
+            this.fgmCount = fgmCount;
+        }
+
+        public String getChName() {
+            return chName;
+        }
+
+        public void setChName(String chName) {
+            this.chName = chName;
+        }
 
         public String getId() {
             return id;

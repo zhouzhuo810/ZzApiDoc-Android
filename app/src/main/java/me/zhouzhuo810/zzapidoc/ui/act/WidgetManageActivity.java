@@ -130,6 +130,7 @@ public class WidgetManageActivity extends BaseActivity {
                         intent.putExtra("pid", adapter.getmDatas().get(position).getId());
                         intent.putExtra("relativeId", relativeId);
                         intent.putExtra("projectId", projectId);
+                        intent.putExtra("appId", appId);
                         startActWithIntent(intent);
                         break;
                     case 8:
@@ -138,6 +139,7 @@ public class WidgetManageActivity extends BaseActivity {
                         intent.putExtra("pid", adapter.getmDatas().get(position).getId());
                         intent.putExtra("relativeId", relativeId);
                         intent.putExtra("projectId", projectId);
+                        intent.putExtra("appId", appId);
                         startActWithIntent(intent);
                         break;
                     case 9:
@@ -146,6 +148,7 @@ public class WidgetManageActivity extends BaseActivity {
                         intent.putExtra("pid", adapter.getmDatas().get(position).getId());
                         intent.putExtra("relativeId", relativeId);
                         intent.putExtra("projectId", projectId);
+                        intent.putExtra("appId", appId);
                         startActWithIntent(intent);
                         break;
                 }

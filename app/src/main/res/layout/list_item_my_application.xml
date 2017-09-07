@@ -72,7 +72,33 @@
             android:textSize="36px" />
 
         <TextView
-            android:id="@+id/tv_interface_no"
+            android:id="@+id/tv_act_no"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20px"
+            android:text="0"
+            android:textColor="@color/colorPrimary"
+            android:textSize="36px" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20px"
+            android:text="个Act"
+            android:textColor="#999"
+            android:textSize="36px" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40px"
+            android:text="共"
+            android:textColor="#999"
+            android:textSize="36px" />
+
+        <TextView
+            android:id="@+id/tv_fgm_no"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20px"
@@ -85,7 +111,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20px"
             android:layout_marginRight="40px"
-            android:text="个界面"
+            android:text="个Fgm"
             android:textColor="#999"
             android:textSize="36px" />
 

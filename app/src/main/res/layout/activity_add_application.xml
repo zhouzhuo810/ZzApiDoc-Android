@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorGrayBg"
     android:orientation="vertical">
 
@@ -83,14 +83,13 @@
 
                 <ImageView
                     android:id="@+id/iv_logo"
-                    app:layout_auto_baseheight="width"
                     android:layout_width="200px"
                     android:layout_height="200px"
                     android:layout_marginLeft="40px"
                     android:layout_marginRight="40px"
-                    android:src="@drawable/ic_add" />
+                    android:src="@drawable/ic_add"
+                    app:layout_auto_baseheight="width" />
             </LinearLayout>
-
 
             <!--备注-->
             <LinearLayout
@@ -130,6 +129,63 @@
                     android:layout_marginRight="30px"
                     android:src="@drawable/clear"
                     android:visibility="gone" />
+            </LinearLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="30px"
+                android:background="@color/colorGrayBg" />
+
+            <!--备注-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorWhite"
+                android:gravity="center_vertical"
+                android:minHeight="130px"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="280px"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="40px"
+                    android:gravity="center|left"
+                    android:text="@string/project_name_text"
+                    android:textColor="#415868"
+                    android:textSize="44px" />
+
+                <EditText
+                    android:id="@+id/et_project_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30px"
+                    android:layout_marginRight="30px"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:gravity="left|center_vertical"
+                    android:hint="@string/project_name_hint_text"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="44px" />
+
+                <ImageView
+                    android:id="@+id/iv_clear_project_name"
+                    android:layout_width="60px"
+                    android:layout_height="60px"
+                    android:layout_marginRight="30px"
+                    android:src="@drawable/clear"
+                    android:visibility="gone" />
+
+                <Button
+                    android:id="@+id/btn_key_word"
+                    android:layout_width="100px"
+                    android:layout_height="60px"
+                    android:layout_marginRight="30px"
+                    android:background="@drawable/btn_save_selector"
+                    android:text="生成"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="30px" />
             </LinearLayout>
 
 
@@ -306,10 +362,10 @@
                     android:layout_marginRight="30px"
                     android:layout_weight="1"
                     android:background="@null"
-                    android:text="15"
                     android:gravity="left|center_vertical"
                     android:hint="@string/min_sdk_hint_text"
                     android:inputType="number"
+                    android:text="15"
                     android:textColor="@color/colorBlack"
                     android:textSize="44px" />
 
@@ -355,10 +411,10 @@
                     android:layout_marginRight="30px"
                     android:layout_weight="1"
                     android:background="@null"
-                    android:text="25"
                     android:gravity="left|center_vertical"
                     android:hint="@string/target_sdk_hint_text"
                     android:inputType="number"
+                    android:text="25"
                     android:textColor="@color/colorBlack"
                     android:textSize="44px" />
 
@@ -403,10 +459,10 @@
                     android:layout_marginRight="30px"
                     android:layout_weight="1"
                     android:background="@null"
-                    android:text="25"
                     android:gravity="left|center_vertical"
                     android:hint="@string/compile_sdk_hint_text"
                     android:inputType="number"
+                    android:text="25"
                     android:textColor="@color/colorBlack"
                     android:textSize="44px" />
 
@@ -451,9 +507,9 @@
                     android:layout_marginRight="30px"
                     android:layout_weight="1"
                     android:background="@null"
-                    android:maxLength="8"
                     android:gravity="left|center_vertical"
                     android:hint="@string/main_color_hint_text"
+                    android:maxLength="8"
                     android:textColor="@color/colorBlack"
                     android:textSize="44px" />
 
@@ -534,7 +590,8 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="280px"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="40px"
                     android:gravity="center|left"
@@ -542,25 +599,16 @@
                     android:textColor="#415868"
                     android:textSize="44px" />
 
-                <TextView
-                    android:id="@+id/tv_multidex"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="30px"
-                    android:layout_marginRight="30px"
-                    android:layout_weight="1"
-                    android:background="@null"
-                    android:gravity="left|center_vertical"
-                    android:hint="@string/choose_multidex_hint"
-                    android:text="false"
-                    android:textColor="@color/colorBlack"
-                    android:textSize="44px" />
 
-                <ImageView
-                    android:layout_width="40px"
-                    android:layout_height="40px"
-                    android:layout_marginRight="30px"
-                    android:src="@drawable/more" />
+                <CheckBox
+                    android:id="@+id/cb_multidex"
+                    android:layout_width="99px"
+                    android:layout_height="75px"
+                    android:checked="false"
+                    android:layout_marginRight="40px"
+                    android:background="@drawable/cb_selector"
+                    android:button="@null"
+                    app:layout_auto_baseheight="width" />
             </LinearLayout>
 
             <View
@@ -580,7 +628,8 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="280px"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="40px"
                     android:gravity="center|left"
@@ -588,25 +637,16 @@
                     android:textColor="#415868"
                     android:textSize="44px" />
 
-                <TextView
-                    android:id="@+id/tv_minify"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="30px"
-                    android:layout_marginRight="30px"
-                    android:layout_weight="1"
-                    android:background="@null"
-                    android:gravity="left|center_vertical"
-                    android:hint="@string/choose_minify_hint"
-                    android:text="false"
-                    android:textColor="@color/colorBlack"
-                    android:textSize="44px" />
 
-                <ImageView
-                    android:layout_width="40px"
-                    android:layout_height="40px"
-                    android:layout_marginRight="30px"
-                    android:src="@drawable/more" />
+                <CheckBox
+                    android:id="@+id/cb_minify"
+                    android:layout_width="99px"
+                    android:layout_height="75px"
+                    android:checked="false"
+                    android:layout_marginRight="40px"
+                    android:background="@drawable/cb_selector"
+                    android:button="@null"
+                    app:layout_auto_baseheight="width" />
             </LinearLayout>
 
             <View

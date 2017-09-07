@@ -23,12 +23,13 @@ public class ApplicationListAdapter extends CommonAdapter<GetAllApplicationResul
     public void convert(ViewHolder holder, GetAllApplicationResult.DataBean dataEntity) {
 
 
-        holder.setText(R.id.tv_name, dataEntity.getAppName())
+        holder.setText(R.id.tv_name, dataEntity.getChName())
                 .setText(R.id.tv_time, dataEntity.getCreateTime())
                 .setText(R.id.tv_create_man, dataEntity.getPackageName())
                 .setText(R.id.tv_desc, "minSDK=" + dataEntity.getMinSDK() + "; targetSDK=" + dataEntity.getTargetSDK()
                         + "; compileSDK=" + dataEntity.getCompileSDK())
-                .setText(R.id.tv_interface_no, "0");
+                .setText(R.id.tv_act_no, ""+dataEntity.getActCount())
+                .setText(R.id.tv_fgm_no, ""+dataEntity.getFgmCount());
     }
 
 }

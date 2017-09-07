@@ -11,6 +11,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -23,6 +24,10 @@ import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.PostRequest;
 import com.yalantis.ucrop.UCrop;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.util.Arrays;
@@ -52,8 +57,12 @@ public class AddApplicationActivity extends BaseActivity {
 
     private RelativeLayout rlBack;
     private RelativeLayout rlRight;
+    private ImageView ivLogo;
     private EditText etAppName;
     private ImageView ivClearAppName;
+    private EditText etProjectName;
+    private ImageView ivClearProjectName;
+    private Button btnKeyWord;
     private EditText etPackageName;
     private ImageView ivClearPackageName;
     private EditText etVercionCode;
@@ -71,13 +80,12 @@ public class AddApplicationActivity extends BaseActivity {
     private LinearLayout llApi;
     private TextView tvApi;
     private LinearLayout llMultidex;
-    private TextView tvMultidex;
+    private CheckBox cbMultidex;
     private LinearLayout llMinify;
-    private TextView tvMinify;
+    private CheckBox cbMinify;
     private EditText etPs;
     private ImageView ivClearPs;
     private Button btnSubmit;
-    private ImageView ivLogo;
 
     private String apiId;
     private String logoPath;
@@ -96,8 +104,12 @@ public class AddApplicationActivity extends BaseActivity {
     public void initView() {
         rlBack = (RelativeLayout) findViewById(R.id.rl_back);
         rlRight = (RelativeLayout) findViewById(R.id.rl_right);
+        ivLogo = (ImageView) findViewById(R.id.iv_logo);
         etAppName = (EditText) findViewById(R.id.et_app_name);
         ivClearAppName = (ImageView) findViewById(R.id.iv_clear_app_name);
+        etProjectName = (EditText) findViewById(R.id.et_project_name);
+        ivClearProjectName = (ImageView) findViewById(R.id.iv_clear_project_name);
+        btnKeyWord = (Button) findViewById(R.id.btn_key_word);
         etPackageName = (EditText) findViewById(R.id.et_package_name);
         ivClearPackageName = (ImageView) findViewById(R.id.iv_clear_package_name);
         etVercionCode = (EditText) findViewById(R.id.et_vercion_code);
@@ -115,12 +127,11 @@ public class AddApplicationActivity extends BaseActivity {
         llApi = (LinearLayout) findViewById(R.id.ll_api);
         tvApi = (TextView) findViewById(R.id.tv_api);
         llMultidex = (LinearLayout) findViewById(R.id.ll_multidex);
-        tvMultidex = (TextView) findViewById(R.id.tv_multidex);
+        cbMultidex = (CheckBox) findViewById(R.id.cb_multidex);
         llMinify = (LinearLayout) findViewById(R.id.ll_minify);
-        tvMinify = (TextView) findViewById(R.id.tv_minify);
+        cbMinify = (CheckBox) findViewById(R.id.cb_minify);
         etPs = (EditText) findViewById(R.id.et_ps);
         ivClearPs = (ImageView) findViewById(R.id.iv_clear_ps);
-        ivLogo = (ImageView) findViewById(R.id.iv_logo);
         btnSubmit = (Button) findViewById(R.id.btn_submit);
     }
 
@@ -153,20 +164,6 @@ public class AddApplicationActivity extends BaseActivity {
             }
         });
 
-        llMinify.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                chooseMinify();
-            }
-        });
-
-        llMultidex.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                chooseMiltidex();
-            }
-        });
-
         setEditListener(etAppName, ivClearAppName);
         setEditListener(etCompileSdk, ivClearCompileSdk);
         setEditListener(etMainColor, ivClearMainColor);
@@ -175,6 +172,14 @@ public class AddApplicationActivity extends BaseActivity {
         setEditListener(etTargetSdk, ivClearTargetSdk);
         setEditListener(etVercionCode, ivClearVercionCode);
         setEditListener(etVercionName, ivClearVercionName);
+        setEditListener(etProjectName, ivClearProjectName);
+
+        btnKeyWord.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                generateKeyword();
+            }
+        });
 
         ivLogo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -192,6 +197,53 @@ public class AddApplicationActivity extends BaseActivity {
 
     }
 
+
+    private void generateKeyword() {
+        String title = etAppName.getText().toString().trim();
+        showPd(getString(R.string.submiting_text), false);
+        OkGo.<String>get("http://fanyi.youdao.com/openapi.do")
+                .params("keyfrom", "WordsHelper")
+                .params("key", "1678465943")
+                .params("type", "data")
+                .params("doctype", "json")
+                .params("version", "1.1")
+                .params("q", title)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        hidePd();
+                        String body = response.body();
+                        try {
+                            JSONObject object = new JSONObject(body);
+                            JSONArray array = object.getJSONArray("translation");
+                            String word = array.getString(0);
+                            StringBuilder sb = new StringBuilder();
+                            if (word.contains(" ")) {
+                                String[] split = word.split(" ");
+                                for (String s : split) {
+                                    sb.append(s.substring(0,1).toUpperCase()).append(s.substring(1));
+                                }
+                            } else {
+                                sb.append(word.substring(0,1).toUpperCase()).append(word.substring(1));
+                            }
+                            String newWord = sb.toString().replace("the", "").replace("The", "").replace(".","");
+                            etProjectName.setText(newWord);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            ToastUtils.showCustomBgToast(e.toString());
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(Response<String> response) {
+                        super.onError(response);
+                        hidePd();
+                        ToastUtils.showCustomBgToast(response.getException().toString());
+                    }
+                });
+    }
+
     private void choosePic() {
         Intent intent = new Intent();
         intent.setType("image/*");
@@ -200,23 +252,6 @@ public class AddApplicationActivity extends BaseActivity {
         startActivityForResult(Intent.createChooser(intent, "选择图片"), REQUEST_SELECT_PICTURE);
     }
 
-    private void chooseMinify() {
-        showListDialog(Arrays.asList("false", "true"), true, null, new OnItemClick() {
-            @Override
-            public void onItemClick(int position, String content) {
-                tvMinify.setText(content);
-            }
-        });
-    }
-
-    private void chooseMiltidex() {
-        showListDialog(Arrays.asList("false", "true"), true, null, new OnItemClick() {
-            @Override
-            public void onItemClick(int position, String content) {
-                tvMultidex.setText(content);
-            }
-        });
-    }
 
     private void chooseApi() {
         Intent intent = new Intent(this, ApiChooseActivity.class);
@@ -272,7 +307,8 @@ public class AddApplicationActivity extends BaseActivity {
     }
 
     private void addApp() {
-        String name = etAppName.getText().toString().trim();
+        String name = etProjectName.getText().toString().trim();
+        String chName = etAppName.getText().toString().trim();
         String versionCode = etVercionCode.getText().toString().trim();
         String versionName = etVercionName.getText().toString().trim();
         String packageName = etPackageName.getText().toString().trim();
@@ -281,10 +317,12 @@ public class AddApplicationActivity extends BaseActivity {
         String compileSDK = etCompileSdk.getText().toString().trim();
         String mainColor = etMainColor.getText().toString().trim();
         String ps = etPs.getText().toString().trim();
-        String minify = tvMinify.getText().toString().trim();
-        String multidex = tvMultidex.getText().toString().trim();
-        if (name.length() == 0) {
+        if (chName.length() == 0) {
             ToastUtils.showCustomBgToast(getString(R.string.app_name_not_nul_text));
+            return;
+        }
+        if (name.length() == 0) {
+            ToastUtils.showCustomBgToast(getString(R.string.project_name_not_nul_text));
             return;
         }
         if (packageName.length() == 0) {
@@ -314,6 +352,7 @@ public class AddApplicationActivity extends BaseActivity {
         showPd(getString(R.string.submiting_text), false);
         PostRequest<AddApplicationResult> post = OkGo.<AddApplicationResult>post(SharedUtil.getString(ZApplication.getInstance(), "server_config")
                 + "/ZzApiDoc/v1/application/addApplication")
+                .params("chName", chName)
                 .params("appName", name)
                 .params("versionName", versionName)
                 .params("packageName", packageName)
@@ -322,8 +361,8 @@ public class AddApplicationActivity extends BaseActivity {
                 .params("compileSDK", compileSDK)
                 .params("targetSDK", targetSDK)
                 .params("versionCode", versionCode)
-                .params("multiDex", multidex.equals("true"))
-                .params("minifyEnabled", minify.equals("true"))
+                .params("multiDex", cbMultidex.isChecked())
+                .params("minifyEnabled", cbMinify.isChecked())
                 .params("apiId", apiId)
                 .params("userId", getUserId())
                 .isMultipart(true);
