@@ -535,13 +535,14 @@ public class AddWidgetActivity extends BaseActivity {
         String resId = tvKeyWord.getText().toString().trim();
         String orientation = tvOrientation.getText().toString().trim();
         String background = tvBackground.getText().toString().trim();
-
+        String gravity = tvGravity.getText().toString().trim();
         showPd(getString(R.string.submiting_text), false);
         PostRequest<AddActivityResult> post = OkGo.<AddActivityResult>post(SharedUtil.getString(ZApplication.getInstance(), "server_config")
                 + "/ZzApiDoc/v1/widget/addWidget")
                 .params("name", name)
                 .params("title", title)
                 .params("resId", resId)
+                .params("gravity", gravity)
                 .params("type", widgetType)
                 .params("appId", appId)
                 .params("relativeId", relativeId)
