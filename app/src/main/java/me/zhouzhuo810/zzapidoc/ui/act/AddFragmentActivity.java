@@ -62,6 +62,7 @@ public class AddFragmentActivity extends BaseActivity {
     private String splashPath;
     private String appId;
     private String activityId;
+    private int count;
 
     @Override
     public int getLayoutId() {
@@ -95,6 +96,8 @@ public class AddFragmentActivity extends BaseActivity {
         activityId = getIntent().getStringExtra("activityId");
         appId = getIntent().getStringExtra("appId");
         cbShowTitle.setChecked(true);
+        count = getIntent().getIntExtra("count", 0);
+        etFgmPosition.setText(""+count);
     }
 
     @Override

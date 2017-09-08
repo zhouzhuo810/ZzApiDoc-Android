@@ -317,7 +317,7 @@
         android:background="@color/colorGrayBg" />
 
 
-    <LinearLayout
+<!--    <LinearLayout
         android:id="@+id/ll_show_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -353,7 +353,7 @@
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:layout_marginLeft="30px"
-        android:background="@color/colorGrayBg" />
+        android:background="@color/colorGrayBg" />-->
     <LinearLayout
         android:id="@+id/ll_is_first"
         android:layout_width="match_parent"

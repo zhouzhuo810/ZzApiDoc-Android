@@ -125,6 +125,7 @@ public class FragmentManageActivity extends BaseActivity {
                 intent.putExtra("projectId", projectId);
                 intent.putExtra("appId", appId);
                 intent.putExtra("activityId", activityId);
+                intent.putExtra("count", list == null ? 0 : list.size());
                 startActWithIntent(intent);
             }
         });

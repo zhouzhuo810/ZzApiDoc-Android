@@ -246,4 +246,8 @@
     <string name="fgm_position_text">序号</string>
     <string name="fgm_position_hint_text">请输入序号</string>
     <string name="click_to_close_text">点击后是否关闭当前页面</string>
+    <string name="text_size_text">文字大小</string>
+    <string name="text_size_hint_text">请输入文字大小</string>
+    <string name="text_color_text">文字颜色</string>
+    <string name="choose_text_color_hint">请选择文字颜色</string>
 </resources>

@@ -105,8 +105,7 @@
         android:id="@+id/ll_require"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/setting_item_bg_selector"
-        android:clickable="true"
+        android:background="@color/colorWhite"
         android:gravity="center_vertical"
         android:minHeight="130px"
         android:orientation="horizontal">
@@ -133,11 +132,17 @@
             android:textColor="@color/colorBlack"
             android:textSize="44px" />
 
-        <ImageView
-            android:layout_width="40px"
-            android:layout_height="40px"
-            android:layout_marginRight="30px"
-            android:src="@drawable/more" />
+
+        <CheckBox
+            android:id="@+id/cb_require"
+            android:layout_width="99px"
+            android:layout_height="77px"
+            android:button="@null"
+            android:checked="true"
+            android:background="@drawable/cb_selector"
+            android:layout_marginRight="40px"
+            />
+
     </LinearLayout>
 
     <View
@@ -145,6 +150,54 @@
         android:layout_height="1px"
         android:layout_marginLeft="30px"
         android:background="@color/colorGrayBg" />
+
+    <!--备注-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:gravity="center_vertical"
+        android:minHeight="130px"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="280px"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40px"
+            android:gravity="center|left"
+            android:text="@string/arg_note_text"
+            android:textColor="#415868"
+            android:textSize="44px" />
+
+        <EditText
+            android:id="@+id/et_arg_note"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30px"
+            android:layout_marginRight="30px"
+            android:layout_weight="1"
+            android:background="@null"
+            android:gravity="right|center_vertical"
+            android:hint="@string/arg_note_hint_text"
+            android:textColor="@color/colorBlack"
+            android:textSize="44px" />
+
+        <ImageView
+            android:id="@+id/iv_clear_arg_note"
+            android:layout_width="60px"
+            android:layout_height="60px"
+            android:layout_marginRight="30px"
+            android:src="@drawable/clear"
+            android:visibility="gone" />
+    </LinearLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginLeft="30px"
+        android:background="@color/colorGrayBg" />
+
     <!--备注-->
     <LinearLayout
         android:layout_width="match_parent"
@@ -183,6 +236,16 @@
             android:layout_marginRight="30px"
             android:src="@drawable/clear"
             android:visibility="gone" />
+
+        <Button
+            android:id="@+id/btn_key_word"
+            android:layout_width="100px"
+            android:layout_height="60px"
+            android:layout_marginRight="30px"
+            android:background="@drawable/btn_save_selector"
+            android:text="生成"
+            android:textColor="@color/colorWhite"
+            android:textSize="30px" />
     </LinearLayout>
 
 
@@ -238,52 +301,6 @@
         android:layout_marginLeft="30px"
         android:background="@color/colorGrayBg" />
 
-    <!--备注-->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorWhite"
-        android:gravity="center_vertical"
-        android:minHeight="130px"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="280px"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="40px"
-            android:gravity="center|left"
-            android:text="@string/arg_note_text"
-            android:textColor="#415868"
-            android:textSize="44px" />
-
-        <EditText
-            android:id="@+id/et_arg_note"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30px"
-            android:layout_marginRight="30px"
-            android:layout_weight="1"
-            android:background="@null"
-            android:gravity="right|center_vertical"
-            android:hint="@string/arg_note_hint_text"
-            android:textColor="@color/colorBlack"
-            android:textSize="44px" />
-
-        <ImageView
-            android:id="@+id/iv_clear_arg_note"
-            android:layout_width="60px"
-            android:layout_height="60px"
-            android:layout_marginRight="30px"
-            android:src="@drawable/clear"
-            android:visibility="gone" />
-    </LinearLayout>
-
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:layout_marginLeft="30px"
-        android:background="@color/colorGrayBg" />
 
     <Button
         android:id="@+id/btn_submit"

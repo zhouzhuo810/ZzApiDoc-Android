@@ -69,6 +69,9 @@ public class AddWidgetActivity extends BaseActivity {
     private Button btnHeightWrapContent;
     private EditText etWidgetHeight;
     private ImageView ivClearWidgetHeight;
+    private LinearLayout llTextSize;
+    private EditText etTextSize;
+    private ImageView ivClearTextSize;
     private LinearLayout llWidgetWeight;
     private EditText etWidgetWeight;
     private ImageView ivClearWidgetWeight;
@@ -98,6 +101,8 @@ public class AddWidgetActivity extends BaseActivity {
     private ImageView ivClearBottomPadding;
     private LinearLayout llBackground;
     private TextView tvBackground;
+    private LinearLayout llTextColor;
+    private TextView tvTextColor;
     private LinearLayout llHint;
     private EditText etEtHint;
     private ImageView ivClearEtHint;
@@ -162,6 +167,9 @@ public class AddWidgetActivity extends BaseActivity {
         btnHeightWrapContent = (Button) findViewById(R.id.btn_height_wrap_content);
         etWidgetHeight = (EditText) findViewById(R.id.et_widget_height);
         ivClearWidgetHeight = (ImageView) findViewById(R.id.iv_clear_widget_height);
+        llTextSize = (LinearLayout) findViewById(R.id.ll_text_size);
+        etTextSize = (EditText) findViewById(R.id.et_text_size);
+        ivClearTextSize = (ImageView) findViewById(R.id.iv_clear_text_size);
         llWidgetWeight = (LinearLayout) findViewById(R.id.ll_widget_weight);
         etWidgetWeight = (EditText) findViewById(R.id.et_widget_weight);
         ivClearWidgetWeight = (ImageView) findViewById(R.id.iv_clear_widget_weight);
@@ -191,6 +199,8 @@ public class AddWidgetActivity extends BaseActivity {
         ivClearBottomPadding = (ImageView) findViewById(R.id.iv_clear_bottom_padding);
         llBackground = (LinearLayout) findViewById(R.id.ll_background);
         tvBackground = (TextView) findViewById(R.id.tv_background);
+        llTextColor = (LinearLayout) findViewById(R.id.ll_text_color);
+        tvTextColor = (TextView) findViewById(R.id.tv_text_color);
         llHint = (LinearLayout) findViewById(R.id.ll_hint);
         etEtHint = (EditText) findViewById(R.id.et_et_hint);
         ivClearEtHint = (ImageView) findViewById(R.id.iv_clear_et_hint);
@@ -230,8 +240,6 @@ public class AddWidgetActivity extends BaseActivity {
         btnSubmit = (Button) findViewById(R.id.btn_submit);
     }
 
-
-
     private int widgetType;
     private String splashPath;
     private String appId;
@@ -264,6 +272,8 @@ public class AddWidgetActivity extends BaseActivity {
         projectId = getIntent().getStringExtra("projectId");
         pid = getIntent().getStringExtra("pid");
 
+        tvTextColor.setText("@color/colorBlack");
+
     }
 
     @Override
@@ -290,6 +300,7 @@ public class AddWidgetActivity extends BaseActivity {
         setEditListener(etWidgetHeight, ivClearWidgetHeight);
         setEditListener(etWidgetWidth, ivClearWidgetWidth);
         setEditListener(etWidgetWeight, ivClearWidgetWeight);
+        setEditListener(etTextSize, ivClearTextSize);
 
         btnWidthMatchParent.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -376,10 +387,32 @@ public class AddWidgetActivity extends BaseActivity {
             }
         });
 
+        llTextColor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chooseTextColor();
+            }
+        });
+
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 addWidget();
+            }
+        });
+    }
+
+    private void chooseTextColor() {
+        List<String> items = new ArrayList<>();
+        items.add("@color/colorBlack");
+        items.add("@color/colorPrimary");
+        items.add("@color/colorWhite");
+        items.add("@color/colorGrayB");
+        items.add("@color/colorGrayD");
+        showListDialog(items, true, null, new OnItemClick() {
+            @Override
+            public void onItemClick(int position, String content) {
+                tvTextColor.setText(content);
             }
         });
     }
@@ -524,7 +557,7 @@ public class AddWidgetActivity extends BaseActivity {
         String height = etWidgetHeight.getText().toString().trim();
         String weight = etWidgetWeight.getText().toString().trim();
         String leftMargin = etLeftMargin.getText().toString().trim();
-        String rightMargin = etLeftMargin.getText().toString().trim();
+        String rightMargin = etRightMargin.getText().toString().trim();
         String topMargin = etTopMargin.getText().toString().trim();
         String bottomMargin = etBottomMargin.getText().toString().trim();
         String leftPadding = etLeftPadding.getText().toString().trim();
@@ -536,6 +569,8 @@ public class AddWidgetActivity extends BaseActivity {
         String orientation = tvOrientation.getText().toString().trim();
         String background = tvBackground.getText().toString().trim();
         String gravity = tvGravity.getText().toString().trim();
+        String textSize = etTextSize.getText().toString().trim();
+        String textColor = tvTextColor.getText().toString().trim();
         showPd(getString(R.string.submiting_text), false);
         PostRequest<AddActivityResult> post = OkGo.<AddActivityResult>post(SharedUtil.getString(ZApplication.getInstance(), "server_config")
                 + "/ZzApiDoc/v1/widget/addWidget")
@@ -556,6 +591,7 @@ public class AddWidgetActivity extends BaseActivity {
                 .params("showLeftTitleText", cbShowLeftText.isChecked())
                 .params("showRightTitleText", cbShowRightText.isChecked())
                 .params("showRightTitleLayout", cbShowRightLayout.isChecked())
+                .params("showLeftTitleLayout", cbShowLeftLayout.isChecked())
                 .params("pid", pid)
                 .params("background", background)
                 .params("width", width)
@@ -570,6 +606,8 @@ public class AddWidgetActivity extends BaseActivity {
                 .params("paddingTop", topPadding)
                 .params("paddingBottom", bottomPadding)
                 .params("orientation", orientation)
+                .params("textSize", textSize)
+                .params("textColor", textColor)
                 .params("userId", getUserId())
                 .isMultipart(true);
         if (targetActId != null) {
@@ -700,6 +738,8 @@ public class AddWidgetActivity extends BaseActivity {
         llKeyWord.setVisibility(View.VISIBLE);
         llHint.setVisibility(View.VISIBLE);
         llGravity.setVisibility(View.VISIBLE);
+        llTextColor.setVisibility(View.VISIBLE);
+        llTextSize.setVisibility(View.VISIBLE);
         showPaddingMarin();
     }
 
@@ -707,6 +747,7 @@ public class AddWidgetActivity extends BaseActivity {
         llTitle.setVisibility(View.VISIBLE);
         llKeyWord.setVisibility(View.VISIBLE);
         llLeftImg.setVisibility(View.VISIBLE);
+        llTargetAct.setVisibility(View.VISIBLE);
         showPaddingMarin();
     }
 
@@ -806,6 +847,8 @@ public class AddWidgetActivity extends BaseActivity {
         llHint.setVisibility(View.GONE);
         llOrientation.setVisibility(View.GONE);
         llClickToClose.setVisibility(View.GONE);
+        llTextSize.setVisibility(View.GONE);
+        llTextColor.setVisibility(View.GONE);
 
         setMargin(0);
     }

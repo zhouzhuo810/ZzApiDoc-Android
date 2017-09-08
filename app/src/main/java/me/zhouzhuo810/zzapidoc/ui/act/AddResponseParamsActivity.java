@@ -5,11 +5,20 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Arrays;
 import java.util.List;
@@ -34,12 +43,13 @@ public class AddResponseParamsActivity extends BaseActivity {
     private RelativeLayout rlRight;
     private LinearLayout llArgType;
     private TextView tvArgType;
-    private EditText etArgName;
-    private ImageView ivClearArgName;
-    private EditText etArgDefValue;
-    private ImageView ivClearArgDefValue;
     private EditText etArgNote;
     private ImageView ivClearArgNote;
+    private EditText etArgName;
+    private ImageView ivClearArgName;
+    private Button btnKeyWord;
+    private EditText etArgDefValue;
+    private ImageView ivClearArgDefValue;
     private Button btnSubmit;
 
     private String projectId;
@@ -67,12 +77,13 @@ public class AddResponseParamsActivity extends BaseActivity {
         rlRight = (RelativeLayout) findViewById(R.id.rl_right);
         llArgType = (LinearLayout) findViewById(R.id.ll_arg_type);
         tvArgType = (TextView) findViewById(R.id.tv_arg_type);
-        etArgName = (EditText) findViewById(R.id.et_arg_name);
-        ivClearArgName = (ImageView) findViewById(R.id.iv_clear_arg_name);
-        etArgDefValue = (EditText) findViewById(R.id.et_arg_def_value);
-        ivClearArgDefValue = (ImageView) findViewById(R.id.iv_clear_arg_def_value);
         etArgNote = (EditText) findViewById(R.id.et_arg_note);
         ivClearArgNote = (ImageView) findViewById(R.id.iv_clear_arg_note);
+        etArgName = (EditText) findViewById(R.id.et_arg_name);
+        ivClearArgName = (ImageView) findViewById(R.id.iv_clear_arg_name);
+        btnKeyWord = (Button) findViewById(R.id.btn_key_word);
+        etArgDefValue = (EditText) findViewById(R.id.et_arg_def_value);
+        ivClearArgDefValue = (ImageView) findViewById(R.id.iv_clear_arg_def_value);
         btnSubmit = (Button) findViewById(R.id.btn_submit);
     }
 
@@ -117,12 +128,71 @@ public class AddResponseParamsActivity extends BaseActivity {
             }
         });
 
+        btnKeyWord.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                generateKeyword();
+            }
+        });
+
 
     }
 
+
+    private void generateKeyword() {
+        if (etArgNote.getText().toString().trim().length() == 0) {
+            ToastUtils.showCustomBgToast("请填写参数说明");
+            return;
+        }
+        String title = etArgNote.getText().toString().trim();
+        showPd(getString(R.string.submiting_text), false);
+        OkGo.<String>get("http://fanyi.youdao.com/openapi.do")
+                .params("keyfrom", "WordsHelper")
+                .params("key", "1678465943")
+                .params("type", "data")
+                .params("doctype", "json")
+                .params("version", "1.1")
+                .params("q", title)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        hidePd();
+                        String body = response.body();
+                        try {
+                            JSONObject object = new JSONObject(body);
+                            JSONArray array = object.getJSONArray("translation");
+                            String word = array.getString(0);
+                            StringBuilder sb = new StringBuilder();
+                            if (word.contains(" ")) {
+                                String[] split = word.split(" ");
+                                for (String s : split) {
+                                    sb.append(s.substring(0,1).toUpperCase()).append(s.substring(1));
+                                }
+                            } else {
+                                sb.append(word.substring(0,1).toUpperCase()).append(word.substring(1));
+                            }
+                            String newWord = sb.toString().replace("the", "").replace("The", "").replace(".","");
+                            etArgName.setText(newWord.substring(0,1).toLowerCase()+newWord.substring(1));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            ToastUtils.showCustomBgToast(e.toString());
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(Response<String> response) {
+                        super.onError(response);
+                        hidePd();
+                        ToastUtils.showCustomBgToast(response.getException().toString());
+                    }
+                });
+    }
+
+
     private void chooseType() {
         show = true;
-        showListDialog(Arrays.asList("string","number","object","array[object]","array[string]","array","file", "unknown", "array[number]"), true, new DialogInterface.OnDismissListener() {
+        showListDialog(Arrays.asList("string", "number", "object", "array[object]", "array[string]", "array", "file", "unknown", "array[number]"), true, new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialog) {
                 show = false;

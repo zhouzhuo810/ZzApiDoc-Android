@@ -513,6 +513,47 @@
                     android:visibility="gone" />
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/ll_text_size"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorWhite"
+                android:gravity="center_vertical"
+                android:minHeight="130px"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="280px"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="40px"
+                    android:gravity="center|left"
+                    android:text="@string/text_size_text"
+                    android:textColor="#415868"
+                    android:textSize="44px" />
+
+                <EditText
+                    android:id="@+id/et_text_size"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30px"
+                    android:layout_marginRight="30px"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:gravity="right|center_vertical"
+                    android:hint="@string/text_size_hint_text"
+                    android:inputType="number"
+                    android:text="40"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="44px" />
+
+                <ImageView
+                    android:id="@+id/iv_clear_text_size"
+                    android:layout_width="60px"
+                    android:layout_height="60px"
+                    android:layout_marginRight="30px"
+                    android:src="@drawable/clear" />
+            </LinearLayout>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
@@ -567,6 +608,11 @@
                 android:layout_marginLeft="30px"
                 android:background="@color/colorGrayBg" />
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="30px"
+                android:background="@color/colorGrayBg" />
             <LinearLayout
                 android:id="@+id/ll_left_margin"
                 android:layout_width="match_parent"
@@ -981,6 +1027,50 @@
                     android:background="@null"
                     android:gravity="right|center_vertical"
                     android:hint="@string/choose_background_hint"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="44px" />
+
+                <ImageView
+                    android:layout_width="40px"
+                    android:layout_height="40px"
+                    android:layout_marginRight="30px"
+                    android:src="@drawable/more" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="30px"
+                android:background="@color/colorGrayBg" />
+
+            <LinearLayout
+                android:id="@+id/ll_text_color"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/setting_item_bg_selector"
+                android:clickable="true"
+                android:gravity="center_vertical"
+                android:minHeight="130px"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="280px"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="40px"
+                    android:gravity="center|left"
+                    android:text="@string/text_color_text"
+                    android:textColor="#415868"
+                    android:textSize="44px" />
+
+                <TextView
+                    android:id="@+id/tv_text_color"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30px"
+                    android:layout_marginRight="30px"
+                    android:layout_weight="1"
+                    android:gravity="right|center_vertical"
+                    android:hint="@string/choose_text_color_hint"
                     android:textColor="@color/colorBlack"
                     android:textSize="44px" />
 
