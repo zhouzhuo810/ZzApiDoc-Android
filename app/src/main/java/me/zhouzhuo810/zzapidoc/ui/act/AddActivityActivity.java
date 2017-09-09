@@ -64,8 +64,8 @@ public class AddActivityActivity extends BaseActivity {
     private ImageView ivClearActTitle;
     private TextView tvActName;
     private Button btnKeyWord;
-    private LinearLayout llShowTitle;
-    private CheckBox cbShowTitle;
+//    private LinearLayout llShowTitle;
+//    private CheckBox cbShowTitle;
     private LinearLayout llIsFirst;
     private CheckBox cbIsFirst;
     private Button btnSubmit;
@@ -103,8 +103,8 @@ public class AddActivityActivity extends BaseActivity {
         ivClearActTitle = (ImageView) findViewById(R.id.iv_clear_act_title);
         tvActName = (TextView) findViewById(R.id.tv_act_name);
         btnKeyWord = (Button) findViewById(R.id.btn_key_word);
-        llShowTitle = (LinearLayout) findViewById(R.id.ll_show_title);
-        cbShowTitle = (CheckBox) findViewById(R.id.cb_show_title);
+//        llShowTitle = (LinearLayout) findViewById(R.id.ll_show_title);
+//        cbShowTitle = (CheckBox) findViewById(R.id.cb_show_title);
         llIsFirst = (LinearLayout) findViewById(R.id.ll_is_first);
         cbIsFirst = (CheckBox) findViewById(R.id.cb_is_first);
         btnSubmit = (Button) findViewById(R.id.btn_submit);
@@ -113,7 +113,7 @@ public class AddActivityActivity extends BaseActivity {
     @Override
     public void initData() {
         appId = getIntent().getStringExtra("appId");
-        cbShowTitle.setChecked(true);
+//        cbShowTitle.setChecked(true);
     }
 
     @Override
@@ -262,7 +262,7 @@ public class AddActivityActivity extends BaseActivity {
                 + "/ZzApiDoc/v1/activity/addActivity")
                 .params("name", name)
                 .params("title", title)
-                .params("showTitle", cbShowTitle.isChecked())
+                .params("showTitle", true)
                 .params("isFirst", cbIsFirst.isChecked())
                 .params("type", actType)
                 .params("appId", appId)
@@ -311,13 +311,11 @@ public class AddActivityActivity extends BaseActivity {
                     llSplashDuration.setVisibility(View.VISIBLE);
                     llTargetAct.setVisibility(View.VISIBLE);
                     tvActName.setText("SplashActivity");
-                    cbShowTitle.setChecked(false);
                 } else {
                     llSplash.setVisibility(View.GONE);
                     llSplashDuration.setVisibility(View.GONE);
                     llTargetAct.setVisibility(View.GONE);
                     tvActName.setText("");
-                    cbShowTitle.setChecked(true);
                 }
                 actType = position;
                 tvActType.setText(content);
