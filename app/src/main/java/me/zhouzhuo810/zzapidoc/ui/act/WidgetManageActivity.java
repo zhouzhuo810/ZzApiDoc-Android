@@ -82,6 +82,13 @@ public class WidgetManageActivity extends BaseActivity {
             }
         });
 
+        refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getData();
+            }
+        });
+
         rlRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

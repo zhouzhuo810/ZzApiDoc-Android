@@ -671,6 +671,9 @@ public class AddWidgetActivity extends BaseActivity {
         items.add("ImageView");
         items.add("TextView");
         items.add("CheckBox");
+        items.add("RecyclerView");
+        items.add("ListView");
+        items.add("ScrollableListView");
         showListDialog(items, true, null, new OnItemClick() {
             @Override
             public void onItemClick(int position, String content) {
@@ -719,11 +722,40 @@ public class AddWidgetActivity extends BaseActivity {
                     case 13:
                         showCheckBox();
                         break;
+                    case 14:
+                        showRv();
+                        break;
+                    case 15:
+                        showLv();
+                        break;
+                    case 16:
+                        showScrollLv();
+                        break;
                 }
                 widgetType = position;
                 tvWidgetType.setText(content);
             }
         });
+    }
+
+    private void showScrollLv() {
+        llTitle.setVisibility(View.VISIBLE);
+        llKeyWord.setVisibility(View.VISIBLE);
+        showPaddingMarin();
+    }
+
+    private void showLv() {
+        llTitle.setVisibility(View.VISIBLE);
+        llKeyWord.setVisibility(View.VISIBLE);
+        showPaddingMarin();
+    }
+
+    private void showRv() {
+        llTitle.setVisibility(View.VISIBLE);
+        llKeyWord.setVisibility(View.VISIBLE);
+        llOrientation.setVisibility(View.VISIBLE);
+        tvOrientation.setText("vertical");
+        showPaddingMarin();
     }
 
 
@@ -762,6 +794,7 @@ public class AddWidgetActivity extends BaseActivity {
         llBackground.setVisibility(View.VISIBLE);
         llTitle.setVisibility(View.VISIBLE);
         llKeyWord.setVisibility(View.VISIBLE);
+        tvOrientation.setText("horizontal");
         showPaddingMarin();
     }
 
@@ -898,8 +931,6 @@ public class AddWidgetActivity extends BaseActivity {
         llShowLeftImg.setVisibility(View.VISIBLE);
         llTitle.setVisibility(View.VISIBLE);
         llKeyWord.setVisibility(View.VISIBLE);
-        llShowRightImg.setVisibility(View.VISIBLE);
-        llRightImg.setVisibility(View.VISIBLE);
 
         showPaddingMarin();
     }
