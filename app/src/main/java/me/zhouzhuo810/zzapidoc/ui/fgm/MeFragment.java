@@ -39,6 +39,7 @@ import me.zhouzhuo810.zzapidoc.ui.widget.roundimage.RoundedImageView;
 import rx.Subscriber;
 import zhouzhuo810.me.zzandframe.common.utils.ApkUtils;
 import zhouzhuo810.me.zzandframe.common.utils.FileUtils;
+import zhouzhuo810.me.zzandframe.ui.act.IBaseActivity;
 
 /**
  * Created by zz on 2017/6/26.
@@ -92,7 +93,7 @@ public class MeFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
 
-                ((BaseActivity) getActivity()).showTwoBtnDialog("提示", "确定退出登录吗？", true, new BaseActivity.OnTwoBtnClick() {
+                ((BaseActivity) getActivity()).showTwoBtnDialog("提示", "确定退出登录吗？", true, new IBaseActivity.OnTwoBtnClick() {
                     @Override
                     public void onOk() {
                         exitLogin();
@@ -100,6 +101,7 @@ public class MeFragment extends BaseFragment {
 
                     @Override
                     public void onCancel() {
+
                     }
                 });
             }
@@ -144,9 +146,9 @@ public class MeFragment extends BaseFragment {
     }
 
     private void clearCache() {
-        getBaseAct().showListDialog(Arrays.asList("清理JSON文件", "清理PDF文件", "清理APK文件"), false, null, new BaseActivity.OnItemClick() {
+        getBaseAct().showListDialog(Arrays.asList("清理JSON文件", "清理PDF文件", "清理APK文件"), false, null, new IBaseActivity.OnItemClick() {
             @Override
-            public void onItemClick(int position, String content) {
+            public void onItemClick(int position, String s) {
                 switch (position) {
                     case 0:
                         FileUtils.deleteFiles(Constants.EXPORT_PATH);
@@ -189,7 +191,7 @@ public class MeFragment extends BaseFragment {
                     public void onNext(final UpdateResult updateResult) {
                         getBaseAct().hidePd();
                         if (updateResult.getCode() == 1) {
-                            getBaseAct().showTwoBtnDialog("更新", updateResult.getData().getUpdateInfo(), true, new BaseActivity.OnTwoBtnClick() {
+                            getBaseAct().showTwoBtnDialog("更新", updateResult.getData().getUpdateInfo(), true, new IBaseActivity.OnTwoBtnClick() {
                                 @Override
                                 public void onOk() {
                                     downloadApk(updateResult.getData().getVersionName(), updateResult.getData().getAddress());
@@ -211,7 +213,7 @@ public class MeFragment extends BaseFragment {
     private void downloadApk(final String versionName, String address) {
         final TextView[] tv = {null};
         final ProgressBar[] pb = {null};
-        getBaseAct().showUpdateDialog("更新", "已下载 0%", false, new BaseActivity.OnOneBtnClickListener() {
+        getBaseAct().showUpdateDialog("更新", "已下载 0%", false, new IBaseActivity.OnOneBtnClickListener() {
             @Override
             public void onProgress(TextView tvProgress, ProgressBar pro) {
                 tv[0] = tvProgress;

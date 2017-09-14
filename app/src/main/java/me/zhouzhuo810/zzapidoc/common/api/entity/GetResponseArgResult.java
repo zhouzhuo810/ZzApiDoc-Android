@@ -61,6 +61,15 @@ public class GetResponseArgResult {
         private String createTime;
         private String createUserName;
         private String defValue;
+        private boolean isGlobal;
+
+        public boolean isGlobal() {
+            return isGlobal;
+        }
+
+        public void setGlobal(boolean global) {
+            isGlobal = global;
+        }
 
         public String getDefValue() {
             return defValue;

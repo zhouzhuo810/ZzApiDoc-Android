@@ -41,6 +41,7 @@ import me.zhouzhuo810.zzapidoc.common.base.BaseActivity;
 import me.zhouzhuo810.zzapidoc.common.utils.ContentUtils;
 import me.zhouzhuo810.zzapidoc.common.utils.SharedUtil;
 import me.zhouzhuo810.zzapidoc.common.utils.ToastUtils;
+import zhouzhuo810.me.zzandframe.ui.act.IBaseActivity;
 
 /**
  * Created by admin on 2017/8/19.
@@ -303,7 +304,7 @@ public class AddActivityActivity extends BaseActivity {
         items.add("Guide Activity");
         items.add("Bottom Fragment");
         items.add("Top Fragment");
-        showListDialog(items, true, null, new OnItemClick() {
+        showListDialog(items, true, null, new IBaseActivity.OnItemClick() {
             @Override
             public void onItemClick(int position, String content) {
                 if (position == 1) {

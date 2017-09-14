@@ -29,6 +29,7 @@ import me.zhouzhuo810.zzapidoc.common.base.BaseActivity;
 import me.zhouzhuo810.zzapidoc.common.rx.RxHelper;
 import me.zhouzhuo810.zzapidoc.common.utils.ToastUtils;
 import rx.Subscriber;
+import zhouzhuo810.me.zzandframe.ui.act.IBaseActivity;
 
 /**
  * Created by zhouzhuo810 on 2017/8/11.
@@ -197,12 +198,12 @@ public class AddRequestParamsActivity extends BaseActivity {
 
     private void chooseType() {
         show = true;
-        showListDialog(Arrays.asList("string","number","object","array[object]","array[string]","array","file", "unknown", "array[number]"), true, new DialogInterface.OnDismissListener() {
+        showListDialog(Arrays.asList("string", "number", "object", "array[object]", "array[string]", "array", "file", "unknown", "array[number]"), true, new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialog) {
                 show = false;
             }
-        }, new OnItemClick() {
+        }, new IBaseActivity.OnItemClick() {
             @Override
             public void onItemClick(int position, String content) {
                 show = false;

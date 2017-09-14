@@ -23,6 +23,7 @@ import me.zhouzhuo810.zzapidoc.common.rx.RxHelper;
 import me.zhouzhuo810.zzapidoc.common.utils.ToastUtils;
 import me.zhouzhuo810.zzapidoc.ui.adapter.RequestHeaderListAdapter;
 import rx.Subscriber;
+import zhouzhuo810.me.zzandframe.ui.act.IBaseActivity;
 
 /**
  * Created by admin on 2017/8/13.
@@ -124,10 +125,10 @@ public class RequestHeaderManageActivity extends BaseActivity {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-                showListDialog(Arrays.asList("删除"), true, null, new OnItemClick() {
+                showListDialog(Arrays.asList("删除"), true, null, new IBaseActivity.OnItemClick() {
                     @Override
-                    public void onItemClick(int pos, String content) {
-                        switch (pos) {
+                    public void onItemClick(int i, String s) {
+                        switch (i) {
                             case 0:
                                 delete(adapter.getmDatas().get(position).getId());
                                 break;

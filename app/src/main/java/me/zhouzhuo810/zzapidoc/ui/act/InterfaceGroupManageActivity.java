@@ -26,6 +26,7 @@ import me.zhouzhuo810.zzapidoc.common.utils.CopyUtils;
 import me.zhouzhuo810.zzapidoc.common.utils.ToastUtils;
 import me.zhouzhuo810.zzapidoc.ui.adapter.InterfaceGroupListAdapter;
 import rx.Subscriber;
+import zhouzhuo810.me.zzandframe.ui.act.IBaseActivity;
 
 /**
  * Created by zhouzhuo810 on 2017/8/11.
@@ -139,9 +140,9 @@ public class InterfaceGroupManageActivity extends BaseActivity {
         lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
-                showListDialog(Arrays.asList("删除接口", "修改接口地址"), true, null, new OnItemClick() {
+                showListDialog(Arrays.asList("删除接口", "修改接口地址"), true, null, new IBaseActivity.OnItemClick() {
                     @Override
-                    public void onItemClick(int pos, String content) {
+                    public void onItemClick(int pos, String s) {
                         switch (pos) {
                             case 0:
                                 deleteGroup(adapter.getmDatas().get(position).getId());
@@ -183,10 +184,10 @@ public class InterfaceGroupManageActivity extends BaseActivity {
     }
 
     private void changeIpAddr(final GetAllInterfaceGroupResult.DataBean group) {
-        showTwoBtnEditDialog("修改接口地址", "请输入新的接口地址", group.getIp(), false, new OnTwoBtnEditClick() {
+        showTwoBtnEditDialog("修改接口地址", "请输入新的接口地址", group.getIp(), false, new IBaseActivity.OnTwoBtnEditClick() {
             @Override
-            public void onOk(String content) {
-                group.setIp(content);
+            public void onOk(String s) {
+                group.setIp(s);
                 updateGroup(group);
             }
 

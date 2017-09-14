@@ -39,7 +39,7 @@ dependencies {
     //bugly
     compile 'com.tencent.bugly:crashreport:latest.release'
     //zzandframe
-    compile 'com.github.zhouzhuo810:ZzAndFrame:1.0.7'
+    compile 'com.github.zhouzhuo810:ZzAndFrame:1.0.10'
     //xutils
     compile 'org.xutils:xutils:3.1.26'
     //Glide

@@ -250,4 +250,6 @@
     <string name="text_size_hint_text">请输入文字大小</string>
     <string name="text_color_text">文字颜色</string>
     <string name="choose_text_color_hint">请选择文字颜色</string>
+    <string name="param_name_not_nul">参数名称不能为空</string>
+    <string name="param_note_not_nul">参数备注不能为空</string>
 </resources>

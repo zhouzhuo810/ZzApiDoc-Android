@@ -22,6 +22,7 @@ import me.zhouzhuo810.zzapidoc.common.base.BaseActivity;
 import me.zhouzhuo810.zzapidoc.common.rx.RxHelper;
 import me.zhouzhuo810.zzapidoc.common.utils.ToastUtils;
 import rx.Subscriber;
+import zhouzhuo810.me.zzandframe.ui.act.IBaseActivity;
 
 /**
  * Created by zhouzhuo810 on 2017/8/11.
@@ -141,12 +142,12 @@ public class AddInterfaceActivity extends BaseActivity {
                                 public void onDismiss(DialogInterface dialog) {
                                     show = false;
                                 }
-                            }, new OnItemClick() {
+                            }, new IBaseActivity.OnItemClick() {
                                 @Override
-                                public void onItemClick(int position, String content) {
+                                public void onItemClick(int i, String s) {
                                     show = false;
-                                    methodId = getDictionaryResult.getData().get(position).getId();
-                                    tvRequestMethod.setText(content);
+                                    methodId = getDictionaryResult.getData().get(i).getId();
+                                    tvRequestMethod.setText(s);
                                 }
                             });
                         } else {

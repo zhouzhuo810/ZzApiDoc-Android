@@ -23,6 +23,7 @@ import me.zhouzhuo810.zzapidoc.common.rx.RxHelper;
 import me.zhouzhuo810.zzapidoc.common.utils.ToastUtils;
 import me.zhouzhuo810.zzapidoc.ui.adapter.WidgetListAdapter;
 import rx.Subscriber;
+import zhouzhuo810.me.zzandframe.ui.act.IBaseActivity;
 
 /**
  * Created by admin on 2017/8/19.
@@ -165,9 +166,9 @@ public class WidgetManageActivity extends BaseActivity {
         lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
-                showListDialog(Arrays.asList("删除"), true, null, new OnItemClick() {
+                showListDialog(Arrays.asList("删除"), true, null, new IBaseActivity.OnItemClick() {
                     @Override
-                    public void onItemClick(int pos, String content) {
+                    public void onItemClick(int pos, String s) {
                         switch (pos) {
                             case 0:
                                 deleteWidget(adapter.getmDatas().get(position).getId());

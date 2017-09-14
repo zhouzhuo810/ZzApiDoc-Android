@@ -36,6 +36,7 @@ import me.zhouzhuo810.zzapidoc.ui.act.AddResponseParamsActivity;
 import me.zhouzhuo810.zzapidoc.ui.act.InterfaceGroupManageActivity;
 import me.zhouzhuo810.zzapidoc.ui.adapter.ProjectListAdapter;
 import rx.Subscriber;
+import zhouzhuo810.me.zzandframe.ui.act.IBaseActivity;
 
 /**
  * Created by zhouzhuo810 on 2017/7/21.
@@ -138,9 +139,9 @@ public class ProjectFragment extends BaseFragment {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
                 getBaseAct().showListDialog(Arrays.asList("导出JSON文件", "导出PDF文件", "复制JSON下载地址", "复制PDF下载地址", "添加全局请求头", "添加全局请求参数",
-                        "添加全局返回参数", "删除项目"), true, null, new BaseActivity.OnItemClick() {
+                        "添加全局返回参数", "删除项目"), true, null, new IBaseActivity.OnItemClick() {
                     @Override
-                    public void onItemClick(int pos, String content) {
+                    public void onItemClick(int pos, String s) {
                         switch (pos) {
                             case 0:
                                 exportJson(adapter.getmDatas().get(position).getId());
@@ -175,7 +176,7 @@ public class ProjectFragment extends BaseFragment {
     }
 
     private void deleteProject(final String projectId) {
-        getBaseAct().showTwoBtnDialog("删除项目", "确定删除吗？", true, new BaseActivity.OnTwoBtnClick() {
+        getBaseAct().showTwoBtnDialog("删除项目", "确定删除吗？", true, new IBaseActivity.OnTwoBtnClick() {
             @Override
             public void onOk() {
                 getBaseAct().showPd(getString(R.string.submiting_text), false);
@@ -252,10 +253,10 @@ public class ProjectFragment extends BaseFragment {
 
             @Override
             public void onStart() {
-                getBaseAct().showUpdateDialog("导出", "正在导出...", false, new BaseActivity.OnOneBtnClickListener() {
+                getBaseAct().showUpdateDialog("导出", "正在导出...", false, new IBaseActivity.OnOneBtnClickListener() {
                     @Override
-                    public void onProgress(TextView tvProgress, ProgressBar progressBar) {
-                        tv = tvProgress;
+                    public void onProgress(TextView textView, ProgressBar progressBar) {
+                        tv = textView;
                         pb = progressBar;
                     }
 
@@ -303,7 +304,7 @@ public class ProjectFragment extends BaseFragment {
 
             @Override
             public void onStart() {
-                getBaseAct().showUpdateDialog("导出", "正在导出...", false, new BaseActivity.OnOneBtnClickListener() {
+                getBaseAct().showUpdateDialog("导出", "正在导出...", false, new IBaseActivity.OnOneBtnClickListener() {
                     @Override
                     public void onProgress(TextView tvProgress, ProgressBar progressBar) {
                         tv = tvProgress;

@@ -34,6 +34,7 @@ import me.zhouzhuo810.zzapidoc.common.api.entity.GetResponseArgResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.ImportProjectEntity;
 import me.zhouzhuo810.zzapidoc.common.api.entity.PublishVersionEntity;
 import me.zhouzhuo810.zzapidoc.common.api.entity.UpdateInterfaceResult;
+import me.zhouzhuo810.zzapidoc.common.api.entity.UpdateResponseArgResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.UpdateResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.UpdateUserPasswordResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.UserLoginResult;
@@ -369,6 +370,21 @@ public interface Api0 {
     Observable<DeleteActivityResult> deleteFragment(
             @Field("id") String id,
             @Field("userId") String userId
+    );
+
+    /*修改返回参数*/
+    @FormUrlEncoded
+    @POST("/ZzApiDoc/v1/responseArg/updateResponseArg")
+    Observable<UpdateResponseArgResult> updateResponseArg(
+            @Field("responseArgId") String responseArgId,
+            @Field("pid") String pid,
+            @Field("name") String name,
+            @Field("defValue") String defValue,
+            @Field("type") int type,
+            @Field("interfaceId") String interfaceId,
+            @Field("note") String note,
+            @Field("userId") String userId,
+            @Field("isGlobal") boolean isGlobal
     );
 
 

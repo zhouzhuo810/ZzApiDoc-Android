@@ -36,6 +36,7 @@ import me.zhouzhuo810.zzapidoc.common.base.BaseActivity;
 import me.zhouzhuo810.zzapidoc.common.utils.ContentUtils;
 import me.zhouzhuo810.zzapidoc.common.utils.SharedUtil;
 import me.zhouzhuo810.zzapidoc.common.utils.ToastUtils;
+import zhouzhuo810.me.zzandframe.ui.act.IBaseActivity;
 
 /**
  * Created by admin on 2017/8/19.
@@ -409,10 +410,10 @@ public class AddWidgetActivity extends BaseActivity {
         items.add("@color/colorWhite");
         items.add("@color/colorGrayB");
         items.add("@color/colorGrayD");
-        showListDialog(items, true, null, new OnItemClick() {
+        showListDialog(items, true, null, new IBaseActivity.OnItemClick() {
             @Override
-            public void onItemClick(int position, String content) {
-                tvTextColor.setText(content);
+            public void onItemClick(int i, String s) {
+                tvTextColor.setText(s);
             }
         });
     }
@@ -424,10 +425,10 @@ public class AddWidgetActivity extends BaseActivity {
         items.add("@color/colorWhite");
         items.add("@color/colorBlack");
         items.add("@drawable/setting_item_bg_selector");
-        showListDialog(items, true, null, new OnItemClick() {
+        showListDialog(items, true, null, new IBaseActivity.OnItemClick() {
             @Override
-            public void onItemClick(int position, String content) {
-                tvBackground.setText(content);
+            public void onItemClick(int i, String s) {
+                tvBackground.setText(s);
             }
         });
     }
@@ -436,10 +437,10 @@ public class AddWidgetActivity extends BaseActivity {
         List<String> items = new ArrayList<>();
         items.add("horizontal");
         items.add("vertical");
-        showListDialog(items, true, null, new OnItemClick() {
+        showListDialog(items, true, null, new IBaseActivity.OnItemClick() {
             @Override
-            public void onItemClick(int position, String content) {
-                tvOrientation.setText(content);
+            public void onItemClick(int i, String s) {
+                tvOrientation.setText(s);
             }
         });
     }
@@ -453,10 +454,10 @@ public class AddWidgetActivity extends BaseActivity {
         items.add("right");
         items.add("right|center_vertical");
         items.add("top|left");
-        showListDialog(items, true, null, new OnItemClick() {
+        showListDialog(items, true, null, new IBaseActivity.OnItemClick() {
             @Override
-            public void onItemClick(int position, String content) {
-                tvGravity.setText(content);
+            public void onItemClick(int i, String s) {
+                tvGravity.setText(s);
             }
         });
     }
@@ -645,10 +646,10 @@ public class AddWidgetActivity extends BaseActivity {
         ll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showListDialog(Arrays.asList("true", "false"), true, null, new OnItemClick() {
+                showListDialog(Arrays.asList("true", "false"), true, null, new IBaseActivity.OnItemClick() {
                     @Override
-                    public void onItemClick(int position, String content) {
-                        tv.setText(content);
+                    public void onItemClick(int i, String s) {
+                        tv.setText(s);
                     }
                 });
             }
@@ -674,12 +675,12 @@ public class AddWidgetActivity extends BaseActivity {
         items.add("RecyclerView");
         items.add("ListView");
         items.add("ScrollableListView");
-        showListDialog(items, true, null, new OnItemClick() {
+        showListDialog(items, true, null, new IBaseActivity.OnItemClick() {
             @Override
-            public void onItemClick(int position, String content) {
-                tvWidgetName.setText(content);
+            public void onItemClick(int i, String s) {
+                tvWidgetName.setText(s);
                 hideAll();
-                switch (position) {
+                switch (i) {
                     case 0:
                         showTitleBarItem();
                         break;
@@ -732,8 +733,8 @@ public class AddWidgetActivity extends BaseActivity {
                         showScrollLv();
                         break;
                 }
-                widgetType = position;
-                tvWidgetType.setText(content);
+                widgetType = i;
+                tvWidgetType.setText(s);
             }
         });
     }

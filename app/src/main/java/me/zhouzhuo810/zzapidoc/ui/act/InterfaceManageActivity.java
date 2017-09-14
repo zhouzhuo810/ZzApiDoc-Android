@@ -32,6 +32,7 @@ import me.zhouzhuo810.zzapidoc.common.utils.CopyUtils;
 import me.zhouzhuo810.zzapidoc.common.utils.ToastUtils;
 import me.zhouzhuo810.zzapidoc.ui.adapter.InterfaceListAdapter;
 import rx.Subscriber;
+import zhouzhuo810.me.zzandframe.ui.act.IBaseActivity;
 
 /**
  * Created by zhouzhuo810 on 2017/8/11.
@@ -183,9 +184,9 @@ public class InterfaceManageActivity extends BaseActivity {
                         public void onDismiss(DialogInterface dialog) {
 
                         }
-                    }, new OnItemClick() {
+                    }, new IBaseActivity.OnItemClick() {
                         @Override
-                        public void onItemClick(int pos, String content) {
+                        public void onItemClick(int pos, String s) {
                             Intent intent;
                             switch (pos) {
                                 case 0:
@@ -227,23 +228,27 @@ public class InterfaceManageActivity extends BaseActivity {
         lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
-                showListDialog(Arrays.asList("修改请求方式", "修改接口路径", "添加备注", "删除接口", "复制接口地址", "测试接口"), true, null, new OnItemClick() {
+                showListDialog(Arrays.asList("修改请求方式", "修改接口名称", "修改接口路径", "添加备注", "删除接口", "复制接口地址", "测试接口"), true,
+                        null, new IBaseActivity.OnItemClick() {
                     @Override
-                    public void onItemClick(int pos, String content) {
+                    public void onItemClick(int pos, String s) {
                         switch (pos) {
                             case 0:
                                 reviseMethod(adapter.getmDatas().get(position));
                                 break;
                             case 1:
-                                revisePath(adapter.getmDatas().get(position));
+                                reviseName(adapter.getmDatas().get(position));
                                 break;
                             case 2:
-                                addNote(adapter.getmDatas().get(position));
+                                revisePath(adapter.getmDatas().get(position));
                                 break;
                             case 3:
-                                deleteInterface(adapter.getmDatas().get(position).getId());
+                                addNote(adapter.getmDatas().get(position));
                                 break;
                             case 4:
+                                deleteInterface(adapter.getmDatas().get(position).getId());
+                                break;
+                            case 5:
                                 CopyUtils.copyPlainText(InterfaceManageActivity.this,
                                         adapter.getmDatas().get(position).getName(),
                                         adapter.getmDatas().get(position).getIp()
@@ -251,7 +256,7 @@ public class InterfaceManageActivity extends BaseActivity {
                                                 + adapter.getmDatas().get(position).getPath());
                                 ToastUtils.showCustomBgToast("已复制到剪切板");
                                 break;
-                            case 5:
+                            case 6:
                                 Intent intent = new Intent(InterfaceManageActivity.this, InterfaceTestActivity.class);
                                 intent.putExtra("interfaceId", adapter.getmDatas().get(position).getId());
                                 intent.putExtra("projectId", projectId);
@@ -277,13 +282,52 @@ public class InterfaceManageActivity extends BaseActivity {
         });
     }
 
-    private void addNote(final GetAllInterfaceResult.DataEntity entity) {
-        showTwoBtnEditDialog("添加备注", "请输入接口备注", entity.getNote(), false, new OnTwoBtnEditClick() {
+    private void reviseName(final GetAllInterfaceResult.DataEntity entity) {
+        showTwoBtnEditDialog("修改名称", "请输入接口名称", entity.getName(), false, new IBaseActivity.OnTwoBtnEditClick() {
             @Override
-            public void onOk(String content) {
+            public void onOk(String s) {
                 showPd(getString(R.string.submiting_text), false);
                 Api.getApi0()
-                        .updateInterface(entity.getId(), entity.getName(), entity.getPath(), projectId, groupId, "", content, getUserId(), null, null)
+                        .updateInterface(entity.getId(), s, entity.getPath(), projectId, groupId, "", entity.getNote(), getUserId(), null, null)
+                        .compose(RxHelper.<UpdateInterfaceResult>io_main())
+                        .subscribe(new Subscriber<UpdateInterfaceResult>() {
+                            @Override
+                            public void onCompleted() {
+
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                hidePd();
+                                ToastUtils.showCustomBgToast(getString(R.string.no_net_text) + e.toString());
+                            }
+
+                            @Override
+                            public void onNext(UpdateInterfaceResult updateInterfaceResult) {
+                                hidePd();
+                                ToastUtils.showCustomBgToast(updateInterfaceResult.getMsg());
+                                if (updateInterfaceResult.getCode() == 1) {
+                                    startRefresh(refresh);
+                                    getData();
+                                }
+                            }
+                        });
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+        });
+    }
+
+    private void addNote(final GetAllInterfaceResult.DataEntity entity) {
+        showTwoBtnEditDialog("添加备注", "请输入接口备注", entity.getNote(), false, new IBaseActivity.OnTwoBtnEditClick() {
+            @Override
+            public void onOk(String s) {
+                showPd(getString(R.string.submiting_text), false);
+                Api.getApi0()
+                        .updateInterface(entity.getId(), entity.getName(), entity.getPath(), projectId, groupId, "", s, getUserId(), null, null)
                         .compose(RxHelper.<UpdateInterfaceResult>io_main())
                         .subscribe(new Subscriber<UpdateInterfaceResult>() {
                             @Override
@@ -318,12 +362,12 @@ public class InterfaceManageActivity extends BaseActivity {
     }
 
     private void revisePath(final GetAllInterfaceResult.DataEntity entity) {
-        showTwoBtnEditDialog("修改路径", "请输入接口路径", entity.getPath(), false, new OnTwoBtnEditClick() {
+        showTwoBtnEditDialog("修改路径", "请输入接口路径", entity.getPath(), false, new IBaseActivity.OnTwoBtnEditClick() {
             @Override
-            public void onOk(String content) {
+            public void onOk(String s) {
                 showPd(getString(R.string.submiting_text), false);
                 Api.getApi0()
-                        .updateInterface(entity.getId(), entity.getName(), content, projectId, groupId, "", entity.getNote(), getUserId(), null, null)
+                        .updateInterface(entity.getId(), entity.getName(), s, projectId, groupId, "", entity.getNote(), getUserId(), null, null)
                         .compose(RxHelper.<UpdateInterfaceResult>io_main())
                         .subscribe(new Subscriber<UpdateInterfaceResult>() {
                             @Override
@@ -379,9 +423,9 @@ public class InterfaceManageActivity extends BaseActivity {
                         hidePd();
                         if (getDictionaryResult.getCode() == 1) {
                             List<String> strings = dicToList(getDictionaryResult.getData());
-                            showListDialog(strings, true, null, new OnItemClick() {
+                            showListDialog(strings, true, null, new IBaseActivity.OnItemClick() {
                                 @Override
-                                public void onItemClick(int position, String content) {
+                                public void onItemClick(int position, String s) {
                                     showPd(getString(R.string.submiting_text), false);
                                     Api.getApi0()
                                             .updateInterface(entity.getId(), entity.getName(), "", projectId, groupId, getDictionaryResult.getData().get(position).getId(), entity.getNote(), getUserId(), null, null)
@@ -419,7 +463,7 @@ public class InterfaceManageActivity extends BaseActivity {
     }
 
     private void deleteInterface(final String id) {
-        showTwoBtnDialog("删除接口", "确定删除吗？", true, new OnTwoBtnClick() {
+        showTwoBtnDialog("删除接口", "确定删除吗？", true, new IBaseActivity.OnTwoBtnClick() {
             @Override
             public void onOk() {
                 showPd(getString(R.string.submiting_text), false);

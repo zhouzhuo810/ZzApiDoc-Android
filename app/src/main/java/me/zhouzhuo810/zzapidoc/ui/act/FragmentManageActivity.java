@@ -27,6 +27,7 @@ import me.zhouzhuo810.zzapidoc.common.utils.ToastUtils;
 import me.zhouzhuo810.zzapidoc.ui.adapter.FragmentListAdapter;
 import me.zhouzhuo810.zzapidoc.ui.adapter.InterfaceGroupListAdapter;
 import rx.Subscriber;
+import zhouzhuo810.me.zzandframe.ui.act.IBaseActivity;
 
 /**
  * Created by zhouzhuo810 on 2017/8/11.
@@ -146,9 +147,9 @@ public class FragmentManageActivity extends BaseActivity {
         lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
-                showListDialog(Arrays.asList("删除接口"), true, null, new OnItemClick() {
+                showListDialog(Arrays.asList("删除接口"), true, null, new IBaseActivity.OnItemClick() {
                     @Override
-                    public void onItemClick(int pos, String content) {
+                    public void onItemClick(int pos, String s) {
                         switch (pos) {
                             case 0:
                                 deleteGroup(adapter.getmDatas().get(position).getId());

@@ -35,6 +35,7 @@ import me.zhouzhuo810.zzapidoc.ui.act.AddApplicationActivity;
 import me.zhouzhuo810.zzapidoc.ui.adapter.ApplicationListAdapter;
 import rx.Subscriber;
 import zhouzhuo810.me.zzandframe.common.utils.ApkUtils;
+import zhouzhuo810.me.zzandframe.ui.act.IBaseActivity;
 
 /**
  * Created by zhouzhuo810 on 2017/7/21.
@@ -137,9 +138,9 @@ public class AppFragment extends BaseFragment {
         lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
-                getBaseAct().showListDialog(Arrays.asList("导出JSON文件", "导出项目文件","导出并安装APK文件", "复制JSON下载地址", "复制项目下载地址", "删除项目"), true, null, new BaseActivity.OnItemClick() {
+                getBaseAct().showListDialog(Arrays.asList("导出JSON文件", "导出项目文件", "导出并安装APK文件", "复制JSON下载地址", "复制项目下载地址", "删除项目"), true, null, new IBaseActivity.OnItemClick() {
                     @Override
-                    public void onItemClick(int pos, String content) {
+                    public void onItemClick(int pos, String s) {
                         switch (pos) {
                             case 0:
                                 exportJson(adapter.getmDatas().get(position).getId());
@@ -175,7 +176,7 @@ public class AppFragment extends BaseFragment {
 
             @Override
             public void onStart() {
-                getBaseAct().showUpdateDialog("导出", "正在导出...", false, new BaseActivity.OnOneBtnClickListener() {
+                getBaseAct().showUpdateDialog("导出", "正在导出...", false, new IBaseActivity.OnOneBtnClickListener() {
                     @Override
                     public void onProgress(TextView tvProgress, ProgressBar progressBar) {
                         tv = tvProgress;
@@ -220,7 +221,7 @@ public class AppFragment extends BaseFragment {
     }
 
     private void deleteProject(final String appId) {
-        getBaseAct().showTwoBtnDialog("删除应用", "确定删除吗？", true, new BaseActivity.OnTwoBtnClick() {
+        getBaseAct().showTwoBtnDialog("删除应用", "确定删除吗？", true, new IBaseActivity.OnTwoBtnClick() {
             @Override
             public void onOk() {
                 getBaseAct().showPd(getString(R.string.submiting_text), false);
@@ -271,7 +272,7 @@ public class AppFragment extends BaseFragment {
 
             @Override
             public void onStart() {
-                getBaseAct().showUpdateDialog("导出", "正在导出...", false, new BaseActivity.OnOneBtnClickListener() {
+                getBaseAct().showUpdateDialog("导出", "正在导出...", false, new IBaseActivity.OnOneBtnClickListener() {
                     @Override
                     public void onProgress(TextView tvProgress, ProgressBar progressBar) {
                         tv = tvProgress;
@@ -322,7 +323,7 @@ public class AppFragment extends BaseFragment {
 
             @Override
             public void onStart() {
-                getBaseAct().showUpdateDialog("导出", "正在导出...", false, new BaseActivity.OnOneBtnClickListener() {
+                getBaseAct().showUpdateDialog("导出", "正在导出...", false, new IBaseActivity.OnOneBtnClickListener() {
                     @Override
                     public void onProgress(TextView tvProgress, ProgressBar progressBar) {
                         tv = tvProgress;
