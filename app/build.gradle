@@ -58,4 +58,7 @@ dependencies {
 
     compile 'com.github.yalantis:ucrop:2.2.1'
 
+    //pdf view
+    compile 'com.github.barteksc:android-pdf-viewer:2.7.0'
+
 }

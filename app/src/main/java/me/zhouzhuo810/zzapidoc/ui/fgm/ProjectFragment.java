@@ -297,8 +297,8 @@ public class ProjectFragment extends BaseFragment {
     }
 
     private void exportPdf(String id) {
-        final String name = System.currentTimeMillis() + ".pdf";
-        ExportUtils.exportToPdfFile(getActivity(), getUserId(), id, Constants.EXPORT_PDF_PATH, name, new ExportUtils.ProgressListener() {
+//        final String name = System.currentTimeMillis() + ".pdf";
+        ExportUtils.exportToPdfFile(getActivity(), getUserId(), id, Constants.EXPORT_PDF_PATH, null, new ExportUtils.ProgressListener() {
             TextView tv;
             ProgressBar pb;
 
@@ -342,7 +342,7 @@ public class ProjectFragment extends BaseFragment {
             public void onOk() {
                 Log.e("TTT", "ok");
                 getBaseAct().hideUpdateDialog();
-                ToastUtils.showCustomBgToast("文件已保存到" + Constants.EXPORT_PDF_PATH + name);
+                ToastUtils.showCustomBgToast("文件已保存到" + Constants.EXPORT_PDF_PATH);
             }
         });
     }
