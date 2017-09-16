@@ -386,6 +386,21 @@ public interface Api0 {
             @Field("userId") String userId,
             @Field("isGlobal") boolean isGlobal
     );
+    /*修改请求参数*/
+    @FormUrlEncoded
+    @POST("/ZzApiDoc/v1/requestArg/updateRequestArg")
+    Observable<UpdateResponseArgResult> updateRequestArg(
+            @Field("requestArgId") String requestArgId,
+            @Field("pid") String pid,
+            @Field("name") String name,
+            @Field("defValue") String defValue,
+            @Field("type") int type,
+            @Field("interfaceId") String interfaceId,
+            @Field("note") String note,
+            @Field("userId") String userId,
+            @Field("isRequire") boolean isRequire,
+            @Field("isGlobal") boolean isGlobal
+    );
 
 
 

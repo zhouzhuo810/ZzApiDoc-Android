@@ -20,6 +20,8 @@ import me.zhouzhuo810.zzapidoc.common.api.Api;
 import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteArgResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllInterfaceResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetRequestArgResult;
+import me.zhouzhuo810.zzapidoc.common.api.entity.GetResponseArgResult;
+import me.zhouzhuo810.zzapidoc.common.api.entity.UpdateResponseArgResult;
 import me.zhouzhuo810.zzapidoc.common.base.BaseActivity;
 import me.zhouzhuo810.zzapidoc.common.rx.RxHelper;
 import me.zhouzhuo810.zzapidoc.common.utils.ToastUtils;
@@ -183,11 +185,20 @@ public class RequestParamsManageActivity extends BaseActivity {
         lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
-                showListDialog(Arrays.asList("删除"), true, null, new IBaseActivity.OnItemClick() {
+                showListDialog(Arrays.asList("修改类型", "修改名称", "修改备注", "删除"), true, null, new IBaseActivity.OnItemClick() {
                     @Override
-                    public void onItemClick(int i, String s) {
-                        switch (i) {
+                    public void onItemClick(int pos, String content) {
+                        switch (pos) {
                             case 0:
+                                reviseType(adapter.getmDatas().get(position));
+                                break;
+                            case 1:
+                                reviseName(adapter.getmDatas().get(position));
+                                break;
+                            case 2:
+                                revisePs(adapter.getmDatas().get(position));
+                                break;
+                            case 3:
                                 delete(adapter.getmDatas().get(position).getId());
                                 break;
                         }
@@ -197,6 +208,7 @@ public class RequestParamsManageActivity extends BaseActivity {
             }
         });
 
+
         refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -204,6 +216,135 @@ public class RequestParamsManageActivity extends BaseActivity {
             }
         });
     }
+
+
+    private void revisePs(final GetRequestArgResult.DataBean dataBean) {
+        showTwoBtnEditDialog("修改备注", "请输入备注", dataBean.getNote(), false, new IBaseActivity.OnTwoBtnEditClick() {
+            @Override
+            public void onOk(String s) {
+                if (s.length() == 0) {
+                    ToastUtils.showCustomBgToast(getString(R.string.param_note_not_nul));
+                    return;
+                }
+                showPd(getString(R.string.submiting_text), false);
+                Api.getApi0().updateRequestArg(dataBean.getId(),
+                        dataBean.getPid(), dataBean.getName(), dataBean.getDefValue(), dataBean.getType(),
+                        dataBean.getInterfaceId(), s, getUserId(), dataBean.isRequire(), dataBean.isGlobal())
+                        .compose(RxHelper.<UpdateResponseArgResult>io_main())
+                        .subscribe(new Subscriber<UpdateResponseArgResult>() {
+                            @Override
+                            public void onCompleted() {
+
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                hidePd();
+                                ToastUtils.showCustomBgToast(getString(R.string.no_net_text)+e.toString());
+                            }
+
+                            @Override
+                            public void onNext(UpdateResponseArgResult updateResponseArgResult) {
+                                hidePd();
+                                ToastUtils.showCustomBgToast(updateResponseArgResult.getMsg());
+                                if (updateResponseArgResult.getCode()==1) {
+                                    startRefresh(refresh);
+                                    getData();
+                                }
+                            }
+                        });
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+        });
+    }
+
+    private void reviseName(final GetRequestArgResult.DataBean dataBean) {
+        showTwoBtnEditDialog("修改名称", "请输入名称", dataBean.getName(), false, new IBaseActivity.OnTwoBtnEditClick() {
+            @Override
+            public void onOk(String s) {
+                if (s.length() == 0) {
+                    ToastUtils.showCustomBgToast(getString(R.string.param_name_not_nul));
+                    return;
+                }
+                showPd(getString(R.string.submiting_text), false);
+                Api.getApi0().updateRequestArg(dataBean.getId(),
+                        dataBean.getPid(), s, dataBean.getDefValue(), dataBean.getType(),
+                        dataBean.getInterfaceId(), dataBean.getNote(), getUserId(), dataBean.isRequire(), dataBean.isGlobal())
+                        .compose(RxHelper.<UpdateResponseArgResult>io_main())
+                        .subscribe(new Subscriber<UpdateResponseArgResult>() {
+                            @Override
+                            public void onCompleted() {
+
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                hidePd();
+                                ToastUtils.showCustomBgToast(getString(R.string.no_net_text)+e.toString());
+                            }
+
+                            @Override
+                            public void onNext(UpdateResponseArgResult updateResponseArgResult) {
+                                hidePd();
+                                ToastUtils.showCustomBgToast(updateResponseArgResult.getMsg());
+                                if (updateResponseArgResult.getCode()==1) {
+                                    startRefresh(refresh);
+                                    getData();
+                                }
+                            }
+                        });
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+        });
+    }
+
+    private void reviseType(final GetRequestArgResult.DataBean dataBean) {
+        showListDialog(Arrays.asList("string", "number", "object", "array[object]", "array[string]", "array", "file", "unknown", "array[number]"), false, new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+            }
+        }, new IBaseActivity.OnItemClick() {
+            @Override
+            public void onItemClick(int i, String s) {
+                showPd(getString(R.string.submiting_text), false);
+                Api.getApi0().updateRequestArg(dataBean.getId(),
+                        dataBean.getPid(), dataBean.getName(), dataBean.getDefValue(), i,
+                        dataBean.getInterfaceId(), dataBean.getNote(), getUserId(), dataBean.isRequire(), dataBean.isGlobal())
+                        .compose(RxHelper.<UpdateResponseArgResult>io_main())
+                        .subscribe(new Subscriber<UpdateResponseArgResult>() {
+                            @Override
+                            public void onCompleted() {
+
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                hidePd();
+                                ToastUtils.showCustomBgToast(getString(R.string.no_net_text)+e.toString());
+                            }
+
+                            @Override
+                            public void onNext(UpdateResponseArgResult updateResponseArgResult) {
+                                hidePd();
+                                ToastUtils.showCustomBgToast(updateResponseArgResult.getMsg());
+                                if (updateResponseArgResult.getCode()==1) {
+                                    startRefresh(refresh);
+                                    getData();
+                                }
+                            }
+                        });
+            }
+        });
+    }
+
 
     private void delete(String id) {
         showPd(getString(R.string.submiting_text), false);

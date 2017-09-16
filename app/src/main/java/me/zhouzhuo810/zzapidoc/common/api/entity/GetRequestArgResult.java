@@ -62,6 +62,15 @@ public class GetRequestArgResult {
         private String createTime;
         private String createUserName;
         private String defValue;
+        private boolean global = false;
+
+        public boolean isGlobal() {
+            return global;
+        }
+
+        public void setGlobal(boolean global) {
+            this.global = global;
+        }
 
         public String getDefValue() {
             return defValue;
