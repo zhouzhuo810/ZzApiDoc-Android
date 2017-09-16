@@ -6,6 +6,7 @@ import com.lzy.okgo.OkGo;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
 import com.tencent.bugly.crashreport.CrashReport;
+import com.youdao.sdk.app.YouDaoApplication;
 
 import org.xutils.x;
 
@@ -32,6 +33,13 @@ public class ZApplication extends Application {
         x.Ext.setDebug(true);
 
         Logger.addLogAdapter(new AndroidLogAdapter());
+
+        try {
+//            YouDaoApplication.init(this, "57e67e07898fdc4b");
+            YouDaoApplication.init(this, "7f2356e58990a4f9");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         /*
          Bugly SDK初始化

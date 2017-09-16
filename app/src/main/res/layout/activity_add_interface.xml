@@ -65,13 +65,13 @@
         android:orientation="horizontal">
 
         <TextView
-            android:layout_width="280px"
+            android:layout_width="220px"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40px"
             android:gravity="center|left"
             android:text="@string/request_method_text"
             android:textColor="#415868"
-            android:textSize="44px" />
+            android:textSize="40px" />
 
         <TextView
             android:id="@+id/tv_request_method"
@@ -84,7 +84,7 @@
             android:gravity="right|center_vertical"
             android:hint="@string/choose_request_method_hint"
             android:textColor="@color/colorBlack"
-            android:textSize="44px" />
+            android:textSize="40px" />
 
         <ImageView
             android:layout_width="40px"
@@ -108,13 +108,13 @@
         android:orientation="horizontal">
 
         <TextView
-            android:layout_width="280px"
+            android:layout_width="220px"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40px"
             android:gravity="center|left"
             android:text="@string/interface_name_text"
             android:textColor="#415868"
-            android:textSize="44px" />
+            android:textSize="40px" />
 
         <EditText
             android:id="@+id/et_interface_name"
@@ -127,7 +127,7 @@
             android:gravity="right|center_vertical"
             android:hint="@string/interface_name_hint_text"
             android:textColor="@color/colorBlack"
-            android:textSize="44px" />
+            android:textSize="40px" />
 
         <ImageView
             android:id="@+id/iv_clear_interface_name"
@@ -155,13 +155,13 @@
         android:orientation="horizontal">
 
         <TextView
-            android:layout_width="280px"
+            android:layout_width="220px"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40px"
             android:gravity="center|left"
             android:text="@string/path_text"
             android:textColor="#415868"
-            android:textSize="44px" />
+            android:textSize="40px" />
 
         <EditText
             android:id="@+id/et_path"
@@ -174,10 +174,66 @@
             android:gravity="right|center_vertical"
             android:hint="@string/path_hint_text"
             android:textColor="@color/colorBlack"
-            android:textSize="44px" />
+            android:textSize="36px" />
 
         <ImageView
             android:id="@+id/iv_clear_path"
+            android:layout_width="60px"
+            android:layout_height="60px"
+            android:layout_marginRight="30px"
+            android:src="@drawable/clear"
+            android:visibility="gone" />
+        <Button
+            android:id="@+id/btn_key_word"
+            android:layout_width="100px"
+            android:layout_height="60px"
+            android:layout_marginRight="30px"
+            android:background="@drawable/btn_save_selector"
+            android:text="生成"
+            android:textColor="@color/colorWhite"
+            android:textSize="30px" />
+    </LinearLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginLeft="30px"
+        android:background="@color/colorGrayBg" />
+    <!--备注-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:gravity="center_vertical"
+        android:minHeight="130px"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="220px"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40px"
+            android:gravity="center|left"
+            android:text="@string/version_text"
+            android:textColor="#415868"
+            android:textSize="40px" />
+
+        <EditText
+            android:id="@+id/et_version"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30px"
+            android:layout_marginRight="30px"
+            android:layout_weight="1"
+            android:background="@null"
+            android:text="1"
+            android:gravity="right|center_vertical"
+            android:hint="@string/version_hint_text"
+            android:textColor="@color/colorBlack"
+            android:textSize="40px" />
+
+        <ImageView
+            android:id="@+id/iv_clear_version"
             android:layout_width="60px"
             android:layout_height="60px"
             android:layout_marginRight="30px"
@@ -203,13 +259,13 @@
         android:orientation="horizontal">
 
         <TextView
-            android:layout_width="280px"
+            android:layout_width="220px"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40px"
             android:gravity="center|left"
             android:text="@string/ps_text"
             android:textColor="#415868"
-            android:textSize="44px" />
+            android:textSize="40px" />
 
         <EditText
             android:id="@+id/et_ps"
@@ -222,7 +278,7 @@
             android:gravity="right|center_vertical"
             android:hint="@string/ps_hint_text"
             android:textColor="@color/colorBlack"
-            android:textSize="44px" />
+            android:textSize="40px" />
 
         <ImageView
             android:id="@+id/iv_clear_ps"

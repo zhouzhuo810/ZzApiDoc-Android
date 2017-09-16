@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -18,6 +19,13 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.PostRequest;
+import com.youdao.sdk.app.Language;
+import com.youdao.sdk.app.LanguageUtils;
+import com.youdao.sdk.ydonlinetranslate.TranslateErrorCode;
+import com.youdao.sdk.ydonlinetranslate.TranslateListener;
+import com.youdao.sdk.ydonlinetranslate.TranslateParameters;
+import com.youdao.sdk.ydonlinetranslate.Translator;
+import com.youdao.sdk.ydtranslate.Translate;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -370,7 +378,7 @@ public class AddWidgetActivity extends BaseActivity {
         btnKeyWord.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                generateKeyword();
+                translate();
             }
         });
 
@@ -462,42 +470,41 @@ public class AddWidgetActivity extends BaseActivity {
         });
     }
 
-    private void generateKeyword() {
+
+    private void translate() {
         String title = etTitle.getText().toString().trim();
+        if (title.length()==0) {
+            ToastUtils.showCustomBgToast("请填写参数说明");
+            return;
+        }
         showPd(getString(R.string.submiting_text), false);
-        OkGo.<String>get("http://fanyi.youdao.com/openapi.do")
-                .params("keyfrom", "WordsHelper")
-                .params("key", "1678465943")
-                .params("type", "data")
-                .params("doctype", "json")
-                .params("version", "1.1")
-                .params("q", title)
-                .execute(new StringCallback() {
-                    @Override
-                    public void onSuccess(Response<String> response) {
-                        hidePd();
-                        String body = response.body();
-                        try {
-                            JSONObject object = new JSONObject(body);
-                            JSONArray array = object.getJSONArray("translation");
-                            String word = array.getString(0);
-                            String newWord = word.replace(" ", "").replace("the", "").replace("The", "").replace(".", "").toLowerCase();
-                            tvKeyWord.setText(newWord);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                            ToastUtils.showCustomBgToast(e.toString());
-                        }
+        Language langFrom = LanguageUtils.getLangByName("中文");
+        Language langTo = LanguageUtils.getLangByName("英文");
+        TranslateParameters tps = new TranslateParameters.Builder()
+                .source("ZzApiDoc")
+                .from(langFrom).to(langTo).build();
 
-                    }
+        Translator translator = Translator.getInstance(tps);
+        translator.lookup(title, new TranslateListener() {
+            @Override
+            public void onResult(Translate result, String input) {//查询成功
+                if (result.getTranslations() != null) {
+                    Log.e("XXX", "trans="+result.getTranslations().toString());
+                    String word = result.getTranslations().get(0);
+                    String newWord = word.replace(" ", "").replace("the", "").replace("The", "").replace(".", "").toLowerCase();
+                    tvKeyWord.setText(newWord);
+                }
+                hidePd();
+            }
 
-                    @Override
-                    public void onError(Response<String> response) {
-                        super.onError(response);
-                        hidePd();
-                        ToastUtils.showCustomBgToast(response.getException().toString());
-                    }
-                });
+            @Override
+            public void onError(TranslateErrorCode error) {//查询失败
+                hidePd();
+                ToastUtils.showCustomBgToast("错误代码："+error.getCode());
+            }
+        });
     }
+
 
     private void chooseTargetAct() {
         Intent intent = new Intent(this, ActivityManageActivity.class);

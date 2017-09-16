@@ -253,4 +253,6 @@
     <string name="param_name_not_nul">参数名称不能为空</string>
     <string name="param_note_not_nul">参数备注不能为空</string>
     <string name="pdf_manage_text">PDF文档管理</string>
+    <string name="version_text">版本号</string>
+    <string name="version_hint_text">请输入接口版本号</string>
 </resources>

@@ -42,9 +42,8 @@ import zhouzhuo810.me.zzandframe.common.utils.FileUtils;
 import zhouzhuo810.me.zzandframe.ui.act.IBaseActivity;
 
 /**
- * Created by zz on 2017/6/26.
+ * 我的
  */
-
 public class MeFragment extends BaseFragment {
     private RoundedImageView ivPhoto;
     private TextView tvName;
@@ -56,7 +55,6 @@ public class MeFragment extends BaseFragment {
     private LinearLayout llSetting;
     private LinearLayout llPswd;
     private Button btnExit;
-
 
     @Override
     public int getLayoutId() {
@@ -280,6 +278,8 @@ public class MeFragment extends BaseFragment {
                     exitLogin();
                     break;
                 case 0x03:
+                    Intent intent = new Intent(getActivity(), LoginActivity.class);
+                    startActWithIntent(intent);
                     getBaseAct().closeAct();
                     break;
             }

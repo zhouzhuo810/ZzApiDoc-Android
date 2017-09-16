@@ -3,6 +3,7 @@ package me.zhouzhuo810.zzapidoc.ui.act;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -10,6 +11,21 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
+import com.youdao.sdk.app.Language;
+import com.youdao.sdk.app.LanguageUtils;
+import com.youdao.sdk.ydonlinetranslate.TranslateErrorCode;
+import com.youdao.sdk.ydonlinetranslate.TranslateListener;
+import com.youdao.sdk.ydonlinetranslate.TranslateParameters;
+import com.youdao.sdk.ydonlinetranslate.Translator;
+import com.youdao.sdk.ydtranslate.Translate;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -38,6 +54,9 @@ public class AddInterfaceActivity extends BaseActivity {
     private ImageView ivClearInterfaceName;
     private EditText etPath;
     private ImageView ivClearPath;
+    private Button btnKeyWord;
+    private EditText etVersion;
+    private ImageView ivClearVersion;
     private EditText etPs;
     private ImageView ivClearPs;
     private Button btnSubmit;
@@ -68,6 +87,9 @@ public class AddInterfaceActivity extends BaseActivity {
         ivClearInterfaceName = (ImageView) findViewById(R.id.iv_clear_interface_name);
         etPath = (EditText) findViewById(R.id.et_path);
         ivClearPath = (ImageView) findViewById(R.id.iv_clear_path);
+        btnKeyWord = (Button) findViewById(R.id.btn_key_word);
+        etVersion = (EditText) findViewById(R.id.et_version);
+        ivClearVersion = (ImageView) findViewById(R.id.iv_clear_version);
         etPs = (EditText) findViewById(R.id.et_ps);
         ivClearPs = (ImageView) findViewById(R.id.iv_clear_ps);
         btnSubmit = (Button) findViewById(R.id.btn_submit);
@@ -103,6 +125,13 @@ public class AddInterfaceActivity extends BaseActivity {
         setEditListener(etPath, ivClearPath);
         setEditListener(etPs, ivClearPs);
 
+        btnKeyWord.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                translate();
+            }
+        });
+
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -112,6 +141,53 @@ public class AddInterfaceActivity extends BaseActivity {
 
 
     }
+
+    private void translate() {
+        String title = etInterfaceName.getText().toString().trim();
+        if (title.length()==0) {
+            ToastUtils.showCustomBgToast("请填写接口名称");
+            return;
+        }
+
+        showPd(getString(R.string.submiting_text), false);
+        Language langFrom = LanguageUtils.getLangByName("中文");
+        Language langTo = LanguageUtils.getLangByName("英文");
+        TranslateParameters tps = new TranslateParameters.Builder()
+                .source("ZzApiDoc")
+                .from(langFrom).to(langTo).build();
+
+        Translator translator = Translator.getInstance(tps);
+        translator.lookup(title, new TranslateListener() {
+            @Override
+            public void onResult(Translate result, String input) {//查询成功
+                if (result.getTranslations() != null) {
+                    Log.e("XXX", "trans="+result.getTranslations().toString());
+                    String word = result.getTranslations().get(0);
+                    StringBuilder sb = new StringBuilder();
+                    if (word.contains(" ")) {
+                        String[] split = word.split(" ");
+                        for (String s : split) {
+                            sb.append(s.substring(0,1).toUpperCase()).append(s.substring(1));
+                        }
+                    } else {
+                        sb.append(word.substring(0,1).toUpperCase()).append(word.substring(1));
+                    }
+                    String newWord = sb.toString().replace("the", "").replace("The", "").replace(".","");
+                    String method = tvRequestMethod.getText().toString().trim();
+                    String version = etVersion.getText().toString().trim();
+                    etPath.setText("/v"+version+"/"+method+"/"+newWord.substring(0,1).toLowerCase()+newWord.substring(1));
+                }
+                hidePd();
+            }
+
+            @Override
+            public void onError(TranslateErrorCode error) {//查询失败
+                hidePd();
+                ToastUtils.showCustomBgToast("错误代码："+error.getCode());
+            }
+        });
+    }
+
 
     private void chooseMethod() {
         show = true;
