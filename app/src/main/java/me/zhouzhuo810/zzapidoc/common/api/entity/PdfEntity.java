@@ -8,6 +8,15 @@ public class PdfEntity {
     private String name;
     private String size;
     private String path;
+    private String time;
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
 
     public String getName() {
         return name;

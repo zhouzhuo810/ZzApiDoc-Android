@@ -13,12 +13,15 @@ import android.widget.TextView;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 import me.zhouzhuo810.zzapidoc.R;
 import me.zhouzhuo810.zzapidoc.common.Constants;
 import me.zhouzhuo810.zzapidoc.common.api.entity.PdfEntity;
 import me.zhouzhuo810.zzapidoc.common.base.BaseFragment;
+import me.zhouzhuo810.zzapidoc.common.utils.DateUtil;
 import me.zhouzhuo810.zzapidoc.common.utils.FileSizeUtil;
 import me.zhouzhuo810.zzapidoc.common.utils.ToastUtils;
 import me.zhouzhuo810.zzapidoc.ui.act.PdfPreviewActivity;
@@ -68,10 +71,19 @@ public class PdfFragment extends BaseFragment {
     private void getData() {
         File[] files = new File(Constants.EXPORT_PDF_PATH).listFiles();
         if (files != null) {
+            Arrays.sort(files, new Comparator<File>() {
+                @Override
+                public int compare(File o1, File o2) {
+                    String modiTime1=  o1.lastModified()+"";
+                    String modiTime2=  o2.lastModified()+"";
+                    return modiTime1.compareTo(modiTime2);
+                }
+            });
             pdfs.clear();
             for (File pdf : files) {
                 PdfEntity entity = new PdfEntity();
                 entity.setName(pdf.getName());
+                entity.setTime(DateUtil.formatDateToYMdHm(new Date(pdf.lastModified())));
                 entity.setPath(pdf.getAbsolutePath());
                 entity.setSize(FileSizeUtil.getFileSize(pdf));
                 pdfs.add(entity);
