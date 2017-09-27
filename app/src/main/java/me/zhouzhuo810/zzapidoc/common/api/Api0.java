@@ -32,7 +32,9 @@ import me.zhouzhuo810.zzapidoc.common.api.entity.GetRequestArgResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetRequestHeaderResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetResponseArgResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.ImportProjectEntity;
+import me.zhouzhuo810.zzapidoc.common.api.entity.PreviewUIResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.PublishVersionEntity;
+import me.zhouzhuo810.zzapidoc.common.api.entity.SetTestFinishResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.UpdateInterfaceResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.UpdateResponseArgResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.UpdateResult;
@@ -400,6 +402,23 @@ public interface Api0 {
             @Field("userId") String userId,
             @Field("isRequire") boolean isRequire,
             @Field("isGlobal") boolean isGlobal
+    );
+
+    /*界面预览*/
+    @FormUrlEncoded
+    @POST("/ZzApiDoc/v1/activity/previewUI")
+    Observable<PreviewUIResult> previewUI(
+            @Field("id") String id,
+            @Field("userId") String userId
+    );
+
+
+    /*设置接口测试完成*/
+    @FormUrlEncoded
+    @POST("/ZzApiDoc/v1/interface/setTestFinish")
+    Observable<SetTestFinishResult> setTestFinish(
+            @Field("interfaceId") String interfaceId,
+            @Field("userId") String userId
     );
 
 

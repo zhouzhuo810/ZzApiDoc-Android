@@ -119,6 +119,26 @@ public class GetAllInterfaceResult {
 
         private String createUserName;
 
+        private String testUserName;
+
+        private boolean isTest;
+
+        public String getTestUserName() {
+            return testUserName;
+        }
+
+        public void setTestUserName(String testUserName) {
+            this.testUserName = testUserName;
+        }
+
+        public boolean isTest() {
+            return isTest;
+        }
+
+        public void setTest(boolean test) {
+            isTest = test;
+        }
+
         public int getRequestHeadersNo() {
             return requestHeadersNo;
         }

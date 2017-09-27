@@ -179,6 +179,16 @@
                     android:textSize="30px" />
 
                 <Button
+                    android:id="@+id/btn_again"
+                    android:layout_width="200px"
+                    android:layout_height="80px"
+                    android:layout_marginRight="40px"
+                    android:background="@drawable/btn_save_selector"
+                    android:text="再测一遍"
+                    android:textColor="#fff"
+                    android:textSize="30px" />
+
+                <Button
                     android:id="@+id/btn_example"
                     android:layout_width="300px"
                     android:layout_height="80px"
@@ -188,14 +198,25 @@
                     android:textColor="#fff"
                     android:textSize="30px" />
 
+                <Button
+                    android:id="@+id/btn_test_finish"
+                    android:layout_width="200px"
+                    android:layout_height="80px"
+                    android:layout_marginRight="40px"
+                    android:background="@drawable/btn_save_selector"
+                    android:text="测试完成"
+                    android:textColor="#fff"
+                    android:textSize="30px" />
+
+
             </LinearLayout>
 
             <EditText
                 android:id="@+id/tv_result"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorWhite"
                 android:layout_marginBottom="50px"
+                android:background="@color/colorWhite"
                 android:enabled="false"
                 android:paddingLeft="40px"
                 android:paddingRight="40px"

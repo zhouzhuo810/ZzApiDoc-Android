@@ -18,13 +18,13 @@ import com.lzy.okgo.request.PostRequest;
 import com.zhy.autolayout.utils.AutoUtils;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import me.zhouzhuo810.zzapidoc.R;
 import me.zhouzhuo810.zzapidoc.common.api.Api;
 import me.zhouzhuo810.zzapidoc.common.api.entity.AddInterfaceExampleResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.InterfaceTestRequestArgEntity;
 import me.zhouzhuo810.zzapidoc.common.api.entity.InterfaceTestRequestHeaderEntity;
+import me.zhouzhuo810.zzapidoc.common.api.entity.SetTestFinishResult;
 import me.zhouzhuo810.zzapidoc.common.base.BaseActivity;
 import me.zhouzhuo810.zzapidoc.common.rx.RxHelper;
 import me.zhouzhuo810.zzapidoc.common.utils.CopyUtils;
@@ -46,12 +46,16 @@ public class InterfaceTestResultActivity extends BaseActivity {
     private TextView tvTime;
     private LinearLayout llHeaders;
     private LinearLayout llParams;
+    private Button btnAgain;
     private Button btnExample;
+    private Button btnTestFinish;
     private EditText tvResult;
 
     private String interfaceId;
     private ArrayList<InterfaceTestRequestArgEntity> params;
     private ArrayList<InterfaceTestRequestHeaderEntity> headers;
+    private String method;
+    private String path;
 
     @Override
     public int getLayoutId() {
@@ -73,16 +77,18 @@ public class InterfaceTestResultActivity extends BaseActivity {
         tvTime = (TextView) findViewById(R.id.tv_time);
         llHeaders = (LinearLayout) findViewById(R.id.ll_headers);
         llParams = (LinearLayout) findViewById(R.id.ll_params);
+        btnAgain = (Button) findViewById(R.id.btn_again);
         btnExample = (Button) findViewById(R.id.btn_example);
+        btnTestFinish = (Button) findViewById(R.id.btn_test_finish);
         tvResult = (EditText) findViewById(R.id.tv_result);
     }
 
     @Override
     public void initData() {
         interfaceId = getIntent().getStringExtra("interfaceId");
-        String path = getIntent().getStringExtra("path");
+        path = getIntent().getStringExtra("path");
         tvPath.setText(path);
-        String method = getIntent().getStringExtra("method");
+        method = getIntent().getStringExtra("method");
         tvMethod.setText(method);
         headers = getIntent().getParcelableArrayListExtra("headers");
         if (headers != null) {
@@ -238,6 +244,51 @@ public class InterfaceTestResultActivity extends BaseActivity {
             }
         });
 
+        btnAgain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (method != null) {
+                    if (method.equals("GET")) {
+                        doGet(path);
+                    } else {
+                        doPost(path);
+                    }
+                }
+            }
+        });
+
+        btnTestFinish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setTestFinish();
+            }
+        });
+
+    }
+
+    private void setTestFinish() {
+        showPd(getString(R.string.submiting_text), false);
+        Api.getApi0()
+                .setTestFinish(interfaceId, getUserId())
+                .compose(RxHelper.<SetTestFinishResult>io_main())
+                .subscribe(new Subscriber<SetTestFinishResult>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        hidePd();
+                        ToastUtils.showCustomBgToast(getString(R.string.no_net_text)+e.toString());
+                    }
+
+                    @Override
+                    public void onNext(SetTestFinishResult setTestFinishResult) {
+                        hidePd();
+                        ToastUtils.showCustomBgToast(setTestFinishResult.getMsg());
+                    }
+                });
     }
 
     private void addExample(String result) {

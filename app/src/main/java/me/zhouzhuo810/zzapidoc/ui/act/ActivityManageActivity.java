@@ -176,12 +176,17 @@ public class ActivityManageActivity extends BaseActivity {
         lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
-                showListDialog(Arrays.asList("删除Activity"), true, null, new IBaseActivity.OnItemClick() {
+                showListDialog(Arrays.asList("删除Activity", "预览"), true, null, new IBaseActivity.OnItemClick() {
                     @Override
                     public void onItemClick(int pos, String s) {
                         switch (pos) {
                             case 0:
                                 deleteActivity(adapter.getmDatas().get(position).getId());
+                                break;
+                            case 1:
+                                Intent intent = new Intent(ActivityManageActivity.this, PreviewActivity.class);
+                                intent.putExtra("id", adapter.getmDatas().get(position).getId());
+                                startActWithIntent(intent);
                                 break;
                         }
                     }

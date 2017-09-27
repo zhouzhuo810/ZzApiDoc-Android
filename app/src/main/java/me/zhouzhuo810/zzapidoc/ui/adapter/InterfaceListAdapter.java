@@ -1,6 +1,7 @@
 package me.zhouzhuo810.zzapidoc.ui.adapter;
 
 import android.content.Context;
+import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +29,7 @@ public class InterfaceListAdapter extends CommonAdapter<GetAllInterfaceResult.Da
                 .setText(R.id.tv_method, dataEntity.getMethod())
                 .setText(R.id.tv_note, dataEntity.getNote())
                 .setText(R.id.tv_path, dataEntity.getPath())
+                .setVisible(R.id.iv_test, dataEntity.isTest() ? View.VISIBLE : View.GONE)
                 .setText(R.id.tv_create_man, dataEntity.getCreateUserName())
                 .setText(R.id.tv_request_header_no, dataEntity.getRequestHeadersNo() + "")
                 .setText(R.id.tv_request_params_no, dataEntity.getRequestParamsNo() + "")
