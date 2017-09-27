@@ -76,7 +76,7 @@ public class PdfFragment extends BaseFragment {
                 public int compare(File o1, File o2) {
                     String modiTime1=  o1.lastModified()+"";
                     String modiTime2=  o2.lastModified()+"";
-                    return modiTime1.compareTo(modiTime2);
+                    return modiTime2.compareTo(modiTime1);
                 }
             });
             pdfs.clear();

@@ -22,6 +22,7 @@ public class PdfListAdapter extends CommonAdapter<PdfEntity> {
     @Override
     public void convert(ViewHolder holder, PdfEntity pdfEntity) {
         holder.setText(R.id.tv_name, pdfEntity.getName())
-                .setText(R.id.tv_size, pdfEntity.getSize());
+                .setText(R.id.tv_size, pdfEntity.getSize())
+                .setText(R.id.tv_time, pdfEntity.getTime());
     }
 }
