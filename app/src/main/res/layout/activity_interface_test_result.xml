@@ -82,14 +82,32 @@
                 android:textColor="@color/colorPress"
                 android:textSize="40px" />
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="80px"
-                android:gravity="center_vertical"
-                android:paddingLeft="40px"
-                android:text="请求地址:"
-                android:textColor="@color/colorBlack"
-                android:textSize="30px" />
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="80px"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="40px"
+                    android:text="请求地址:"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="30px" />
+
+                <Button
+                    android:id="@+id/btn_copy"
+                    android:layout_width="200px"
+                    android:layout_height="80px"
+                    android:layout_marginRight="40px"
+                    android:background="@drawable/btn_save_selector"
+                    android:text="复制请求实例"
+                    android:textColor="#fff"
+                    android:textSize="30px" />
+            </LinearLayout>
+
 
             <TextView
                 android:id="@+id/tv_path"

@@ -46,10 +46,12 @@ public class InterfaceTestResultActivity extends BaseActivity {
     private TextView tvTime;
     private LinearLayout llHeaders;
     private LinearLayout llParams;
+    private Button btnCopy;
     private Button btnAgain;
     private Button btnExample;
     private Button btnTestFinish;
     private EditText tvResult;
+
 
     private String interfaceId;
     private ArrayList<InterfaceTestRequestArgEntity> params;
@@ -77,6 +79,7 @@ public class InterfaceTestResultActivity extends BaseActivity {
         tvTime = (TextView) findViewById(R.id.tv_time);
         llHeaders = (LinearLayout) findViewById(R.id.ll_headers);
         llParams = (LinearLayout) findViewById(R.id.ll_params);
+        btnCopy = (Button) findViewById(R.id.btn_copy);
         btnAgain = (Button) findViewById(R.id.btn_again);
         btnExample = (Button) findViewById(R.id.btn_example);
         btnTestFinish = (Button) findViewById(R.id.btn_test_finish);
@@ -257,6 +260,16 @@ public class InterfaceTestResultActivity extends BaseActivity {
             }
         });
 
+        btnCopy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String params = getParams();
+                String url = path+"?"+params;
+                CopyUtils.copyPlainText(InterfaceTestResultActivity.this, "url", url);
+                ToastUtils.showCustomBgToast("已复制到剪切板");
+            }
+        });
+
         btnTestFinish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -264,6 +277,17 @@ public class InterfaceTestResultActivity extends BaseActivity {
             }
         });
 
+    }
+
+    private String getParams() {
+        StringBuilder sb = new StringBuilder();
+        if (params != null && params.size() > 0) {
+            for (InterfaceTestRequestArgEntity param : params) {
+                sb.append(param.getName()).append("=").append(param.getValue()).append("&");
+            }
+            sb.deleteCharAt(sb.length()-1);
+        }
+        return sb.toString();
     }
 
     private void setTestFinish() {
