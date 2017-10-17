@@ -138,7 +138,7 @@ public class ProjectFragment extends BaseFragment {
         lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
-                getBaseAct().showListDialog(Arrays.asList("导出JSON文件", "导出PDF文件", "复制JSON下载地址", "复制PDF下载地址", "添加全局请求头", "添加全局请求参数",
+                getBaseAct().showListDialog(Arrays.asList("导出JSON文件", "导出PDF文件", "复制JSON下载地址", "复制PDF下载地址", "复制Android API下载地址", "添加全局请求头", "添加全局请求参数",
                         "添加全局返回参数", "删除项目"), true, null, new IBaseActivity.OnItemClick() {
                     @Override
                     public void onItemClick(int pos, String s) {
@@ -156,15 +156,18 @@ public class ProjectFragment extends BaseFragment {
                                 copy(adapter.getmDatas().get(position).getName(), SharedUtil.getString(ZApplication.getInstance(), "server_config") + "ZzApiDoc/v1/interface/downloadPdf?userId=" + getUserId() + "&projectId=" + adapter.getmDatas().get(position).getId());
                                 break;
                             case 4:
-                                addGlobalRequestHeader(adapter.getmDatas().get(position).getId());
+                                copy(adapter.getmDatas().get(position).getName(), SharedUtil.getString(ZApplication.getInstance(), "server_config") + "ZzApiDoc/v1/interface/downloadApi?userId=" + getUserId() + "&projectId=" + adapter.getmDatas().get(position).getId());
                                 break;
                             case 5:
-                                addGlobalRequestArg(adapter.getmDatas().get(position).getId());
+                                addGlobalRequestHeader(adapter.getmDatas().get(position).getId());
                                 break;
                             case 6:
-                                addGlobalResponseArg(adapter.getmDatas().get(position).getId());
+                                addGlobalRequestArg(adapter.getmDatas().get(position).getId());
                                 break;
                             case 7:
+                                addGlobalResponseArg(adapter.getmDatas().get(position).getId());
+                                break;
+                            case 8:
                                 deleteProject(adapter.getmDatas().get(position).getId());
                                 break;
                         }
