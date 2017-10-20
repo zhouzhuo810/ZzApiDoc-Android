@@ -33,6 +33,7 @@ import me.zhouzhuo810.zzapidoc.common.utils.ToastUtils;
 import me.zhouzhuo810.zzapidoc.common.utils.ZSharedUtil;
 import me.zhouzhuo810.zzapidoc.ui.act.LoginActivity;
 import me.zhouzhuo810.zzapidoc.ui.act.PublishVersionActivity;
+import me.zhouzhuo810.zzapidoc.ui.act.QrCodeManageActivity;
 import me.zhouzhuo810.zzapidoc.ui.act.RevisePswdActivity;
 import me.zhouzhuo810.zzapidoc.ui.act.SettingServerActivity;
 import me.zhouzhuo810.zzapidoc.ui.widget.roundimage.RoundedImageView;
@@ -131,6 +132,14 @@ public class MeFragment extends BaseFragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), RevisePswdActivity.class);
                 startActivityForResult(intent, 0x01);
+            }
+        });
+
+        llAbout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), QrCodeManageActivity.class);
+                startActWithIntent(intent);
             }
         });
 

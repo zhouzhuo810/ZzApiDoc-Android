@@ -8,6 +8,7 @@ import me.zhouzhuo810.zzapidoc.common.api.entity.AddInterfaceExampleResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.AddInterfaceGroupResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.AddInterfaceResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.AddProjectResult;
+import me.zhouzhuo810.zzapidoc.common.api.entity.AddQrCodeResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.AddRequestHeaderResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.AddResponseArgResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteActivityResult;
@@ -16,6 +17,7 @@ import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteArgResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteInterfaceGroupResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteInterfaceResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteProjectResult;
+import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteQrCodeResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteRequestHeaderResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GenerateEmptyExampleResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllApplicationResult;
@@ -25,6 +27,7 @@ import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllMyActivityResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllMyFragmentResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllMyWidgetResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllProjectResult;
+import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllQrCodeResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetDictionaryResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetInterfaceDetailsResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetProjectDetailsResult;
@@ -36,6 +39,7 @@ import me.zhouzhuo810.zzapidoc.common.api.entity.PreviewUIResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.PublishVersionEntity;
 import me.zhouzhuo810.zzapidoc.common.api.entity.SetTestFinishResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.UpdateInterfaceResult;
+import me.zhouzhuo810.zzapidoc.common.api.entity.UpdateQrCodeResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.UpdateResponseArgResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.UpdateResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.UpdateUserPasswordResult;
@@ -420,7 +424,29 @@ public interface Api0 {
             @Field("interfaceId") String interfaceId,
             @Field("userId") String userId
     );
-
+    /*
+     * 添加二维码()
+     */
+    @FormUrlEncoded
+    @POST("/ZzApiDoc/v1/qrcode/addQrCode")
+    Observable<AddQrCodeResult> addQrCode(@Field("userId") String userId, @Field("isPrivate") boolean isPrivate, @Field("title") String title, @Field("content") String content);
+    /*
+     * 删除二维码()
+     */
+    @FormUrlEncoded
+    @POST("/ZzApiDoc/v1/qrcode/deleteQrCode")
+    Observable<DeleteQrCodeResult> deleteQrCode(@Field("userId") String userId, @Field("id") String id);
+    /*
+     * 更新二维码()
+     */
+    @FormUrlEncoded
+    @POST("/ZzApiDoc/v1/qrcode/updateQrCode")
+    Observable<UpdateQrCodeResult> updateQrCode(@Field("userId") String userId, @Field("id") String id, @Field("isPrivate") boolean isPrivate, @Field("title") String title, @Field("content") String content);
+    /*
+     * 获取所有二维码()
+     */
+    @GET("/ZzApiDoc/v1/qrcode/getAllQrCode")
+    Observable<GetAllQrCodeResult> getAllQrCode(@Query("userId") String userId);
 
 
 }
