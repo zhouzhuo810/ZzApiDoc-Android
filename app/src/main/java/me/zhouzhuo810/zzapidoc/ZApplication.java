@@ -48,7 +48,7 @@ public class ZApplication extends Application {
         * 参数3：是否开启调试模式，调试模式下会输出'CrashReport'tag的日志
         */
         try {
-            CrashReport.initCrashReport(getApplicationContext(), "72a5af001f", true);
+            CrashReport.initCrashReport(getApplicationContext(), "53991427eb", true);
         } catch (Exception e) {
             e.printStackTrace();
         }

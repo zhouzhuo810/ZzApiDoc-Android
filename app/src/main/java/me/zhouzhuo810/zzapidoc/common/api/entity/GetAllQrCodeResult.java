@@ -1,5 +1,8 @@
 package me.zhouzhuo810.zzapidoc.common.api.entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.List;
 
 /**
@@ -36,7 +39,7 @@ public class GetAllQrCodeResult {
         return data;
     }
 
-    public static class DataEntity {
+    public static class DataEntity implements Parcelable {
 
         private String id;
 
@@ -87,5 +90,42 @@ public class GetAllQrCodeResult {
         public boolean getIsPrivate() {
             return isPrivate;
         }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(this.id);
+            dest.writeString(this.url);
+            dest.writeString(this.content);
+            dest.writeString(this.title);
+            dest.writeByte(this.isPrivate ? (byte) 1 : (byte) 0);
+        }
+
+        public DataEntity() {
+        }
+
+        protected DataEntity(Parcel in) {
+            this.id = in.readString();
+            this.url = in.readString();
+            this.content = in.readString();
+            this.title = in.readString();
+            this.isPrivate = in.readByte() != 0;
+        }
+
+        public static final Parcelable.Creator<DataEntity> CREATOR = new Parcelable.Creator<DataEntity>() {
+            @Override
+            public DataEntity createFromParcel(Parcel source) {
+                return new DataEntity(source);
+            }
+
+            @Override
+            public DataEntity[] newArray(int size) {
+                return new DataEntity[size];
+            }
+        };
     }
 }

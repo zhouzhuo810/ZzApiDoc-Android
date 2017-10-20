@@ -1,8 +1,12 @@
 package me.zhouzhuo810.zzapidoc.ui.fgm;
 
+import android.content.ComponentName;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.FileProvider;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.widget.AdapterView;
@@ -17,6 +21,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
+import me.zhouzhuo810.zzapidoc.BuildConfig;
 import me.zhouzhuo810.zzapidoc.R;
 import me.zhouzhuo810.zzapidoc.common.Constants;
 import me.zhouzhuo810.zzapidoc.common.api.entity.PdfEntity;
@@ -74,8 +79,8 @@ public class PdfFragment extends BaseFragment {
             Arrays.sort(files, new Comparator<File>() {
                 @Override
                 public int compare(File o1, File o2) {
-                    String modiTime1=  o1.lastModified()+"";
-                    String modiTime2=  o2.lastModified()+"";
+                    String modiTime1 = o1.lastModified() + "";
+                    String modiTime2 = o2.lastModified() + "";
                     return modiTime2.compareTo(modiTime1);
                 }
             });
@@ -116,16 +121,71 @@ public class PdfFragment extends BaseFragment {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
 
-                getBaseAct().showListDialog(Arrays.asList("删除"), true, null, new IBaseActivity.OnItemClick() {
+                getBaseAct().showListDialog(Arrays.asList("删除", "分享到QQ", "分享到微信"), true, null, new IBaseActivity.OnItemClick() {
                     @Override
                     public void onItemClick(int i, String s) {
-                        delete(pdfs.get(position));
+                        switch (i) {
+                            case 0:
+                                delete(pdfs.get(position));
+                                break;
+                            case 1:
+                                try {
+                                    shareFileToQQ(new File(pdfs.get(position).getPath()));
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                                break;
+                            case 2:
+                                try {
+                                    shareFileToWx(pdfs.get(position).getName(), new File(pdfs.get(position).getPath()));
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                                break;
+                        }
+
                     }
                 });
                 return true;
             }
         });
 
+    }
+
+    private void shareFileToQQ(File file) throws Exception{
+        Intent share = new Intent(Intent.ACTION_SEND);
+        ComponentName component = new ComponentName("com.tencent.mobileqq", "com.tencent.mobileqq.activity.JumpActivity");
+        share.setComponent(component);
+        Uri uri = null;
+        if (Build.VERSION.SDK_INT > 23) {
+            uri = FileProvider.getUriForFile(getActivity(),
+                    BuildConfig.APPLICATION_ID + ".provider",
+                    file);
+        } else {
+            uri = Uri.fromFile(file);
+        }
+        share.putExtra(Intent.EXTRA_STREAM, uri);
+        share.setType("*/*");
+        startActivity(Intent.createChooser(share, "发送"));
+    }
+
+    private void shareFileToWx(String title, File file) throws Exception{
+        Intent intent = new Intent();
+        ComponentName comp = new ComponentName("com.tencent.mm", "com.tencent.mm.ui.tools.ShareImgUI");
+        intent.setComponent(comp);
+        Uri uri = null;
+        if (Build.VERSION.SDK_INT > 23) {
+            uri = FileProvider.getUriForFile(getActivity(),
+                    BuildConfig.APPLICATION_ID + ".provider",
+                    file);
+        } else {
+            uri = Uri.fromFile(file);
+        }
+        intent.setAction("android.intent.action.SEND");
+        intent.setType("file/*");
+        intent.putExtra(Intent.EXTRA_TEXT, title);
+        intent.putExtra(Intent.EXTRA_STREAM, uri);
+        startActivity(intent);
     }
 
     private void openPdf(PdfEntity pdfEntity) {
