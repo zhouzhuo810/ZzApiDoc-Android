@@ -172,7 +172,17 @@ public class AddInterfaceActivity extends BaseActivity {
                     } else {
                         sb.append(word.substring(0,1).toUpperCase()).append(word.substring(1));
                     }
-                    String newWord = sb.toString().replace("the", "").replace("The", "").replace(".","");
+                    String newWord = sb.toString().replace("the", "").replace("The", "").replace(".","")
+                            .replace("Equipment", "Device")
+                            .replace("machine", "mac")
+                            .replace("Machine", "Mac")
+                            .replace("Number", "Num")
+                            .replace("Maintenance", "Fix")
+                            .replace("equipment", "device")
+                            .replace("number", "num")
+                            .replace("maintenance", "fix")
+                            .replace("information", "info")
+                            .replace("Information", "Info");;
                     String method = tvRequestMethod.getText().toString().trim();
                     String version = etVersion.getText().toString().trim();
                     etPath.setText("/v"+version+"/"+method+"/"+newWord.substring(0,1).toLowerCase()+newWord.substring(1));
