@@ -260,4 +260,18 @@
     <string name="qrcode_title_text">标题</string>
     <string name="qrcode_title_hint_text">请输入二维码标题</string>
     <string name="private_text">私有</string>
+    <string name="add_version_text">添加版本</string>
+    <string name="add_version_project_text">添加项目</string>
+    <string name="add_version_record_text">添加版本记录</string>
+    <string name="version_project_manage_text">项目管理</string>
+    <string name="version_record_manage_text">记录管理</string>
+    <string name="version_manage_text">版本管理</string>
+    <string name="msg_version_manage_text">版本记录</string>
+    <string name="version_desc_text">版本描述</string>
+    <string name="version_desc_hint_text">请输入版本描述</string>
+    <string name="version_project_name_text">项目名称</string>
+    <string name="version_project_name_hint_text">请输入项目名称</string>
+    <string name="version_project_desc_hint_text">项目描述</string>
+    <string name="version_record_desc_hint_text">版本记录</string>
+    <string name="versionCode_not_nul_text">版本号不能为空</string>
 </resources>

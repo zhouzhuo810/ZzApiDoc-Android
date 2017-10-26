@@ -219,16 +219,45 @@
             android:name=".ui.act.UpdateQrCodeActivity"
             android:configChanges="orientation|keyboardHidden|layoutDirection|screenSize|screenLayout"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateVisible"
-            />
+            android:windowSoftInputMode="stateVisible" />
+        <activity
+            android:name=".ui.act.VersionManageActivity"
+            android:configChanges="orientation|keyboardHidden|layoutDirection|screenSize|screenLayout"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".ui.act.VersionProjectManageActivity"
+            android:configChanges="orientation|keyboardHidden|layoutDirection|screenSize|screenLayout"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".ui.act.VersionRecordManageActivity"
+            android:configChanges="orientation|keyboardHidden|layoutDirection|screenSize|screenLayout"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".ui.act.AddVersionActivity"
+            android:configChanges="orientation|keyboardHidden|layoutDirection|screenSize|screenLayout"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".ui.act.AddVersionRecordActivity"
+            android:configChanges="orientation|keyboardHidden|layoutDirection|screenSize|screenLayout"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".ui.act.AddVersionProjectActivity"
+            android:configChanges="orientation|keyboardHidden|layoutDirection|screenSize|screenLayout"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
 
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
-        <activity android:name="com.tencent.mm.ui.tools.ShareImgUI"/>
-        <activity android:name="com.tencent.mobileqq.activity.JumpActivity"/>
+        <activity android:name="com.tencent.mm.ui.tools.ShareImgUI" />
+        <activity android:name="com.tencent.mobileqq.activity.JumpActivity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

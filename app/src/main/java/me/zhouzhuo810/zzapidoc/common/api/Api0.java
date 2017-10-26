@@ -11,6 +11,9 @@ import me.zhouzhuo810.zzapidoc.common.api.entity.AddProjectResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.AddQrCodeResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.AddRequestHeaderResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.AddResponseArgResult;
+import me.zhouzhuo810.zzapidoc.common.api.entity.AddVersionProjectResult;
+import me.zhouzhuo810.zzapidoc.common.api.entity.AddVersionRecordResult;
+import me.zhouzhuo810.zzapidoc.common.api.entity.AddVersionResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteActivityResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteApplicationResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteArgResult;
@@ -19,6 +22,9 @@ import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteInterfaceResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteProjectResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteQrCodeResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteRequestHeaderResult;
+import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteVersionProjectResult;
+import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteVersionRecordResult;
+import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteVersionResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GenerateEmptyExampleResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllApplicationResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllInterfaceGroupResult;
@@ -28,6 +34,9 @@ import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllMyFragmentResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllMyWidgetResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllProjectResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllQrCodeResult;
+import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllVersionProjectResult;
+import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllVersionRecordResult;
+import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllVersionResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetDictionaryResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetInterfaceDetailsResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetProjectDetailsResult;
@@ -43,6 +52,9 @@ import me.zhouzhuo810.zzapidoc.common.api.entity.UpdateQrCodeResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.UpdateResponseArgResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.UpdateResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.UpdateUserPasswordResult;
+import me.zhouzhuo810.zzapidoc.common.api.entity.UpdateVersionProjectResult;
+import me.zhouzhuo810.zzapidoc.common.api.entity.UpdateVersionRecordResult;
+import me.zhouzhuo810.zzapidoc.common.api.entity.UpdateVersionResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.UserLoginResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.UserRegisterResult;
 import okhttp3.MultipartBody;
@@ -392,6 +404,7 @@ public interface Api0 {
             @Field("userId") String userId,
             @Field("isGlobal") boolean isGlobal
     );
+
     /*修改请求参数*/
     @FormUrlEncoded
     @POST("/ZzApiDoc/v1/requestArg/updateRequestArg")
@@ -424,29 +437,114 @@ public interface Api0 {
             @Field("interfaceId") String interfaceId,
             @Field("userId") String userId
     );
+
     /*
      * 添加二维码()
      */
     @FormUrlEncoded
     @POST("/ZzApiDoc/v1/qrcode/addQrCode")
     Observable<AddQrCodeResult> addQrCode(@Field("userId") String userId, @Field("isPrivate") boolean isPrivate, @Field("title") String title, @Field("content") String content);
+
     /*
      * 删除二维码()
      */
     @FormUrlEncoded
     @POST("/ZzApiDoc/v1/qrcode/deleteQrCode")
     Observable<DeleteQrCodeResult> deleteQrCode(@Field("userId") String userId, @Field("id") String id);
+
     /*
      * 更新二维码()
      */
     @FormUrlEncoded
     @POST("/ZzApiDoc/v1/qrcode/updateQrCode")
     Observable<UpdateQrCodeResult> updateQrCode(@Field("userId") String userId, @Field("id") String id, @Field("isPrivate") boolean isPrivate, @Field("title") String title, @Field("content") String content);
+
     /*
      * 获取所有二维码()
      */
     @GET("/ZzApiDoc/v1/qrcode/getAllQrCode")
     Observable<GetAllQrCodeResult> getAllQrCode(@Query("userId") String userId);
 
+
+    /*
+     * 添加版本()
+     */
+    @FormUrlEncoded
+    @POST("/ZzApiDoc/v1/version/addVersion")
+    Observable<AddVersionResult> addVersion(@Field("userId") String userId, @Field("projectId") String projectId, @Field("versionName") String versionName, @Field("versionCode") int versionCode, @Field("versionDesc") String versionDesc);
+
+    /*
+     * 更新版本()
+     */
+    @FormUrlEncoded
+    @POST("/ZzApiDoc/v1/version/updateVersion")
+    Observable<UpdateVersionResult> updateVersion(@Field("userId") String userId, @Field("versionId") String versionId, @Field("projectId") String projectId, @Field("versionName") String versionName, @Field("versionCode") String versionCode, @Field("versionDesc") String versionDesc);
+
+    /*
+     * 删除版本()
+     */
+    @FormUrlEncoded
+    @POST("/ZzApiDoc/v1/version/deleteVersion")
+    Observable<DeleteVersionResult> deleteVersion(@Field("userId") String userId, @Field("id") String id);
+
+    /*
+     * 获取所有版本()
+     */
+    @GET("/ZzApiDoc/v1/version/getAllVersion")
+    Observable<GetAllVersionResult> getAllVersion(@Query("userId") String userId, @Query("projectId") String projectId);
+
+    /*
+     * 添加版本项目()
+     */
+    @FormUrlEncoded
+    @POST("/ZzApiDoc/v1/versionProject/addVersionProject")
+    Observable<AddVersionProjectResult> addVersionProject(@Field("userId") String userId, @Field("name") String name, @Field("note") String note) ;
+
+    /*
+     * 更新版本项目()
+     */
+    @FormUrlEncoded
+    @POST("/ZzApiDoc/v1/versionProject/updateVersionProject")
+    Observable<UpdateVersionProjectResult> updateVersionProject(@Field("userId") String userId);
+
+    /*
+     * 删除版本项目()
+     */
+    @FormUrlEncoded
+    @POST("/ZzApiDoc/v1/versionProject/deleteVersionProject")
+    Observable<DeleteVersionProjectResult> deleteVersionProject(@Field("userId") String userId, @Field("id") String id);
+
+    /*
+     * 获取所有版本项目()
+     */
+    @GET("/ZzApiDoc/v1/versionProject/getAllVersionProject")
+    Observable<GetAllVersionProjectResult> getAllVersionProject(@Query("userId") String userId);
+
+    /*
+     * 添加版本记录()
+     */
+    @FormUrlEncoded
+    @POST("/ZzApiDoc/v1/versionRecord/addVersionRecord")
+    Observable<AddVersionRecordResult> addVersionRecord(@Field("userId") String userId, @Field("versionId") String versionId, @Field("projectId") String projectId, @Field("note") String note);
+
+    /*
+     * 更新版本记录()
+     */
+    @FormUrlEncoded
+    @POST("/ZzApiDoc/v1/versionRecord/updateVersionRecord")
+    Observable<UpdateVersionRecordResult> updateVersionRecord(@Field("userId") String userId, @Field("recordId") String recordId, @Field("versionId") String versionId, @Field("projectId") String projectId, @Field("note") String note);
+
+    /*
+     * 删除版本记录()
+     */
+    @FormUrlEncoded
+    @POST("/ZzApiDoc/v1/versionRecord/deleteVersionRecord")
+    Observable<DeleteVersionRecordResult> deleteVersionRecord(@Field("userId") String userId, @Field("id") String id);
+
+    /*
+     * 过去所有版本记录()
+     */
+    @GET("/ZzApiDoc/v1/versionRecord/getAllVersionRecord")
+    Observable<GetAllVersionRecordResult> getAllVersionRecord(@Query("userId") String userId, @Query("versionId") String versionId);
 
 }

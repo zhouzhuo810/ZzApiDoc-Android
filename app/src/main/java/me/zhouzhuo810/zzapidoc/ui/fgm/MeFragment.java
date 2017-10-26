@@ -36,6 +36,7 @@ import me.zhouzhuo810.zzapidoc.ui.act.PublishVersionActivity;
 import me.zhouzhuo810.zzapidoc.ui.act.QrCodeManageActivity;
 import me.zhouzhuo810.zzapidoc.ui.act.RevisePswdActivity;
 import me.zhouzhuo810.zzapidoc.ui.act.SettingServerActivity;
+import me.zhouzhuo810.zzapidoc.ui.act.VersionProjectManageActivity;
 import me.zhouzhuo810.zzapidoc.ui.widget.roundimage.RoundedImageView;
 import rx.Subscriber;
 import zhouzhuo810.me.zzandframe.common.utils.ApkUtils;
@@ -56,6 +57,7 @@ public class MeFragment extends BaseFragment {
     private LinearLayout llSetting;
     private LinearLayout llPswd;
     private Button btnExit;
+    private LinearLayout llVersionRecord;
 
     @Override
     public int getLayoutId() {
@@ -71,6 +73,7 @@ public class MeFragment extends BaseFragment {
         llClear = (LinearLayout) rootView.findViewById(R.id.ll_clear);
         llUpdate = (LinearLayout) rootView.findViewById(R.id.ll_update);
         llAbout = (LinearLayout) rootView.findViewById(R.id.ll_about);
+        llVersionRecord = (LinearLayout) rootView.findViewById(R.id.ll_version_record);
         llSetting = (LinearLayout) rootView.findViewById(R.id.ll_setting);
         llPswd = (LinearLayout) rootView.findViewById(R.id.ll_pswd);
         btnExit = (Button) rootView.findViewById(R.id.btn_exit);
@@ -127,11 +130,19 @@ public class MeFragment extends BaseFragment {
             }
         });
 
+        llVersionRecord.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), VersionProjectManageActivity.class);
+                startActWithIntent(intent);
+            }
+        });
+
         llPswd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), RevisePswdActivity.class);
-                startActivityForResult(intent, 0x01);
+                startActWithIntentForResult(intent, 0x01);
             }
         });
 
@@ -147,7 +158,7 @@ public class MeFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), SettingServerActivity.class);
-                startActivityForResult(intent, 0x03);
+                startActWithIntentForResult(intent, 0x03);
             }
         });
     }
