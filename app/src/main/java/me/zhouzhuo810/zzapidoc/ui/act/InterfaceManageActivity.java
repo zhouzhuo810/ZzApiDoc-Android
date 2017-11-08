@@ -7,11 +7,13 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -21,6 +23,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import me.zhouzhuo810.zzapidoc.R;
+import me.zhouzhuo810.zzapidoc.ZApplication;
+import me.zhouzhuo810.zzapidoc.common.Constants;
 import me.zhouzhuo810.zzapidoc.common.api.Api;
 import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteInterfaceResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllInterfaceResult;
@@ -29,6 +33,8 @@ import me.zhouzhuo810.zzapidoc.common.api.entity.UpdateInterfaceResult;
 import me.zhouzhuo810.zzapidoc.common.base.BaseActivity;
 import me.zhouzhuo810.zzapidoc.common.rx.RxHelper;
 import me.zhouzhuo810.zzapidoc.common.utils.CopyUtils;
+import me.zhouzhuo810.zzapidoc.common.utils.ExportUtils;
+import me.zhouzhuo810.zzapidoc.common.utils.SharedUtil;
 import me.zhouzhuo810.zzapidoc.common.utils.ToastUtils;
 import me.zhouzhuo810.zzapidoc.ui.adapter.InterfaceListAdapter;
 import rx.Subscriber;
@@ -228,48 +234,56 @@ public class InterfaceManageActivity extends BaseActivity {
         lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
-                showListDialog(Arrays.asList("修改请求方式", "修改接口名称", "修改接口路径", "添加备注", "删除接口", "复制接口地址", "测试接口"), true,
+                showListDialog(Arrays.asList("修改请求方式", "修改接口名称", "修改接口路径", "添加备注", "复制API下载地址", "删除接口", "复制接口地址", "测试接口"), true,
                         null, new IBaseActivity.OnItemClick() {
-                    @Override
-                    public void onItemClick(int pos, String s) {
-                        switch (pos) {
-                            case 0:
-                                reviseMethod(adapter.getmDatas().get(position));
-                                break;
-                            case 1:
-                                reviseName(adapter.getmDatas().get(position));
-                                break;
-                            case 2:
-                                revisePath(adapter.getmDatas().get(position));
-                                break;
-                            case 3:
-                                addNote(adapter.getmDatas().get(position));
-                                break;
-                            case 4:
-                                deleteInterface(adapter.getmDatas().get(position).getId());
-                                break;
-                            case 5:
-                                CopyUtils.copyPlainText(InterfaceManageActivity.this,
-                                        adapter.getmDatas().get(position).getName(),
-                                        adapter.getmDatas().get(position).getIp()
-                                                + File.separator
-                                                + adapter.getmDatas().get(position).getPath());
-                                ToastUtils.showCustomBgToast("已复制到剪切板");
-                                break;
-                            case 6:
-                                Intent intent = new Intent(InterfaceManageActivity.this, InterfaceTestActivity.class);
-                                intent.putExtra("interfaceId", adapter.getmDatas().get(position).getId());
-                                intent.putExtra("projectId", projectId);
-                                intent.putExtra("ip", adapter.getmDatas().get(position).getIp());
-                                intent.putExtra("path", adapter.getmDatas().get(position).getPath());
-                                intent.putExtra("method", adapter.getmDatas().get(position).getMethod());
-                                intent.putExtra("name", adapter.getmDatas().get(position).getName());
-                                startActWithIntent(intent);
+                            @Override
+                            public void onItemClick(int pos, String s) {
+                                switch (pos) {
+                                    case 0:
+                                        reviseMethod(adapter.getmDatas().get(position));
+                                        break;
+                                    case 1:
+                                        reviseName(adapter.getmDatas().get(position));
+                                        break;
+                                    case 2:
+                                        revisePath(adapter.getmDatas().get(position));
+                                        break;
+                                    case 3:
+                                        addNote(adapter.getmDatas().get(position));
+                                        break;
+                                    case 4:
+                                        copy(adapter.getmDatas().get(position).getName(),
+                                                SharedUtil.getString(ZApplication.getInstance(),
+                                                        "server_config") + "ZzApiDoc/v1/interface/downloadInterfaceApi?userId="
+                                                        + getUserId()
+                                                        + "&projectId=" + projectId
+                                                        + "&interfaceId=" + adapter.getmDatas().get(position).getId());
+                                        break;
+                                    case 5:
+                                        deleteInterface(adapter.getmDatas().get(position).getId());
+                                        break;
+                                    case 6:
+                                        CopyUtils.copyPlainText(InterfaceManageActivity.this,
+                                                adapter.getmDatas().get(position).getName(),
+                                                adapter.getmDatas().get(position).getIp()
+                                                        + File.separator
+                                                        + adapter.getmDatas().get(position).getPath());
+                                        ToastUtils.showCustomBgToast("已复制到剪切板");
+                                        break;
+                                    case 7:
+                                        Intent intent = new Intent(InterfaceManageActivity.this, InterfaceTestActivity.class);
+                                        intent.putExtra("interfaceId", adapter.getmDatas().get(position).getId());
+                                        intent.putExtra("projectId", projectId);
+                                        intent.putExtra("ip", adapter.getmDatas().get(position).getIp());
+                                        intent.putExtra("path", adapter.getmDatas().get(position).getPath());
+                                        intent.putExtra("method", adapter.getmDatas().get(position).getMethod());
+                                        intent.putExtra("name", adapter.getmDatas().get(position).getName());
+                                        startActWithIntent(intent);
 
-                                break;
-                        }
-                    }
-                });
+                                        break;
+                                }
+                            }
+                        });
                 return true;
             }
         });
@@ -280,6 +294,12 @@ public class InterfaceManageActivity extends BaseActivity {
                 getData();
             }
         });
+    }
+
+
+    private void copy(String name, String s) {
+        CopyUtils.copyPlainText(InterfaceManageActivity.this, name, s);
+        ToastUtils.showCustomBgToast("已复制到剪切板");
     }
 
     private void reviseName(final GetAllInterfaceResult.DataEntity entity) {
