@@ -115,7 +115,14 @@ public interface Api0 {
      */
     @FormUrlEncoded
     @POST("/ZzApiDoc/v1/project/addProject")
-    Observable<AddProjectResult> addProject(@Field("name") String name, @Field("property") String property, @Field("note") String note, @Field("userId") String userId);
+    Observable<AddProjectResult> addProject(@Field("name") String name, @Field("packageName") String packageName, @Field("property") String property, @Field("note") String note, @Field("userId") String userId);
+
+    /*
+     * 修改包名
+     */
+    @FormUrlEncoded
+    @POST("/ZzApiDoc/v1/project/updateProject")
+    Observable<AddProjectResult> updateProject(@Field("id") String id, @Field("name") String name, @Field("packageName") String packageName, @Field("property") String property, @Field("note") String note, @Field("userId") String userId);
 
     /*
      * 查询项目列表

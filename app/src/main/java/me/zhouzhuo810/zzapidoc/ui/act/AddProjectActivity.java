@@ -39,6 +39,8 @@ public class AddProjectActivity extends BaseActivity {
     private boolean show;
     private int property;
     private Button btnSubmit;
+    private EditText et_package_name;
+    private ImageView iv_clear_package_name;
 
 
     @Override
@@ -61,6 +63,8 @@ public class AddProjectActivity extends BaseActivity {
         ivClearProjectName = (ImageView) findViewById(R.id.iv_clear_project_name);
         etPs = (EditText) findViewById(R.id.et_ps);
         ivClearPs = (ImageView) findViewById(R.id.iv_clear_ps);
+        et_package_name = (EditText) findViewById(R.id.et_package_name);
+        iv_clear_package_name = (ImageView) findViewById(R.id.iv_clear_package_name);
         btnSubmit = (Button) findViewById(R.id.btn_submit);
     }
 
@@ -89,6 +93,7 @@ public class AddProjectActivity extends BaseActivity {
 
         setEditListener(etProjectName, ivClearProjectName);
         setEditListener(etPs, ivClearPs);
+        setEditListener(et_package_name, iv_clear_package_name);
 
         llProjectProperty.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,13 +117,14 @@ public class AddProjectActivity extends BaseActivity {
     private void addProject() {
         String name = etProjectName.getText().toString().trim();
         String ps = etPs.getText().toString().trim();
+        String packageName = et_package_name.getText().toString().trim();
         if (name.length() == 0) {
             ToastUtils.showCustomBgToast(getString(R.string.project_name_not_nul_text));
             return;
         }
         showPd(getString(R.string.submiting_text), false);
         Api.getApi0()
-                .addProject(name, property + "", ps, getUserId())
+                .addProject(name, packageName, property + "", ps, getUserId())
                 .compose(RxHelper.<AddProjectResult>io_main())
                 .subscribe(new Subscriber<AddProjectResult>() {
                     @Override

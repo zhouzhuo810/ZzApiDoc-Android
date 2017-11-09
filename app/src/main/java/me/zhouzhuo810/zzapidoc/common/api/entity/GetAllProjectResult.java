@@ -106,5 +106,15 @@ public class GetAllProjectResult {
         public String getId() {
             return id;
         }
+
+        private String packageName;
+
+        public String getPackageName() {
+            return packageName;
+        }
+
+        public void setPackageName(String packageName) {
+            this.packageName = packageName;
+        }
     }
 }

@@ -274,4 +274,5 @@
     <string name="version_project_desc_hint_text">项目描述</string>
     <string name="version_record_desc_hint_text">版本记录</string>
     <string name="versionCode_not_nul_text">版本号不能为空</string>
+    <string name="intpu_package_name_hint_text">请输入包名(选填)</string>
 </resources>

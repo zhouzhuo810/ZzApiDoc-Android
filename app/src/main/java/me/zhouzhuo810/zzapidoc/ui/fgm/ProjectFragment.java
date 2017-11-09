@@ -20,6 +20,7 @@ import me.zhouzhuo810.zzapidoc.R;
 import me.zhouzhuo810.zzapidoc.ZApplication;
 import me.zhouzhuo810.zzapidoc.common.Constants;
 import me.zhouzhuo810.zzapidoc.common.api.Api;
+import me.zhouzhuo810.zzapidoc.common.api.entity.AddProjectResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteProjectResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllProjectResult;
 import me.zhouzhuo810.zzapidoc.common.base.BaseActivity;
@@ -139,7 +140,7 @@ public class ProjectFragment extends BaseFragment {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
                 getBaseAct().showListDialog(Arrays.asList("导出JSON文件", "导出PDF文件", "复制JSON下载地址", "复制PDF下载地址", "复制Android API下载地址", "添加全局请求头", "添加全局请求参数",
-                        "添加全局返回参数", "删除项目"), true, null, new IBaseActivity.OnItemClick() {
+                        "添加全局返回参数", "修改包名", "删除项目"), true, null, new IBaseActivity.OnItemClick() {
                     @Override
                     public void onItemClick(int pos, String s) {
                         switch (pos) {
@@ -168,12 +169,54 @@ public class ProjectFragment extends BaseFragment {
                                 addGlobalResponseArg(adapter.getmDatas().get(position).getId());
                                 break;
                             case 8:
+                                revisePackageName(adapter.getmDatas().get(position));
+                                break;
+                            case 9:
                                 deleteProject(adapter.getmDatas().get(position).getId());
                                 break;
                         }
                     }
                 });
                 return true;
+            }
+        });
+    }
+
+    private void revisePackageName(final GetAllProjectResult.DataEntity entity) {
+        getBaseAct().showTwoBtnEditDialog("修改包名", "请输入新的包名", entity.getPackageName(), false, new IBaseActivity.OnTwoBtnEditClick() {
+            @Override
+            public void onOk(String s) {
+                getBaseAct().showPd(getString(R.string.submiting_text), false);
+                Api.getApi0()
+                        .updateProject(entity.getId(), entity.getName(), s, entity.getProperty(), entity.getNote(), getUserId())
+                        .compose(RxHelper.<AddProjectResult>io_main())
+                        .subscribe(new Subscriber<AddProjectResult>() {
+                            @Override
+                            public void onCompleted() {
+
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                getBaseAct().hidePd();
+                                ToastUtils.showCustomBgToast(getString(R.string.no_net_text) + e.toString());
+                            }
+
+                            @Override
+                            public void onNext(AddProjectResult addProjectResult) {
+                                getBaseAct().hidePd();
+                                ToastUtils.showCustomBgToast(addProjectResult.getMsg());
+                                if (addProjectResult.getCode() == 1) {
+                                    startRefresh(refresh);
+                                    getData();
+                                }
+                            }
+                        });
+            }
+
+            @Override
+            public void onCancel() {
+
             }
         });
     }
