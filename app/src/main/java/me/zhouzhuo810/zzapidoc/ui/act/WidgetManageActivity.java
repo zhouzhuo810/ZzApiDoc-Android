@@ -28,7 +28,6 @@ import zhouzhuo810.me.zzandframe.ui.act.IBaseActivity;
 /**
  * Created by admin on 2017/8/19.
  */
-
 public class WidgetManageActivity extends BaseActivity {
     private RelativeLayout rlBack;
     private RelativeLayout rlRight;
@@ -110,11 +109,17 @@ public class WidgetManageActivity extends BaseActivity {
                 switch (type) {
                     case 0:
                         // titlebar
-
+                        intent = new Intent(WidgetManageActivity.this, ActionManageActivity.class);
+                        intent.putExtra("widgetId", adapter.getmDatas().get(position).getId());
+                        intent.putExtra("appId", appId);
+                        startActWithIntent(intent);
                         break;
                     case 1:
                         //setting item
-
+                        intent = new Intent(WidgetManageActivity.this, ActionManageActivity.class);
+                        intent.putExtra("widgetId", adapter.getmDatas().get(position).getId());
+                        intent.putExtra("appId", appId);
+                        startActWithIntent(intent);
                         break;
                     case 2:
                         //edit item
@@ -125,9 +130,17 @@ public class WidgetManageActivity extends BaseActivity {
                         break;
                     case 4:
                         //submit btn
+                        intent = new Intent(WidgetManageActivity.this, ActionManageActivity.class);
+                        intent.putExtra("widgetId", adapter.getmDatas().get(position).getId());
+                        intent.putExtra("appId", appId);
+                        startActWithIntent(intent);
                         break;
                     case 5:
                         //exit btn
+                        intent = new Intent(WidgetManageActivity.this, ActionManageActivity.class);
+                        intent.putExtra("widgetId", adapter.getmDatas().get(position).getId());
+                        intent.putExtra("appId", appId);
+                        startActWithIntent(intent);
                         break;
                     case 6:
                         //sidebar
@@ -242,6 +255,13 @@ public class WidgetManageActivity extends BaseActivity {
                             list = getAllMyWidgetResult.getData();
                             adapter.setmDatas(list);
                             adapter.notifyDataSetChanged();
+                            if (list == null || list.size() == 0) {
+                                tvNoData.setVisibility(View.VISIBLE);
+                            } else {
+                                tvNoData.setVisibility(View.GONE);
+                            }
+                        } else {
+                            ToastUtils.showCustomBgToast(getAllMyWidgetResult.getMsg());
                         }
                     }
                 });

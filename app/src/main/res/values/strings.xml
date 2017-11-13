@@ -275,4 +275,21 @@
     <string name="version_record_desc_hint_text">版本记录</string>
     <string name="versionCode_not_nul_text">版本号不能为空</string>
     <string name="intpu_package_name_hint_text">请输入包名(选填)</string>
+    <string name="add_action_text">添加动作</string>
+    <string name="action_type_text">动作类型</string>
+    <string name="choose_action_type_hint">请选择动作类型</string>
+    <string name="action_name_text">动作名称</string>
+    <string name="action_name_hint_text">请输入动作名称</string>
+    <string name="msg_text">消息</string>
+    <string name="msg_hint_text">请输入消息</string>
+    <string name="ok_text_text">确定按钮文字</string>
+    <string name="ok_text_hint_text">请输入确定按钮文字</string>
+    <string name="cancel_text_text">取消按钮文字</string>
+    <string name="cancel_text_hint_text">请输入取消按钮文字</string>
+    <string name="hint_text_text">提示文字</string>
+    <string name="hint_text_hint_text">请输入提示文字</string>
+    <string name="show_or_hide_text">显示/隐藏</string>
+    <string name="items_text">列表文字</string>
+    <string name="items_hint_text">多个以英文逗号隔开</string>
+    <string name="action_manage_text">动作管理</string>
 </resources>

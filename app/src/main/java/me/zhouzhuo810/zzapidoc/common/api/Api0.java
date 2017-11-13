@@ -2,6 +2,7 @@ package me.zhouzhuo810.zzapidoc.common.api;
 
 import java.util.List;
 
+import me.zhouzhuo810.zzapidoc.common.api.entity.AddActionResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.AddApplicationResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.AddDictionaryResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.AddInterfaceExampleResult;
@@ -14,6 +15,7 @@ import me.zhouzhuo810.zzapidoc.common.api.entity.AddResponseArgResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.AddVersionProjectResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.AddVersionRecordResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.AddVersionResult;
+import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteActionResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteActivityResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteApplicationResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteArgResult;
@@ -26,6 +28,7 @@ import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteVersionProjectResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteVersionRecordResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteVersionResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GenerateEmptyExampleResult;
+import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllActionsResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllApplicationResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllInterfaceGroupResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllInterfaceResult;
@@ -47,6 +50,7 @@ import me.zhouzhuo810.zzapidoc.common.api.entity.ImportProjectEntity;
 import me.zhouzhuo810.zzapidoc.common.api.entity.PreviewUIResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.PublishVersionEntity;
 import me.zhouzhuo810.zzapidoc.common.api.entity.SetTestFinishResult;
+import me.zhouzhuo810.zzapidoc.common.api.entity.UpdateActionResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.UpdateInterfaceResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.UpdateQrCodeResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.UpdateResponseArgResult;
@@ -505,7 +509,7 @@ public interface Api0 {
      */
     @FormUrlEncoded
     @POST("/ZzApiDoc/v1/versionProject/addVersionProject")
-    Observable<AddVersionProjectResult> addVersionProject(@Field("userId") String userId, @Field("name") String name, @Field("note") String note) ;
+    Observable<AddVersionProjectResult> addVersionProject(@Field("userId") String userId, @Field("name") String name, @Field("note") String note);
 
     /*
      * 更新版本项目()
@@ -553,5 +557,44 @@ public interface Api0 {
      */
     @GET("/ZzApiDoc/v1/versionRecord/getAllVersionRecord")
     Observable<GetAllVersionRecordResult> getAllVersionRecord(@Query("userId") String userId, @Query("versionId") String versionId);
+
+    /*
+     * 添加动作()
+     */
+    @FormUrlEncoded
+    @POST("/ZzApiDoc/v1/action/addAction")
+    Observable<AddActionResult> addAction(@Field("userId") String userId, @Field("type") int type,
+                                          @Field("name") String name, @Field("widgetId") String widgetId,
+                                          @Field("title") String title, @Field("msg") String msg,
+                                          @Field("okText") String okText, @Field("cancelText") String cancelText,
+                                          @Field("hintText") String hintText, @Field("defText") String defText,
+                                          @Field("showOrHide") boolean showOrHide, @Field("okApiId") String okApiId,
+                                          @Field("okActId") String okActId);
+
+    /*
+     * 更新动作()
+     */
+    @FormUrlEncoded
+    @POST("/ZzApiDoc/v1/action/updateAction")
+    Observable<UpdateActionResult> updateAction(@Field("userId") String userId, @Field("actionId") String actionId,
+                                                @Field("type") int type, @Field("name") String name,
+                                                @Field("widgetId") String widgetId, @Field("title") String title,
+                                                @Field("msg") String msg, @Field("okText") String okText,
+                                                @Field("cancelText") String cancelText, @Field("hintText") String hintText,
+                                                @Field("defText") String defText, @Field("showOrHide") boolean showOrHide,
+                                                @Field("okApiId") String okApiId, @Field("okActId") String okActId);
+
+    /*
+     * 删除动作()
+     */
+    @FormUrlEncoded
+    @POST("/ZzApiDoc/v1/action/deleteAction")
+    Observable<DeleteActionResult> deleteAction(@Field("userId") String userId, @Field("id") String id);
+
+    /*
+     * 获取所有动作()
+     */
+    @GET("/ZzApiDoc/v1/action/getAllActions")
+    Observable<GetAllActionsResult> getAllActions(@Query("userId") String userId, @Query("widgetId") String widgetId);
 
 }

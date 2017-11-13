@@ -5,6 +5,22 @@
     android:layout_height="match_parent"
     android:background="@color/colorGrayBg"
     android:orientation="vertical">
+    <!--
+
+        <zhouzhuo810.me.zzandframe.ui.widget.TitleBar
+            android:layout_width="match_parent"
+            android:layout_height="120px"
+            android:background="@color/colorMain"
+            app:leftImg="@drawable/back"
+            app:rightText="@string/add_text"
+            app:showLeftImg="true"
+            app:showLeftLayout="true"
+            app:showRightImg="false"
+            app:showRightLayout="true"
+            app:showRightText="true"
+            app:textColorAll="@color/colorWhite"
+            app:titleText="@string/activity_manage_text" />
+    -->
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -15,7 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="@string/activity_manage_text"
+            android:text="@string/action_manage_text"
             android:textColor="@color/colorWhite"
             android:textSize="@dimen/activity_title_text_size" />
 

@@ -16,6 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import me.zhouzhuo810.zzapidoc.R;
+import me.zhouzhuo810.zzapidoc.ZApplication;
 import me.zhouzhuo810.zzapidoc.common.api.Api;
 import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteInterfaceGroupResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllInterfaceGroupResult;
@@ -23,6 +24,7 @@ import me.zhouzhuo810.zzapidoc.common.api.entity.UpdateInterfaceResult;
 import me.zhouzhuo810.zzapidoc.common.base.BaseActivity;
 import me.zhouzhuo810.zzapidoc.common.rx.RxHelper;
 import me.zhouzhuo810.zzapidoc.common.utils.CopyUtils;
+import me.zhouzhuo810.zzapidoc.common.utils.SharedUtil;
 import me.zhouzhuo810.zzapidoc.common.utils.ToastUtils;
 import me.zhouzhuo810.zzapidoc.ui.adapter.InterfaceGroupListAdapter;
 import rx.Subscriber;
@@ -140,14 +142,21 @@ public class InterfaceGroupManageActivity extends BaseActivity {
         lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
-                showListDialog(Arrays.asList("删除接口", "修改接口地址"), true, null, new IBaseActivity.OnItemClick() {
+                showListDialog(Arrays.asList("复制Android Api下载地址", "删除分组", "修改接口地址"), true, null, new IBaseActivity.OnItemClick() {
                     @Override
                     public void onItemClick(int pos, String s) {
                         switch (pos) {
                             case 0:
-                                deleteGroup(adapter.getmDatas().get(position).getId());
+                                copy(adapter.getmDatas().get(position).getName(),
+                                        SharedUtil.getString(ZApplication.getInstance(),
+                                                "server_config") + "ZzApiDoc/v1/interfaceGroup/downloadApi?userId="
+                                                + getUserId()
+                                                + "&groupId=" + adapter.getmDatas().get(position).getId());
                                 break;
                             case 1:
+                                deleteGroup(adapter.getmDatas().get(position).getId());
+                                break;
+                            case 2:
                                 changeIpAddr(adapter.getmDatas().get(position));
                                 break;
                         }
@@ -165,6 +174,12 @@ public class InterfaceGroupManageActivity extends BaseActivity {
         });
     }
 
+    private void copy(String name, String s) {
+        CopyUtils.copyPlainText(InterfaceGroupManageActivity.this, name, s);
+        ToastUtils.showCustomBgToast("已复制到剪切板");
+    }
+
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -174,7 +189,7 @@ public class InterfaceGroupManageActivity extends BaseActivity {
                     String id = data.getStringExtra("id");
                     String name = data.getStringExtra("name");
                     Intent intent = new Intent();
-                    intent.putExtra("id",id);
+                    intent.putExtra("id", id);
                     intent.putExtra("name", name);
                     setResult(RESULT_OK, intent);
                     closeAct();
