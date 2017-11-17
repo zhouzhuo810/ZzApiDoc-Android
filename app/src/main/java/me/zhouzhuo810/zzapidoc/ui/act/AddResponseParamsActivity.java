@@ -1,21 +1,18 @@
 package me.zhouzhuo810.zzapidoc.ui.act;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.lzy.okgo.OkGo;
-import com.lzy.okgo.callback.StringCallback;
-import com.lzy.okgo.model.Response;
 import com.youdao.sdk.app.Language;
 import com.youdao.sdk.app.LanguageUtils;
 import com.youdao.sdk.ydonlinetranslate.TranslateErrorCode;
@@ -24,18 +21,11 @@ import com.youdao.sdk.ydonlinetranslate.TranslateParameters;
 import com.youdao.sdk.ydonlinetranslate.Translator;
 import com.youdao.sdk.ydtranslate.Translate;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.Arrays;
-import java.util.List;
 
 import me.zhouzhuo810.zzapidoc.R;
 import me.zhouzhuo810.zzapidoc.common.api.Api;
-import me.zhouzhuo810.zzapidoc.common.api.entity.AddInterfaceResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.AddResponseArgResult;
-import me.zhouzhuo810.zzapidoc.common.api.entity.GetDictionaryResult;
 import me.zhouzhuo810.zzapidoc.common.base.BaseActivity;
 import me.zhouzhuo810.zzapidoc.common.rx.RxHelper;
 import me.zhouzhuo810.zzapidoc.common.utils.ToastUtils;
@@ -126,6 +116,17 @@ public class AddResponseParamsActivity extends BaseActivity {
             }
         });
 
+
+        rlRight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AddResponseParamsActivity.this, ImportResponseParamsActivity.class);
+                intent.putExtra("interfaceId", interfaceId);
+                intent.putExtra("pid", pid);
+                startActForResultWithIntent(intent, 0x01);
+            }
+        });
+
         setEditListener(etArgName, ivClearArgName);
         setEditListener(etArgNote, ivClearArgNote);
         setEditListener(etArgDefValue, ivClearArgDefValue);
@@ -149,7 +150,7 @@ public class AddResponseParamsActivity extends BaseActivity {
 
     private void translate() {
         String title = etArgNote.getText().toString().trim();
-        if (title.length()==0) {
+        if (title.length() == 0) {
             ToastUtils.showCustomBgToast("请填写参数说明");
             return;
         }
@@ -165,21 +166,21 @@ public class AddResponseParamsActivity extends BaseActivity {
             @Override
             public void onResult(Translate result, String input) {//查询成功
                 if (result.getTranslations() != null) {
-                    Log.e("XXX", "trans="+result.getTranslations().toString());
+                    Log.e("XXX", "trans=" + result.getTranslations().toString());
                     String word = result.getTranslations().get(0);
                     StringBuilder sb = new StringBuilder();
                     if (word.contains(" ")) {
                         String[] split = word.split(" ");
                         for (String s : split) {
-                            sb.append(s.substring(0,1).toUpperCase()).append(s.substring(1));
+                            sb.append(s.substring(0, 1).toUpperCase()).append(s.substring(1));
                         }
                     } else {
-                        sb.append(word.substring(0,1).toUpperCase()).append(word.substring(1));
+                        sb.append(word.substring(0, 1).toUpperCase()).append(word.substring(1));
                     }
                     String newWord = sb.toString()
                             .replace("the", "")
                             .replace("The", "")
-                            .replace(".","")
+                            .replace(".", "")
                             .replace("Equipment", "Device")
                             .replace("machine", "mac")
                             .replace("Machine", "Mac")
@@ -190,7 +191,7 @@ public class AddResponseParamsActivity extends BaseActivity {
                             .replace("maintenance", "fix")
                             .replace("information", "info")
                             .replace("Information", "Info");
-                    String text = newWord.substring(0,1).toLowerCase()+newWord.substring(1);
+                    String text = newWord.substring(0, 1).toLowerCase() + newWord.substring(1);
                     etArgName.setText(text);
 
                 }
@@ -200,7 +201,7 @@ public class AddResponseParamsActivity extends BaseActivity {
             @Override
             public void onError(TranslateErrorCode error) {//查询失败
                 hidePd();
-                ToastUtils.showCustomBgToast("错误代码："+error.getCode());
+                ToastUtils.showCustomBgToast("错误代码：" + error.getCode());
             }
         });
     }
@@ -259,6 +260,18 @@ public class AddResponseParamsActivity extends BaseActivity {
                         }
                     }
                 });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case 0x01:
+                    closeAct();
+                    break;
+            }
+        }
     }
 
     @Override

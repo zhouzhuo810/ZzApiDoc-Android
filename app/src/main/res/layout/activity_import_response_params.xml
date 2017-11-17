@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorGrayBg"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/activity_title_height"
+        android:background="@color/colorMain">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/import_project_text"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/activity_title_text_size" />
+
+        <RelativeLayout
+            android:id="@+id/rl_back"
+            android:layout_width="200px"
+            android:layout_height="match_parent"
+            android:background="@drawable/btn_main_selector"
+            android:clickable="true">
+
+            <ImageView
+                android:layout_width="80px"
+                android:layout_height="80px"
+                android:layout_centerInParent="true"
+                android:src="@drawable/back" />
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/rl_right"
+            android:layout_width="200px"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/btn_main_selector"
+            android:clickable="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="@string/import_text"
+                android:textColor="@color/colorWhite"
+                android:textSize="40px" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <EditText
+        android:id="@+id/et_json"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="30px"
+        android:layout_weight="1"
+        android:background="@drawable/remark_et_bg_selector"
+        android:gravity="left|top"
+        android:hint="请复制或输入JSON格式返回内容到输入框"
+        android:padding="20px"
+        android:textColor="@color/colorBlack"
+        android:textSize="30px" />
+
+    <Button
+        android:id="@+id/btn_format"
+        android:layout_width="match_parent"
+        android:layout_height="120px"
+        android:layout_marginBottom="40px"
+        android:layout_marginLeft="30px"
+        android:layout_marginRight="30px"
+        android:layout_marginTop="20px"
+        android:background="@drawable/btn_save_selector"
+        android:gravity="center"
+        android:text="@string/format_text"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/activity_title_text_size" />
+</LinearLayout>

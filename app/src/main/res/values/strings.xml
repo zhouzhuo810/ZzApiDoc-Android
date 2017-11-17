@@ -292,4 +292,5 @@
     <string name="items_text">列表文字</string>
     <string name="items_hint_text">多个以英文逗号隔开</string>
     <string name="action_manage_text">动作管理</string>
+    <string name="format_text">格式化</string>
 </resources>

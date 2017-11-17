@@ -311,6 +311,17 @@ public interface Api0 {
             @Query("userId") String userId
     );
 
+    /*导入返回参数*/
+    @FormUrlEncoded
+    @POST("/ZzApiDoc/v1/responseArg/importResponseArg")
+    Observable<ImportProjectEntity> importResponseArg(
+            @Field("json") String json,
+            @Field("interfaceId") String interfaceId,
+            @Field("pid") String pid,
+            @Field("userId") String userId
+    );
+
+
     /*导入项目*/
     @FormUrlEncoded
     @POST("/ZzApiDoc/v1/project/importProject")
@@ -596,5 +607,8 @@ public interface Api0 {
      */
     @GET("/ZzApiDoc/v1/action/getAllActions")
     Observable<GetAllActionsResult> getAllActions(@Query("userId") String userId, @Query("widgetId") String widgetId);
+
+
+
 
 }
