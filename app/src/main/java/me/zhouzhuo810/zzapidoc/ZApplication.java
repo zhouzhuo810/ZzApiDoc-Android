@@ -12,13 +12,15 @@ import org.xutils.x;
 
 import me.zhouzhuo810.zzapidoc.common.Constants;
 import me.zhouzhuo810.zzapidoc.common.utils.SharedUtil;
+import zhouzhuo810.me.zzandframe.common.utils.ToastUtils;
+import zhouzhuo810.me.zzandframe.ui.app.BaseApplication;
 
 
 /**
  * Created by zhouzhuo810 on 2017/7/21.
  */
 
-public class ZApplication extends Application {
+public class ZApplication extends BaseApplication {
 
     private static Application INSTANCE;
 
@@ -40,6 +42,8 @@ public class ZApplication extends Application {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        ToastUtils.init(this, R.color.colorMain, R.color.colorWhite);
 
         /*
          Bugly SDK初始化

@@ -45,6 +45,11 @@ public class SharedUtil {
         return sharedPreferences.getString(key, null);
     }
 
+    public static String getString(Context context, String key, String defValue) {
+        SharedPreferences sharedPreferences = getDefaultSharedPreferences(context);
+        return sharedPreferences.getString(key, defValue);
+    }
+
     public static void putBoolean(Context context, String key, boolean value) {
         SharedPreferences sharedPreferences = getDefaultSharedPreferences(context);
         SharedPreferences.Editor edit = sharedPreferences.edit();

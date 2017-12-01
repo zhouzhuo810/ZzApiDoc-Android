@@ -37,6 +37,7 @@ import me.zhouzhuo810.zzapidoc.common.api.entity.AddInterfaceResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetDictionaryResult;
 import me.zhouzhuo810.zzapidoc.common.base.BaseActivity;
 import me.zhouzhuo810.zzapidoc.common.rx.RxHelper;
+import me.zhouzhuo810.zzapidoc.common.utils.SharedUtil;
 import me.zhouzhuo810.zzapidoc.common.utils.ToastUtils;
 import rx.Subscriber;
 import zhouzhuo810.me.zzandframe.ui.act.IBaseActivity;
@@ -47,20 +48,28 @@ import zhouzhuo810.me.zzandframe.ui.act.IBaseActivity;
 
 public class AddInterfaceActivity extends BaseActivity {
 
+
     private RelativeLayout rlBack;
     private RelativeLayout rlRight;
     private LinearLayout llRequestMethod;
     private TextView tvRequestMethod;
     private EditText etInterfaceName;
     private ImageView ivClearInterfaceName;
+    private EditText etVersion;
+    private ImageView ivClearVersion;
+    private LinearLayout llPreffix;
+    private EditText etPreffix;
+    private ImageView ivClearPreffix;
+    private LinearLayout llMidValue;
+    private EditText etMidValue;
+    private ImageView ivClearMidValue;
     private EditText etPath;
     private ImageView ivClearPath;
     private Button btnKeyWord;
-    private EditText etVersion;
-    private ImageView ivClearVersion;
     private EditText etPs;
     private ImageView ivClearPs;
     private Button btnSubmit;
+
 
     private String projectId;
     private String groupId;
@@ -86,11 +95,17 @@ public class AddInterfaceActivity extends BaseActivity {
         tvRequestMethod = (TextView) findViewById(R.id.tv_request_method);
         etInterfaceName = (EditText) findViewById(R.id.et_interface_name);
         ivClearInterfaceName = (ImageView) findViewById(R.id.iv_clear_interface_name);
+        etVersion = (EditText) findViewById(R.id.et_version);
+        ivClearVersion = (ImageView) findViewById(R.id.iv_clear_version);
+        llPreffix = (LinearLayout) findViewById(R.id.ll_preffix);
+        etPreffix = (EditText) findViewById(R.id.et_preffix);
+        ivClearPreffix = (ImageView) findViewById(R.id.iv_clear_preffix);
+        llMidValue = (LinearLayout) findViewById(R.id.ll_mid_value);
+        etMidValue = (EditText) findViewById(R.id.et_mid_value);
+        ivClearMidValue = (ImageView) findViewById(R.id.iv_clear_mid_value);
         etPath = (EditText) findViewById(R.id.et_path);
         ivClearPath = (ImageView) findViewById(R.id.iv_clear_path);
         btnKeyWord = (Button) findViewById(R.id.btn_key_word);
-        etVersion = (EditText) findViewById(R.id.et_version);
-        ivClearVersion = (ImageView) findViewById(R.id.iv_clear_version);
         etPs = (EditText) findViewById(R.id.et_ps);
         ivClearPs = (ImageView) findViewById(R.id.iv_clear_ps);
         btnSubmit = (Button) findViewById(R.id.btn_submit);
@@ -104,12 +119,21 @@ public class AddInterfaceActivity extends BaseActivity {
         chooseMethodAuto();
     }
 
+
     @Override
     public void initEvent() {
         rlBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 closeAct();
+            }
+        });
+
+        rlRight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AddInterfaceActivity.this, InterfaceSettingActivity.class);
+                startActWithIntent(intent);
             }
         });
 
@@ -122,6 +146,8 @@ public class AddInterfaceActivity extends BaseActivity {
             }
         });
 
+        setEditListener(etPreffix, ivClearPreffix);
+        setEditListener(etMidValue, ivClearMidValue);
         setEditListener(etInterfaceName, ivClearInterfaceName);
         setEditListener(etPath, ivClearPath);
         setEditListener(etPs, ivClearPs);
@@ -145,7 +171,7 @@ public class AddInterfaceActivity extends BaseActivity {
 
     private void translate() {
         String title = etInterfaceName.getText().toString().trim();
-        if (title.length()==0) {
+        if (title.length() == 0) {
             ToastUtils.showCustomBgToast("请填写接口名称");
             return;
         }
@@ -162,18 +188,18 @@ public class AddInterfaceActivity extends BaseActivity {
             @Override
             public void onResult(Translate result, String input) {//查询成功
                 if (result.getTranslations() != null) {
-                    Log.e("XXX", "trans="+result.getTranslations().toString());
+                    Log.e("XXX", "trans=" + result.getTranslations().toString());
                     String word = result.getTranslations().get(0);
                     StringBuilder sb = new StringBuilder();
                     if (word.contains(" ")) {
                         String[] split = word.split(" ");
                         for (String s : split) {
-                            sb.append(s.substring(0,1).toUpperCase()).append(s.substring(1));
+                            sb.append(s.substring(0, 1).toUpperCase()).append(s.substring(1));
                         }
                     } else {
-                        sb.append(word.substring(0,1).toUpperCase()).append(word.substring(1));
+                        sb.append(word.substring(0, 1).toUpperCase()).append(word.substring(1));
                     }
-                    String newWord = sb.toString().replace("the", "").replace("The", "").replace(".","")
+                    String newWord = sb.toString().replace("the", "").replace("The", "").replace(".", "")
                             .replace("Equipment", "Device")
                             .replace("machine", "mac")
                             .replace("Machine", "Mac")
@@ -183,10 +209,24 @@ public class AddInterfaceActivity extends BaseActivity {
                             .replace("number", "num")
                             .replace("maintenance", "fix")
                             .replace("information", "info")
-                            .replace("Information", "Info");;
+                            .replace("Information", "Info")
+                            .replace("gain", "get");
                     String method = tvRequestMethod.getText().toString().trim();
                     String version = etVersion.getText().toString().trim();
-                    etPath.setText("/v"+version+"/"+method+"/"+newWord.substring(0,1).toLowerCase()+newWord.substring(1));
+                    int style = SharedUtil.getInt(AddInterfaceActivity.this, "interface_name_style");
+                    String defPreffix = etPreffix.getText().toString().trim();
+                    String defMidValue = etMidValue.getText().toString().trim();
+                    switch (style) {
+                        case 0:
+                            etPath.setText("/v" + version + "/" + method + "/" + newWord.substring(0, 1).toLowerCase() + newWord.substring(1));
+                            break;
+                        case 1:
+                            etPath.setText("/" + defPreffix + "/" + defMidValue + "/" + newWord.substring(0, 1).toLowerCase() + newWord.substring(1));
+                            break;
+                        case 2:
+                            etPath.setText("/v" + version + "/" + defMidValue + "/" + newWord.substring(0, 1).toLowerCase() + newWord.substring(1));
+                            break;
+                    }
                 }
                 hidePd();
             }
@@ -194,7 +234,7 @@ public class AddInterfaceActivity extends BaseActivity {
             @Override
             public void onError(TranslateErrorCode error) {//查询失败
                 hidePd();
-                ToastUtils.showCustomBgToast("错误代码："+error.getCode());
+                ToastUtils.showCustomBgToast("错误代码：" + error.getCode());
             }
         });
     }
@@ -286,7 +326,7 @@ public class AddInterfaceActivity extends BaseActivity {
         String note = etPs.getText().toString().trim();
         showPd(getString(R.string.submiting_text), false);
         Api.getApi0()
-                .addInterface(name, groupId, methodId, getUserId(),note, projectId, path, null, null)
+                .addInterface(name, groupId, methodId, getUserId(), note, projectId, path, null, null)
                 .compose(RxHelper.<AddInterfaceResult>io_main())
                 .subscribe(new Subscriber<AddInterfaceResult>() {
                     @Override
@@ -313,7 +353,12 @@ public class AddInterfaceActivity extends BaseActivity {
 
     @Override
     public void resume() {
-
+        String defVersion = SharedUtil.getString(this, "version", "1");
+        etVersion.setText(defVersion);
+        String defPreffix = SharedUtil.getString(this, "preffix", "api");
+        etPreffix.setText(defPreffix);
+        String defMidValue = SharedUtil.getString(this, "midvalue", "Values");
+        etMidValue.setText(defMidValue);
     }
 
     @Override

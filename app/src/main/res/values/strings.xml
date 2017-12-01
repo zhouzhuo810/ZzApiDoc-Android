@@ -57,7 +57,7 @@
     <string name="interface_manage_text">接口管理</string>
     <string name="add_interface_text">添加接口</string>
     <string name="interface_name_text">接口名称</string>
-    <string name="interface_name_hint_text">请输入接口名称</string>
+    <string name="interface_name_hint_text">请输入接口中文名称</string>
     <string name="path_text">请求路径</string>
     <string name="path_hint_text">请输入请求路径</string>
     <string name="request_method_text">请求方式</string>
@@ -293,4 +293,20 @@
     <string name="items_hint_text">多个以英文逗号隔开</string>
     <string name="action_manage_text">动作管理</string>
     <string name="format_text">格式化</string>
+    <string name="interface_setting_text">接口设置</string>
+    <string name="rename_style_text">命名方式</string>
+    <string name="choose_name_style_text">命名方式</string>
+    <string name="choose_choose_name_style_hint">请选择命名方式</string>
+    <string name="def_version_text">默认版本号</string>
+    <string name="def_version_hint_text">请输入默认版本号</string>
+    <string name="def_preffix_text">默认前缀</string>
+    <string name="def_preffix_hint_text">请输入默认前缀</string>
+    <string name="def_suffix_text">默认后缀</string>
+    <string name="def_suffix_hint_text">请输入默认后缀</string>
+    <string name="def_mid_value_text">默认中值</string>
+    <string name="def_mid_value_hint_text">请输入默认中值</string>
+    <string name="mid_value_text">中值</string>
+    <string name="mid_value_hint_text">请输入中值</string>
+    <string name="preffix_text">前缀</string>
+    <string name="preffix_hint_text">请输入前缀</string>
 </resources>

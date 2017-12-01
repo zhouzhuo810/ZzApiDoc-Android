@@ -151,13 +151,16 @@ public class ProjectFragment extends BaseFragment {
                                 exportPdf(adapter.getmDatas().get(position).getId());
                                 break;
                             case 2:
-                                copy(adapter.getmDatas().get(position).getName(), SharedUtil.getString(ZApplication.getInstance(), "server_config") + "ZzApiDoc/v1/interface/downloadJson?userId=" + getUserId() + "&projectId=" + adapter.getmDatas().get(position).getId());
+                                copy(adapter.getmDatas().get(position).getName(), SharedUtil.getString(ZApplication.getInstance(), "server_config") + "ZzApiDoc/v1/interface/downloadJson?userId=" + getUserId()
+                                        + "&projectId=" + adapter.getmDatas().get(position).getId());
                                 break;
                             case 3:
-                                copy(adapter.getmDatas().get(position).getName(), SharedUtil.getString(ZApplication.getInstance(), "server_config") + "ZzApiDoc/v1/interface/downloadPdf?userId=" + getUserId() + "&projectId=" + adapter.getmDatas().get(position).getId());
+                                copy(adapter.getmDatas().get(position).getName(), SharedUtil.getString(ZApplication.getInstance(), "server_config") + "ZzApiDoc/v1/interface/downloadPdf?userId=" + getUserId()
+                                        + "&projectId=" + adapter.getmDatas().get(position).getId());
                                 break;
                             case 4:
-                                copy(adapter.getmDatas().get(position).getName(), SharedUtil.getString(ZApplication.getInstance(), "server_config") + "ZzApiDoc/v1/interface/downloadApi?userId=" + getUserId() + "&projectId=" + adapter.getmDatas().get(position).getId());
+                                copy(adapter.getmDatas().get(position).getName(), SharedUtil.getString(ZApplication.getInstance(), "server_config") + "ZzApiDoc/v1/interface/downloadApi?userId=" + getUserId()
+                                        + "&projectId=" + adapter.getmDatas().get(position).getId());
                                 break;
                             case 5:
                                 addGlobalRequestHeader(adapter.getmDatas().get(position).getId());
