@@ -255,6 +255,7 @@ public class AddWidgetActivity extends BaseActivity {
     private String targetActId;
     private String relativeId;
     private String targetApiId;
+    private int groupPosition;
     private String projectId;
     private String pid;
 
@@ -538,6 +539,7 @@ public class AddWidgetActivity extends BaseActivity {
                     break;
                 case 0x02:
                     targetApiId = data.getStringExtra("id");
+                    groupPosition = data.getIntExtra("groupPosition", 0);
                     String apiName = data.getStringExtra("name");
                     tvTargetApi.setText(apiName);
                     break;
@@ -623,6 +625,7 @@ public class AddWidgetActivity extends BaseActivity {
         }
         if (targetApiId != null) {
             post.params("targetApiId", targetApiId);
+            post.params("groupPosition", groupPosition);
         }
         if (splashPath != null) {
             post.params("rightTitleImg", new File(splashPath));

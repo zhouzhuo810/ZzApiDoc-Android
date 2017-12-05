@@ -59,6 +59,7 @@ public class InterfaceManageActivity extends BaseActivity {
     private InterfaceListAdapter adapter;
     private String groupId;
     private boolean choose;
+    private int groupPosition;
 
 
     @Override
@@ -91,6 +92,7 @@ public class InterfaceManageActivity extends BaseActivity {
         projectId = getIntent().getStringExtra("projectId");
         groupId = getIntent().getStringExtra("groupId");
         choose = getIntent().getBooleanExtra("choose", false);
+        groupPosition = getIntent().getIntExtra("groupPosition", 0);
     }
 
     private void getData() {
@@ -182,6 +184,7 @@ public class InterfaceManageActivity extends BaseActivity {
                     Intent intent = new Intent();
                     intent.putExtra("id", adapter.getmDatas().get(position).getId());
                     intent.putExtra("name", adapter.getmDatas().get(position).getName());
+                    intent.putExtra("groupPosition", groupPosition);
                     setResult(RESULT_OK, intent);
                     closeAct();
                 } else {

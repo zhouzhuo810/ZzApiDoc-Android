@@ -30,7 +30,7 @@ public class ResponseArgListAdapter extends CommonAdapter<GetResponseArgResult.D
                 holder.setText(R.id.tv_type, "string");
                 break;
             case 1:
-                holder.setText(R.id.tv_type, "number");
+                holder.setText(R.id.tv_type, "int");
                 break;
             case 2:
                 holder.setText(R.id.tv_type, "object");
@@ -51,7 +51,15 @@ public class ResponseArgListAdapter extends CommonAdapter<GetResponseArgResult.D
                 break;
             case 8:
                 //array[number]
-                holder.setText(R.id.tv_type, "array[number]");
+                holder.setText(R.id.tv_type, "array[int]");
+                break;
+            case 9:
+                //float
+                holder.setText(R.id.tv_type, "float");
+                break;
+            case 10:
+                //array[float]
+                holder.setText(R.id.tv_type, "array[float]");
                 break;
             default:
                 holder.setText(R.id.tv_type, "未知");

@@ -135,6 +135,7 @@ public class InterfaceGroupManageActivity extends BaseActivity {
                 intent.putExtra("projectId", projectId);
                 intent.putExtra("choose", choose);
                 intent.putExtra("groupId", adapter.getmDatas().get(position).getId());
+                intent.putExtra("groupPosition", position);
                 startActForResultWithIntent(intent, 0x04);
             }
         });
@@ -188,9 +189,11 @@ public class InterfaceGroupManageActivity extends BaseActivity {
                 case 0x04:
                     String id = data.getStringExtra("id");
                     String name = data.getStringExtra("name");
+                    int groupPosition = data.getIntExtra("groupPosition", 0);
                     Intent intent = new Intent();
                     intent.putExtra("id", id);
                     intent.putExtra("name", name);
+                    intent.putExtra("groupPosition", groupPosition);
                     setResult(RESULT_OK, intent);
                     closeAct();
                     break;
