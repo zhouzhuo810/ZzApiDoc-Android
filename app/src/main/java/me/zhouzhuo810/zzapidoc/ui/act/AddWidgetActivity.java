@@ -255,7 +255,7 @@ public class AddWidgetActivity extends BaseActivity {
     private String targetActId;
     private String relativeId;
     private String targetApiId;
-    private int groupPosition;
+    private int groupPosition = 0;
     private String projectId;
     private String pid;
 
@@ -626,6 +626,8 @@ public class AddWidgetActivity extends BaseActivity {
         if (targetApiId != null) {
             post.params("targetApiId", targetApiId);
             post.params("groupPosition", groupPosition);
+        } else {
+            post.params("groupPosition", 0);
         }
         if (splashPath != null) {
             post.params("rightTitleImg", new File(splashPath));
@@ -647,7 +649,6 @@ public class AddWidgetActivity extends BaseActivity {
                 hidePd();
                 Throwable exception = response.getException();
                 ToastUtils.showCustomBgToast(getString(R.string.no_net_text) + (exception == null ? "" : exception.toString()));
-
             }
         });
     }

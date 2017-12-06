@@ -97,6 +97,7 @@ public class AddApplicationActivity extends BaseActivity {
 
     private String apiId;
     private String logoPath;
+    private CheckBox cbQrcode;
 
     @Override
     public int getLayoutId() {
@@ -138,6 +139,7 @@ public class AddApplicationActivity extends BaseActivity {
         cbMultidex = (CheckBox) findViewById(R.id.cb_multidex);
         llMinify = (LinearLayout) findViewById(R.id.ll_minify);
         cbMinify = (CheckBox) findViewById(R.id.cb_minify);
+        cbQrcode = (CheckBox) findViewById(R.id.cb_qrcode);
         etPs = (EditText) findViewById(R.id.et_ps);
         ivClearPs = (ImageView) findViewById(R.id.iv_clear_ps);
         btnSubmit = (Button) findViewById(R.id.btn_submit);
@@ -145,7 +147,11 @@ public class AddApplicationActivity extends BaseActivity {
 
     @Override
     public void initData() {
-
+        String package_name = SharedUtil.getString(ZApplication.getInstance(), "package_name");
+        if (package_name != null) {
+            etPackageName.setText(package_name);
+            ivClearPackageName.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -207,7 +213,7 @@ public class AddApplicationActivity extends BaseActivity {
 
     private void translate() {
         String title = etAppName.getText().toString().trim();
-        if (title.length()==0) {
+        if (title.length() == 0) {
             ToastUtils.showCustomBgToast("请填写参数说明");
             return;
         }
@@ -223,19 +229,25 @@ public class AddApplicationActivity extends BaseActivity {
             @Override
             public void onResult(Translate result, String input) {//查询成功
                 if (result.getTranslations() != null) {
-                    Log.e("XXX", "trans="+result.getTranslations().toString());
+                    Log.e("XXX", "trans=" + result.getTranslations().toString());
                     String word = result.getTranslations().get(0);
                     StringBuilder sb = new StringBuilder();
                     if (word.contains(" ")) {
                         String[] split = word.split(" ");
                         for (String s : split) {
-                            sb.append(s.substring(0,1).toUpperCase()).append(s.substring(1));
+                            sb.append(s.substring(0, 1).toUpperCase()).append(s.substring(1));
                         }
                     } else {
-                        sb.append(word.substring(0,1).toUpperCase()).append(word.substring(1));
+                        sb.append(word.substring(0, 1).toUpperCase()).append(word.substring(1));
                     }
-                    String newWord = sb.toString().replace("the", "").replace("The", "").replace(".","");
+                    String newWord = sb.toString().replace("the", "").replace("The", "").replace(".", "");
                     etProjectName.setText(newWord);
+                    String p = etPackageName.getText().toString().trim();
+                    if (p.endsWith(".")) {
+                        etPackageName.setText(p+newWord.toLowerCase());
+                    } else {
+                        etPackageName.setText(p+"."+newWord.toLowerCase());
+                    }
                 }
                 hidePd();
             }
@@ -243,7 +255,7 @@ public class AddApplicationActivity extends BaseActivity {
             @Override
             public void onError(TranslateErrorCode error) {//查询失败
                 hidePd();
-                ToastUtils.showCustomBgToast("错误代码："+error.getCode());
+                ToastUtils.showCustomBgToast("错误代码：" + error.getCode());
             }
         });
     }
@@ -303,7 +315,7 @@ public class AddApplicationActivity extends BaseActivity {
         if (!dir.exists()) {
             dir.mkdirs();
         }
-        String destinationFileName = Constants.PIC_CROP_ROOT_PATH + "ic_launcher_"+System.currentTimeMillis()%1000+".png";
+        String destinationFileName = Constants.PIC_CROP_ROOT_PATH + "ic_launcher_" + System.currentTimeMillis() % 1000 + ".png";
 
         UCrop.Options options = new UCrop.Options();
         options.setToolbarColor(getResources().getColor(R.color.colorMain));
@@ -368,6 +380,7 @@ public class AddApplicationActivity extends BaseActivity {
                 .params("versionCode", versionCode)
                 .params("multiDex", cbMultidex.isChecked())
                 .params("minifyEnabled", cbMinify.isChecked())
+                .params("enableQrCode", cbQrcode.isChecked())
                 .params("apiId", apiId)
                 .params("userId", getUserId())
                 .isMultipart(true);

@@ -309,4 +309,6 @@
     <string name="mid_value_hint_text">请输入中值</string>
     <string name="preffix_text">前缀</string>
     <string name="preffix_hint_text">请输入前缀</string>
+    <string name="qrcode_text">集成二维码扫描</string>
+    <string name="setting_text">设置</string>
 </resources>

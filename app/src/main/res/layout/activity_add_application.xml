@@ -576,6 +576,46 @@
                 android:layout_marginLeft="30px"
                 android:background="@color/colorGrayBg" />
 
+            <!--签订日期-->
+
+            <LinearLayout
+                android:id="@+id/ll_qrcode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/setting_item_bg_selector"
+                android:clickable="true"
+                android:gravity="center_vertical"
+                android:minHeight="130px"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="40px"
+                    android:gravity="center|left"
+                    android:text="@string/qrcode_text"
+                    android:textColor="#415868"
+                    android:textSize="44px" />
+
+
+                <CheckBox
+                    android:id="@+id/cb_qrcode"
+                    android:layout_width="99px"
+                    android:layout_height="75px"
+                    android:checked="false"
+                    android:layout_marginRight="40px"
+                    android:background="@drawable/cb_selector"
+                    android:button="@null"
+                    app:layout_auto_baseheight="width" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="30px"
+                android:background="@color/colorGrayBg" />
+
 
             <!--签订日期-->
 

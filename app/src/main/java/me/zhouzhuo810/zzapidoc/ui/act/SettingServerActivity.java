@@ -23,16 +23,19 @@ import me.zhouzhuo810.zzapidoc.common.utils.SharedUtil;
 import me.zhouzhuo810.zzapidoc.common.utils.ToastUtils;
 
 /**
+ * 服务器设定
  * Created by zhouzhuo810 on 2017/8/14.
  */
-
 public class SettingServerActivity extends BaseActivity {
 
     private RelativeLayout rlBack;
     private RelativeLayout rlRight;
     private AutoCompleteTextView etIp;
     private ImageView ivClearIp;
+    private AutoCompleteTextView etPackageName;
+    private ImageView ivClearPackageName;
     private Button btnSave;
+    private Button btnSavePackage;
 
     @Override
     public int getLayoutId() {
@@ -50,7 +53,10 @@ public class SettingServerActivity extends BaseActivity {
         rlRight = (RelativeLayout) findViewById(R.id.rl_right);
         etIp = (AutoCompleteTextView) findViewById(R.id.et_ip);
         ivClearIp = (ImageView) findViewById(R.id.iv_clear_ip);
+        etPackageName = (AutoCompleteTextView) findViewById(R.id.et_package_name);
+        ivClearPackageName = (ImageView) findViewById(R.id.iv_clear_package_name);
         btnSave = (Button) findViewById(R.id.btn_save);
+        btnSavePackage = (Button) findViewById(R.id.btn_save_package);
     }
 
     @Override
@@ -58,6 +64,12 @@ public class SettingServerActivity extends BaseActivity {
         String ip = SharedUtil.getString(ZApplication.getInstance(), "server_config");
         if (ip != null) {
             etIp.setText(ip);
+            ivClearIp.setVisibility(View.VISIBLE);
+        }
+        String packageName = SharedUtil.getString(ZApplication.getInstance(), "package_name");
+        if (packageName != null) {
+            etPackageName.setText(packageName);
+            ivClearPackageName.setVisibility(View.VISIBLE);
         }
         initAuto();
     }
@@ -86,7 +98,9 @@ public class SettingServerActivity extends BaseActivity {
                 closeAct();
             }
         });
+
         setEditListener(etIp, ivClearIp);
+        setEditListener(etPackageName, ivClearPackageName);
 
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,6 +120,20 @@ public class SettingServerActivity extends BaseActivity {
                 Api.getApi0();
                 ToastUtils.showCustomBgToast("保存成功");
                 setResult(RESULT_OK, null);
+                closeAct();
+            }
+        });
+
+        btnSavePackage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String packageName = etPackageName.getText().toString().trim();
+                if (packageName.length() == 0) {
+                    ToastUtils.showCustomBgToast(getString(R.string.package_name_not_nul_text));
+                    return;
+                }
+                SharedUtil.putString(ZApplication.getInstance(), "package_name", packageName);
+                ToastUtils.showCustomBgToast("保存成功");
                 closeAct();
             }
         });
