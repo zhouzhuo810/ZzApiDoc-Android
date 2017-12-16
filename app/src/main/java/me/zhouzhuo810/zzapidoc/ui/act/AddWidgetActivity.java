@@ -492,7 +492,7 @@ public class AddWidgetActivity extends BaseActivity {
                 if (result.getTranslations() != null) {
                     Log.e("XXX", "trans="+result.getTranslations().toString());
                     String word = result.getTranslations().get(0);
-                    String newWord = word.replace(" ", "").replace("the", "").replace("The", "").replace(".", "").toLowerCase();
+                    String newWord = word.replace(" ", "_").replace("the", "").replace("The", "").replace(".", "").toLowerCase();
                     tvKeyWord.setText(newWord);
                 }
                 hidePd();

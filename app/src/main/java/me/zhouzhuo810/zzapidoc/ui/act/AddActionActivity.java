@@ -216,12 +216,12 @@ public class AddActionActivity extends BaseActivity {
         String cancelText = etCancelText.getText().toString().trim();
         String defText = etDefValueText.getText().toString().trim();
         String hintText = etHintText.getText().toString().trim();
-        boolean showOrHide = cbShowOrHide.isChecked();
+        boolean isHide = cbShowOrHide.isChecked();
         String name = tvActionType.getText().toString().trim();
         showPd(getString(R.string.submiting_text), false);
         Api.getApi0()
                 .addAction(getUserId(), type, name, widgetId,
-                        title, msg, okText, cancelText, hintText, defText, showOrHide, okApiId, okActId)
+                        title, msg, okText, cancelText, hintText, defText, isHide, okApiId, okActId)
                 .compose(RxHelper.<AddActionResult>io_main())
                 .subscribe(new Subscriber<AddActionResult>() {
                     @Override
@@ -231,6 +231,7 @@ public class AddActionActivity extends BaseActivity {
 
                     @Override
                     public void onError(Throwable e) {
+                        e.printStackTrace();
                         hidePd();
                         ToastUtils.showCustomBgToast(getString(R.string.no_net_text) + e.toString());
                     }
