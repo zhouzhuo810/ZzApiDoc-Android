@@ -34,7 +34,12 @@ public class AddActionActivity extends BaseActivity {
     public static final int TYPE_DIALOG_EDIT = 2;
     public static final int TYPE_DIALOG_UPDATE = 3;
     public static final int TYPE_DIALOG_LIST = 4;
-    public static final int TYPE_CHOOSE_PIC = 5;
+    public static final int TYPE_DIALOG_TWO_BTN_IOS = 5;
+    public static final int TYPE_CHOOSE_PIC = 6;
+    public static final int TYPE_USE_API = 7;
+    public static final int TYPE_TARGET_ACT = 8;
+    public static final int TYPE_CLOSE_ACT = 9;
+    public static final int TYPE_CLOSE_ALL_ACT = 10;
 
     private RelativeLayout rlBack;
     private RelativeLayout rlRight;
@@ -191,7 +196,12 @@ public class AddActionActivity extends BaseActivity {
         items.add("edit dialog");
         items.add("update dialog");
         items.add("list dialog");
+        items.add("two btn ios dialog");
         items.add("choose image");
+        items.add("use api");
+        items.add("open activity");
+        items.add("close activity");
+        items.add("close all activity");
         showListDialog(items, false, null, new IBaseActivity.OnItemClick() {
             @Override
             public void onItemClick(int i, String s) {
