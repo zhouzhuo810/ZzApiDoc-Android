@@ -74,6 +74,8 @@ public class AddActionActivity extends BaseActivity {
     private CheckBox cbShowOrHide;
     private Button btnSubmit;
     private String appId;
+    private String projectId;
+    private int groupPosition;
 
     private void assignViews() {
         rlBack = (RelativeLayout) findViewById(R.id.rl_back);
@@ -134,6 +136,7 @@ public class AddActionActivity extends BaseActivity {
     public void initData() {
         widgetId = getIntent().getStringExtra("widgetId");
         appId = getIntent().getStringExtra("appId");
+        projectId = getIntent().getStringExtra("projectId");
 
     }
 
@@ -185,7 +188,9 @@ public class AddActionActivity extends BaseActivity {
 
 
     private void chooseTargetApi() {
-        Intent intent = new Intent(this, ApiChooseActivity.class);
+        Intent intent = new Intent(this, InterfaceGroupManageActivity.class);
+        intent.putExtra("choose", true);
+        intent.putExtra("projectId", projectId);
         startActForResultWithIntent(intent, 0x01);
     }
 
@@ -228,10 +233,11 @@ public class AddActionActivity extends BaseActivity {
         String hintText = etHintText.getText().toString().trim();
         boolean isHide = cbShowOrHide.isChecked();
         String name = tvActionType.getText().toString().trim();
+        String items = etItems.getText().toString().trim();
         showPd(getString(R.string.submiting_text), false);
         Api.getApi0()
                 .addAction(getUserId(), type, name, widgetId,
-                        title, msg, okText, cancelText, hintText, defText, isHide, okApiId, okActId)
+                        title, msg, okText, cancelText, hintText, defText, isHide, items, okApiId, groupPosition, okActId)
                 .compose(RxHelper.<AddActionResult>io_main())
                 .subscribe(new Subscriber<AddActionResult>() {
                     @Override
@@ -266,6 +272,7 @@ public class AddActionActivity extends BaseActivity {
                 case 0x01:
                     okApiId = data.getStringExtra("id");
                     String name = data.getStringExtra("name");
+                    groupPosition = data.getIntExtra("groupPosition", 0);
                     tvTargetApi.setText(name);
                     break;
                 case 0x02:

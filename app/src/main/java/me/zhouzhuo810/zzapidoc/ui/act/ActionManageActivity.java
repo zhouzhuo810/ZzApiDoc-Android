@@ -41,6 +41,7 @@ public class ActionManageActivity extends BaseActivity {
     private boolean choose;
     private String widgetId;
     private String appId;
+    private String projectId;
 
     @Override
     public int getLayoutId() {
@@ -69,6 +70,7 @@ public class ActionManageActivity extends BaseActivity {
     public void initData() {
         widgetId = getIntent().getStringExtra("widgetId");
         appId = getIntent().getStringExtra("appId");
+        projectId = getIntent().getStringExtra("projectId");
         choose = getIntent().getBooleanExtra("choose", false);
     }
 
@@ -122,6 +124,7 @@ public class ActionManageActivity extends BaseActivity {
                 Intent intent = new Intent(ActionManageActivity.this, AddActionActivity.class);
                 intent.putExtra("appId", appId);
                 intent.putExtra("widgetId", widgetId);
+                intent.putExtra("projectId", projectId);
                 startActWithIntent(intent);
             }
         });

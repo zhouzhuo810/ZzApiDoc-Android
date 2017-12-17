@@ -579,8 +579,8 @@ public interface Api0 {
                                           @Field("title") String title, @Field("msg") String msg,
                                           @Field("okText") String okText, @Field("cancelText") String cancelText,
                                           @Field("hintText") String hintText, @Field("defText") String defText,
-                                          @Field("showOrHide") boolean showOrHide, @Field("okApiId") String okApiId,
-                                          @Field("okActId") String okActId);
+                                          @Field("showOrHide") boolean showOrHide, @Field("items") String items,
+                                          @Field("okApiId") String okApiId, @Field("groupPosition") int groupPosition, @Field("okActId") String okActId);
 
     /*
      * 更新动作()
@@ -593,7 +593,8 @@ public interface Api0 {
                                                 @Field("msg") String msg, @Field("okText") String okText,
                                                 @Field("cancelText") String cancelText, @Field("hintText") String hintText,
                                                 @Field("defText") String defText, @Field("showOrHide") boolean showOrHide,
-                                                @Field("okApiId") String okApiId, @Field("okActId") String okActId);
+                                                @Field("items") String items, @Field("okApiId") String okApiId,
+                                                @Field("groupPosition") int groupPosition, @Field("okActId") String okActId);
 
     /*
      * 删除动作()
@@ -607,8 +608,6 @@ public interface Api0 {
      */
     @GET("/ZzApiDoc/v1/action/getAllActions")
     Observable<GetAllActionsResult> getAllActions(@Query("userId") String userId, @Query("widgetId") String widgetId);
-
-
 
 
 }

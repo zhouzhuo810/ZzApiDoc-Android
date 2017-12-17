@@ -111,6 +111,7 @@ public class WidgetManageActivity extends BaseActivity {
                         // titlebar
                         intent = new Intent(WidgetManageActivity.this, ActionManageActivity.class);
                         intent.putExtra("widgetId", adapter.getmDatas().get(position).getId());
+                        intent.putExtra("projectId", projectId);
                         intent.putExtra("appId", appId);
                         startActWithIntent(intent);
                         break;
@@ -118,6 +119,7 @@ public class WidgetManageActivity extends BaseActivity {
                         //setting item
                         intent = new Intent(WidgetManageActivity.this, ActionManageActivity.class);
                         intent.putExtra("widgetId", adapter.getmDatas().get(position).getId());
+                        intent.putExtra("projectId", projectId);
                         intent.putExtra("appId", appId);
                         startActWithIntent(intent);
                         break;
@@ -132,6 +134,7 @@ public class WidgetManageActivity extends BaseActivity {
                         //submit btn
                         intent = new Intent(WidgetManageActivity.this, ActionManageActivity.class);
                         intent.putExtra("widgetId", adapter.getmDatas().get(position).getId());
+                        intent.putExtra("projectId", projectId);
                         intent.putExtra("appId", appId);
                         startActWithIntent(intent);
                         break;
@@ -139,6 +142,7 @@ public class WidgetManageActivity extends BaseActivity {
                         //exit btn
                         intent = new Intent(WidgetManageActivity.this, ActionManageActivity.class);
                         intent.putExtra("widgetId", adapter.getmDatas().get(position).getId());
+                        intent.putExtra("projectId", projectId);
                         intent.putExtra("appId", appId);
                         startActWithIntent(intent);
                         break;
