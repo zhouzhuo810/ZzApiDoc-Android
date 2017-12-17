@@ -138,6 +138,8 @@ public class AddActionActivity extends BaseActivity {
         appId = getIntent().getStringExtra("appId");
         projectId = getIntent().getStringExtra("projectId");
 
+
+        setType(TYPE_DIALOG_PROGRESS, "progress dialog");
     }
 
     @Override
@@ -155,6 +157,7 @@ public class AddActionActivity extends BaseActivity {
         setEditListener(etMsg, ivClearMsg);
         setEditListener(etOkText, ivClearOkText);
         setEditListener(etTitle, ivClearTitle);
+        setEditListener(etItems, ivClearItems);
 
         llActionType.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -210,11 +213,65 @@ public class AddActionActivity extends BaseActivity {
         showListDialog(items, false, null, new IBaseActivity.OnItemClick() {
             @Override
             public void onItemClick(int i, String s) {
-                type = i;
-                tvActionType.setText(s);
+                setType(i, s);
             }
         });
 
+    }
+
+    private void setType(int i, String s) {
+        type = i;
+        tvActionType.setText(s);
+        llTitleText.setVisibility(View.GONE);
+        llMsgText.setVisibility(View.GONE);
+        llOkText.setVisibility(View.GONE);
+        llCancelText.setVisibility(View.GONE);
+        llHintText.setVisibility(View.GONE);
+        llDefValue.setVisibility(View.GONE);
+        llItems.setVisibility(View.GONE);
+        llTargetAct.setVisibility(View.GONE);
+        llTargetApi.setVisibility(View.GONE);
+        llShowOrHide.setVisibility(View.GONE);
+
+        switch (i) {
+            case TYPE_DIALOG_PROGRESS:
+                llMsgText.setVisibility(View.VISIBLE);
+                break;
+            case TYPE_DIALOG_TWO_BTN:
+                llTitleText.setVisibility(View.VISIBLE);
+                llMsgText.setVisibility(View.VISIBLE);
+                break;
+            case TYPE_DIALOG_EDIT:
+                llTitleText.setVisibility(View.VISIBLE);
+                llDefValue.setVisibility(View.VISIBLE);
+                llHintText.setVisibility(View.VISIBLE);
+                break;
+            case TYPE_DIALOG_UPDATE:
+                llTitleText.setVisibility(View.VISIBLE);
+                llMsgText.setVisibility(View.VISIBLE);
+                break;
+            case TYPE_DIALOG_LIST:
+                llItems.setVisibility(View.VISIBLE);
+                break;
+            case TYPE_DIALOG_TWO_BTN_IOS:
+                llTitleText.setVisibility(View.VISIBLE);
+                llMsgText.setVisibility(View.VISIBLE);
+                llOkText.setVisibility(View.VISIBLE);
+                llCancelText.setVisibility(View.VISIBLE);
+                break;
+            case TYPE_CHOOSE_PIC:
+                break;
+            case TYPE_USE_API:
+                llTargetApi.setVisibility(View.VISIBLE);
+                break;
+            case TYPE_TARGET_ACT:
+                llTargetAct.setVisibility(View.VISIBLE);
+                break;
+            case TYPE_CLOSE_ACT:
+                break;
+            case TYPE_CLOSE_ALL_ACT:
+                break;
+        }
     }
 
     private void chooseTargetAct() {
