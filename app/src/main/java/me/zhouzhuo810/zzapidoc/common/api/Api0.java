@@ -1,9 +1,6 @@
 package me.zhouzhuo810.zzapidoc.common.api;
 
-import java.util.List;
-
 import me.zhouzhuo810.zzapidoc.common.api.entity.AddActionResult;
-import me.zhouzhuo810.zzapidoc.common.api.entity.AddApplicationResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.AddDictionaryResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.AddInterfaceExampleResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.AddInterfaceGroupResult;
@@ -61,14 +58,10 @@ import me.zhouzhuo810.zzapidoc.common.api.entity.UpdateVersionRecordResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.UpdateVersionResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.UserLoginResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.UserRegisterResult;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
-import retrofit2.http.Multipart;
 import retrofit2.http.POST;
-import retrofit2.http.Part;
 import retrofit2.http.Query;
 import rx.Observable;
 
@@ -574,7 +567,7 @@ public interface Api0 {
      */
     @FormUrlEncoded
     @POST("/ZzApiDoc/v1/action/addAction")
-    Observable<AddActionResult> addAction(@Field("userId") String userId, @Field("type") int type,
+    Observable<AddActionResult> addAction(@Field("userId") String userId, @Field("pid") String pid, @Field("type") int type,
                                           @Field("name") String name, @Field("widgetId") String widgetId,
                                           @Field("title") String title, @Field("msg") String msg,
                                           @Field("okText") String okText, @Field("cancelText") String cancelText,
@@ -587,7 +580,7 @@ public interface Api0 {
      */
     @FormUrlEncoded
     @POST("/ZzApiDoc/v1/action/updateAction")
-    Observable<UpdateActionResult> updateAction(@Field("userId") String userId, @Field("actionId") String actionId,
+    Observable<UpdateActionResult> updateAction(@Field("userId") String userId, @Field("pid") String pid, @Field("actionId") String actionId,
                                                 @Field("type") int type, @Field("name") String name,
                                                 @Field("widgetId") String widgetId, @Field("title") String title,
                                                 @Field("msg") String msg, @Field("okText") String okText,
@@ -607,7 +600,7 @@ public interface Api0 {
      * 获取所有动作()
      */
     @GET("/ZzApiDoc/v1/action/getAllActions")
-    Observable<GetAllActionsResult> getAllActions(@Query("userId") String userId, @Query("widgetId") String widgetId);
+    Observable<GetAllActionsResult> getAllActions(@Query("userId") String userId, @Query("pid") String pid, @Query("widgetId") String widgetId);
 
 
 }

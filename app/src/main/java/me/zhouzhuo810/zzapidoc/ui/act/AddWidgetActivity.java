@@ -57,10 +57,6 @@ public class AddWidgetActivity extends BaseActivity {
     private RelativeLayout rlRight;
     private LinearLayout llWidgetType;
     private TextView tvWidgetType;
-    private LinearLayout llTargetAct;
-    private TextView tvTargetAct;
-    private LinearLayout llTargetApi;
-    private TextView tvTargetApi;
     private TextView tvWidgetName;
     private EditText etHint;
     private ImageView ivClearHint;
@@ -142,8 +138,6 @@ public class AddWidgetActivity extends BaseActivity {
     private CheckBox cbShowLeftLayout;
     private LinearLayout llShowRightLayout;
     private CheckBox cbShowRightLayout;
-    private LinearLayout llClickToClose;
-    private CheckBox cbClickToClose;
     private LinearLayout llOrientation;
     private TextView tvOrientation;
     private LinearLayout llGravity;
@@ -155,10 +149,6 @@ public class AddWidgetActivity extends BaseActivity {
         rlRight = (RelativeLayout) findViewById(R.id.rl_right);
         llWidgetType = (LinearLayout) findViewById(R.id.ll_widget_type);
         tvWidgetType = (TextView) findViewById(R.id.tv_widget_type);
-        llTargetAct = (LinearLayout) findViewById(R.id.ll_target_act);
-        tvTargetAct = (TextView) findViewById(R.id.tv_target_act);
-        llTargetApi = (LinearLayout) findViewById(R.id.ll_target_api);
-        tvTargetApi = (TextView) findViewById(R.id.tv_target_api);
         tvWidgetName = (TextView) findViewById(R.id.tv_widget_name);
         etHint = (EditText) findViewById(R.id.et_hint);
         ivClearHint = (ImageView) findViewById(R.id.iv_clear_hint);
@@ -240,8 +230,6 @@ public class AddWidgetActivity extends BaseActivity {
         cbShowLeftLayout = (CheckBox) findViewById(R.id.cb_show_left_layout);
         llShowRightLayout = (LinearLayout) findViewById(R.id.ll_show_right_layout);
         cbShowRightLayout = (CheckBox) findViewById(R.id.cb_show_right_layout);
-        llClickToClose = (LinearLayout) findViewById(R.id.ll_clickToClose);
-        cbClickToClose = (CheckBox) findViewById(R.id.cb_click_to_close);
         llOrientation = (LinearLayout) findViewById(R.id.ll_orientation);
         tvOrientation = (TextView) findViewById(R.id.tv_orientation);
         llGravity = (LinearLayout) findViewById(R.id.ll_gravity);
@@ -252,10 +240,7 @@ public class AddWidgetActivity extends BaseActivity {
     private int widgetType;
     private String splashPath;
     private String appId;
-    private String targetActId;
     private String relativeId;
-    private String targetApiId;
-    private int groupPosition = 0;
     private String projectId;
     private String pid;
 
@@ -362,20 +347,6 @@ public class AddWidgetActivity extends BaseActivity {
             }
         });
 
-        llTargetAct.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                chooseTargetAct();
-            }
-        });
-
-        llTargetApi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                chooseTargetApi();
-            }
-        });
-
         btnKeyWord.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -474,7 +445,7 @@ public class AddWidgetActivity extends BaseActivity {
 
     private void translate() {
         String title = etTitle.getText().toString().trim();
-        if (title.length()==0) {
+        if (title.length() == 0) {
             ToastUtils.showCustomBgToast("请填写参数说明");
             return;
         }
@@ -490,7 +461,7 @@ public class AddWidgetActivity extends BaseActivity {
             @Override
             public void onResult(Translate result, String input) {//查询成功
                 if (result.getTranslations() != null) {
-                    Log.e("XXX", "trans="+result.getTranslations().toString());
+                    Log.e("XXX", "trans=" + result.getTranslations().toString());
                     String word = result.getTranslations().get(0);
                     String newWord = word.replace(" ", "_").replace("the", "").replace("The", "").replace(".", "").toLowerCase();
                     tvKeyWord.setText(newWord);
@@ -501,24 +472,9 @@ public class AddWidgetActivity extends BaseActivity {
             @Override
             public void onError(TranslateErrorCode error) {//查询失败
                 hidePd();
-                ToastUtils.showCustomBgToast("错误代码："+error.getCode());
+                ToastUtils.showCustomBgToast("错误代码：" + error.getCode());
             }
         });
-    }
-
-
-    private void chooseTargetAct() {
-        Intent intent = new Intent(this, ActivityManageActivity.class);
-        intent.putExtra("choose", true);
-        intent.putExtra("appId", appId);
-        startActForResultWithIntent(intent, 0x01);
-    }
-
-    private void chooseTargetApi() {
-        Intent intent = new Intent(this, InterfaceGroupManageActivity.class);
-        intent.putExtra("choose", true);
-        intent.putExtra("projectId", projectId);
-        startActForResultWithIntent(intent, 0x02);
     }
 
     private void choosePic() {
@@ -532,17 +488,6 @@ public class AddWidgetActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
-                case 0x01:
-                    targetActId = data.getStringExtra("id");
-                    String name = data.getStringExtra("name");
-                    tvTargetAct.setText(name);
-                    break;
-                case 0x02:
-                    targetApiId = data.getStringExtra("id");
-                    groupPosition = data.getIntExtra("groupPosition", 0);
-                    String apiName = data.getStringExtra("name");
-                    tvTargetApi.setText(apiName);
-                    break;
                 case REQUEST_SELECT_PICTURE:
                     final Uri selectedUri = data.getData();
                     if (selectedUri != null) {
@@ -593,7 +538,6 @@ public class AddWidgetActivity extends BaseActivity {
                 .params("relativeId", relativeId)
                 .params("defValue", defvalue)
                 .params("hint", hint)
-                .params("clickToClose", cbClickToClose.isChecked())
                 .params("leftTitleText", leftTitle)
                 .params("rightTitleText", rightText)
                 .params("showLeftTitleImg", cbShowLeftImg.isChecked())
@@ -620,15 +564,6 @@ public class AddWidgetActivity extends BaseActivity {
                 .params("textColor", textColor)
                 .params("userId", getUserId())
                 .isMultipart(true);
-        if (targetActId != null) {
-            post.params("targetActId", targetActId);
-        }
-        if (targetApiId != null) {
-            post.params("targetApiId", targetApiId);
-            post.params("groupPosition", groupPosition);
-        } else {
-            post.params("groupPosition", 0);
-        }
         if (splashPath != null) {
             post.params("rightTitleImg", new File(splashPath));
         }
@@ -653,20 +588,6 @@ public class AddWidgetActivity extends BaseActivity {
         });
     }
 
-    private void chooseShow(LinearLayout ll, final TextView tv) {
-        ll.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showListDialog(Arrays.asList("true", "false"), true, null, new IBaseActivity.OnItemClick() {
-                    @Override
-                    public void onItemClick(int i, String s) {
-                        tv.setText(s);
-                    }
-                });
-            }
-        });
-    }
-
     private void chooseWidgetType() {
         List<String> items = new ArrayList<>();
         items.add("TitleBar");
@@ -686,6 +607,7 @@ public class AddWidgetActivity extends BaseActivity {
         items.add("RecyclerView");
         items.add("ListView");
         items.add("ScrollableListView");
+        items.add("EditText");
         showListDialog(items, true, null, new IBaseActivity.OnItemClick() {
             @Override
             public void onItemClick(int i, String s) {
@@ -743,11 +665,23 @@ public class AddWidgetActivity extends BaseActivity {
                     case 16:
                         showScrollLv();
                         break;
+                    case 17:
+                        showEditText();
+                        break;
                 }
                 widgetType = i;
                 tvWidgetType.setText(s);
             }
         });
+    }
+
+    private void showEditText() {
+        llTitle.setVisibility(View.VISIBLE);
+        llKeyWord.setVisibility(View.VISIBLE);
+        llGravity.setVisibility(View.VISIBLE);
+        llWidgetWeight.setVisibility(View.VISIBLE);
+        llHint.setVisibility(View.VISIBLE);
+        showPaddingMarin();
     }
 
     private void showScrollLv() {
@@ -791,7 +725,6 @@ public class AddWidgetActivity extends BaseActivity {
         llTitle.setVisibility(View.VISIBLE);
         llKeyWord.setVisibility(View.VISIBLE);
         llLeftImg.setVisibility(View.VISIBLE);
-        llTargetAct.setVisibility(View.VISIBLE);
         showPaddingMarin();
     }
 
@@ -816,15 +749,11 @@ public class AddWidgetActivity extends BaseActivity {
     }
 
     private void showSideBar() {
-        llTargetApi.setVisibility(View.VISIBLE);
     }
 
     private void showExitBtn() {
         llTitle.setVisibility(View.VISIBLE);
         llKeyWord.setVisibility(View.VISIBLE);
-        llTargetAct.setVisibility(View.VISIBLE);
-        llTargetApi.setVisibility(View.VISIBLE);
-        llClickToClose.setVisibility(View.VISIBLE);
 
         setMargin(40);
 
@@ -842,9 +771,6 @@ public class AddWidgetActivity extends BaseActivity {
     private void showSubmitBtn() {
         llTitle.setVisibility(View.VISIBLE);
         llKeyWord.setVisibility(View.VISIBLE);
-        llTargetAct.setVisibility(View.VISIBLE);
-        llTargetApi.setVisibility(View.VISIBLE);
-        llClickToClose.setVisibility(View.VISIBLE);
 
         setMargin(40);
 
@@ -862,8 +788,6 @@ public class AddWidgetActivity extends BaseActivity {
     }
 
     private void hideAll() {
-        llTargetAct.setVisibility(View.GONE);
-        llTargetApi.setVisibility(View.GONE);
         llRightImg.setVisibility(View.GONE);
         llBackground.setVisibility(View.GONE);
         llBottomPadding.setVisibility(View.GONE);
@@ -891,7 +815,6 @@ public class AddWidgetActivity extends BaseActivity {
         llGravity.setVisibility(View.GONE);
         llHint.setVisibility(View.GONE);
         llOrientation.setVisibility(View.GONE);
-        llClickToClose.setVisibility(View.GONE);
         llTextSize.setVisibility(View.GONE);
         llTextColor.setVisibility(View.GONE);
 
@@ -923,7 +846,6 @@ public class AddWidgetActivity extends BaseActivity {
     }
 
     private void showTitleBarItem() {
-        llTargetAct.setVisibility(View.VISIBLE);
         llShowLeftLayout.setVisibility(View.VISIBLE);
         llShowRightLayout.setVisibility(View.VISIBLE);
         llShowRightImg.setVisibility(View.VISIBLE);
@@ -938,7 +860,6 @@ public class AddWidgetActivity extends BaseActivity {
     }
 
     private void showSettingItem() {
-        llTargetAct.setVisibility(View.VISIBLE);
         llLeftImg.setVisibility(View.VISIBLE);
         llShowLeftImg.setVisibility(View.VISIBLE);
         llTitle.setVisibility(View.VISIBLE);

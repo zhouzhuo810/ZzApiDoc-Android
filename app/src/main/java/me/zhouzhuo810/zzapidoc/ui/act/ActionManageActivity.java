@@ -42,6 +42,7 @@ public class ActionManageActivity extends BaseActivity {
     private String widgetId;
     private String appId;
     private String projectId;
+    private String pid;
 
     @Override
     public int getLayoutId() {
@@ -72,12 +73,16 @@ public class ActionManageActivity extends BaseActivity {
         appId = getIntent().getStringExtra("appId");
         projectId = getIntent().getStringExtra("projectId");
         choose = getIntent().getBooleanExtra("choose", false);
+        pid = getIntent().getStringExtra("pid");
     }
 
     private void getData() {
 
+        if (pid == null) {
+            pid = "0";
+        }
         Api.getApi0()
-                .getAllActions(getUserId(), widgetId)
+                .getAllActions(getUserId(), pid, widgetId)
                 .compose(RxHelper.<GetAllActionsResult>io_main())
                 .subscribe(new Subscriber<GetAllActionsResult>() {
                     @Override
@@ -124,6 +129,7 @@ public class ActionManageActivity extends BaseActivity {
                 Intent intent = new Intent(ActionManageActivity.this, AddActionActivity.class);
                 intent.putExtra("appId", appId);
                 intent.putExtra("widgetId", widgetId);
+                intent.putExtra("pid", pid);
                 intent.putExtra("projectId", projectId);
                 startActWithIntent(intent);
             }
@@ -139,6 +145,14 @@ public class ActionManageActivity extends BaseActivity {
                     intent.putExtra("name", adapter.getmDatas().get(position).getName());
                     setResult(RESULT_OK, intent);
                     closeAct();
+                } else {
+                    Intent intent = new Intent(ActionManageActivity.this, ActionManageActivity.class);
+                    intent.putExtra("pid", adapter.getmDatas().get(position).getId());
+                    intent.putExtra("widgetId", widgetId);
+                    intent.putExtra("choose", choose);
+                    intent.putExtra("appId", appId);
+                    intent.putExtra("projectId", projectId);
+                    startActWithIntent(intent);
                 }
             }
         });

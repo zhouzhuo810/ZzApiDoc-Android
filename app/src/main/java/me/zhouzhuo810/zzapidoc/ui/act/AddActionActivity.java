@@ -76,6 +76,7 @@ public class AddActionActivity extends BaseActivity {
     private String appId;
     private String projectId;
     private int groupPosition;
+    private String pid;
 
     private void assignViews() {
         rlBack = (RelativeLayout) findViewById(R.id.rl_back);
@@ -137,6 +138,7 @@ public class AddActionActivity extends BaseActivity {
         widgetId = getIntent().getStringExtra("widgetId");
         appId = getIntent().getStringExtra("appId");
         projectId = getIntent().getStringExtra("projectId");
+        pid = getIntent().getStringExtra("pid");
 
 
         setType(TYPE_DIALOG_PROGRESS, "progress dialog");
@@ -236,28 +238,34 @@ public class AddActionActivity extends BaseActivity {
         switch (i) {
             case TYPE_DIALOG_PROGRESS:
                 llMsgText.setVisibility(View.VISIBLE);
+                llShowOrHide.setVisibility(View.VISIBLE);
                 break;
             case TYPE_DIALOG_TWO_BTN:
                 llTitleText.setVisibility(View.VISIBLE);
                 llMsgText.setVisibility(View.VISIBLE);
+                llShowOrHide.setVisibility(View.VISIBLE);
                 break;
             case TYPE_DIALOG_EDIT:
                 llTitleText.setVisibility(View.VISIBLE);
                 llDefValue.setVisibility(View.VISIBLE);
                 llHintText.setVisibility(View.VISIBLE);
+                llShowOrHide.setVisibility(View.VISIBLE);
                 break;
             case TYPE_DIALOG_UPDATE:
                 llTitleText.setVisibility(View.VISIBLE);
                 llMsgText.setVisibility(View.VISIBLE);
+                llShowOrHide.setVisibility(View.VISIBLE);
                 break;
             case TYPE_DIALOG_LIST:
                 llItems.setVisibility(View.VISIBLE);
+                llShowOrHide.setVisibility(View.VISIBLE);
                 break;
             case TYPE_DIALOG_TWO_BTN_IOS:
                 llTitleText.setVisibility(View.VISIBLE);
                 llMsgText.setVisibility(View.VISIBLE);
                 llOkText.setVisibility(View.VISIBLE);
                 llCancelText.setVisibility(View.VISIBLE);
+                llShowOrHide.setVisibility(View.VISIBLE);
                 break;
             case TYPE_CHOOSE_PIC:
                 break;
@@ -293,7 +301,7 @@ public class AddActionActivity extends BaseActivity {
         String items = etItems.getText().toString().trim();
         showPd(getString(R.string.submiting_text), false);
         Api.getApi0()
-                .addAction(getUserId(), type, name, widgetId,
+                .addAction(getUserId(), pid == null ? "0" : pid, type, name, widgetId,
                         title, msg, okText, cancelText, hintText, defText, isHide, items, okApiId, groupPosition, okActId)
                 .compose(RxHelper.<AddActionResult>io_main())
                 .subscribe(new Subscriber<AddActionResult>() {
