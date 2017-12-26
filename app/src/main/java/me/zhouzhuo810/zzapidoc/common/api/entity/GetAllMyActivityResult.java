@@ -31,6 +31,15 @@ public class GetAllMyActivityResult {
         private boolean showTitle;
         private String appId;
         private String createTime;
+        private boolean isLandscape;
+
+        public boolean isLandscape() {
+            return isLandscape;
+        }
+
+        public void setLandscape(boolean landscape) {
+            isLandscape = landscape;
+        }
 
         public String getTargetActId() {
             return targetActId;

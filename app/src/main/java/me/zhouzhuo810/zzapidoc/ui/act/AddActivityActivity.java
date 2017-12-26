@@ -72,11 +72,34 @@ public class AddActivityActivity extends BaseActivity {
     private ImageView ivClearActTitle;
     private TextView tvActName;
     private Button btnKeyWord;
-//    private LinearLayout llShowTitle;
-//    private CheckBox cbShowTitle;
     private LinearLayout llIsFirst;
     private CheckBox cbIsFirst;
+    private LinearLayout llIsLandscape;
+    private CheckBox cbIsLandscape;
     private Button btnSubmit;
+
+    private void assignViews() {
+        rlBack = (RelativeLayout) findViewById(R.id.rl_back);
+        rlRight = (RelativeLayout) findViewById(R.id.rl_right);
+        llActType = (LinearLayout) findViewById(R.id.ll_act_type);
+        tvActType = (TextView) findViewById(R.id.tv_act_type);
+        llSplash = (LinearLayout) findViewById(R.id.ll_splash);
+        ivSplash = (ImageView) findViewById(R.id.iv_splash);
+        llSplashDuration = (LinearLayout) findViewById(R.id.ll_splash_duration);
+        etSplashDuration = (EditText) findViewById(R.id.et_splash_duration);
+        ivClearSplashDuration = (ImageView) findViewById(R.id.iv_clear_splash_duration);
+        llTargetAct = (LinearLayout) findViewById(R.id.ll_target_act);
+        tvTargetAct = (TextView) findViewById(R.id.tv_target_act);
+        etActTitle = (EditText) findViewById(R.id.et_act_title);
+        ivClearActTitle = (ImageView) findViewById(R.id.iv_clear_act_title);
+        tvActName = (TextView) findViewById(R.id.tv_act_name);
+        btnKeyWord = (Button) findViewById(R.id.btn_key_word);
+        llIsFirst = (LinearLayout) findViewById(R.id.ll_is_first);
+        cbIsFirst = (CheckBox) findViewById(R.id.cb_is_first);
+        llIsLandscape = (LinearLayout) findViewById(R.id.ll_is_landscape);
+        cbIsLandscape = (CheckBox) findViewById(R.id.cb_is_landscape);
+        btnSubmit = (Button) findViewById(R.id.btn_submit);
+    }
 
 
     private int actType;
@@ -96,26 +119,7 @@ public class AddActivityActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        rlBack = (RelativeLayout) findViewById(R.id.rl_back);
-        rlRight = (RelativeLayout) findViewById(R.id.rl_right);
-        llActType = (LinearLayout) findViewById(R.id.ll_act_type);
-        tvActType = (TextView) findViewById(R.id.tv_act_type);
-        llSplash = (LinearLayout) findViewById(R.id.ll_splash);
-        ivSplash = (ImageView) findViewById(R.id.iv_splash);
-        llSplashDuration = (LinearLayout) findViewById(R.id.ll_splash_duration);
-        etSplashDuration = (EditText) findViewById(R.id.et_splash_duration);
-        ivClearSplashDuration = (ImageView) findViewById(R.id.iv_clear_splash_duration);
-        llTargetAct = (LinearLayout) findViewById(R.id.ll_target_act);
-        tvTargetAct = (TextView) findViewById(R.id.tv_target_act);
-        etActTitle = (EditText) findViewById(R.id.et_act_title);
-        ivClearActTitle = (ImageView) findViewById(R.id.iv_clear_act_title);
-        tvActName = (TextView) findViewById(R.id.tv_act_name);
-        btnKeyWord = (Button) findViewById(R.id.btn_key_word);
-//        llShowTitle = (LinearLayout) findViewById(R.id.ll_show_title);
-//        cbShowTitle = (CheckBox) findViewById(R.id.cb_show_title);
-        llIsFirst = (LinearLayout) findViewById(R.id.ll_is_first);
-        cbIsFirst = (CheckBox) findViewById(R.id.cb_is_first);
-        btnSubmit = (Button) findViewById(R.id.btn_submit);
+        assignViews();
     }
 
     @Override
@@ -173,7 +177,7 @@ public class AddActivityActivity extends BaseActivity {
 
     private void translate() {
         String title = etActTitle.getText().toString().trim();
-        if (title.length()==0) {
+        if (title.length() == 0) {
             ToastUtils.showCustomBgToast("请填写参数说明");
             return;
         }
@@ -189,12 +193,12 @@ public class AddActivityActivity extends BaseActivity {
             @Override
             public void onResult(Translate result, String input) {//查询成功
                 if (result.getTranslations() != null) {
-                    Log.e("XXX", "trans="+result.getTranslations().toString());
+                    Log.e("XXX", "trans=" + result.getTranslations().toString());
                     String words = result.getTranslations().get(0).replace("the ", "").replace("The ", "");
                     StringBuilder sb = new StringBuilder();
                     String child[] = words.split(" ");
                     for (String s : child) {
-                        sb.append(s.substring(0,1).toUpperCase()).append(s.substring(1, s.length()));
+                        sb.append(s.substring(0, 1).toUpperCase()).append(s.substring(1, s.length()));
                     }
                     sb.append("Activity");
                     tvActName.setText(sb.toString());
@@ -205,7 +209,7 @@ public class AddActivityActivity extends BaseActivity {
             @Override
             public void onError(TranslateErrorCode error) {//查询失败
                 hidePd();
-                ToastUtils.showCustomBgToast("错误代码："+error.getCode());
+                ToastUtils.showCustomBgToast("错误代码：" + error.getCode());
             }
         });
     }
@@ -251,7 +255,7 @@ public class AddActivityActivity extends BaseActivity {
         String name = tvActName.getText().toString().trim();
         String title = etActTitle.getText().toString().trim();
         String duration = etSplashDuration.getText().toString().trim();
-        if (duration.length()==0 && actType == 5) {
+        if (duration.length() == 0 && actType == 5) {
             ToastUtils.showCustomBgToast("启动时间不能为空");
             return;
         }
@@ -267,6 +271,7 @@ public class AddActivityActivity extends BaseActivity {
                 .params("title", title)
                 .params("showTitle", true)
                 .params("isFirst", cbIsFirst.isChecked())
+                .params("isLandscape", cbIsLandscape.isChecked())
                 .params("type", actType)
                 .params("appId", appId)
                 .params("targetActId", targetActId)

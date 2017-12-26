@@ -311,4 +311,5 @@
     <string name="preffix_hint_text">请输入前缀</string>
     <string name="qrcode_text">集成二维码扫描</string>
     <string name="setting_text">设置</string>
+    <string name="is_landscape_text">是否横屏显示</string>
 </resources>
