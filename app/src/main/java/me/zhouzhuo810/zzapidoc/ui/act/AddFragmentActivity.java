@@ -52,8 +52,6 @@ public class AddFragmentActivity extends BaseActivity {
     private ImageView ivClearActTitle;
     private TextView tvFgmName;
     private Button btnKeyWord;
-    private LinearLayout llShowTitle;
-    private CheckBox cbShowTitle;
     private Button btnSubmit;
 
     private int actType;
@@ -61,6 +59,7 @@ public class AddFragmentActivity extends BaseActivity {
     private String appId;
     private String activityId;
     private int count;
+    private String pid;
 
     @Override
     public int getLayoutId() {
@@ -84,8 +83,6 @@ public class AddFragmentActivity extends BaseActivity {
         ivClearActTitle = (ImageView) findViewById(R.id.iv_clear_act_title);
         tvFgmName = (TextView) findViewById(R.id.tv_fgm_name);
         btnKeyWord = (Button) findViewById(R.id.btn_key_word);
-        llShowTitle = (LinearLayout) findViewById(R.id.ll_show_title);
-        cbShowTitle = (CheckBox) findViewById(R.id.cb_show_title);
         btnSubmit = (Button) findViewById(R.id.btn_submit);
     }
 
@@ -93,9 +90,9 @@ public class AddFragmentActivity extends BaseActivity {
     public void initData() {
         activityId = getIntent().getStringExtra("activityId");
         appId = getIntent().getStringExtra("appId");
-        cbShowTitle.setChecked(true);
+        pid = getIntent().getStringExtra("pid");
         count = getIntent().getIntExtra("count", 0);
-        etFgmPosition.setText(""+count);
+        etFgmPosition.setText("" + count);
     }
 
     @Override
@@ -134,7 +131,7 @@ public class AddFragmentActivity extends BaseActivity {
 
     private void translate() {
         String title = etActTitle.getText().toString().trim();
-        if (title.length()==0) {
+        if (title.length() == 0) {
             ToastUtils.showCustomBgToast("请填写参数说明");
             return;
         }
@@ -150,19 +147,19 @@ public class AddFragmentActivity extends BaseActivity {
             @Override
             public void onResult(Translate result, String input) {//查询成功
                 if (result.getTranslations() != null) {
-                    Log.e("XXX", "trans="+result.getTranslations().toString());
+                    Log.e("XXX", "trans=" + result.getTranslations().toString());
                     String word = result.getTranslations().get(0);
                     StringBuilder sb = new StringBuilder();
                     if (word.contains(" ")) {
                         String[] split = word.split(" ");
                         for (String s : split) {
-                            sb.append(s.substring(0,1).toUpperCase()).append(s.substring(1));
+                            sb.append(s.substring(0, 1).toUpperCase()).append(s.substring(1));
                         }
                     } else {
-                        sb.append(word.substring(0,1).toUpperCase()).append(word.substring(1));
+                        sb.append(word.substring(0, 1).toUpperCase()).append(word.substring(1));
                     }
                     sb.append("Fragment");
-                    String newWord = sb.toString().replace("the", "").replace("The", "").replace(".","");
+                    String newWord = sb.toString().replace("the", "").replace("The", "").replace(".", "");
 
                     tvFgmName.setText(newWord);
                 }
@@ -172,7 +169,7 @@ public class AddFragmentActivity extends BaseActivity {
             @Override
             public void onError(TranslateErrorCode error) {//查询失败
                 hidePd();
-                ToastUtils.showCustomBgToast("错误代码："+error.getCode());
+                ToastUtils.showCustomBgToast("错误代码：" + error.getCode());
             }
         });
     }
@@ -211,7 +208,7 @@ public class AddFragmentActivity extends BaseActivity {
         String name = tvFgmName.getText().toString().trim();
         String title = etActTitle.getText().toString().trim();
         String position = etFgmPosition.getText().toString().trim();
-        if (position.length()==0 && actType == 1) {
+        if (position.length() == 0 && actType == 1) {
             ToastUtils.showCustomBgToast("序号不能为空");
             return;
         }
@@ -222,9 +219,9 @@ public class AddFragmentActivity extends BaseActivity {
         showPd(getString(R.string.submiting_text), false);
         PostRequest<AddActivityResult> post = OkGo.<AddActivityResult>post(SharedUtil.getString(ZApplication.getInstance(), "server_config")
                 + "/ZzApiDoc/v1/fragment/addFragment")
+                .params("pid", pid == null ? "0" : pid)
                 .params("name", name)
                 .params("title", title)
-                .params("showTitle", cbShowTitle.isChecked())
                 .params("type", actType)
                 .params("appId", appId)
                 .params("activityId", activityId)

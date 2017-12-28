@@ -312,4 +312,5 @@
     <string name="qrcode_text">集成二维码扫描</string>
     <string name="setting_text">设置</string>
     <string name="is_landscape_text">是否横屏显示</string>
+    <string name="has_child_fgm">有子Fragment</string>
 </resources>

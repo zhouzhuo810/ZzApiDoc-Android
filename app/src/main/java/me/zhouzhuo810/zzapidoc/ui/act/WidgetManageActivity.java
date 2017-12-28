@@ -124,13 +124,16 @@ public class WidgetManageActivity extends BaseActivity {
                         startActWithIntent(intent);
                         break;
                     case 2:
-                        //edit item
+                        //title edit item
 
                         break;
                     case 3:
-                        //info item
+                        //underline edit item
                         break;
                     case 4:
+                        //info item
+                        break;
+                    case 5:
                         //submit btn
                         intent = new Intent(WidgetManageActivity.this, ActionManageActivity.class);
                         intent.putExtra("widgetId", adapter.getmDatas().get(position).getId());
@@ -138,7 +141,7 @@ public class WidgetManageActivity extends BaseActivity {
                         intent.putExtra("appId", appId);
                         startActWithIntent(intent);
                         break;
-                    case 5:
+                    case 6:
                         //exit btn
                         intent = new Intent(WidgetManageActivity.this, ActionManageActivity.class);
                         intent.putExtra("widgetId", adapter.getmDatas().get(position).getId());
@@ -146,10 +149,7 @@ public class WidgetManageActivity extends BaseActivity {
                         intent.putExtra("appId", appId);
                         startActWithIntent(intent);
                         break;
-                    case 6:
-                        //sidebar
-                        break;
-                    case 7:
+                    case 8:
                         //scrollview
                         intent = new Intent(WidgetManageActivity.this, WidgetManageActivity.class);
                         intent.putExtra("pid", adapter.getmDatas().get(position).getId());
@@ -158,7 +158,7 @@ public class WidgetManageActivity extends BaseActivity {
                         intent.putExtra("appId", appId);
                         startActWithIntent(intent);
                         break;
-                    case 8:
+                    case 9:
                         //linear
                         intent = new Intent(WidgetManageActivity.this, WidgetManageActivity.class);
                         intent.putExtra("pid", adapter.getmDatas().get(position).getId());
@@ -167,11 +167,19 @@ public class WidgetManageActivity extends BaseActivity {
                         intent.putExtra("appId", appId);
                         startActWithIntent(intent);
                         break;
-                    case 9:
+                    case 10:
                         //relative
                         intent = new Intent(WidgetManageActivity.this, WidgetManageActivity.class);
                         intent.putExtra("pid", adapter.getmDatas().get(position).getId());
                         intent.putExtra("relativeId", relativeId);
+                        intent.putExtra("projectId", projectId);
+                        intent.putExtra("appId", appId);
+                        startActWithIntent(intent);
+                        break;
+                    case 11:
+                        //ImageView
+                        intent = new Intent(WidgetManageActivity.this, ActionManageActivity.class);
+                        intent.putExtra("widgetId", adapter.getmDatas().get(position).getId());
                         intent.putExtra("projectId", projectId);
                         intent.putExtra("appId", appId);
                         startActWithIntent(intent);

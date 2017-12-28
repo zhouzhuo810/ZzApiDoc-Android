@@ -45,6 +45,7 @@ public class FragmentManageActivity extends BaseActivity {
     private FragmentListAdapter adapter;
     private String activityId;
     private String appId;
+    private String pid;
 
 
     @Override
@@ -75,12 +76,13 @@ public class FragmentManageActivity extends BaseActivity {
         projectId = getIntent().getStringExtra("projectId");
         activityId = getIntent().getStringExtra("activityId");
         appId = getIntent().getStringExtra("appId");
+        pid = getIntent().getStringExtra("pid");
     }
 
     private void getData() {
 
         Api.getApi0()
-                .getAllMyFragment(activityId, getUserId())
+                .getAllMyFragment(activityId, pid == null ? "0" : pid, getUserId())
                 .compose(RxHelper.<GetAllMyFragmentResult>io_main())
                 .subscribe(new Subscriber<GetAllMyFragmentResult>() {
                     @Override
@@ -125,6 +127,7 @@ public class FragmentManageActivity extends BaseActivity {
                 Intent intent = new Intent(FragmentManageActivity.this, AddFragmentActivity.class);
                 intent.putExtra("projectId", projectId);
                 intent.putExtra("appId", appId);
+                intent.putExtra("pid", pid);
                 intent.putExtra("activityId", activityId);
                 intent.putExtra("count", list == null ? 0 : list.size());
                 startActWithIntent(intent);
@@ -147,11 +150,19 @@ public class FragmentManageActivity extends BaseActivity {
         lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
-                showListDialog(Arrays.asList("删除接口"), true, null, new IBaseActivity.OnItemClick() {
+                showListDialog(Arrays.asList("管理子Fragment", "删除接口"), true, null, new IBaseActivity.OnItemClick() {
                     @Override
                     public void onItemClick(int pos, String s) {
                         switch (pos) {
                             case 0:
+                                Intent intent = new Intent(FragmentManageActivity.this, FragmentManageActivity.class);
+                                intent.putExtra("appId", appId);
+                                intent.putExtra("activityId", activityId);
+                                intent.putExtra("projectId", projectId);
+                                intent.putExtra("pid", adapter.getmDatas().get(position).getId());
+                                startActWithIntent(intent);
+                                break;
+                            case 1:
                                 deleteGroup(adapter.getmDatas().get(position).getId());
                                 break;
                         }

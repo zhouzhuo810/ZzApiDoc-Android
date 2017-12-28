@@ -156,5 +156,25 @@ public class GetAllActionsResult {
         public void setCreatePerson(String createPerson) {
             this.createPerson = createPerson;
         }
+
+        private String okActName;
+
+        private String okApiName;
+
+        public String getOkActName() {
+            return okActName;
+        }
+
+        public void setOkActName(String okActName) {
+            this.okActName = okActName;
+        }
+
+        public String getOkApiName() {
+            return okApiName;
+        }
+
+        public void setOkApiName(String okApiName) {
+            this.okApiName = okApiName;
+        }
     }
 }

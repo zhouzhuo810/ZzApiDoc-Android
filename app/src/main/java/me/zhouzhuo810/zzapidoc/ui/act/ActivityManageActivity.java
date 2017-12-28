@@ -157,6 +157,7 @@ public class ActivityManageActivity extends BaseActivity {
                             intent = new Intent(ActivityManageActivity.this, FragmentManageActivity.class);
                             intent.putExtra("appId", appId);
                             intent.putExtra("activityId", adapter.getmDatas().get(position).getId());
+                            intent.putExtra("pid", "0");
                             intent.putExtra("projectId", projectId);
                             startActWithIntent(intent);
                             break;
@@ -166,6 +167,7 @@ public class ActivityManageActivity extends BaseActivity {
                             intent.putExtra("appId", appId);
                             intent.putExtra("activityId", adapter.getmDatas().get(position).getId());
                             intent.putExtra("projectId", projectId);
+                            intent.putExtra("pid", "0");
                             startActWithIntent(intent);
                             break;
                     }

@@ -376,6 +376,7 @@ public interface Api0 {
     @GET("/ZzApiDoc/v1/fragment/getAllMyFragment")
     Observable<GetAllMyFragmentResult> getAllMyFragment(
             @Query("activityId") String activityId,
+            @Query("pid") String pid,
             @Query("userId") String userId
     );
 

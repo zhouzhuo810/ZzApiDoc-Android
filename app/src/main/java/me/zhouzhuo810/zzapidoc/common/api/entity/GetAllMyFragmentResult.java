@@ -44,6 +44,15 @@ public class GetAllMyFragmentResult {
         private String appId;
         private String activityId;
         private String createTime;
+        private boolean hasChild;
+
+        public boolean isHasChild() {
+            return hasChild;
+        }
+
+        public void setHasChild(boolean hasChild) {
+            this.hasChild = hasChild;
+        }
 
         public String getId() {
             return id;
