@@ -2,6 +2,7 @@ package me.zhouzhuo810.zzapidoc.common.api;
 
 import me.zhouzhuo810.zzapidoc.common.api.entity.AddActionResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.AddDictionaryResult;
+import me.zhouzhuo810.zzapidoc.common.api.entity.AddErrorCodeResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.AddInterfaceExampleResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.AddInterfaceGroupResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.AddInterfaceResult;
@@ -16,6 +17,7 @@ import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteActionResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteActivityResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteApplicationResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteArgResult;
+import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteErrorCodeResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteInterfaceGroupResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteInterfaceResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteProjectResult;
@@ -27,6 +29,7 @@ import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteVersionResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GenerateEmptyExampleResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllActionsResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllApplicationResult;
+import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllErrorCodeResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllInterfaceGroupResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllInterfaceResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllMyActivityResult;
@@ -602,6 +605,45 @@ public interface Api0 {
      */
     @GET("/ZzApiDoc/v1/action/getAllActions")
     Observable<GetAllActionsResult> getAllActions(@Query("userId") String userId, @Query("pid") String pid, @Query("widgetId") String widgetId);
+
+
+    /*
+     * 添加错误码
+     */
+    @FormUrlEncoded
+    @POST("/ZzApiDoc/v1/errorCode/addErrorCode")
+    Observable<AddErrorCodeResult> addErrorCode(@Field("userId") String userId,
+                                                @Field("code") int code,
+                                                @Field("note") String note,
+                                                @Field("interfaceId") String interfaceId,
+                                                @Field("groupId") String groupId,
+                                                @Field("projectId") String projectId,
+                                                @Field("isGlobal") boolean isGlobal,
+                                                @Field("isGroup") boolean isGroup
+    );
+
+    /*
+     * 获取所有错误码
+     */
+    @GET("/ZzApiDoc/v1/errorCode/getAllErrorCode")
+    Observable<GetAllErrorCodeResult> getAllErrorCode(@Query("userId") String userId,
+                                                      @Query("interfaceId") String interfaceId,
+                                                      @Query("groupId") String groupId,
+                                                      @Query("projectId") String projectId,
+                                                      @Query("global") boolean global,
+                                                      @Query("group") boolean group
+    );
+
+    /*
+     * 删除错误码
+     */
+    @FormUrlEncoded
+    @POST("/ZzApiDoc/v1/errorCode/deleteErrorCode")
+    Observable<DeleteErrorCodeResult> deleteErrorCode(@Field("userId") String userId,
+                                                      @Field("id") String id
+    );
+
+
 
 
 }

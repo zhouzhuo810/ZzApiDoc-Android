@@ -313,4 +313,11 @@
     <string name="setting_text">设置</string>
     <string name="is_landscape_text">是否横屏显示</string>
     <string name="has_child_fgm">有子Fragment</string>
+    <string name="add_error_code_text">添加错误码</string>
+    <string name="error_code_text">错误码</string>
+    <string name="error_code_hint_text">请输入错误码</string>
+    <string name="choose_group_text">选择接口分组</string>
+    <string name="choose_choose_group_hint">请选择接口分组</string>
+    <string name="error_code_manage_text">错误码</string>
+    <string name="code_not_nul_text">错误码不能为空</string>
 </resources>

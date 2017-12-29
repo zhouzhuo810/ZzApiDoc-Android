@@ -30,10 +30,12 @@ import me.zhouzhuo810.zzapidoc.common.utils.CopyUtils;
 import me.zhouzhuo810.zzapidoc.common.utils.ExportUtils;
 import me.zhouzhuo810.zzapidoc.common.utils.SharedUtil;
 import me.zhouzhuo810.zzapidoc.common.utils.ToastUtils;
+import me.zhouzhuo810.zzapidoc.ui.act.AddErrorCodeActivity;
 import me.zhouzhuo810.zzapidoc.ui.act.AddProjectActivity;
 import me.zhouzhuo810.zzapidoc.ui.act.AddRequestHeaderActivity;
 import me.zhouzhuo810.zzapidoc.ui.act.AddRequestParamsActivity;
 import me.zhouzhuo810.zzapidoc.ui.act.AddResponseParamsActivity;
+import me.zhouzhuo810.zzapidoc.ui.act.ErrorCodeManageActivity;
 import me.zhouzhuo810.zzapidoc.ui.act.InterfaceGroupManageActivity;
 import me.zhouzhuo810.zzapidoc.ui.adapter.ProjectListAdapter;
 import rx.Subscriber;
@@ -139,7 +141,7 @@ public class ProjectFragment extends BaseFragment {
         lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
-                getBaseAct().showListDialog(Arrays.asList("导出JSON文件", "导出PDF文件", "复制JSON下载地址", "复制PDF下载地址", "复制Android API下载地址", "添加全局请求头", "添加全局请求参数",
+                getBaseAct().showListDialog(Arrays.asList("导出JSON文件", "导出PDF文件", "复制JSON下载地址", "复制PDF下载地址", "复制Android API下载地址", "添加全局错误码", "添加全局请求头", "添加全局请求参数",
                         "添加全局返回参数", "修改包名", "删除项目"), true, null, new IBaseActivity.OnItemClick() {
                     @Override
                     public void onItemClick(int pos, String s) {
@@ -163,18 +165,21 @@ public class ProjectFragment extends BaseFragment {
                                         + "&projectId=" + adapter.getmDatas().get(position).getId());
                                 break;
                             case 5:
-                                addGlobalRequestHeader(adapter.getmDatas().get(position).getId());
+                                addGlobalErrorCode(adapter.getmDatas().get(position).getId());
                                 break;
                             case 6:
-                                addGlobalRequestArg(adapter.getmDatas().get(position).getId());
+                                addGlobalRequestHeader(adapter.getmDatas().get(position).getId());
                                 break;
                             case 7:
-                                addGlobalResponseArg(adapter.getmDatas().get(position).getId());
+                                addGlobalRequestArg(adapter.getmDatas().get(position).getId());
                                 break;
                             case 8:
-                                revisePackageName(adapter.getmDatas().get(position));
+                                addGlobalResponseArg(adapter.getmDatas().get(position).getId());
                                 break;
                             case 9:
+                                revisePackageName(adapter.getmDatas().get(position));
+                                break;
+                            case 10:
                                 deleteProject(adapter.getmDatas().get(position).getId());
                                 break;
                         }
@@ -183,6 +188,14 @@ public class ProjectFragment extends BaseFragment {
                 return true;
             }
         });
+    }
+
+    private void addGlobalErrorCode(String id) {
+        Intent intent = new Intent(getActivity(), ErrorCodeManageActivity.class);
+        intent.putExtra("global", true);
+        intent.putExtra("group", false);
+        intent.putExtra("projectId", id);
+        startActWithIntent(intent);
     }
 
     private void revisePackageName(final GetAllProjectResult.DataEntity entity) {

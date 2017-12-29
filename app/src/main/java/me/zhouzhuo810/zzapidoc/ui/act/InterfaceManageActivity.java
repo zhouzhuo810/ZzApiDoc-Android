@@ -237,7 +237,7 @@ public class InterfaceManageActivity extends BaseActivity {
         lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
-                showListDialog(Arrays.asList("修改请求方式", "修改接口名称", "修改接口路径", "添加备注", "复制API下载地址", "删除接口", "复制接口地址", "测试接口"), true,
+                showListDialog(Arrays.asList("修改请求方式", "修改接口名称", "修改接口路径", "添加备注", "复制API下载地址", "添加错误码说明", "删除接口", "复制接口地址", "测试接口"), true,
                         null, new IBaseActivity.OnItemClick() {
                             @Override
                             public void onItemClick(int pos, String s) {
@@ -263,9 +263,12 @@ public class InterfaceManageActivity extends BaseActivity {
                                                         + "&interfaceId=" + adapter.getmDatas().get(position).getId());
                                         break;
                                     case 5:
-                                        deleteInterface(adapter.getmDatas().get(position).getId());
+                                        addGroupErrorCode(adapter.getItem(position).getId());
                                         break;
                                     case 6:
+                                        deleteInterface(adapter.getmDatas().get(position).getId());
+                                        break;
+                                    case 7:
                                         CopyUtils.copyPlainText(InterfaceManageActivity.this,
                                                 adapter.getmDatas().get(position).getName(),
                                                 adapter.getmDatas().get(position).getIp()
@@ -273,7 +276,7 @@ public class InterfaceManageActivity extends BaseActivity {
                                                         + adapter.getmDatas().get(position).getPath());
                                         ToastUtils.showCustomBgToast("已复制到剪切板");
                                         break;
-                                    case 7:
+                                    case 8:
                                         Intent intent = new Intent(InterfaceManageActivity.this, InterfaceTestActivity.class);
                                         intent.putExtra("interfaceId", adapter.getmDatas().get(position).getId());
                                         intent.putExtra("projectId", projectId);
@@ -297,6 +300,15 @@ public class InterfaceManageActivity extends BaseActivity {
                 getData();
             }
         });
+    }
+
+    private void addGroupErrorCode(String id) {
+        Intent intent = new Intent(this, ErrorCodeManageActivity.class);
+        intent.putExtra("global", false);
+        intent.putExtra("group", false);
+        intent.putExtra("interfaceId", id);
+        intent.putExtra("projectId", projectId);
+        startActWithIntent(intent);
     }
 
 

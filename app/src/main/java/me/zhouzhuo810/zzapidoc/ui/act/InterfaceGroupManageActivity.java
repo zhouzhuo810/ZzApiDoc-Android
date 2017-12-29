@@ -10,7 +10,6 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -143,7 +142,7 @@ public class InterfaceGroupManageActivity extends BaseActivity {
         lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
-                showListDialog(Arrays.asList("复制Android Api下载地址", "删除分组", "修改接口地址"), true, null, new IBaseActivity.OnItemClick() {
+                showListDialog(Arrays.asList("复制Android Api下载地址", "添加错误码说明", "删除分组", "修改接口地址"), true, null, new IBaseActivity.OnItemClick() {
                     @Override
                     public void onItemClick(int pos, String s) {
                         switch (pos) {
@@ -155,9 +154,12 @@ public class InterfaceGroupManageActivity extends BaseActivity {
                                                 + "&groupId=" + adapter.getmDatas().get(position).getId());
                                 break;
                             case 1:
-                                deleteGroup(adapter.getmDatas().get(position).getId());
+                                addGroupErrorCode(adapter.getmDatas().get(position).getId());
                                 break;
                             case 2:
+                                deleteGroup(adapter.getmDatas().get(position).getId());
+                                break;
+                            case 3:
                                 changeIpAddr(adapter.getmDatas().get(position));
                                 break;
                         }
@@ -174,6 +176,17 @@ public class InterfaceGroupManageActivity extends BaseActivity {
             }
         });
     }
+
+
+    private void addGroupErrorCode(String id) {
+        Intent intent = new Intent(this, ErrorCodeManageActivity.class);
+        intent.putExtra("global", false);
+        intent.putExtra("group", true);
+        intent.putExtra("groupId", id);
+        intent.putExtra("projectId", projectId);
+        startActWithIntent(intent);
+    }
+
 
     private void copy(String name, String s) {
         CopyUtils.copyPlainText(InterfaceGroupManageActivity.this, name, s);
