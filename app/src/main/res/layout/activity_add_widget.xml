@@ -262,7 +262,7 @@
                     android:textColor="#415868"
                     android:textSize="44px" />
 
-                <TextView
+                <EditText
                     android:id="@+id/tv_key_word"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"

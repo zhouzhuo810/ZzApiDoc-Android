@@ -64,7 +64,7 @@ public class AddWidgetActivity extends BaseActivity {
     private EditText etTitle;
     private ImageView ivClearTitle;
     private LinearLayout llKeyWord;
-    private TextView tvKeyWord;
+    private EditText tvKeyWord;
     private Button btnKeyWord;
     private Button btnWidthMatchParent;
     private Button btnWidthWrapContent;
@@ -156,7 +156,7 @@ public class AddWidgetActivity extends BaseActivity {
         etTitle = (EditText) findViewById(R.id.et_title);
         ivClearTitle = (ImageView) findViewById(R.id.iv_clear_title);
         llKeyWord = (LinearLayout) findViewById(R.id.ll_key_word);
-        tvKeyWord = (TextView) findViewById(R.id.tv_key_word);
+        tvKeyWord = (EditText) findViewById(R.id.tv_key_word);
         btnKeyWord = (Button) findViewById(R.id.btn_key_word);
         btnWidthMatchParent = (Button) findViewById(R.id.btn_width_match_parent);
         btnWidthWrapContent = (Button) findViewById(R.id.btn_width_wrap_content);
@@ -463,7 +463,7 @@ public class AddWidgetActivity extends BaseActivity {
                 if (result.getTranslations() != null) {
                     Log.e("XXX", "trans=" + result.getTranslations().toString());
                     String word = result.getTranslations().get(0);
-                    String newWord = word.replace(" ", "_").replace("the", "").replace("The", "").replace(".", "").toLowerCase();
+                    String newWord = word.replace(" ", "_").replace("the_", "").replace("The_", "").replace(".", "").toLowerCase();
                     tvKeyWord.setText(newWord);
                 }
                 hidePd();
