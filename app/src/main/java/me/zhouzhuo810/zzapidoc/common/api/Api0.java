@@ -6,6 +6,7 @@ import me.zhouzhuo810.zzapidoc.common.api.entity.AddErrorCodeResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.AddInterfaceExampleResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.AddInterfaceGroupResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.AddInterfaceResult;
+import me.zhouzhuo810.zzapidoc.common.api.entity.AddItemResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.AddProjectResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.AddQrCodeResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.AddRequestHeaderResult;
@@ -20,6 +21,7 @@ import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteArgResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteErrorCodeResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteInterfaceGroupResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteInterfaceResult;
+import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteItemResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteProjectResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteQrCodeResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteRequestHeaderResult;
@@ -32,6 +34,7 @@ import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllApplicationResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllErrorCodeResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllInterfaceGroupResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllInterfaceResult;
+import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllItemsResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllMyActivityResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllMyFragmentResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllMyWidgetResult;
@@ -52,6 +55,7 @@ import me.zhouzhuo810.zzapidoc.common.api.entity.PublishVersionEntity;
 import me.zhouzhuo810.zzapidoc.common.api.entity.SetTestFinishResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.UpdateActionResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.UpdateInterfaceResult;
+import me.zhouzhuo810.zzapidoc.common.api.entity.UpdateItemResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.UpdateQrCodeResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.UpdateResponseArgResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.UpdateResult;
@@ -644,6 +648,36 @@ public interface Api0 {
     );
 
 
+    /*
+     * addItem(添加Item)
+     */
+    @FormUrlEncoded
+    @POST("/ZzApiDoc/v1/items/addItem")
+    Observable<AddItemResult> addItem(@Field("type") int type, @Field("name") String name,
+                                      @Field("resId") String resId, @Field("widgetId") String widgetId,
+                                      @Field("widgetPid") String widgetPid, @Field("userId") String userId);
 
+    /*
+     * updateItem(更新Item)
+     */
+    @FormUrlEncoded
+    @POST("/ZzApiDoc/v1/items/updateItem")
+    Observable<UpdateItemResult> updateItem(@Field("itemId") String itemId, @Field("type") int type,
+                                            @Field("name") String name, @Field("resId") String resId,
+                                            @Field("widgetId") String widgetId, @Field("widgetPid") String widgetPid,
+                                            @Field("userId") String userId);
+
+    /*
+     * deleteItem(删除Item)
+     */
+    @FormUrlEncoded
+    @POST("/ZzApiDoc/v1/items/deleteItem")
+    Observable<DeleteItemResult> deleteItem(@Field("id") String id, @Field("userId") String userId);
+
+    /*
+     * getAllItems(获取所有items)
+     */
+    @GET("/ZzApiDoc/v1/items/getAllItems")
+    Observable<GetAllItemsResult> getAllItems(@Query("widgetId") String widgetId, @Query("userId") String userId);
 
 }

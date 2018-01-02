@@ -44,7 +44,7 @@ public class GetAllMyWidgetResult {
         this.data = data;
     }
 
-    public static class DataBean implements SearchAble{
+    public static class DataBean implements SearchAble {
         /**
          * targetActivityId :
          * showLeftTitleLayout : false
@@ -260,7 +260,7 @@ public class GetAllMyWidgetResult {
 
         @Override
         public String toSearch() {
-            return name+title;
+            return name + title;
         }
     }
 }

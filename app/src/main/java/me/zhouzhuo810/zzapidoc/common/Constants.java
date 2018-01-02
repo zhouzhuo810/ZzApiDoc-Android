@@ -12,7 +12,7 @@ import java.io.File;
 public class Constants {
 
 //    public static final String SERVER_IP = "http://192.168.0.169:8080/";
-    public static final String SERVER_IP = "http://192.168.0.191:8080/";
+    public static final String SERVER_IP = "http://192.168.0.212:8080/";
     //public static final String SERVER_IP = "http://125.118.59.1:8888/";
 
     public static final String PIC_HEAD = "http://www.qqwork.net/HighnetCloudFile/";

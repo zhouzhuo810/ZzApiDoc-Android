@@ -320,4 +320,10 @@
     <string name="choose_choose_group_hint">请选择接口分组</string>
     <string name="error_code_manage_text">错误码</string>
     <string name="code_not_nul_text">错误码不能为空</string>
+    <string name="is_fullscreen_text">是否全屏显示</string>
+    <string name="add_item_text">添加Item</string>
+    <string name="item_type_text">Item类型</string>
+    <string name="choose_item_type_hint">请选择Item类型</string>
+    <string name="item_name_hint_text">请输入Item名称(英文)</string>
+    <string name="item_manage_text">Item管理</string>
 </resources>

@@ -1,15 +1,13 @@
 package me.zhouzhuo810.zzapidoc.ui.act;
 
-import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -19,7 +17,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.lzy.okgo.OkGo;
-import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.PostRequest;
 import com.youdao.sdk.app.Language;
@@ -30,18 +27,13 @@ import com.youdao.sdk.ydonlinetranslate.TranslateParameters;
 import com.youdao.sdk.ydonlinetranslate.Translator;
 import com.youdao.sdk.ydtranslate.Translate;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
+import me.zhouzhuo.zzimagebox.ZzImageBox;
 import me.zhouzhuo810.zzapidoc.R;
 import me.zhouzhuo810.zzapidoc.ZApplication;
-import me.zhouzhuo810.zzapidoc.common.api.Api;
 import me.zhouzhuo810.zzapidoc.common.api.JsonCallback;
 import me.zhouzhuo810.zzapidoc.common.api.entity.AddActivityResult;
 import me.zhouzhuo810.zzapidoc.common.base.BaseActivity;
@@ -51,11 +43,17 @@ import me.zhouzhuo810.zzapidoc.common.utils.ToastUtils;
 import zhouzhuo810.me.zzandframe.ui.act.IBaseActivity;
 
 /**
+ * 添加Activity
  * Created by admin on 2017/8/19.
  */
 public class AddActivityActivity extends BaseActivity {
 
     public static final int REQUEST_SELECT_PICTURE = 0x80;
+    public static final int REQUEST_SELECT_PICTURE_GUIDE_ONE = 0x81;
+    public static final int REQUEST_SELECT_PICTURE_GUIDE_TWO = 0x82;
+    public static final int REQUEST_SELECT_PICTURE_GUIDE_THREE = 0x83;
+    public static final int REQUEST_SELECT_PICTURE_GUIDE_FOUR = 0x84;
+    public static final int REQUEST_SELECT_PICTURE_GUIDE_FIVE = 0x85;
 
     private RelativeLayout rlBack;
     private RelativeLayout rlRight;
@@ -77,6 +75,8 @@ public class AddActivityActivity extends BaseActivity {
     private LinearLayout llIsLandscape;
     private CheckBox cbIsLandscape;
     private Button btnSubmit;
+    private CheckBox cbIsFullScreen;
+    private ZzImageBox zibPic;
 
     private void assignViews() {
         rlBack = (RelativeLayout) findViewById(R.id.rl_back);
@@ -98,7 +98,9 @@ public class AddActivityActivity extends BaseActivity {
         cbIsFirst = (CheckBox) findViewById(R.id.cb_is_first);
         llIsLandscape = (LinearLayout) findViewById(R.id.ll_is_landscape);
         cbIsLandscape = (CheckBox) findViewById(R.id.cb_is_landscape);
+        cbIsFullScreen = (CheckBox) findViewById(R.id.cb_is_fullscreen);
         btnSubmit = (Button) findViewById(R.id.btn_submit);
+        zibPic = (ZzImageBox) findViewById(R.id.zib_pic);
     }
 
 
@@ -163,7 +165,42 @@ public class AddActivityActivity extends BaseActivity {
         ivSplash.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                choosePic();
+                choosePic(REQUEST_SELECT_PICTURE);
+            }
+        });
+
+        zibPic.setOnImageClickListener(new ZzImageBox.OnImageClickListener() {
+            @Override
+            public void onImageClick(int position, String filePath, ImageView iv) {
+
+            }
+
+            @Override
+            public void onDeleteClick(int position, String filePath) {
+                zibPic.removeImage(position);
+            }
+
+            @Override
+            public void onAddClick() {
+                int size = zibPic.getAllImages().size();
+                switch (size) {
+                    case 0:
+                        choosePic(REQUEST_SELECT_PICTURE_GUIDE_ONE);
+                        break;
+                    case 1:
+                        choosePic(REQUEST_SELECT_PICTURE_GUIDE_TWO);
+                        break;
+                    case 2:
+                        choosePic(REQUEST_SELECT_PICTURE_GUIDE_THREE);
+                        break;
+                    case 3:
+                        choosePic(REQUEST_SELECT_PICTURE_GUIDE_FOUR);
+                        break;
+                    case 4:
+                        choosePic(REQUEST_SELECT_PICTURE_GUIDE_FIVE);
+                        break;
+                }
+
             }
         });
 
@@ -221,10 +258,10 @@ public class AddActivityActivity extends BaseActivity {
         startActForResultWithIntent(intent, 0x01);
     }
 
-    private void choosePic() {
+    private void choosePic(int requestCode) {
         Intent intent = new Intent(Intent.ACTION_PICK, null);
         intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
-        startActivityForResult(Intent.createChooser(intent, "选择图片"), REQUEST_SELECT_PICTURE);
+        startActivityForResult(Intent.createChooser(intent, "选择图片"), requestCode);
     }
 
     @Override
@@ -242,6 +279,51 @@ public class AddActivityActivity extends BaseActivity {
                     if (selectedUri != null) {
                         ivSplash.setImageURI(selectedUri);
                         splashPath = ContentUtils.getRealPathFromUri(AddActivityActivity.this, selectedUri);
+                    } else {
+                        ToastUtils.showCustomBgToast("选择图片出错了，请选择其他图片");
+                    }
+                    break;
+                case REQUEST_SELECT_PICTURE_GUIDE_ONE:
+                    final Uri selectedUriOne = data.getData();
+                    if (selectedUriOne != null) {
+                        String path = ContentUtils.getRealPathFromUri(AddActivityActivity.this, selectedUriOne);
+                        zibPic.addImage(path);
+                    } else {
+                        ToastUtils.showCustomBgToast("选择图片出错了，请选择其他图片");
+                    }
+                    break;
+                case REQUEST_SELECT_PICTURE_GUIDE_TWO:
+                    final Uri selectedUriTwo = data.getData();
+                    if (selectedUriTwo != null) {
+                        String path = ContentUtils.getRealPathFromUri(AddActivityActivity.this, selectedUriTwo);
+                        zibPic.addImage(path);
+                    } else {
+                        ToastUtils.showCustomBgToast("选择图片出错了，请选择其他图片");
+                    }
+                    break;
+                case REQUEST_SELECT_PICTURE_GUIDE_THREE:
+                    final Uri selectedUriThree = data.getData();
+                    if (selectedUriThree != null) {
+                        String path = ContentUtils.getRealPathFromUri(AddActivityActivity.this, selectedUriThree);
+                        zibPic.addImage(path);
+                    } else {
+                        ToastUtils.showCustomBgToast("选择图片出错了，请选择其他图片");
+                    }
+                    break;
+                case REQUEST_SELECT_PICTURE_GUIDE_FOUR:
+                    final Uri selectedUriFour = data.getData();
+                    if (selectedUriFour != null) {
+                        String path = ContentUtils.getRealPathFromUri(AddActivityActivity.this, selectedUriFour);
+                        zibPic.addImage(path);
+                    } else {
+                        ToastUtils.showCustomBgToast("选择图片出错了，请选择其他图片");
+                    }
+                    break;
+                case REQUEST_SELECT_PICTURE_GUIDE_FIVE:
+                    final Uri selectedUriFive = data.getData();
+                    if (selectedUriFive != null) {
+                        String path = ContentUtils.getRealPathFromUri(AddActivityActivity.this, selectedUriFive);
+                        zibPic.addImage(path);
                     } else {
                         ToastUtils.showCustomBgToast("选择图片出错了，请选择其他图片");
                     }
@@ -272,14 +354,36 @@ public class AddActivityActivity extends BaseActivity {
                 .params("showTitle", true)
                 .params("isFirst", cbIsFirst.isChecked())
                 .params("isLandscape", cbIsLandscape.isChecked())
+                .params("isFullScreen", cbIsFullScreen.isChecked())
                 .params("type", actType)
                 .params("appId", appId)
                 .params("targetActId", targetActId)
                 .params("splashSecond", Integer.parseInt(duration))
                 .params("userId", getUserId())
+                .params("guideImgCount", zibPic.getAllImages().size())
                 .isMultipart(true);
         if (splashPath != null) {
             post.params("splashImg", new File(splashPath));
+        }
+        for (int i = 0; i < zibPic.getAllImages().size(); i++) {
+            String path = zibPic.getImagePathAt(i);
+            switch (i) {
+                case 0:
+                    post.params("guideImgOne", new File(path));
+                    break;
+                case 1:
+                    post.params("guideImgTwo", new File(path));
+                    break;
+                case 2:
+                    post.params("guideImgThree", new File(path));
+                    break;
+                case 3:
+                    post.params("guideImgFour", new File(path));
+                    break;
+                case 4:
+                    post.params("guideImgFive", new File(path));
+                    break;
+            }
         }
         post.execute(new JsonCallback<AddActivityResult>(AddActivityResult.class) {
             @Override
@@ -314,16 +418,28 @@ public class AddActivityActivity extends BaseActivity {
         showListDialog(items, true, null, new IBaseActivity.OnItemClick() {
             @Override
             public void onItemClick(int position, String content) {
-                if (position == 1) {
-                    llSplash.setVisibility(View.VISIBLE);
-                    llSplashDuration.setVisibility(View.VISIBLE);
-                    llTargetAct.setVisibility(View.VISIBLE);
-                    tvActName.setText("SplashActivity");
-                } else {
-                    llSplash.setVisibility(View.GONE);
-                    llSplashDuration.setVisibility(View.GONE);
-                    llTargetAct.setVisibility(View.GONE);
-                    tvActName.setText("");
+                switch (position) {
+                    case 1:
+                        llSplash.setVisibility(View.VISIBLE);
+                        llSplashDuration.setVisibility(View.VISIBLE);
+                        llTargetAct.setVisibility(View.VISIBLE);
+                        zibPic.setVisibility(View.GONE);
+                        tvActName.setText("SplashActivity");
+                        break;
+                    case 2:
+                        llSplash.setVisibility(View.GONE);
+                        llSplashDuration.setVisibility(View.GONE);
+                        llTargetAct.setVisibility(View.VISIBLE);
+                        zibPic.setVisibility(View.VISIBLE);
+                        tvActName.setText("GuideActivity");
+                        break;
+                    default:
+                        zibPic.setVisibility(View.GONE);
+                        llSplash.setVisibility(View.GONE);
+                        llSplashDuration.setVisibility(View.GONE);
+                        llTargetAct.setVisibility(View.GONE);
+                        tvActName.setText("");
+                        break;
                 }
                 actType = position;
                 tvActType.setText(content);

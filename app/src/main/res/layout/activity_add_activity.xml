@@ -316,44 +316,43 @@
         android:layout_marginLeft="30px"
         android:background="@color/colorGrayBg" />
 
-
-<!--    <LinearLayout
-        android:id="@+id/ll_show_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorWhite"
-        android:gravity="center_vertical"
-        android:minHeight="130px"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_weight="1"
+    <!--    <LinearLayout
+            android:id="@+id/ll_show_title"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="40px"
-            android:gravity="center|left"
-            android:text="@string/show_title_text"
-            android:textColor="#415868"
-            android:textSize="44px" />
+            android:background="@color/colorWhite"
+            android:gravity="center_vertical"
+            android:minHeight="130px"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40px"
+                android:gravity="center|left"
+                android:text="@string/show_title_text"
+                android:textColor="#415868"
+                android:textSize="44px" />
 
 
-        <CheckBox
-            android:id="@+id/cb_show_title"
-            android:layout_width="99px"
-            android:layout_height="75px"
-            android:layout_marginRight="40px"
-            android:layout_marginLeft="20px"
-            android:checked="true"
-            app:layout_auto_baseheight="width"
-            android:background="@drawable/cb_selector"
-            android:button="@null" />
-    </LinearLayout>
+            <CheckBox
+                android:id="@+id/cb_show_title"
+                android:layout_width="99px"
+                android:layout_height="75px"
+                android:layout_marginRight="40px"
+                android:layout_marginLeft="20px"
+                android:checked="true"
+                app:layout_auto_baseheight="width"
+                android:background="@drawable/cb_selector"
+                android:button="@null" />
+        </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:layout_marginLeft="30px"
-        android:background="@color/colorGrayBg" />-->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginLeft="30px"
+            android:background="@color/colorGrayBg" />-->
     <LinearLayout
         android:id="@+id/ll_is_first"
         android:layout_width="match_parent"
@@ -365,9 +364,9 @@
 
         <TextView
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40px"
+            android:layout_weight="1"
             android:gravity="center|left"
             android:text="@string/is_first_text"
             android:textColor="#415868"
@@ -378,12 +377,12 @@
             android:id="@+id/cb_is_first"
             android:layout_width="99px"
             android:layout_height="75px"
-            android:layout_marginRight="40px"
             android:layout_marginLeft="20px"
-            app:layout_auto_baseheight="width"
-            android:checked="false"
+            android:layout_marginRight="40px"
             android:background="@drawable/cb_selector"
-            android:button="@null" />
+            android:button="@null"
+            android:checked="false"
+            app:layout_auto_baseheight="width" />
     </LinearLayout>
 
     <View
@@ -403,9 +402,9 @@
 
         <TextView
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40px"
+            android:layout_weight="1"
             android:gravity="center|left"
             android:text="@string/is_landscape_text"
             android:textColor="#415868"
@@ -416,12 +415,12 @@
             android:id="@+id/cb_is_landscape"
             android:layout_width="99px"
             android:layout_height="75px"
-            android:layout_marginRight="40px"
             android:layout_marginLeft="20px"
-            app:layout_auto_baseheight="width"
-            android:checked="false"
+            android:layout_marginRight="40px"
             android:background="@drawable/cb_selector"
-            android:button="@null" />
+            android:button="@null"
+            android:checked="false"
+            app:layout_auto_baseheight="width" />
     </LinearLayout>
 
     <View
@@ -430,6 +429,54 @@
         android:layout_marginLeft="30px"
         android:background="@color/colorGrayBg" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:gravity="center_vertical"
+        android:minHeight="130px"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40px"
+            android:layout_weight="1"
+            android:gravity="center|left"
+            android:text="@string/is_fullscreen_text"
+            android:textColor="#415868"
+            android:textSize="44px" />
+
+
+        <CheckBox
+            android:id="@+id/cb_is_fullscreen"
+            android:layout_width="99px"
+            android:layout_height="75px"
+            android:layout_marginLeft="20px"
+            android:layout_marginRight="40px"
+            android:background="@drawable/cb_selector"
+            android:button="@null"
+            android:checked="false"
+            app:layout_auto_baseheight="width" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginLeft="30px"
+        android:background="@color/colorGrayBg" />
+
+    <me.zhouzhuo.zzimagebox.ZzImageBox
+        android:id="@+id/zib_pic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30px"
+        app:zib_img_size_one_line="5"
+        app:zib_left_margin="40px"
+        app:zib_max_line="1"
+        app:zib_right_margin="40px">
+
+    </me.zhouzhuo.zzimagebox.ZzImageBox>
 
     <Button
         android:id="@+id/btn_submit"

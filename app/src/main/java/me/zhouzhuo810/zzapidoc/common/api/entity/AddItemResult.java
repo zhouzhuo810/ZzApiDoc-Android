@@ -3,9 +3,9 @@ package me.zhouzhuo810.zzapidoc.common.api.entity;
 import java.util.List;
 
 /**
- * 更新版本记录
+ * addItem
  */
-public class UpdateVersionRecordResult {
+public class AddItemResult {
     private int code;  //
 
     public void setCode(int code) {

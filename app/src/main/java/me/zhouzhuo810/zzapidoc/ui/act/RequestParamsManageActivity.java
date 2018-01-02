@@ -307,7 +307,7 @@ public class RequestParamsManageActivity extends BaseActivity {
     }
 
     private void reviseType(final GetRequestArgResult.DataBean dataBean) {
-        showListDialog(Arrays.asList("string", "number", "object", "array[object]", "array[string]", "array", "file", "unknown", "array[number]"), false, new DialogInterface.OnDismissListener() {
+        showListDialog(Arrays.asList("string", "int", "object", "array[object]", "array[string]", "array", "file", "unknown", "array[int]","float","array[float]"), false, new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialog) {
             }

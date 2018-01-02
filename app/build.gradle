@@ -67,4 +67,5 @@ dependencies {
     //pdf view
     compile 'com.github.barteksc:android-pdf-viewer:2.7.0'
 
+    compile 'me.zhouzhuo.zzimagebox:zz-image-box:1.0.5'
 }
