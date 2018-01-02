@@ -51,6 +51,25 @@ import zhouzhuo810.me.zzandframe.ui.act.IBaseActivity;
  */
 public class AddWidgetActivity extends BaseActivity {
 
+    private static final int TYPE_TITLE_BAR = 0;
+    private static final int TYPE_SETTING_ITEM = 1;
+    private static final int TYPE_TITLE_EDIT_ITEM = 2;
+    private static final int TYPE_UNDERLINE_EDIT_ITEM = 3;
+    private static final int TYPE_INFO_ITEM = 4;
+    private static final int TYPE_SUBMIT_BTN_ITEM = 5;
+    private static final int TYPE_EXIT_BTN_ITEM = 6;
+    private static final int TYPE_LETTER_RV = 7;
+    private static final int TYPE_SCROLL_VIEW = 8;
+    private static final int TYPE_LINEAR_LAYOUT = 9;
+    private static final int TYPE_RELATIVE_LAYOUT = 10;
+    private static final int TYPE_IMAGE_VIEW = 11;
+    private static final int TYPE_TEXT_VIEW = 12;
+    private static final int TYPE_CHECK_BOX = 13;
+    private static final int TYPE_RV = 14;
+    private static final int TYPE_LV = 15;
+    private static final int TYPE_SCROLLABLE_LV = 16;
+    private static final int TYPE_EDIT_TEXT = 17;
+
     public static final int REQUEST_SELECT_PICTURE = 0x80;
 
     private RelativeLayout rlBack;
@@ -385,6 +404,7 @@ public class AddWidgetActivity extends BaseActivity {
 
     private void chooseTextColor() {
         List<String> items = new ArrayList<>();
+        items.add("自定义");
         items.add("@color/colorBlack");
         items.add("@color/colorPrimary");
         items.add("@color/colorWhite");
@@ -393,7 +413,20 @@ public class AddWidgetActivity extends BaseActivity {
         showListDialog(items, true, null, new IBaseActivity.OnItemClick() {
             @Override
             public void onItemClick(int i, String s) {
-                tvTextColor.setText(s);
+                if (i == 0) {
+                    showTwoBtnEditDialog("文字顔色", "请输入文字颜色", "#", false, new IBaseActivity.OnTwoBtnEditClick() {
+                        @Override
+                        public void onOk(String s) {
+                            tvTextColor.setText(s);
+                        }
+
+                        @Override
+                        public void onCancel() {
+                        }
+                    });
+                } else {
+                    tvTextColor.setText(s);
+                }
             }
         });
     }
@@ -614,58 +647,58 @@ public class AddWidgetActivity extends BaseActivity {
                 tvWidgetName.setText(s);
                 hideAll();
                 switch (i) {
-                    case 0:
+                    case TYPE_TITLE_BAR:
                         showTitleBarItem();
                         break;
-                    case 1:
+                    case TYPE_SETTING_ITEM:
                         showSettingItem();
                         break;
-                    case 2:
+                    case TYPE_TITLE_EDIT_ITEM:
                         showTitleEditItem();
                         break;
-                    case 3:
+                    case TYPE_UNDERLINE_EDIT_ITEM:
                         showUnderlineEditItem();
                         break;
-                    case 4:
+                    case TYPE_INFO_ITEM:
                         showInfoItem();
                         break;
-                    case 5:
+                    case TYPE_SUBMIT_BTN_ITEM:
                         showSubmitBtn();
                         break;
-                    case 6:
+                    case TYPE_EXIT_BTN_ITEM:
                         showExitBtn();
                         break;
-                    case 7:
+                    case TYPE_LETTER_RV:
                         showSideBar();
                         break;
-                    case 8:
+                    case TYPE_SCROLL_VIEW:
                         showScrollView();
                         break;
-                    case 9:
+                    case TYPE_LINEAR_LAYOUT:
                         showLinear();
                         break;
-                    case 10:
+                    case TYPE_RELATIVE_LAYOUT:
                         showRelative();
                         break;
-                    case 11:
+                    case TYPE_IMAGE_VIEW:
                         showImageView();
                         break;
-                    case 12:
+                    case TYPE_TEXT_VIEW:
                         showTextView();
                         break;
-                    case 13:
+                    case TYPE_CHECK_BOX:
                         showCheckBox();
                         break;
-                    case 14:
+                    case TYPE_RV:
                         showRv();
                         break;
-                    case 15:
+                    case TYPE_LV:
                         showLv();
                         break;
-                    case 16:
+                    case TYPE_SCROLLABLE_LV:
                         showScrollLv();
                         break;
-                    case 17:
+                    case TYPE_EDIT_TEXT:
                         showEditText();
                         break;
                 }
@@ -718,6 +751,7 @@ public class AddWidgetActivity extends BaseActivity {
         llGravity.setVisibility(View.VISIBLE);
         llTextColor.setVisibility(View.VISIBLE);
         llTextSize.setVisibility(View.VISIBLE);
+        llWidgetWeight.setVisibility(View.VISIBLE);
         showPaddingMarin();
     }
 

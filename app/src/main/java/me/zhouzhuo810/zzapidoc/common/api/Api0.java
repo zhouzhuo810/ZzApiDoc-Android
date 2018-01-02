@@ -652,32 +652,32 @@ public interface Api0 {
      * addItem(添加Item)
      */
     @FormUrlEncoded
-    @POST("/ZzApiDoc/v1/items/addItem")
+    @POST("/ZzApiDoc/v1/item/addItem")
     Observable<AddItemResult> addItem(@Field("type") int type, @Field("name") String name,
                                       @Field("resId") String resId, @Field("widgetId") String widgetId,
-                                      @Field("widgetPid") String widgetPid, @Field("userId") String userId);
+                                      @Field("userId") String userId);
 
     /*
      * updateItem(更新Item)
      */
     @FormUrlEncoded
-    @POST("/ZzApiDoc/v1/items/updateItem")
+    @POST("/ZzApiDoc/v1/item/updateItem")
     Observable<UpdateItemResult> updateItem(@Field("itemId") String itemId, @Field("type") int type,
                                             @Field("name") String name, @Field("resId") String resId,
-                                            @Field("widgetId") String widgetId, @Field("widgetPid") String widgetPid,
+                                            @Field("widgetId") String widgetId,
                                             @Field("userId") String userId);
 
     /*
      * deleteItem(删除Item)
      */
     @FormUrlEncoded
-    @POST("/ZzApiDoc/v1/items/deleteItem")
+    @POST("/ZzApiDoc/v1/item/deleteItem")
     Observable<DeleteItemResult> deleteItem(@Field("id") String id, @Field("userId") String userId);
 
     /*
      * getAllItems(获取所有items)
      */
-    @GET("/ZzApiDoc/v1/items/getAllItems")
+    @GET("/ZzApiDoc/v1/item/getAllItems")
     Observable<GetAllItemsResult> getAllItems(@Query("widgetId") String widgetId, @Query("userId") String userId);
 
 }

@@ -282,6 +282,16 @@
             android:configChanges="orientation|keyboardHidden|layoutDirection|screenSize|screenLayout"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".ui.act.ItemManageActivity"
+            android:configChanges="orientation|keyboardHidden|layoutDirection|screenSize|screenLayout"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".ui.act.AddItemActivity"
+            android:configChanges="orientation|keyboardHidden|layoutDirection|screenSize|screenLayout"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
 
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"

@@ -44,7 +44,6 @@ public class AddItemActivity extends BaseActivity {
     private Button btnKeyWord;
     private Button btnSubmit;
     private String widgetId;
-    private String widgetPid;
     private int type;
 
     private void assignViews() {
@@ -78,7 +77,6 @@ public class AddItemActivity extends BaseActivity {
     @Override
     public void initData() {
         widgetId = getIntent().getStringExtra("widgetId");
-        widgetPid = getIntent().getStringExtra("widgetPid");
         type = getIntent().getIntExtra("type", TYPE_RV_ITEM);
     }
 
@@ -107,7 +105,7 @@ public class AddItemActivity extends BaseActivity {
         String name = tvItemName.getText().toString().trim();
         showPd(getString(R.string.submiting_text), false);
         Api.getApi0()
-                .addItem(type, title, name, widgetId, widgetPid, getUserId())
+                .addItem(type, title, name, widgetId, getUserId())
                 .compose(RxHelper.<AddItemResult>io_main())
                 .subscribe(new Subscriber<AddItemResult>() {
                     @Override

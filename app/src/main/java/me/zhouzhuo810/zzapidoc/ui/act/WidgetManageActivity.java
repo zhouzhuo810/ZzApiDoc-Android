@@ -29,6 +29,26 @@ import zhouzhuo810.me.zzandframe.ui.act.IBaseActivity;
  * Created by admin on 2017/8/19.
  */
 public class WidgetManageActivity extends BaseActivity {
+
+    private static final int TYPE_TITLE_BAR = 0;
+    private static final int TYPE_SETTING_ITEM = 1;
+    private static final int TYPE_TITLE_EDIT_ITEM = 2;
+    private static final int TYPE_UNDERLINE_EDIT_ITEM = 3;
+    private static final int TYPE_INFO_ITEM = 4;
+    private static final int TYPE_SUBMIT_BTN_ITEM = 5;
+    private static final int TYPE_EXIT_BTN_ITEM = 6;
+    private static final int TYPE_LETTER_RV = 7;
+    private static final int TYPE_SCROLL_VIEW = 8;
+    private static final int TYPE_LINEAR_LAYOUT = 9;
+    private static final int TYPE_RELATIVE_LAYOUT = 10;
+    private static final int TYPE_IMAGE_VIEW = 11;
+    private static final int TYPE_TEXT_VIEW = 12;
+    private static final int TYPE_CHECK_BOX = 13;
+    private static final int TYPE_RV = 14;
+    private static final int TYPE_LV = 15;
+    private static final int TYPE_SCROLLABLE_LV = 16;
+    private static final int TYPE_EDIT_TEXT = 17;
+
     private RelativeLayout rlBack;
     private RelativeLayout rlRight;
     private SwipeRefreshLayout refresh;
@@ -107,7 +127,7 @@ public class WidgetManageActivity extends BaseActivity {
                 int type = adapter.getmDatas().get(position).getType();
                 Intent intent;
                 switch (type) {
-                    case 0:
+                    case TYPE_TITLE_BAR:
                         // titlebar
                         intent = new Intent(WidgetManageActivity.this, ActionManageActivity.class);
                         intent.putExtra("widgetId", adapter.getmDatas().get(position).getId());
@@ -115,7 +135,7 @@ public class WidgetManageActivity extends BaseActivity {
                         intent.putExtra("appId", appId);
                         startActWithIntent(intent);
                         break;
-                    case 1:
+                    case TYPE_SETTING_ITEM:
                         //setting item
                         intent = new Intent(WidgetManageActivity.this, ActionManageActivity.class);
                         intent.putExtra("widgetId", adapter.getmDatas().get(position).getId());
@@ -123,17 +143,17 @@ public class WidgetManageActivity extends BaseActivity {
                         intent.putExtra("appId", appId);
                         startActWithIntent(intent);
                         break;
-                    case 2:
+                    case TYPE_TITLE_EDIT_ITEM:
                         //title edit item
 
                         break;
-                    case 3:
+                    case TYPE_UNDERLINE_EDIT_ITEM:
                         //underline edit item
                         break;
-                    case 4:
+                    case TYPE_INFO_ITEM:
                         //info item
                         break;
-                    case 5:
+                    case TYPE_SUBMIT_BTN_ITEM:
                         //submit btn
                         intent = new Intent(WidgetManageActivity.this, ActionManageActivity.class);
                         intent.putExtra("widgetId", adapter.getmDatas().get(position).getId());
@@ -141,7 +161,7 @@ public class WidgetManageActivity extends BaseActivity {
                         intent.putExtra("appId", appId);
                         startActWithIntent(intent);
                         break;
-                    case 6:
+                    case TYPE_EXIT_BTN_ITEM:
                         //exit btn
                         intent = new Intent(WidgetManageActivity.this, ActionManageActivity.class);
                         intent.putExtra("widgetId", adapter.getmDatas().get(position).getId());
@@ -149,7 +169,7 @@ public class WidgetManageActivity extends BaseActivity {
                         intent.putExtra("appId", appId);
                         startActWithIntent(intent);
                         break;
-                    case 8:
+                    case TYPE_SCROLL_VIEW:
                         //scrollview
                         intent = new Intent(WidgetManageActivity.this, WidgetManageActivity.class);
                         intent.putExtra("pid", adapter.getmDatas().get(position).getId());
@@ -158,7 +178,7 @@ public class WidgetManageActivity extends BaseActivity {
                         intent.putExtra("appId", appId);
                         startActWithIntent(intent);
                         break;
-                    case 9:
+                    case TYPE_LINEAR_LAYOUT:
                         //linear
                         intent = new Intent(WidgetManageActivity.this, WidgetManageActivity.class);
                         intent.putExtra("pid", adapter.getmDatas().get(position).getId());
@@ -167,7 +187,7 @@ public class WidgetManageActivity extends BaseActivity {
                         intent.putExtra("appId", appId);
                         startActWithIntent(intent);
                         break;
-                    case 10:
+                    case TYPE_RELATIVE_LAYOUT:
                         //relative
                         intent = new Intent(WidgetManageActivity.this, WidgetManageActivity.class);
                         intent.putExtra("pid", adapter.getmDatas().get(position).getId());
@@ -176,11 +196,20 @@ public class WidgetManageActivity extends BaseActivity {
                         intent.putExtra("appId", appId);
                         startActWithIntent(intent);
                         break;
-                    case 11:
+                    case TYPE_IMAGE_VIEW:
                         //ImageView
                         intent = new Intent(WidgetManageActivity.this, ActionManageActivity.class);
                         intent.putExtra("widgetId", adapter.getmDatas().get(position).getId());
                         intent.putExtra("projectId", projectId);
+                        intent.putExtra("appId", appId);
+                        startActWithIntent(intent);
+                        break;
+                    case TYPE_RV:
+                        //recycler view
+                        intent = new Intent(WidgetManageActivity.this, ItemManageActivity.class);
+                        intent.putExtra("widgetId", adapter.getmDatas().get(position).getId());
+                        intent.putExtra("projectId", projectId);
+                        intent.putExtra("relativeId", relativeId);
                         intent.putExtra("appId", appId);
                         startActWithIntent(intent);
                         break;

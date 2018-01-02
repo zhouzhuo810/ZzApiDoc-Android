@@ -2,6 +2,8 @@ package me.zhouzhuo810.zzapidoc.common.api.entity;
 
 import java.util.List;
 
+import me.zhouzhuo810.zzapidoc.common.rule.SearchAble;
+
 /**
  * getAllItems
  */
@@ -36,7 +38,7 @@ public class GetAllItemsResult {
         return data;
     }
 
-    public static class DataEntity {
+    public static class DataEntity implements SearchAble {
         private String id;  //
 
         public void setId(String id) {
@@ -45,6 +47,16 @@ public class GetAllItemsResult {
 
         public String getId() {
             return id;
+        }
+
+        private String widgetId;
+
+        public String getWidgetId() {
+            return widgetId;
+        }
+
+        public void setWidgetId(String widgetId) {
+            this.widgetId = widgetId;
         }
 
         private int type;  //
@@ -77,16 +89,6 @@ public class GetAllItemsResult {
             return widgetName;
         }
 
-        private String parentWidgetName;  //
-
-        public String getParentWidgetName() {
-            return parentWidgetName;
-        }
-
-        public void setParentWidgetName(String parentWidgetName) {
-            this.parentWidgetName = parentWidgetName;
-        }
-
         private String createTime;  //
 
         public void setCreateTime(String createTime) {
@@ -105,6 +107,21 @@ public class GetAllItemsResult {
 
         public String getCreatePerson() {
             return createPerson;
+        }
+
+        private String resId;
+
+        public String getResId() {
+            return resId;
+        }
+
+        public void setResId(String resId) {
+            this.resId = resId;
+        }
+
+        @Override
+        public String toSearch() {
+            return resId + "," + name;
         }
     }
 }

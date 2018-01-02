@@ -17,10 +17,12 @@ import java.util.List;
 import me.zhouzhuo810.zzapidoc.R;
 import me.zhouzhuo810.zzapidoc.common.api.Api;
 import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteActivityResult;
+import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllItemsResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllMyWidgetResult;
 import me.zhouzhuo810.zzapidoc.common.base.BaseActivity;
 import me.zhouzhuo810.zzapidoc.common.rx.RxHelper;
 import me.zhouzhuo810.zzapidoc.common.utils.ToastUtils;
+import me.zhouzhuo810.zzapidoc.ui.adapter.ItemListAdapter;
 import me.zhouzhuo810.zzapidoc.ui.adapter.WidgetListAdapter;
 import rx.Subscriber;
 import zhouzhuo810.me.zzandframe.ui.act.IBaseActivity;
@@ -36,15 +38,15 @@ public class ItemManageActivity extends BaseActivity {
     private TextView tvNoData;
     private String relativeId;
 
-    private List<GetAllMyWidgetResult.DataBean> list;
-    private WidgetListAdapter adapter;
+    private List<GetAllItemsResult.DataEntity> list;
+    private ItemListAdapter adapter;
     private String projectId;
     private String appId;
-    private String pid;
+    private String widgetId;
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_widget_manage;
+        return R.layout.activity_item_manage;
     }
 
     @Override
@@ -61,7 +63,7 @@ public class ItemManageActivity extends BaseActivity {
         tvNoData = (TextView) findViewById(R.id.tv_no_data);
 
         list = new ArrayList<>();
-        adapter = new WidgetListAdapter(this, list, R.layout.list_item_widget, true);
+        adapter = new ItemListAdapter(this, list, R.layout.list_item_widget, true);
         lv.setAdapter(adapter);
     }
 
@@ -70,7 +72,7 @@ public class ItemManageActivity extends BaseActivity {
         appId = getIntent().getStringExtra("appId");
         relativeId = getIntent().getStringExtra("relativeId");
         projectId = getIntent().getStringExtra("projectId");
-        pid = getIntent().getStringExtra("pid");
+        widgetId = getIntent().getStringExtra("widgetId");
     }
 
     @Override
@@ -92,10 +94,10 @@ public class ItemManageActivity extends BaseActivity {
         rlRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ItemManageActivity.this, AddWidgetActivity.class);
+                Intent intent = new Intent(ItemManageActivity.this, AddItemActivity.class);
                 intent.putExtra("relativeId", relativeId);
                 intent.putExtra("appId", appId);
-                intent.putExtra("pid", pid);
+                intent.putExtra("widgetId", widgetId);
                 intent.putExtra("projectId", projectId);
                 startActWithIntent(intent);
             }
@@ -110,25 +112,37 @@ public class ItemManageActivity extends BaseActivity {
                     case 0:
                         // titlebar
                         intent = new Intent(ItemManageActivity.this, WidgetManageActivity.class);
-                        intent.putExtra("pid", adapter.getmDatas().get(position).getId());
+                        intent.putExtra("pid", adapter.getmDatas().get(position).getWidgetId());
+                        intent.putExtra("relativeId", relativeId);
+                        intent.putExtra("appId", appId);
+                        intent.putExtra("projectId", projectId);
                         startActWithIntent(intent);
                         break;
                     case 1:
                         //setting item
                         intent = new Intent(ItemManageActivity.this, WidgetManageActivity.class);
-                        intent.putExtra("pid", adapter.getmDatas().get(position).getId());
+                        intent.putExtra("pid", adapter.getmDatas().get(position).getWidgetId());
+                        intent.putExtra("relativeId", relativeId);
+                        intent.putExtra("appId", appId);
+                        intent.putExtra("projectId", projectId);
                         startActWithIntent(intent);
                         break;
                     case 2:
                         //title edit item
                         intent = new Intent(ItemManageActivity.this, WidgetManageActivity.class);
-                        intent.putExtra("pid", adapter.getmDatas().get(position).getId());
+                        intent.putExtra("pid", adapter.getmDatas().get(position).getWidgetId());
+                        intent.putExtra("relativeId", relativeId);
+                        intent.putExtra("appId", appId);
+                        intent.putExtra("projectId", projectId);
                         startActWithIntent(intent);
                         break;
                     case 3:
                         //underline edit item
                         intent = new Intent(ItemManageActivity.this, WidgetManageActivity.class);
-                        intent.putExtra("pid", adapter.getmDatas().get(position).getId());
+                        intent.putExtra("pid", adapter.getmDatas().get(position).getWidgetId());
+                        intent.putExtra("relativeId", relativeId);
+                        intent.putExtra("appId", appId);
+                        intent.putExtra("projectId", projectId);
                         startActWithIntent(intent);
                         break;
                 }
@@ -190,13 +204,13 @@ public class ItemManageActivity extends BaseActivity {
     }
 
     private void getData() {
-        if (pid == null) {
-            pid = "0";
+        if (widgetId == null) {
+            widgetId = "0";
         }
         Api.getApi0()
-                .getAllMyWidget(relativeId, pid, getUserId())
-                .compose(RxHelper.<GetAllMyWidgetResult>io_main())
-                .subscribe(new Subscriber<GetAllMyWidgetResult>() {
+                .getAllItems(widgetId, getUserId())
+                .compose(RxHelper.<GetAllItemsResult>io_main())
+                .subscribe(new Subscriber<GetAllItemsResult>() {
                     @Override
                     public void onCompleted() {
 
@@ -208,7 +222,7 @@ public class ItemManageActivity extends BaseActivity {
                     }
 
                     @Override
-                    public void onNext(GetAllMyWidgetResult getAllMyWidgetResult) {
+                    public void onNext(GetAllItemsResult getAllMyWidgetResult) {
                         stopRefresh(refresh);
                         if (getAllMyWidgetResult.getCode() == 1) {
                             list = getAllMyWidgetResult.getData();
