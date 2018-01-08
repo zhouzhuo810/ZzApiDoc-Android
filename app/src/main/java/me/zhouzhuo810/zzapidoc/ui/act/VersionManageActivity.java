@@ -24,6 +24,7 @@ import me.zhouzhuo810.zzapidoc.R;
 import me.zhouzhuo810.zzapidoc.common.api.Api;
 import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteVersionProjectResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteVersionRecordResult;
+import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteVersionResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllVersionProjectResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllVersionRecordResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllVersionResult;
@@ -270,6 +271,7 @@ public class VersionManageActivity extends BaseActivity {
 
     /**
      * 分享文字给QQ好友
+     *
      * @param context
      * @param content
      */
@@ -292,6 +294,7 @@ public class VersionManageActivity extends BaseActivity {
 
     /**
      * 分享文字给微信好友
+     *
      * @param content
      */
     private void shareToFriend(Context context, String content) {
@@ -328,9 +331,9 @@ public class VersionManageActivity extends BaseActivity {
     private void delete(String id) {
         showPd(getString(R.string.submiting_text), false);
         Api.getApi0()
-                .deleteVersionRecord(getUserId(), id)
-                .compose(RxHelper.<DeleteVersionRecordResult>io_main())
-                .subscribe(new Subscriber<DeleteVersionRecordResult>() {
+                .deleteVersion(getUserId(), id)
+                .compose(RxHelper.<DeleteVersionResult>io_main())
+                .subscribe(new Subscriber<DeleteVersionResult>() {
                     @Override
                     public void onCompleted() {
 
@@ -344,7 +347,7 @@ public class VersionManageActivity extends BaseActivity {
                     }
 
                     @Override
-                    public void onNext(DeleteVersionRecordResult deleteVersionProjectResult) {
+                    public void onNext(DeleteVersionResult deleteVersionProjectResult) {
                         hidePd();
                         ToastUtils.showCustomBgToast(deleteVersionProjectResult.getMsg());
                         if (deleteVersionProjectResult.getCode() == 1) {
