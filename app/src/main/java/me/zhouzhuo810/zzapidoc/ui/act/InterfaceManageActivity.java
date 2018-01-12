@@ -203,6 +203,7 @@ public class InterfaceManageActivity extends BaseActivity {
                                     intent.putExtra("projectId", projectId);
                                     intent.putExtra("groupId", groupId);
                                     intent.putExtra("interfaceId", adapter.getmDatas().get(position).getId());
+                                    intent.putExtra("global", false);
                                     startActWithIntent(intent);
                                     break;
                                 case 1:

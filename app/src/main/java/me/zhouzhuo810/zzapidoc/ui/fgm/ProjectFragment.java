@@ -37,6 +37,7 @@ import me.zhouzhuo810.zzapidoc.ui.act.AddRequestParamsActivity;
 import me.zhouzhuo810.zzapidoc.ui.act.AddResponseParamsActivity;
 import me.zhouzhuo810.zzapidoc.ui.act.ErrorCodeManageActivity;
 import me.zhouzhuo810.zzapidoc.ui.act.InterfaceGroupManageActivity;
+import me.zhouzhuo810.zzapidoc.ui.act.RequestHeaderManageActivity;
 import me.zhouzhuo810.zzapidoc.ui.adapter.ProjectListAdapter;
 import rx.Subscriber;
 import zhouzhuo810.me.zzandframe.ui.act.IBaseActivity;
@@ -277,7 +278,7 @@ public class ProjectFragment extends BaseFragment {
     }
 
     private void addGlobalRequestHeader(String projectId) {
-        Intent intent = new Intent(getActivity(), AddRequestHeaderActivity.class);
+        Intent intent = new Intent(getActivity(), RequestHeaderManageActivity.class);
         intent.putExtra("projectId", projectId);
         intent.putExtra("interfaceId", "");
         intent.putExtra("global", true);

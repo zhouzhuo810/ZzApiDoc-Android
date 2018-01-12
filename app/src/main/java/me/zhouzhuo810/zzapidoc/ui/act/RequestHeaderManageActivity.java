@@ -39,6 +39,7 @@ public class RequestHeaderManageActivity extends BaseActivity {
     private List<GetRequestHeaderResult.DataBean> list;
     private RequestHeaderListAdapter adapter;
     private String interfaceId;
+    private boolean global;
 
 
     @Override
@@ -68,6 +69,7 @@ public class RequestHeaderManageActivity extends BaseActivity {
     public void initData() {
         projectId = getIntent().getStringExtra("projectId");
         interfaceId = getIntent().getStringExtra("interfaceId");
+        global = getIntent().getBooleanExtra("global", false);
     }
 
     private void getData() {
@@ -118,6 +120,7 @@ public class RequestHeaderManageActivity extends BaseActivity {
                 Intent intent = new Intent(RequestHeaderManageActivity.this, AddRequestHeaderActivity.class);
                 intent.putExtra("projectId", projectId);
                 intent.putExtra("interfaceId", interfaceId);
+                intent.putExtra("global", global);
                 startActWithIntent(intent);
             }
         });
