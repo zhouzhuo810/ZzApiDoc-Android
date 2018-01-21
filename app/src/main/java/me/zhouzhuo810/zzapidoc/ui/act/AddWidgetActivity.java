@@ -85,50 +85,55 @@ public class AddWidgetActivity extends BaseActivity {
     private LinearLayout llKeyWord;
     private EditText tvKeyWord;
     private Button btnKeyWord;
+    private Button btnWidthZero;
     private Button btnWidthMatchParent;
     private Button btnWidthWrapContent;
     private EditText etWidgetWidth;
     private ImageView ivClearWidgetWidth;
+    private Button btnHeightZero;
     private Button btnHeightMatchParent;
     private Button btnHeightWrapContent;
     private EditText etWidgetHeight;
     private ImageView ivClearWidgetHeight;
     private LinearLayout llTextSize;
+    private Button btnFontThirty;
+    private Button btnFontForty;
+    private Button btnFontFifty;
     private EditText etTextSize;
     private ImageView ivClearTextSize;
     private LinearLayout llWidgetWeight;
-    private EditText etWidgetWeight;
-    private ImageView ivClearWidgetWeight;
     private Button btnWeightZero;
     private Button btnWeightOne;
+    private EditText etWidgetWeight;
+    private ImageView ivClearWidgetWeight;
     private LinearLayout llLeftMargin;
     private EditText etLeftMargin;
     private ImageView ivClearLeftMargin;
     private LinearLayout llRightMargin;
+    private Button btnMarginRight;
     private EditText etRightMargin;
     private ImageView ivClearRightMargin;
-    private Button btnMarginRight;
     private LinearLayout llTopMargin;
     private EditText etTopMargin;
     private ImageView ivClearTopMargin;
     private LinearLayout llBottomMargin;
+    private Button btnMarginBottom;
     private EditText etBottomMargin;
     private ImageView ivClearBottomMargin;
-    private Button btnMarginBottom;
     private LinearLayout llLeftPadding;
     private EditText etLeftPadding;
     private ImageView ivClearLeftPadding;
     private LinearLayout llRightPadding;
+    private Button btnPaddingRight;
     private EditText etRightPadding;
     private ImageView ivClearRightPadding;
-    private Button btnPaddingRight;
     private LinearLayout llTopPadding;
     private EditText etTopPadding;
     private ImageView ivClearTopPadding;
     private LinearLayout llBottomPadding;
+    private Button btnPaddingBottom;
     private EditText etBottomPadding;
     private ImageView ivClearBottomPadding;
-    private Button btnPaddingBottom;
     private LinearLayout llBackground;
     private TextView tvBackground;
     private LinearLayout llTextColor;
@@ -183,50 +188,55 @@ public class AddWidgetActivity extends BaseActivity {
         llKeyWord = (LinearLayout) findViewById(R.id.ll_key_word);
         tvKeyWord = (EditText) findViewById(R.id.tv_key_word);
         btnKeyWord = (Button) findViewById(R.id.btn_key_word);
+        btnWidthZero = (Button) findViewById(R.id.btn_width_zero);
         btnWidthMatchParent = (Button) findViewById(R.id.btn_width_match_parent);
         btnWidthWrapContent = (Button) findViewById(R.id.btn_width_wrap_content);
         etWidgetWidth = (EditText) findViewById(R.id.et_widget_width);
         ivClearWidgetWidth = (ImageView) findViewById(R.id.iv_clear_widget_width);
+        btnHeightZero = (Button) findViewById(R.id.btn_height_zero);
         btnHeightMatchParent = (Button) findViewById(R.id.btn_height_match_parent);
         btnHeightWrapContent = (Button) findViewById(R.id.btn_height_wrap_content);
         etWidgetHeight = (EditText) findViewById(R.id.et_widget_height);
         ivClearWidgetHeight = (ImageView) findViewById(R.id.iv_clear_widget_height);
         llTextSize = (LinearLayout) findViewById(R.id.ll_text_size);
+        btnFontThirty = (Button) findViewById(R.id.btn_font_thirty);
+        btnFontForty = (Button) findViewById(R.id.btn_font_forty);
+        btnFontFifty = (Button) findViewById(R.id.btn_font_fifty);
         etTextSize = (EditText) findViewById(R.id.et_text_size);
         ivClearTextSize = (ImageView) findViewById(R.id.iv_clear_text_size);
         llWidgetWeight = (LinearLayout) findViewById(R.id.ll_widget_weight);
-        etWidgetWeight = (EditText) findViewById(R.id.et_widget_weight);
-        ivClearWidgetWeight = (ImageView) findViewById(R.id.iv_clear_widget_weight);
         btnWeightZero = (Button) findViewById(R.id.btn_weight_zero);
         btnWeightOne = (Button) findViewById(R.id.btn_weight_one);
+        etWidgetWeight = (EditText) findViewById(R.id.et_widget_weight);
+        ivClearWidgetWeight = (ImageView) findViewById(R.id.iv_clear_widget_weight);
         llLeftMargin = (LinearLayout) findViewById(R.id.ll_left_margin);
         etLeftMargin = (EditText) findViewById(R.id.et_left_margin);
         ivClearLeftMargin = (ImageView) findViewById(R.id.iv_clear_left_margin);
         llRightMargin = (LinearLayout) findViewById(R.id.ll_right_margin);
+        btnMarginRight = (Button) findViewById(R.id.btn_margin_right);
         etRightMargin = (EditText) findViewById(R.id.et_right_margin);
         ivClearRightMargin = (ImageView) findViewById(R.id.iv_clear_right_margin);
-        btnMarginRight = (Button) findViewById(R.id.btn_margin_right);
         llTopMargin = (LinearLayout) findViewById(R.id.ll_top_margin);
         etTopMargin = (EditText) findViewById(R.id.et_top_margin);
         ivClearTopMargin = (ImageView) findViewById(R.id.iv_clear_top_margin);
         llBottomMargin = (LinearLayout) findViewById(R.id.ll_bottom_margin);
+        btnMarginBottom = (Button) findViewById(R.id.btn_margin_bottom);
         etBottomMargin = (EditText) findViewById(R.id.et_bottom_margin);
         ivClearBottomMargin = (ImageView) findViewById(R.id.iv_clear_bottom_margin);
-        btnMarginBottom = (Button) findViewById(R.id.btn_margin_bottom);
         llLeftPadding = (LinearLayout) findViewById(R.id.ll_left_padding);
         etLeftPadding = (EditText) findViewById(R.id.et_left_padding);
         ivClearLeftPadding = (ImageView) findViewById(R.id.iv_clear_left_padding);
         llRightPadding = (LinearLayout) findViewById(R.id.ll_right_padding);
+        btnPaddingRight = (Button) findViewById(R.id.btn_padding_right);
         etRightPadding = (EditText) findViewById(R.id.et_right_padding);
         ivClearRightPadding = (ImageView) findViewById(R.id.iv_clear_right_padding);
-        btnPaddingRight = (Button) findViewById(R.id.btn_padding_right);
         llTopPadding = (LinearLayout) findViewById(R.id.ll_top_padding);
         etTopPadding = (EditText) findViewById(R.id.et_top_padding);
         ivClearTopPadding = (ImageView) findViewById(R.id.iv_clear_top_padding);
         llBottomPadding = (LinearLayout) findViewById(R.id.ll_bottom_padding);
+        btnPaddingBottom = (Button) findViewById(R.id.btn_padding_bottom);
         etBottomPadding = (EditText) findViewById(R.id.et_bottom_padding);
         ivClearBottomPadding = (ImageView) findViewById(R.id.iv_clear_bottom_padding);
-        btnPaddingBottom = (Button) findViewById(R.id.btn_padding_bottom);
         llBackground = (LinearLayout) findViewById(R.id.ll_background);
         tvBackground = (TextView) findViewById(R.id.tv_background);
         llTextColor = (LinearLayout) findViewById(R.id.ll_text_color);
@@ -398,6 +408,41 @@ public class AddWidgetActivity extends BaseActivity {
                 etBottomPadding.setText(etTopPadding.getText().toString().trim());
             }
         });
+
+        btnFontThirty.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                etTextSize.setText("30");
+            }
+        });
+        btnFontForty.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                etTextSize.setText("40");
+            }
+        });
+        btnFontFifty.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                etTextSize.setText("50");
+            }
+        });
+
+        btnWidthZero.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                etWidgetWidth.setText("0");
+            }
+        });
+
+        btnHeightZero.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                etWidgetHeight.setText("0");
+            }
+        });
+
+
 
         llBackground.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -791,6 +836,10 @@ public class AddWidgetActivity extends BaseActivity {
         llKeyWord.setVisibility(View.VISIBLE);
         llOrientation.setVisibility(View.VISIBLE);
         tvOrientation.setText("vertical");
+        etTitle.setText("rv");
+        tvKeyWord.setText("rv");
+        etWidgetWidth.setText("-1");
+        etWidgetHeight.setText("-1");
         showPaddingMarin();
     }
 
