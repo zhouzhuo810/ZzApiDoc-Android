@@ -230,7 +230,7 @@ public class AddResponseParamsActivity extends BaseActivity {
             ToastUtils.showCustomBgToast(getString(R.string.interface_name_not_nul_text));
             return;
         }
-        if (pid == null) {
+        if (pid == null || pid.length() == 0) {
             pid = "0";
         }
         String note = etArgNote.getText().toString().trim();

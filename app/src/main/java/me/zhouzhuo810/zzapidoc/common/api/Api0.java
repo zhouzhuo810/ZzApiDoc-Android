@@ -224,11 +224,17 @@ public interface Api0 {
 
     /*获取返回参数根据接口id和pid*/
     @GET("/ZzApiDoc/v1/responseArg/getResponseArgByInterfaceIdAndPid")
-    Observable<GetResponseArgResult> getResponseArgByInterfaceIdAndPid(@Query("interfaceId") String interfaceId, @Query("pid") String pid, @Query("userId") String userId);
+    Observable<GetResponseArgResult> getResponseArgByInterfaceIdAndPid(@Query("interfaceId") String interfaceId,
+                                                                       @Query("projectId") String projectId,
+                                                                       @Query("pid") String pid,
+                                                                       @Query("global") boolean global,
+                                                                       @Query("userId") String userId);
 
     /*获取请求参数根据接口id和pid*/
     @GET("/ZzApiDoc/v1/requestArg/getRequestArgByInterfaceIdAndPid")
-    Observable<GetRequestArgResult> getRequestArgByInterfaceIdAndPid(@Query("interfaceId") String interfaceId, @Query("pid") String pid, @Query("userId") String userId);
+    Observable<GetRequestArgResult> getRequestArgByInterfaceIdAndPid(@Query("interfaceId") String interfaceId,
+                                                                     @Query("projectId") String projectId, @Query("pid") String pid,
+                                                                     @Query("userId") String userId);
 
 
     /*添加返回参数*/

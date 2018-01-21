@@ -93,6 +93,11 @@ public class PdfFragment extends BaseFragment {
                 entity.setSize(FileSizeUtil.getFileSize(pdf));
                 pdfs.add(entity);
             }
+            if (pdfs.size() == 0) {
+                tvNoData.setVisibility(View.VISIBLE);
+            } else {
+                tvNoData.setVisibility(View.GONE);
+            }
             adapter.setmDatas(pdfs);
             adapter.notifyDataSetChanged();
         }
@@ -152,7 +157,7 @@ public class PdfFragment extends BaseFragment {
 
     }
 
-    private void shareFileToQQ(File file) throws Exception{
+    private void shareFileToQQ(File file) throws Exception {
         Intent share = new Intent(Intent.ACTION_SEND);
         ComponentName component = new ComponentName("com.tencent.mobileqq", "com.tencent.mobileqq.activity.JumpActivity");
         share.setComponent(component);
@@ -169,7 +174,7 @@ public class PdfFragment extends BaseFragment {
         startActivity(Intent.createChooser(share, "发送"));
     }
 
-    private void shareFileToWx(String title, File file) throws Exception{
+    private void shareFileToWx(String title, File file) throws Exception {
         Intent intent = new Intent();
         ComponentName comp = new ComponentName("com.tencent.mm", "com.tencent.mm.ui.tools.ShareImgUI");
         intent.setComponent(comp);

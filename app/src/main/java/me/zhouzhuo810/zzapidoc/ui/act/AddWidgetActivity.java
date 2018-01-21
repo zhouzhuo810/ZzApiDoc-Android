@@ -99,30 +99,36 @@ public class AddWidgetActivity extends BaseActivity {
     private LinearLayout llWidgetWeight;
     private EditText etWidgetWeight;
     private ImageView ivClearWidgetWeight;
+    private Button btnWeightZero;
+    private Button btnWeightOne;
     private LinearLayout llLeftMargin;
     private EditText etLeftMargin;
     private ImageView ivClearLeftMargin;
     private LinearLayout llRightMargin;
     private EditText etRightMargin;
     private ImageView ivClearRightMargin;
+    private Button btnMarginRight;
     private LinearLayout llTopMargin;
     private EditText etTopMargin;
     private ImageView ivClearTopMargin;
     private LinearLayout llBottomMargin;
     private EditText etBottomMargin;
     private ImageView ivClearBottomMargin;
+    private Button btnMarginBottom;
     private LinearLayout llLeftPadding;
     private EditText etLeftPadding;
     private ImageView ivClearLeftPadding;
     private LinearLayout llRightPadding;
     private EditText etRightPadding;
     private ImageView ivClearRightPadding;
+    private Button btnPaddingRight;
     private LinearLayout llTopPadding;
     private EditText etTopPadding;
     private ImageView ivClearTopPadding;
     private LinearLayout llBottomPadding;
     private EditText etBottomPadding;
     private ImageView ivClearBottomPadding;
+    private Button btnPaddingBottom;
     private LinearLayout llBackground;
     private TextView tvBackground;
     private LinearLayout llTextColor;
@@ -191,30 +197,36 @@ public class AddWidgetActivity extends BaseActivity {
         llWidgetWeight = (LinearLayout) findViewById(R.id.ll_widget_weight);
         etWidgetWeight = (EditText) findViewById(R.id.et_widget_weight);
         ivClearWidgetWeight = (ImageView) findViewById(R.id.iv_clear_widget_weight);
+        btnWeightZero = (Button) findViewById(R.id.btn_weight_zero);
+        btnWeightOne = (Button) findViewById(R.id.btn_weight_one);
         llLeftMargin = (LinearLayout) findViewById(R.id.ll_left_margin);
         etLeftMargin = (EditText) findViewById(R.id.et_left_margin);
         ivClearLeftMargin = (ImageView) findViewById(R.id.iv_clear_left_margin);
         llRightMargin = (LinearLayout) findViewById(R.id.ll_right_margin);
         etRightMargin = (EditText) findViewById(R.id.et_right_margin);
         ivClearRightMargin = (ImageView) findViewById(R.id.iv_clear_right_margin);
+        btnMarginRight = (Button) findViewById(R.id.btn_margin_right);
         llTopMargin = (LinearLayout) findViewById(R.id.ll_top_margin);
         etTopMargin = (EditText) findViewById(R.id.et_top_margin);
         ivClearTopMargin = (ImageView) findViewById(R.id.iv_clear_top_margin);
         llBottomMargin = (LinearLayout) findViewById(R.id.ll_bottom_margin);
         etBottomMargin = (EditText) findViewById(R.id.et_bottom_margin);
         ivClearBottomMargin = (ImageView) findViewById(R.id.iv_clear_bottom_margin);
+        btnMarginBottom = (Button) findViewById(R.id.btn_margin_bottom);
         llLeftPadding = (LinearLayout) findViewById(R.id.ll_left_padding);
         etLeftPadding = (EditText) findViewById(R.id.et_left_padding);
         ivClearLeftPadding = (ImageView) findViewById(R.id.iv_clear_left_padding);
         llRightPadding = (LinearLayout) findViewById(R.id.ll_right_padding);
         etRightPadding = (EditText) findViewById(R.id.et_right_padding);
         ivClearRightPadding = (ImageView) findViewById(R.id.iv_clear_right_padding);
+        btnPaddingRight = (Button) findViewById(R.id.btn_padding_right);
         llTopPadding = (LinearLayout) findViewById(R.id.ll_top_padding);
         etTopPadding = (EditText) findViewById(R.id.et_top_padding);
         ivClearTopPadding = (ImageView) findViewById(R.id.iv_clear_top_padding);
         llBottomPadding = (LinearLayout) findViewById(R.id.ll_bottom_padding);
         etBottomPadding = (EditText) findViewById(R.id.et_bottom_padding);
         ivClearBottomPadding = (ImageView) findViewById(R.id.iv_clear_bottom_padding);
+        btnPaddingBottom = (Button) findViewById(R.id.btn_padding_bottom);
         llBackground = (LinearLayout) findViewById(R.id.ll_background);
         tvBackground = (TextView) findViewById(R.id.tv_background);
         llTextColor = (LinearLayout) findViewById(R.id.ll_text_color);
@@ -255,6 +267,7 @@ public class AddWidgetActivity extends BaseActivity {
         tvGravity = (TextView) findViewById(R.id.tv_gravity);
         btnSubmit = (Button) findViewById(R.id.btn_submit);
     }
+
 
     private int widgetType;
     private String splashPath;
@@ -341,6 +354,48 @@ public class AddWidgetActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 etWidgetHeight.setText("-2");
+            }
+        });
+
+        btnWeightOne.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                etWidgetWeight.setText("1");
+            }
+        });
+        btnWeightZero.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                etWidgetWeight.setText("0");
+            }
+        });
+
+        btnMarginRight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String leftMargin = etLeftMargin.getText().toString().trim();
+                etRightMargin.setText(leftMargin);
+            }
+        });
+
+        btnMarginBottom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                etBottomMargin.setText(etTopMargin.getText().toString().trim());
+            }
+        });
+
+        btnPaddingRight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                etRightPadding.setText(etLeftPadding.getText().toString().trim());
+            }
+        });
+
+        btnPaddingBottom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                etBottomPadding.setText(etTopPadding.getText().toString().trim());
             }
         });
 
@@ -465,8 +520,10 @@ public class AddWidgetActivity extends BaseActivity {
         items.add("center");
         items.add("left");
         items.add("right");
-        items.add("right|center_vertical");
+        items.add("bottom");
         items.add("top|left");
+        items.add("top|right");
+        items.add("right|center_vertical");
         showListDialog(items, true, null, new IBaseActivity.OnItemClick() {
             @Override
             public void onItemClick(int i, String s) {

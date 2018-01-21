@@ -281,6 +281,7 @@
                     android:layout_marginRight="30px"
                     android:background="@drawable/btn_save_selector"
                     android:text="生成"
+                    android:gravity="center"
                     android:textColor="@color/colorWhite"
                     android:textSize="30px" />
             </LinearLayout>
@@ -338,9 +339,9 @@
                     android:layout_marginRight="30px"
                     android:layout_weight="1"
                     android:background="@null"
-                    android:inputType="number"
                     android:gravity="right|center_vertical"
                     android:hint="@string/widget_width_hint_text"
+                    android:inputType="number"
                     android:textColor="@color/colorBlack"
                     android:textSize="44px" />
 
@@ -406,9 +407,9 @@
                     android:layout_marginRight="30px"
                     android:layout_weight="1"
                     android:background="@null"
-                    android:inputType="number"
                     android:gravity="right|center_vertical"
                     android:hint="@string/widget_height_hint_text"
+                    android:inputType="number"
                     android:textColor="@color/colorBlack"
                     android:textSize="44px" />
 
@@ -494,9 +495,9 @@
                     android:layout_marginRight="30px"
                     android:layout_weight="1"
                     android:background="@null"
-                    android:inputType="number"
                     android:gravity="right|center_vertical"
                     android:hint="@string/widget_weight_hint_text"
+                    android:inputType="number"
                     android:text="0"
                     android:textColor="@color/colorBlack"
                     android:textSize="44px" />
@@ -506,8 +507,30 @@
                     android:layout_width="60px"
                     android:layout_height="60px"
                     android:layout_marginRight="30px"
-                    android:src="@drawable/clear"
-                    />
+                    android:src="@drawable/clear" />
+
+                <Button
+                    android:id="@+id/btn_weight_zero"
+                    android:layout_width="80px"
+                    android:layout_height="60px"
+                    android:layout_marginRight="30px"
+                    android:background="@drawable/btn_save_selector"
+                    android:text="0"
+                    android:gravity="center"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="30px" />
+
+                <Button
+                    android:id="@+id/btn_weight_one"
+                    android:layout_width="80px"
+                    android:layout_height="60px"
+                    android:layout_marginRight="30px"
+                    android:background="@drawable/btn_save_selector"
+                    android:text="1"
+                    android:gravity="center"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="30px" />
+
             </LinearLayout>
 
             <View
@@ -521,6 +544,7 @@
                 android:layout_height="1px"
                 android:layout_marginLeft="30px"
                 android:background="@color/colorGrayBg" />
+
             <LinearLayout
                 android:id="@+id/ll_left_margin"
                 android:layout_width="match_parent"
@@ -559,8 +583,7 @@
                     android:layout_width="60px"
                     android:layout_height="60px"
                     android:layout_marginRight="30px"
-                    android:src="@drawable/clear"
-                    />
+                    android:src="@drawable/clear" />
             </LinearLayout>
 
             <View
@@ -595,9 +618,9 @@
                     android:layout_marginRight="30px"
                     android:layout_weight="1"
                     android:background="@null"
-                    android:inputType="number"
                     android:gravity="right|center_vertical"
                     android:hint="@string/right_margin_hint_text"
+                    android:inputType="number"
                     android:text="0"
                     android:textColor="@color/colorBlack"
                     android:textSize="44px" />
@@ -607,8 +630,19 @@
                     android:layout_width="60px"
                     android:layout_height="60px"
                     android:layout_marginRight="30px"
-                    android:src="@drawable/clear"
-                    />
+                    android:src="@drawable/clear" />
+
+
+                <Button
+                    android:id="@+id/btn_margin_right"
+                    android:layout_width="80px"
+                    android:layout_height="60px"
+                    android:layout_marginRight="30px"
+                    android:background="@drawable/btn_save_selector"
+                    android:text="同左"
+                    android:gravity="center"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="30px" />
             </LinearLayout>
 
             <View
@@ -643,9 +677,9 @@
                     android:layout_marginRight="30px"
                     android:layout_weight="1"
                     android:background="@null"
-                    android:inputType="number"
                     android:gravity="right|center_vertical"
                     android:hint="@string/top_margin_hint_text"
+                    android:inputType="number"
                     android:text="0"
                     android:textColor="@color/colorBlack"
                     android:textSize="44px" />
@@ -655,8 +689,7 @@
                     android:layout_width="60px"
                     android:layout_height="60px"
                     android:layout_marginRight="30px"
-                    android:src="@drawable/clear"
-                    />
+                    android:src="@drawable/clear" />
             </LinearLayout>
 
             <View
@@ -703,8 +736,18 @@
                     android:layout_width="60px"
                     android:layout_height="60px"
                     android:layout_marginRight="30px"
-                    android:src="@drawable/clear"
-                    />
+                    android:src="@drawable/clear" />
+
+                <Button
+                    android:id="@+id/btn_margin_bottom"
+                    android:layout_width="80px"
+                    android:layout_height="60px"
+                    android:layout_marginRight="30px"
+                    android:background="@drawable/btn_save_selector"
+                    android:text="同上"
+                    android:gravity="center"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="30px" />
             </LinearLayout>
 
             <View
@@ -751,8 +794,7 @@
                     android:layout_width="60px"
                     android:layout_height="60px"
                     android:layout_marginRight="30px"
-                    android:src="@drawable/clear"
-                    />
+                    android:src="@drawable/clear" />
             </LinearLayout>
 
             <View
@@ -799,8 +841,18 @@
                     android:layout_width="60px"
                     android:layout_height="60px"
                     android:layout_marginRight="30px"
-                    android:src="@drawable/clear"
-                    />
+                    android:src="@drawable/clear" />
+
+                <Button
+                    android:id="@+id/btn_padding_right"
+                    android:layout_width="80px"
+                    android:layout_height="60px"
+                    android:layout_marginRight="30px"
+                    android:background="@drawable/btn_save_selector"
+                    android:text="同左"
+                    android:gravity="center"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="30px" />
             </LinearLayout>
 
             <View
@@ -847,8 +899,7 @@
                     android:layout_width="60px"
                     android:layout_height="60px"
                     android:layout_marginRight="30px"
-                    android:src="@drawable/clear"
-                    />
+                    android:src="@drawable/clear" />
             </LinearLayout>
 
             <View
@@ -895,8 +946,19 @@
                     android:layout_width="60px"
                     android:layout_height="60px"
                     android:layout_marginRight="30px"
-                    android:src="@drawable/clear"
-                    />
+                    android:src="@drawable/clear" />
+
+
+                <Button
+                    android:id="@+id/btn_padding_bottom"
+                    android:layout_width="80px"
+                    android:layout_height="60px"
+                    android:layout_marginRight="30px"
+                    android:background="@drawable/btn_save_selector"
+                    android:text="同上"
+                    android:gravity="center"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="30px" />
             </LinearLayout>
 
             <View
@@ -1552,9 +1614,9 @@
                     android:layout_marginRight="30px"
                     android:layout_weight="1"
                     android:background="@null"
-                    android:text="horizontal"
                     android:gravity="right|center_vertical"
                     android:hint="@string/choose_orientation_hint"
+                    android:text="horizontal"
                     android:textColor="@color/colorBlack"
                     android:textSize="44px" />
 

@@ -179,6 +179,7 @@ public class AddApplicationActivity extends BaseActivity {
         });
 
         setEditListener(etAppName, ivClearAppName);
+        setEditListener(etPackageName, ivClearPackageName);
         setEditListener(etCompileSdk, ivClearCompileSdk);
         setEditListener(etMainColor, ivClearMainColor);
         setEditListener(etMinSdk, ivClearMinSdk);

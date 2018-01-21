@@ -46,6 +46,7 @@ public class RequestParamsManageActivity extends BaseActivity {
     private String groupId;
     private String interfaceId;
     private String pid;
+    private boolean global;
 
 
     @Override
@@ -77,6 +78,7 @@ public class RequestParamsManageActivity extends BaseActivity {
         groupId = getIntent().getStringExtra("groupId");
         interfaceId = getIntent().getStringExtra("interfaceId");
         pid = getIntent().getStringExtra("pid");
+        global = getIntent().getBooleanExtra("global", false);
     }
 
     private void getData() {
@@ -84,7 +86,7 @@ public class RequestParamsManageActivity extends BaseActivity {
             pid = "0";
         }
         Api.getApi0()
-                .getRequestArgByInterfaceIdAndPid(interfaceId, pid, getUserId())
+                .getRequestArgByInterfaceIdAndPid(interfaceId, projectId, pid, getUserId())
                 .compose(RxHelper.<GetRequestArgResult>io_main())
                 .subscribe(new Subscriber<GetRequestArgResult>() {
                     @Override
@@ -132,6 +134,7 @@ public class RequestParamsManageActivity extends BaseActivity {
                 intent.putExtra("groupId", groupId);
                 intent.putExtra("interfaceId", interfaceId);
                 intent.putExtra("pid", pid);
+                intent.putExtra("global", global);
                 startActWithIntent(intent);
             }
         });
@@ -156,6 +159,7 @@ public class RequestParamsManageActivity extends BaseActivity {
                         intent.putExtra("pid", pid);
                         intent.putExtra("interfaceId", interfaceId);
                         intent.putExtra("projectId", projectId);
+                        intent.putExtra("global", global);
                         startActWithIntent(intent);
                         break;
                     case 3:
@@ -164,6 +168,7 @@ public class RequestParamsManageActivity extends BaseActivity {
                         intent.putExtra("pid", pid);
                         intent.putExtra("interfaceId", interfaceId);
                         intent.putExtra("projectId", projectId);
+                        intent.putExtra("global", global);
                         startActWithIntent(intent);
                         break;
                     case 4:

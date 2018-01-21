@@ -38,6 +38,8 @@ import me.zhouzhuo810.zzapidoc.ui.act.AddResponseParamsActivity;
 import me.zhouzhuo810.zzapidoc.ui.act.ErrorCodeManageActivity;
 import me.zhouzhuo810.zzapidoc.ui.act.InterfaceGroupManageActivity;
 import me.zhouzhuo810.zzapidoc.ui.act.RequestHeaderManageActivity;
+import me.zhouzhuo810.zzapidoc.ui.act.RequestParamsManageActivity;
+import me.zhouzhuo810.zzapidoc.ui.act.ResponseParamsManageActivity;
 import me.zhouzhuo810.zzapidoc.ui.adapter.ProjectListAdapter;
 import rx.Subscriber;
 import zhouzhuo810.me.zzandframe.ui.act.IBaseActivity;
@@ -286,7 +288,7 @@ public class ProjectFragment extends BaseFragment {
     }
 
     private void addGlobalRequestArg(String projectId) {
-        Intent intent = new Intent(getActivity(), AddRequestParamsActivity.class);
+        Intent intent = new Intent(getActivity(), RequestParamsManageActivity.class);
         intent.putExtra("projectId", projectId);
         intent.putExtra("groupId", "");
         intent.putExtra("interfaceId", "");
@@ -295,7 +297,7 @@ public class ProjectFragment extends BaseFragment {
     }
 
     private void addGlobalResponseArg(String projectId) {
-        Intent intent = new Intent(getActivity(), AddResponseParamsActivity.class);
+        Intent intent = new Intent(getActivity(), ResponseParamsManageActivity.class);
         intent.putExtra("projectId", projectId);
         intent.putExtra("groupId", "");
         intent.putExtra("interfaceId", "");

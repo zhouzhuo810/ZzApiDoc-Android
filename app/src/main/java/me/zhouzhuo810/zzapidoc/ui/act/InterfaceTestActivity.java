@@ -150,7 +150,7 @@ public class InterfaceTestActivity extends BaseActivity {
 
     private void getData() {
         Api.getApi0()
-                .getRequestArgByInterfaceIdAndPid(interfaceId, "0", getUserId())
+                .getRequestArgByInterfaceIdAndPid(interfaceId, projectId,  "0", getUserId())
                 .compose(RxHelper.<GetRequestArgResult>io_main())
                 .subscribe(new Subscriber<GetRequestArgResult>() {
                     @Override

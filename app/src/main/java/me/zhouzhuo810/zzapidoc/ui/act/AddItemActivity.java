@@ -3,12 +3,21 @@ package me.zhouzhuo810.zzapidoc.ui.act;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+
+import com.youdao.sdk.app.Language;
+import com.youdao.sdk.app.LanguageUtils;
+import com.youdao.sdk.ydonlinetranslate.TranslateErrorCode;
+import com.youdao.sdk.ydonlinetranslate.TranslateListener;
+import com.youdao.sdk.ydonlinetranslate.TranslateParameters;
+import com.youdao.sdk.ydonlinetranslate.Translator;
+import com.youdao.sdk.ydtranslate.Translate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -91,6 +100,13 @@ public class AddItemActivity extends BaseActivity {
 
         setEditListener(etTitle, ivClearTitle);
 
+        btnKeyWord.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                translate();
+            }
+        });
+
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,6 +114,53 @@ public class AddItemActivity extends BaseActivity {
             }
         });
 
+    }
+
+
+    private void translate() {
+        String title = etTitle.getText().toString().trim();
+        if (title.length() == 0) {
+            ToastUtils.showCustomBgToast("请填写参数说明");
+            return;
+        }
+        showPd(getString(R.string.submiting_text), false);
+        Language langFrom = LanguageUtils.getLangByName("中文");
+        Language langTo = LanguageUtils.getLangByName("英文");
+        TranslateParameters tps = new TranslateParameters.Builder()
+                .source("ZzApiDoc")
+                .from(langFrom).to(langTo).build();
+
+        Translator translator = Translator.getInstance(tps);
+        translator.lookup(title, new TranslateListener() {
+            @Override
+            public void onResult(Translate result, String input) {//查询成功
+                if (result.getTranslations() != null) {
+                    String word = result.getTranslations().get(0);
+                    String newWord = word.replace(" ", "_").replace("the_", "").replace("The_", "").replace(".", "").toLowerCase();
+                    switch (type) {
+                        case TYPE_RV_ITEM:
+                            tvItemName.setText("rv_item_"+newWord);
+                            break;
+                        case TYPE_LV_ITEM:
+                            tvItemName.setText("lv_item_"+newWord);
+                            break;
+                        case TYPE_HEADER:
+                            tvItemName.setText("header_item_"+newWord);
+                            break;
+                        case TYPE_FOOTER:
+                            tvItemName.setText("footer_item_"+newWord);
+                            break;
+                    }
+                }
+                hidePd();
+            }
+
+            @Override
+            public void onError(TranslateErrorCode error) {//查询失败
+                hidePd();
+                ToastUtils.showCustomBgToast("错误代码：" + error.getCode());
+            }
+        });
     }
 
     private void addItem() {
