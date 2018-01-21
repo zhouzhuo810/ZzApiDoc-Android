@@ -150,7 +150,7 @@ public class FragmentManageActivity extends BaseActivity {
         lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
-                showListDialog(Arrays.asList("管理子Fragment", "删除接口"), true, null, new IBaseActivity.OnItemClick() {
+                showListDialog(Arrays.asList("管理子Fragment", "删除"), true, null, new IBaseActivity.OnItemClick() {
                     @Override
                     public void onItemClick(int pos, String s) {
                         switch (pos) {
