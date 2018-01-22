@@ -11,6 +11,7 @@
         android:background="@color/colorMain">
 
         <TextView
+            android:id="@+id/tv_title"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
@@ -323,25 +324,25 @@
 
                 <Button
                     android:id="@+id/btn_width_match_parent"
-                    android:layout_width="140px"
+                    android:layout_width="160px"
                     android:layout_height="70px"
                     android:layout_marginRight="20px"
                     android:background="@drawable/btn_save_selector"
                     android:gravity="center"
-                    android:text="match_parent"
+                    android:text="match -1"
                     android:textColor="@color/colorWhite"
-                    android:textSize="15px" />
+                    android:textSize="26px" />
 
                 <Button
                     android:id="@+id/btn_width_wrap_content"
-                    android:layout_width="140px"
+                    android:layout_width="160px"
                     android:layout_height="70px"
                     android:layout_marginRight="30px"
                     android:gravity="center"
                     android:background="@drawable/btn_save_selector"
-                    android:text="wrap_content"
+                    android:text="wrap -2"
                     android:textColor="@color/colorWhite"
-                    android:textSize="15px" />
+                    android:textSize="26px" />
 
                 <EditText
                     android:id="@+id/et_widget_width"
@@ -401,25 +402,25 @@
                     android:textSize="30px" />
                 <Button
                     android:id="@+id/btn_height_match_parent"
-                    android:layout_width="140px"
+                    android:layout_width="160px"
                     android:layout_height="70px"
                     android:layout_marginRight="20px"
                     android:gravity="center"
                     android:background="@drawable/btn_save_selector"
-                    android:text="match_parent"
+                    android:text="match -1"
                     android:textColor="@color/colorWhite"
-                    android:textSize="15px" />
+                    android:textSize="26px" />
 
                 <Button
                     android:id="@+id/btn_height_wrap_content"
-                    android:layout_width="140px"
+                    android:layout_width="160px"
                     android:layout_height="70px"
                     android:layout_marginRight="30px"
                     android:gravity="center"
                     android:background="@drawable/btn_save_selector"
-                    android:text="wrap_content"
+                    android:text="wrap -2"
                     android:textColor="@color/colorWhite"
-                    android:textSize="15px" />
+                    android:textSize="26px" />
 
 
                 <EditText

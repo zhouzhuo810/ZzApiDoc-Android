@@ -220,11 +220,16 @@ public class WidgetManageActivity extends BaseActivity {
         lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
-                showListDialog(Arrays.asList("删除"), true, null, new IBaseActivity.OnItemClick() {
+                showListDialog(Arrays.asList("编辑", "删除"), true, null, new IBaseActivity.OnItemClick() {
                     @Override
                     public void onItemClick(int pos, String s) {
                         switch (pos) {
                             case 0:
+                                Intent intent = new Intent(WidgetManageActivity.this, EditWidgetActivity.class);
+                                intent.putExtra("widgetId", adapter.getItem(position).getId());
+                                startActWithIntent(intent);
+                                break;
+                            case 1:
                                 deleteWidget(adapter.getmDatas().get(position).getId());
                                 break;
                         }

@@ -1,14 +1,10 @@
 package me.zhouzhuo810.zzapidoc.ui.act;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -18,10 +14,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.lzy.okgo.OkGo;
-import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.PostRequest;
 import com.yalantis.ucrop.UCrop;
@@ -33,12 +27,7 @@ import com.youdao.sdk.ydonlinetranslate.TranslateParameters;
 import com.youdao.sdk.ydonlinetranslate.Translator;
 import com.youdao.sdk.ydtranslate.Translate;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.File;
-import java.util.Arrays;
 
 import me.zhouzhuo810.zzapidoc.R;
 import me.zhouzhuo810.zzapidoc.ZApplication;
@@ -46,20 +35,17 @@ import me.zhouzhuo810.zzapidoc.common.Constants;
 import me.zhouzhuo810.zzapidoc.common.api.Api;
 import me.zhouzhuo810.zzapidoc.common.api.JsonCallback;
 import me.zhouzhuo810.zzapidoc.common.api.entity.AddApplicationResult;
-import me.zhouzhuo810.zzapidoc.common.api.entity.AddProjectResult;
+import me.zhouzhuo810.zzapidoc.common.api.entity.GetApplicationDetailResult;
 import me.zhouzhuo810.zzapidoc.common.base.BaseActivity;
-import me.zhouzhuo810.zzapidoc.common.rx.RxHelper;
 import me.zhouzhuo810.zzapidoc.common.utils.SharedUtil;
 import me.zhouzhuo810.zzapidoc.common.utils.ToastUtils;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 import rx.Subscriber;
+import zhouzhuo810.me.zzandframe.common.rx.RxHelper;
 
 /**
  * Created by zhouzhuo810 on 2017/8/11.
  */
-public class AddApplicationActivity extends BaseActivity {
+public class EditApplicationActivity extends BaseActivity {
 
     public static final int REQUEST_SELECT_PICTURE = 0x80;
 
@@ -98,6 +84,8 @@ public class AddApplicationActivity extends BaseActivity {
     private String apiId;
     private String logoPath;
     private CheckBox cbQrcode;
+    private String appId;
+    private TextView tvTitle;
 
     @Override
     public int getLayoutId() {
@@ -111,6 +99,7 @@ public class AddApplicationActivity extends BaseActivity {
 
     @Override
     public void initView() {
+        tvTitle = (TextView) findViewById(R.id.tv_title);
         rlBack = (RelativeLayout) findViewById(R.id.rl_back);
         rlRight = (RelativeLayout) findViewById(R.id.rl_right);
         ivLogo = (ImageView) findViewById(R.id.iv_logo);
@@ -147,10 +136,59 @@ public class AddApplicationActivity extends BaseActivity {
 
     @Override
     public void initData() {
-        String package_name = SharedUtil.getString(ZApplication.getInstance(), "package_name");
-        if (package_name != null) {
-            etPackageName.setText(package_name);
-            ivClearPackageName.setVisibility(View.VISIBLE);
+        appId = getIntent().getStringExtra("appId");
+
+        tvTitle.setText("编辑Application");
+    }
+
+
+    private void getData() {
+        showPd(getString(R.string.loading_text), false);
+        Api.getApi0()
+                .getApplicationDetail(getUserId(), appId)
+                .compose(RxHelper.<GetApplicationDetailResult>io_main())
+                .subscribe(new Subscriber<GetApplicationDetailResult>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        hidePd();
+                        ToastUtils.showCustomBgToast(getString(R.string.no_net_text) + e.toString());
+                    }
+
+                    @Override
+                    public void onNext(GetApplicationDetailResult getApplicationDetailResult) {
+                        hidePd();
+                        if (getApplicationDetailResult.getCode() == 1) {
+                            fillData(getApplicationDetailResult.getData());
+                        }
+                    }
+                });
+    }
+
+    private void fillData(GetApplicationDetailResult.DataEntity data) {
+        if (data != null) {
+            etAppName.setText(data.getChName());
+            etCompileSdk.setText(data.getCompileSDK()+"");
+            String colorMain = data.getColorMain();
+            if (colorMain != null) {
+                etMainColor.setText(colorMain.replaceAll("#", ""));
+            }
+            etMinSdk.setText(data.getMinSDK()+"");
+            etPackageName.setText(data.getPackageName());
+            etProjectName.setText(data.getAppName());
+            etTargetSdk.setText(data.getTargetSDK()+"");
+            etVercionName.setText(data.getVersionName());
+            etVercionCode.setText(data.getVersionCode()+"");
+            cbMinify.setChecked(data.isMinifyEnabled());
+            cbMultidex.setChecked(data.isMultiDex());
+            cbQrcode.setChecked(data.isEnableQrCode());
+            tvApi.setText(data.getApiName());
+            apiId = data.getApiId();
+
         }
     }
 
@@ -179,7 +217,6 @@ public class AddApplicationActivity extends BaseActivity {
         });
 
         setEditListener(etAppName, ivClearAppName);
-        setEditListener(etPackageName, ivClearPackageName);
         setEditListener(etCompileSdk, ivClearCompileSdk);
         setEditListener(etMainColor, ivClearMainColor);
         setEditListener(etMinSdk, ivClearMinSdk);
@@ -211,12 +248,14 @@ public class AddApplicationActivity extends BaseActivity {
             }
         });
 
+        getData();
+
     }
 
     private void translate() {
         String title = etAppName.getText().toString().trim();
         if (title.length() == 0) {
-            ToastUtils.showCustomBgToast("请填写参数说明");
+            ToastUtils.showCustomBgToast("请填写应用名称");
             return;
         }
         showPd(getString(R.string.submiting_text), false);
@@ -231,7 +270,6 @@ public class AddApplicationActivity extends BaseActivity {
             @Override
             public void onResult(Translate result, String input) {//查询成功
                 if (result.getTranslations() != null) {
-                    Log.e("XXX", "trans=" + result.getTranslations().toString());
                     String word = result.getTranslations().get(0);
                     StringBuilder sb = new StringBuilder();
                     if (word.contains(" ")) {
@@ -246,9 +284,9 @@ public class AddApplicationActivity extends BaseActivity {
                     etProjectName.setText(newWord);
                     String p = etPackageName.getText().toString().trim();
                     if (p.endsWith(".")) {
-                        etPackageName.setText(p+newWord.toLowerCase());
+                        etPackageName.setText(p + newWord.toLowerCase());
                     } else {
-                        etPackageName.setText(p+"."+newWord.toLowerCase());
+                        etPackageName.setText(p + "." + newWord.toLowerCase());
                     }
                 }
                 hidePd();
@@ -370,7 +408,8 @@ public class AddApplicationActivity extends BaseActivity {
         }
         showPd(getString(R.string.submiting_text), false);
         PostRequest<AddApplicationResult> post = OkGo.<AddApplicationResult>post(SharedUtil.getString(ZApplication.getInstance(), "server_config")
-                + "/ZzApiDoc/v1/application/addApplication")
+                + "/ZzApiDoc/v1/application/updateApplication")
+                .params("appId", appId)
                 .params("chName", chName)
                 .params("appName", name)
                 .params("versionName", versionName)
@@ -385,6 +424,7 @@ public class AddApplicationActivity extends BaseActivity {
                 .params("enableQrCode", cbQrcode.isChecked())
                 .params("apiId", apiId)
                 .params("userId", getUserId())
+                .params("ps", ps)
                 .isMultipart(true);
         if (logoPath != null) {
             post.params("logo", new File(logoPath));

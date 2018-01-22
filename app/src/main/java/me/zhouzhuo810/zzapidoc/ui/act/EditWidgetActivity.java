@@ -16,7 +16,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.lzy.okgo.OkGo;
-import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.PostRequest;
 import com.youdao.sdk.app.Language;
@@ -27,29 +26,29 @@ import com.youdao.sdk.ydonlinetranslate.TranslateParameters;
 import com.youdao.sdk.ydonlinetranslate.Translator;
 import com.youdao.sdk.ydtranslate.Translate;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import me.zhouzhuo810.zzapidoc.R;
 import me.zhouzhuo810.zzapidoc.ZApplication;
+import me.zhouzhuo810.zzapidoc.common.api.Api;
 import me.zhouzhuo810.zzapidoc.common.api.JsonCallback;
 import me.zhouzhuo810.zzapidoc.common.api.entity.AddActivityResult;
+import me.zhouzhuo810.zzapidoc.common.api.entity.GetWidgetDetailResult;
 import me.zhouzhuo810.zzapidoc.common.base.BaseActivity;
 import me.zhouzhuo810.zzapidoc.common.utils.ContentUtils;
 import me.zhouzhuo810.zzapidoc.common.utils.SharedUtil;
 import me.zhouzhuo810.zzapidoc.common.utils.ToastUtils;
+import rx.Subscriber;
+import zhouzhuo810.me.zzandframe.common.rx.RxHelper;
 import zhouzhuo810.me.zzandframe.ui.act.IBaseActivity;
 
 /**
+ * 编辑控件
  * Created by admin on 2017/8/19.
  */
-public class AddWidgetActivity extends BaseActivity {
+public class EditWidgetActivity extends BaseActivity {
 
     private static final int TYPE_TITLE_BAR = 0;
     private static final int TYPE_SETTING_ITEM = 1;
@@ -280,7 +279,7 @@ public class AddWidgetActivity extends BaseActivity {
         btnSubmit = (Button) findViewById(R.id.btn_submit);
     }
 
-
+    private String widgetId;
     private int widgetType;
     private String splashPath;
     private String appId;
@@ -306,12 +305,9 @@ public class AddWidgetActivity extends BaseActivity {
     @Override
     public void initData() {
 
-        appId = getIntent().getStringExtra("appId");
+        widgetId = getIntent().getStringExtra("widgetId");
 
-        relativeId = getIntent().getStringExtra("relativeId");
-        projectId = getIntent().getStringExtra("projectId");
-        pid = getIntent().getStringExtra("pid");
-
+        tvTitle.setText("编辑Widget");
         tvTextColor.setText("@color/colorBlack");
 
     }
@@ -504,6 +500,8 @@ public class AddWidgetActivity extends BaseActivity {
                 addWidget();
             }
         });
+
+        getData();
     }
 
     private void chooseTextColor() {
@@ -631,7 +629,7 @@ public class AddWidgetActivity extends BaseActivity {
                     final Uri selectedUri = data.getData();
                     if (selectedUri != null) {
                         ivRightImg.setImageURI(selectedUri);
-                        splashPath = ContentUtils.getRealPathFromUri(AddWidgetActivity.this, selectedUri);
+                        splashPath = ContentUtils.getRealPathFromUri(EditWidgetActivity.this, selectedUri);
                     } else {
                         ToastUtils.showCustomBgToast("选择图片出错了，请选择其他图片");
                     }
@@ -667,7 +665,8 @@ public class AddWidgetActivity extends BaseActivity {
         String textColor = tvTextColor.getText().toString().trim();
         showPd(getString(R.string.submiting_text), false);
         PostRequest<AddActivityResult> post = OkGo.<AddActivityResult>post(SharedUtil.getString(ZApplication.getInstance(), "server_config")
-                + "/ZzApiDoc/v1/widget/addWidget")
+                + "/ZzApiDoc/v1/widget/updateWidget")
+                .params("widgetId", widgetId)
                 .params("name", name)
                 .params("title", title)
                 .params("resId", resId)
@@ -750,69 +749,92 @@ public class AddWidgetActivity extends BaseActivity {
         showListDialog(items, true, null, new IBaseActivity.OnItemClick() {
             @Override
             public void onItemClick(int i, String s) {
-                tvWidgetName.setText(s);
-                hideAll();
-                switch (i) {
-                    case TYPE_TITLE_BAR:
-                        showTitleBarItem();
-                        break;
-                    case TYPE_SETTING_ITEM:
-                        showSettingItem();
-                        break;
-                    case TYPE_TITLE_EDIT_ITEM:
-                        showTitleEditItem();
-                        break;
-                    case TYPE_UNDERLINE_EDIT_ITEM:
-                        showUnderlineEditItem();
-                        break;
-                    case TYPE_INFO_ITEM:
-                        showInfoItem();
-                        break;
-                    case TYPE_SUBMIT_BTN_ITEM:
-                        showSubmitBtn();
-                        break;
-                    case TYPE_EXIT_BTN_ITEM:
-                        showExitBtn();
-                        break;
-                    case TYPE_LETTER_RV:
-                        showSideBar();
-                        break;
-                    case TYPE_SCROLL_VIEW:
-                        showScrollView();
-                        break;
-                    case TYPE_LINEAR_LAYOUT:
-                        showLinear();
-                        break;
-                    case TYPE_RELATIVE_LAYOUT:
-                        showRelative();
-                        break;
-                    case TYPE_IMAGE_VIEW:
-                        showImageView();
-                        break;
-                    case TYPE_TEXT_VIEW:
-                        showTextView();
-                        break;
-                    case TYPE_CHECK_BOX:
-                        showCheckBox();
-                        break;
-                    case TYPE_RV:
-                        showRv();
-                        break;
-                    case TYPE_LV:
-                        showLv();
-                        break;
-                    case TYPE_SCROLLABLE_LV:
-                        showScrollLv();
-                        break;
-                    case TYPE_EDIT_TEXT:
-                        showEditText();
-                        break;
-                }
-                widgetType = i;
-                tvWidgetType.setText(s);
+                setType(i);
             }
         });
     }
+
+    private void setType(int i) {
+        List<String> items = new ArrayList<>();
+        items.add("TitleBar");
+        items.add("SettingItem");
+        items.add("TitleEditItem");
+        items.add("UnderlineEditItem");
+        items.add("InfoItem");
+        items.add("SubmitButton");
+        items.add("ExitButton");
+        items.add("SideBar+RecyclerView");
+        items.add("ScrollView");
+        items.add("LinearLayout");
+        items.add("RelativeLayout");
+        items.add("ImageView");
+        items.add("TextView");
+        items.add("CheckBox");
+        items.add("RecyclerView");
+        items.add("ListView");
+        items.add("ScrollableListView");
+        items.add("EditText");
+        hideAll();
+        switch (i) {
+            case TYPE_TITLE_BAR:
+                showTitleBarItem();
+                break;
+            case TYPE_SETTING_ITEM:
+                showSettingItem();
+                break;
+            case TYPE_TITLE_EDIT_ITEM:
+                showTitleEditItem();
+                break;
+            case TYPE_UNDERLINE_EDIT_ITEM:
+                showUnderlineEditItem();
+                break;
+            case TYPE_INFO_ITEM:
+                showInfoItem();
+                break;
+            case TYPE_SUBMIT_BTN_ITEM:
+                showSubmitBtn();
+                break;
+            case TYPE_EXIT_BTN_ITEM:
+                showExitBtn();
+                break;
+            case TYPE_LETTER_RV:
+                showSideBar();
+                break;
+            case TYPE_SCROLL_VIEW:
+                showScrollView();
+                break;
+            case TYPE_LINEAR_LAYOUT:
+                showLinear();
+                break;
+            case TYPE_RELATIVE_LAYOUT:
+                showRelative();
+                break;
+            case TYPE_IMAGE_VIEW:
+                showImageView();
+                break;
+            case TYPE_TEXT_VIEW:
+                showTextView();
+                break;
+            case TYPE_CHECK_BOX:
+                showCheckBox();
+                break;
+            case TYPE_RV:
+                showRv();
+                break;
+            case TYPE_LV:
+                showLv();
+                break;
+            case TYPE_SCROLLABLE_LV:
+                showScrollLv();
+                break;
+            case TYPE_EDIT_TEXT:
+                showEditText();
+                break;
+        }
+        widgetType = i;
+        tvWidgetType.setText(items.get(i));
+    }
+
 
     private void showEditText() {
         llTitle.setVisibility(View.VISIBLE);
@@ -1029,6 +1051,72 @@ public class AddWidgetActivity extends BaseActivity {
 
     }
 
+    private void getData() {
+        showPd(getString(R.string.loading_text), false);
+        Api.getApi0()
+                .getWidgetDetail(getUserId(), widgetId)
+                .compose(RxHelper.<GetWidgetDetailResult>io_main())
+                .subscribe(new Subscriber<GetWidgetDetailResult>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        hidePd();
+                        ToastUtils.showCustomBgToast(getString(R.string.no_net_text) + e.toString());
+                    }
+
+                    @Override
+                    public void onNext(GetWidgetDetailResult getWidgetDetailResult) {
+                        hidePd();
+                        if (getWidgetDetailResult.getCode() == 1) {
+                            fillData(getWidgetDetailResult.getData());
+                        } else {
+                            ToastUtils.showCustomBgToast(getWidgetDetailResult.getMsg());
+                        }
+                    }
+                });
+    }
+
+    private void fillData(GetWidgetDetailResult.DataEntity data) {
+        if (data != null) {
+            tvWidgetName.setText(data.getName());
+            etTitle.setText(data.getTitle());
+            etBottomMargin.setText(data.getMarginBottom() + "");
+            etTopMargin.setText(data.getMarginTop() + "");
+            etLeftMargin.setText(data.getMarginLeft() + "");
+            etRightMargin.setText(data.getMarginRight() + "");
+            etTopPadding.setText(data.getPaddingTop() + "");
+            etLeftPadding.setText(data.getPaddingLeft() + "");
+            etRightPadding.setText(data.getPaddingRight() + "");
+            etBottomPadding.setText(data.getPaddingBottom() + "");
+            etWidgetWeight.setText(data.getWeight() + "");
+            tvGravity.setText(data.getGravity() + "");
+            etHint.setText(data.getHint());
+            etWidgetWidth.setText(data.getWidth() + "");
+            etWidgetHeight.setText(data.getHeight() + "");
+            tvBackground.setText(data.getBackground());
+            etDefValue.setText(data.getDefValue());
+            tvKeyWord.setText(data.getResId());
+            etLeftTitle.setText(data.getLeftTitleText());
+            etRightText.setText(data.getRightTitleText());
+            cbShowLeftImg.setChecked(data.isShowLeftTitleImg());
+            cbShowLeftLayout.setChecked(data.isShowLeftTitleLayout());
+            cbShowLeftText.setChecked(data.isShowLeftTitleText());
+            cbShowRightImg.setChecked(data.isShowRightTitleImg());
+            cbShowRightText.setChecked(data.isShowRightTitleText());
+            cbShowRightLayout.setChecked(data.isShowRightTitleLayout());
+            tvTextColor.setText(data.getTextColor());
+            etTextSize.setText(data.getTextSize() + "");
+            pid = data.getPid();
+            appId = data.getAppId();
+            relativeId = data.getRelativeId();
+            setType(data.getType());
+        }
+    }
+
     @Override
     public void pause() {
 
@@ -1049,3 +1137,4 @@ public class AddWidgetActivity extends BaseActivity {
 
     }
 }
+

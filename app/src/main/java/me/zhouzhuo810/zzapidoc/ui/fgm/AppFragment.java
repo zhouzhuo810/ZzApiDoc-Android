@@ -32,6 +32,7 @@ import me.zhouzhuo810.zzapidoc.common.utils.SystemUtil;
 import me.zhouzhuo810.zzapidoc.common.utils.ToastUtils;
 import me.zhouzhuo810.zzapidoc.ui.act.ActivityManageActivity;
 import me.zhouzhuo810.zzapidoc.ui.act.AddApplicationActivity;
+import me.zhouzhuo810.zzapidoc.ui.act.EditApplicationActivity;
 import me.zhouzhuo810.zzapidoc.ui.adapter.ApplicationListAdapter;
 import rx.Subscriber;
 import zhouzhuo810.me.zzandframe.common.utils.ApkUtils;
@@ -138,26 +139,31 @@ public class AppFragment extends BaseFragment {
         lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
-                getBaseAct().showListDialog(Arrays.asList("导出JSON文件", "导出项目文件", "导出并安装APK文件", "复制JSON下载地址", "复制项目下载地址", "删除项目"), true, null, new IBaseActivity.OnItemClick() {
+                getBaseAct().showListDialog(Arrays.asList("编辑项目", "导出JSON文件", "导出项目文件", "导出并安装APK文件", "复制JSON下载地址", "复制项目下载地址", "删除项目"), true, null, new IBaseActivity.OnItemClick() {
                     @Override
                     public void onItemClick(int pos, String s) {
                         switch (pos) {
                             case 0:
-                                exportJson(adapter.getmDatas().get(position).getId());
+                                Intent intent = new Intent(getActivity(), EditApplicationActivity.class);
+                                intent.putExtra("appId", adapter.getmDatas().get(position).getId());
+                                startActWithIntent(intent);
                                 break;
                             case 1:
-                                exportApp(adapter.getmDatas().get(position).getId());
+                                exportJson(adapter.getmDatas().get(position).getId());
                                 break;
                             case 2:
-                                exportApk(adapter.getmDatas().get(position).getId());
+                                exportApp(adapter.getmDatas().get(position).getId());
                                 break;
                             case 3:
-                                copy(adapter.getmDatas().get(position).getAppName(), SharedUtil.getString(ZApplication.getInstance(), "server_config") + "ZzApiDoc/v1/application/downloadAppJson?userId=" + getUserId() + "&appId=" + adapter.getmDatas().get(position).getId());
+                                exportApk(adapter.getmDatas().get(position).getId());
                                 break;
                             case 4:
-                                copy(adapter.getmDatas().get(position).getAppName(), SharedUtil.getString(ZApplication.getInstance(), "server_config") + "ZzApiDoc/v1/application/downloadApplication?userId=" + getUserId() + "&appId=" + adapter.getmDatas().get(position).getId());
+                                copy(adapter.getmDatas().get(position).getAppName(), SharedUtil.getString(ZApplication.getInstance(), "server_config") + "ZzApiDoc/v1/application/downloadAppJson?userId=" + getUserId() + "&appId=" + adapter.getmDatas().get(position).getId());
                                 break;
                             case 5:
+                                copy(adapter.getmDatas().get(position).getAppName(), SharedUtil.getString(ZApplication.getInstance(), "server_config") + "ZzApiDoc/v1/application/downloadApplication?userId=" + getUserId() + "&appId=" + adapter.getmDatas().get(position).getId());
+                                break;
+                            case 6:
                                 deleteProject(adapter.getmDatas().get(position).getId());
                                 break;
                         }

@@ -29,6 +29,7 @@ import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteVersionProjectResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteVersionRecordResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteVersionResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GenerateEmptyExampleResult;
+import me.zhouzhuo810.zzapidoc.common.api.entity.GetActivityDetailResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllActionsResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllApplicationResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllErrorCodeResult;
@@ -43,12 +44,14 @@ import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllQrCodeResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllVersionProjectResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllVersionRecordResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllVersionResult;
+import me.zhouzhuo810.zzapidoc.common.api.entity.GetApplicationDetailResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetDictionaryResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetInterfaceDetailsResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetProjectDetailsResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetRequestArgResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetRequestHeaderResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetResponseArgResult;
+import me.zhouzhuo810.zzapidoc.common.api.entity.GetWidgetDetailResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.ImportProjectEntity;
 import me.zhouzhuo810.zzapidoc.common.api.entity.PreviewUIResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.PublishVersionEntity;
@@ -685,5 +688,37 @@ public interface Api0 {
      */
     @GET("/ZzApiDoc/v1/item/getAllItems")
     Observable<GetAllItemsResult> getAllItems(@Query("widgetId") String widgetId, @Query("userId") String userId);
+
+
+    /*
+     * 获取Application详情
+     */
+    @GET("/ZzApiDoc/v1/application/getApplicationDetail")
+    Observable<GetApplicationDetailResult> getApplicationDetail(
+            @Query("userId") String userId,
+            @Query("appId") String appId
+    );
+
+
+    /*
+     * 获取Activity详情
+     */
+    @GET("/ZzApiDoc/v1/activity/getActivityDetail")
+    Observable<GetActivityDetailResult> getActivityDetail(
+            @Query("userId") String userId,
+            @Query("actId") String actId
+    );
+
+    /*
+     * 获取Widget详情
+     */
+    @GET("/ZzApiDoc/v1/widget/getWidgetDetail")
+    Observable<GetWidgetDetailResult> getWidgetDetail(
+            @Query("userId") String userId,
+            @Query("widgetId") String widgetId
+    );
+
+
+
 
 }
