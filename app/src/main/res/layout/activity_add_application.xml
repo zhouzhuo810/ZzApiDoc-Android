@@ -12,7 +12,7 @@
         android:background="@color/colorMain">
 
         <TextView
-            android:id="@+id/tv_titles"
+            android:id="@+id/tv_title"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
