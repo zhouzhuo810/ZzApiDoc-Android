@@ -11,6 +11,7 @@ import me.zhouzhuo810.zzapidoc.common.api.entity.AddProjectResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.AddQrCodeResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.AddRequestHeaderResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.AddResponseArgResult;
+import me.zhouzhuo810.zzapidoc.common.api.entity.AddTodoListResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.AddVersionProjectResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.AddVersionRecordResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.AddVersionResult;
@@ -25,9 +26,12 @@ import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteItemResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteProjectResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteQrCodeResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteRequestHeaderResult;
+import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteTodoListResult;
+import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteTodoListWebResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteVersionProjectResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteVersionRecordResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.DeleteVersionResult;
+import me.zhouzhuo810.zzapidoc.common.api.entity.FinishTodoListResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GenerateEmptyExampleResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetActivityDetailResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllActionsResult;
@@ -38,6 +42,9 @@ import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllInterfaceResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllItemsResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllMyActivityResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllMyFragmentResult;
+import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllMyTodoListResult;
+import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllMyTodoListTodayResult;
+import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllMyTodoListWebResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllMyWidgetResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllProjectResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetAllQrCodeResult;
@@ -51,10 +58,12 @@ import me.zhouzhuo810.zzapidoc.common.api.entity.GetProjectDetailsResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetRequestArgResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetRequestHeaderResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetResponseArgResult;
+import me.zhouzhuo810.zzapidoc.common.api.entity.GetUserListResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.GetWidgetDetailResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.ImportProjectEntity;
 import me.zhouzhuo810.zzapidoc.common.api.entity.PreviewUIResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.PublishVersionEntity;
+import me.zhouzhuo810.zzapidoc.common.api.entity.SendEmailResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.SetTestFinishResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.UpdateActionResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.UpdateInterfaceResult;
@@ -62,6 +71,7 @@ import me.zhouzhuo810.zzapidoc.common.api.entity.UpdateItemResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.UpdateQrCodeResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.UpdateResponseArgResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.UpdateResult;
+import me.zhouzhuo810.zzapidoc.common.api.entity.UpdateTodoListResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.UpdateUserPasswordResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.UpdateVersionProjectResult;
 import me.zhouzhuo810.zzapidoc.common.api.entity.UpdateVersionRecordResult;
@@ -718,7 +728,81 @@ public interface Api0 {
             @Query("widgetId") String widgetId
     );
 
+    /*
+     * 添加待办()
+     */
+    @FormUrlEncoded
+    @POST("/ZzApiDoc/v1/todoList/addTodoList")
+    Observable<AddTodoListResult> addTodoList(@Field("userId") String userId, @Field("handlePersonId") String handlePersonId, @Field("content") String content, @Field("note") String note, @Field("progress") int progress, @Field("isFinish") int isFinish);
 
+    /*
+     * ()
+     */
+    @FormUrlEncoded
+    @POST("/ZzApiDoc/v1/todoList/updateTodoList")
+    Observable<UpdateTodoListResult> updateTodoList(@Field("todoId") String todoId, @Field("userId") String userId, @Field("handlePersonId") String handlePersonId, @Field("content") String content, @Field("note") String note, @Field("progress") int progress, @Field("isFinish") int isFinish);
 
+    /*
+     * ()
+     */
+    @FormUrlEncoded
+    @POST("/ZzApiDoc/v1/todoList/deleteTodoList")
+    Observable<DeleteTodoListResult> deleteTodoList(@Field("todoId") String todoId, @Field("userId") String userId);
 
+    /*
+     * ()
+     */
+    @FormUrlEncoded
+    @POST("/ZzApiDoc/v1/todoList/deleteTodoListWeb")
+    Observable<DeleteTodoListWebResult> deleteTodoListWeb(@Field("ids") String ids, @Field("userId") String userId);
+
+    /*
+     * ()
+     */
+    @GET("/ZzApiDoc/v1/todoList/getAllMyTodoList")
+    Observable<GetAllMyTodoListResult> getAllMyTodoList(@Query("userId") String userId);
+
+    /*
+     * ()
+     */
+    @GET("/ZzApiDoc/v1/todoList/getAllMyTodoListToday")
+    Observable<GetAllMyTodoListTodayResult> getAllMyTodoListToday(@Query("userId") String userId);
+
+    /*
+     * ()
+     */
+    @GET("/ZzApiDoc/v1/todoList/getAllMyTodoListCurMonth")
+    Observable<GetAllMyTodoListTodayResult> getAllMyTodoListCurMonth(@Query("userId") String userId);
+
+    /*
+     * ()
+     */
+    @GET("/ZzApiDoc/v1/todoList/getAllMyTodoListCurWeek")
+    Observable<GetAllMyTodoListTodayResult> getAllMyTodoListCurWeek(@Query("userId") String userId);
+
+    /*
+     * ()
+     */
+    @GET("/ZzApiDoc/v1/todoList/getAllMyTodoListWeb")
+    Observable<GetAllMyTodoListWebResult> getAllMyTodoListWeb(@Query("userId") String userId, @Query("page") int page);
+
+    /*
+     * ()
+     */
+    @FormUrlEncoded
+    @POST("/ZzApiDoc/v1/todoList/finishTodoList")
+    Observable<FinishTodoListResult> finishTodoList(@Field("userId") String userId, @Field("ids") String ids);
+
+    /*
+     * ()
+     */
+    @FormUrlEncoded
+    @POST("/ZzApiDoc/v1/todoList/sendEmail")
+    Observable<SendEmailResult> sendEmail(@Field("userId") String userId, @Field("todoId") String todoId);
+
+    /*
+     * ()
+     */
+    @GET("/ZzApiDoc/v1/user/getUserList")
+    Observable<GetUserListResult> getUserList(@Query("userId") String userId);
 }

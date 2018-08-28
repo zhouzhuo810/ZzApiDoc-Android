@@ -3,6 +3,8 @@ package me.zhouzhuo810.zzapidoc.common.base;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.IdRes;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -55,6 +57,11 @@ public abstract class BaseFragment extends zhouzhuo810.me.zzandframe.ui.fgm.Base
         super.onAttach(context);
         isAttach = true;
     }
+
+    protected <T> T findViewById(@IdRes int viewId) {
+        return (T) rootView.findViewById(viewId);
+    }
+
 
     @Override
     public void onDetach() {

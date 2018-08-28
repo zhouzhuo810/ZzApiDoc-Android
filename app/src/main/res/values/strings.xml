@@ -326,4 +326,11 @@
     <string name="choose_item_type_hint">请选择Item类型</string>
     <string name="item_name_hint_text">请输入Item名称(英文)</string>
     <string name="item_manage_text">Item管理</string>
+    <string name="todo_content">待办内容</string>
+    <string name="todo_title">待办标题</string>
+    <string name="handle_person_text">处理人</string>
+    <string name="handle_person_hint_text">请选择</string>
+    <string name="finish_progress_text">完成进度</string>
+    <string name="add_todo">添加待办</string>
+    <string name="edit_todo">编辑待办</string>
 </resources>
