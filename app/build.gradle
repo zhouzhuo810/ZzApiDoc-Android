@@ -12,7 +12,7 @@ android {
 
     android.applicationVariants.all { variant ->
         variant.outputs.all {
-            outputFileName = "ZzApiDoc_v${variant.versionName}.apk"
+            outputFileName = "ZzApiDoc_${variant.versionName}.apk"
         }
     }
 
