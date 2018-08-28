@@ -333,4 +333,5 @@
     <string name="finish_progress_text">完成进度</string>
     <string name="add_todo">添加待办</string>
     <string name="edit_todo">编辑待办</string>
+    <string name="my_todo">我的待办</string>
 </resources>
