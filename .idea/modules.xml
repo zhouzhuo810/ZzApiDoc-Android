@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/ZzApiDoc-Android.iml" filepath="$PROJECT_DIR$/ZzApiDoc-Android.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/ZzApiDoc-Android.iml" filepath="$PROJECT_DIR$/.idea/ZzApiDoc-Android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/ZzApiDoc-Android.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/ZzApiDoc-Android.app.iml" />
     </modules>
   </component>
 </project>
